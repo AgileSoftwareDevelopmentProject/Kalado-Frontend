@@ -1,0 +1,66 @@
+.signup-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #272C48;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    height: 40px;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.signup-form {
+    /* display: flex; */
+    /* flex-direction: column;
+    justify-content: center; */
+}
+
+.signup-form input {
+    background: transparent;
+    text-align: right;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid white;
+    outline: none;
+    width: 50%;
+    /* Remove the default outline on focus */
+    transition: border-bottom-color 0.3s;
+    /* Smooth transition for focus effect */
+}
+
+.signup-form input:focus {
+    border-bottom-color: #007BFF;
+    /* Change to a different color on focus (e.g., blue) */
+}
+
+.password-field {
+    display: flex;
+}
+
+.password-field button {
+    margin-left: -40px;
+    /* Adjust based on your layout */
+}
+
+.signup-button {
+    padding: 10px;
+    background-color: #D74101;
+    border-radius: 30px;
+    width: 45%;
+}
+
+.login-link {
+    margin-top: 10px;
+}
