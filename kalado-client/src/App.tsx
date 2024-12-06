@@ -1,9 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import SignupForm from './components/Signup/SignupForm'
-import Loginform from './components/Login/LoginForm'
 
 function App() {
   const [isSignupOpen, setSignupOpen] = useState(false);
@@ -18,12 +14,6 @@ function App() {
 
   return (
     <div>
-      <nav>
-        <button onClick={handleSignupClick}>Sign Up</button>
-      </nav>
-      {isSignupOpen && (
-        <Loginform onClose={handleCloseSignup} />
-      )}
     </div>
   )
 }
