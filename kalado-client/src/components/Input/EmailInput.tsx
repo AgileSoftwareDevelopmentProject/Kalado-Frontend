@@ -13,6 +13,7 @@ const EmailInput: React.FC<EmailInputProps> = ({ placeholder = "ایمیل", val
         <div style={{ marginBottom: '20px' }}>
             <input
                 type="email"
+                name="email"
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}

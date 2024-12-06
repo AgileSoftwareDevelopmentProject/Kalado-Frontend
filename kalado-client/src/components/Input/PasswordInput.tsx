@@ -20,6 +20,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder, value, onCha
         <div style={{ position: 'relative', marginBottom: '20px' }}>
             <input
                 type={isVisible ? 'text' : 'password'}
+                name="password"
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
