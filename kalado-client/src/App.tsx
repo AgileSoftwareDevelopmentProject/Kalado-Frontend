@@ -17,9 +17,6 @@ function App() {
 
   return (
     <div>
-      <nav>
-        <button onClick={handleSignupClick}>Sign Up</button>
-      </nav>
       {isSignupOpen && (
         <SignupForm onClose={handleCloseSignup} />
       )}
