@@ -30,7 +30,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder, value, onCha
                 onClick={handleToggleVisibility}
                 style={{
                     position: 'absolute',
-                    right: '200px',
+                    left: '50px',
                     top: '50%',
                     transform: 'translateY(-50%)',
                     cursor: 'pointer'

@@ -8,56 +8,6 @@ import { FaTimes } from 'react-icons/fa';
 
 
 const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  // First-Name Input
-  const [firstName, setFirstName] = useState('');
-
-  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-  };
-
-  // Last-Name Input
-  const [lastName, setLastName] = useState('');
-
-  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-  };
-
-  // Username Input
-  const [username, setUsername] = useState('');
-
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-
-  // Email Input
-  const [email, setEmail] = useState('');
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  // Phone Number Input
-  const [phoneNumber, setPhoneNumber] = useState('');
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
-  };
-
-  // Password Input
-  const [password, setPassword] = useState('');
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  // Password Repeat Input
-  const [passwordRepeat, setPasswordRepeat] = useState('');
-
-  const handlePasswordRepeatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordRepeat(e.target.value);
-  };
-
-
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -65,13 +15,17 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     email: '',
     phoneNumber: '',
     password: '',
-    passwordRepeat: '',
+    passwordRepeat: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
   };
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -81,52 +35,53 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="signup-popup">
       <div className="signup-header">
-        <img src="/path/to/logo.png" alt="Logo" className="logo" />
+        {/* <img src="/path/to/logo.png" alt="Logo" className="logo" /> */}
+        <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'Bold', padding: '0px' }}>کالادو</p>
         <button onClick={onClose} className="close-button">
           <FaTimes size={24} color="#FFFFFF" />
         </button>
       </div>
       <form onSubmit={handleSubmit} className="signup-form">
         <NameInput
-          value={firstName}
-          onChange={handleFirstNameChange}
+          value={formData.firstName}
+          onChange={handleChange}
           isRequired={true}
         />
         <NameInput
           placeholder="نام‌خانوادگی"
-          value={lastName}
-          onChange={handleLastNameChange}
+          value={formData.lastName}
+          onChange={handleChange}
           isRequired={true}
         />
         <NameInput
           placeholder="نام کاربری"
-          value={username}
-          onChange={handleUsernameChange}
+          value={formData.username}
+          onChange={handleChange}
           isRequired={true}
         />
         <EmailInput
-          value={email}
-          onChange={handleEmailChange}
+          value={formData.email}
+          onChange={handleChange}
         />
         <PhoneNumberInput
-          value={phoneNumber}
-          onChange={handlePhoneChange}
+          value={formData.phoneNumber}
+          onChange={handleChange}
         />
         <PasswordInput
           placeholder="رمز عبور"
-          value={password}
-          onChange={handlePasswordChange}
+          value={formData.password}
+          onChange={handleChange}
         />
         <PasswordInput
           placeholder="تکرار رمز عبور"
-          value={passwordRepeat}
-          onChange={handlePasswordRepeatChange}
+          value={formData.passwordRepeat}
+          onChange={handleChange}
         />
         <button type="submit" className="signup-button">ثبت‌نام</button>
+        <p>
+          <a href="/login" className="login-link">در صورت داشتن حساب کاربری اینجا را کلیک کنید</a>
+        </p>
       </form>
-      <p className="login-link">
-        <a href="/login">در صورت داشتن حساب کاربری اینجا را کلیک کنید</a>
-      </p>
     </div>
   );
 };

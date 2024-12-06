@@ -17,7 +17,7 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({ placeholder = "شم
                 value={value}
                 onChange={onChange}
                 required={isRequired}
-                className="inout"
+                className="input"
             />
         </div>
     );
