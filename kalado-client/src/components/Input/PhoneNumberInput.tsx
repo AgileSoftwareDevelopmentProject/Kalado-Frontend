@@ -1,26 +1,26 @@
 import React from 'react';
 import './UserInput.css';
 
-interface EmailInputProps {
+interface PhoneNumberInputProps {
     placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
 }
 
-const EmailInput: React.FC<EmailInputProps> = ({ placeholder = "ایمیل", value, onChange, isRequired = true }) => {
+const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({ placeholder = "شماره تلفن", value, onChange, isRequired = true }) => {
     return (
         <div style={{ marginBottom: '20px' }}>
             <input
-                type="email"
+                type="tel"
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 required={isRequired}
-                className="input"
+                className="inout"
             />
         </div>
     );
 };
 
-export default EmailInput;
+export default PhoneNumberInput;

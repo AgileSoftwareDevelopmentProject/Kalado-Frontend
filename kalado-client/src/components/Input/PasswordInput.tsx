@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import '../Signup/SignupForm.css';
+import './UserInput.css';
 
 interface PasswordInputProps {
     placeholder: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    isRequired?: boolean;
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder }) => {
-    const [password, setPassword] = useState<string>('');
+const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder, value, onChange, isRequired = true }) => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
     const handleToggleVisibility = () => {
@@ -19,9 +21,10 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder }) => {
             <input
                 type={isVisible ? 'text' : 'password'}
                 placeholder={placeholder}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="signup-form input"
+                value={value}
+                onChange={onChange}
+                required={isRequired}
+                className="input"
             />
             <span
                 onClick={handleToggleVisibility}

@@ -5,9 +5,10 @@ interface NameInputProps {
     placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    isRequired?: boolean;
 }
 
-const NameInput: React.FC<NameInputProps> = ({ placeholder = "نام", value, onChange }) => {
+const NameInput: React.FC<NameInputProps> = ({ placeholder = "نام", value, onChange, isRequired = false }) => {
     return (
         <div style={{ marginBottom: '20px' }}>
             <input
@@ -15,6 +16,7 @@ const NameInput: React.FC<NameInputProps> = ({ placeholder = "نام", value, on
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                required={isRequired}
                 className="input"
             />
         </div>

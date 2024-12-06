@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './SignupForm.css';
-import PasswordInput from '../Input/PasswordInput';
 import NameInput from '../Input/NameInput';
+import EmailInput from '../Input/EmailInput';
+import PhoneNumberInput from '../Input/PhoneNumberInput';
+import PasswordInput from '../Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
 
 
@@ -20,6 +22,42 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setLastName(e.target.value);
   };
 
+  // Username Input
+  const [username, setUsername] = useState('');
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  // Email Input
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  // Phone Number Input
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(e.target.value);
+  };
+
+  // Password Input
+  const [password, setPassword] = useState('');
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  // Password Repeat Input
+  const [passwordRepeat, setPasswordRepeat] = useState('');
+
+  const handlePasswordRepeatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordRepeat(e.target.value);
+  };
+
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -37,7 +75,6 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log(formData);
   };
 
@@ -53,37 +90,38 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <NameInput
           value={firstName}
           onChange={handleFirstNameChange}
+          isRequired={true}
         />
         <NameInput
           placeholder="نام‌خانوادگی"
           value={lastName}
           onChange={handleLastNameChange}
+          isRequired={true}
         />
-        <input
-          type="text"
-          name="username"
+        <NameInput
           placeholder="نام کاربری"
-          value={formData.username}
-          onChange={handleChange}
-          required
+          value={username}
+          onChange={handleUsernameChange}
+          isRequired={true}
         />
-        <input
-          type="email"
-          name="email"
-          placeholder="ایمیل"
-          value={formData.email}
-          onChange={handleChange}
-          required
+        <EmailInput
+          value={email}
+          onChange={handleEmailChange}
         />
-        <input
-          type="tel"
-          name="phoneNumber"
-          placeholder="شماره تلفن"
-          value={formData.phoneNumber}
-          onChange={handleChange}
+        <PhoneNumberInput
+          value={phoneNumber}
+          onChange={handlePhoneChange}
         />
-        <PasswordInput placeholder="رمز عبور" />
-        <PasswordInput placeholder="تکرار رمز عبور" />
+        <PasswordInput
+          placeholder="رمز عبور"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <PasswordInput
+          placeholder="تکرار رمز عبور"
+          value={passwordRepeat}
+          onChange={handlePasswordRepeatChange}
+        />
         <button type="submit" className="signup-button">ثبت‌نام</button>
       </form>
       <p className="login-link">
