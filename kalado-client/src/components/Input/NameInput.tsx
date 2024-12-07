@@ -13,6 +13,7 @@ const NameInput: React.FC<NameInputProps> = ({ placeholder = "نام", value, on
         <div style={{ marginBottom: '20px' }}>
             <input
                 type="text"
+                name="name"
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}

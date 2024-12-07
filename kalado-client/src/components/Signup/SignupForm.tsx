@@ -5,6 +5,7 @@ import EmailInput from '../Input/EmailInput';
 import PhoneNumberInput from '../Input/PhoneNumberInput';
 import PasswordInput from '../Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
+import axios from 'axios';
 
 
 const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -27,9 +28,16 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const response = await axios.post('https://kalado.com/login', formData);
+      console.log('Login successful:', response.data);
+      onClose();
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
   return (
