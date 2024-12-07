@@ -54,8 +54,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
                     value={code}
                     onChange={handleChange}
                 />
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit" className="code-verification-button">بررسی</button>
+                <button type="submit" className="code-verification-button" disabled={code.length !== 5}>بررسی</button>
             </form>
         </div>
     );
