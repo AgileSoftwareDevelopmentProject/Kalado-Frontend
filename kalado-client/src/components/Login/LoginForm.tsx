@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
 
-const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const LoginForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -60,4 +60,4 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     );
 };
 
-export default SignupForm;
+export default LoginForm;
