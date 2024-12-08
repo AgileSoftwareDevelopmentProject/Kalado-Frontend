@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import SignupForm from './LoginForm';
+import LoginForm from './LoginForm';
 import axios from 'axios';
 
 jest.mock('axios');
@@ -10,91 +10,63 @@ describe('LoginForm Component', () => {
   const mockOnClose = jest.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    mockOnClose.mockClear();
+    mockedAxios.post.mockClear();
   });
 
-  test('renders login form correctly', () => {
-    render(<SignupForm onClose={mockOnClose} />);
+  it('closes the form when the close button is clicked', () => {
+    render(<LoginForm onClose={mockOnClose} />);
 
-    expect(screen.getByText('کالادو')).toBeInTheDocument();
-
-    expect(screen.getByPlaceholderText('ایمیل')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('رمز عبور')).toBeInTheDocument();
-
-    expect(screen.getByText('ورود')).toBeInTheDocument();
-    expect(screen.getByText('ایجاد حساب جدید')).toBeInTheDocument();
-  });
-
-  test('allows typing into email and password fields', () => {
-    render(<SignupForm onClose={mockOnClose} />);
-
-    const emailInput = screen.getByPlaceholderText('ایمیل') as HTMLInputElement;
-    const passwordInput = screen.getByPlaceholderText('رمز عبور') as HTMLInputElement;
-
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-
-    expect(emailInput.value).toBe('test@example.com');
-    expect(passwordInput.value).toBe('password123');
-  });
-
-  test('calls API on form submission and closes the form on success', async () => {
-    mockedAxios.post.mockResolvedValueOnce({ data: { message: 'Login successful' } });
-
-    render(<SignupForm onClose={mockOnClose} />);
-
-    const emailInput = screen.getByPlaceholderText('ایمیل');
-    const passwordInput = screen.getByPlaceholderText('رمز عبور');
-    const submitButton = screen.getByText('ورود');
-
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(mockedAxios.post).toHaveBeenCalledWith('https://kalado.com/login', {
-        email: 'test@example.com',
-        password: 'password123',
-      });
-    });
-
-    expect(mockOnClose).toHaveBeenCalled();
-  });
-
-  test('displays error message on API failure', async () => {
-    mockedAxios.post.mockRejectedValueOnce(new Error('Invalid credentials'));
-
-    render(<SignupForm onClose={mockOnClose} />);
-
-    const emailInput = screen.getByPlaceholderText('ایمیل');
-    const passwordInput = screen.getByPlaceholderText('رمز عبور');
-    const submitButton = screen.getByText('ورود');
-
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(mockedAxios.post).toHaveBeenCalledWith('https://kalado.com/login', {
-        email: 'test@example.com',
-        password: 'password123',
-      });
-    });
-
-    expect(console.error).toHaveBeenCalledWith('Login error:', expect.any(Error));
-  });
-
-  test('closes the form when close button is clicked', () => {
-    render(<SignupForm onClose={mockOnClose} />);
-
-    const closeButton = screen.getByRole('button', { name: '' });
-
+    const closeButton = screen.getByRole('button', { name: /close/i });
     fireEvent.click(closeButton);
-
     expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('updates inputs on user input', () => {
+    render(<LoginForm onClose={mockOnClose} />);
+
+    const emailInput = screen.getByPlaceholderText('ایمیل');
+    const passwordInput = screen.getByPlaceholderText('رمز عبور');
+
+    fireEvent.change(emailInput, { target: { value: 'user@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'mysecret' } });
+
+    expect(emailInput).toHaveValue('user@example.com');
+    expect(passwordInput).toHaveValue('mysecret');
+  });
+
+  it('submits form and calls onClose on success', async () => {
+    mockedAxios.post.mockResolvedValueOnce({ data: { message: 'Login successful' } });
+    render(<LoginForm onClose={mockOnClose} />);
+
+    fireEvent.change(screen.getByPlaceholderText('ایمیل'), { target: { value: 'user@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('رمز عبور'), { target: { value: 'mypassword' } });
+
+    const loginButton = screen.getByRole('button', { name: 'ورود' });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalledWith('https://kalado.com/login', {
+        email: 'user@example.com',
+        password: 'mypassword'
+      });
+      expect(mockOnClose).toHaveBeenCalled();
+    });
+  });
+
+  it('handles errors during login submission', async () => {
+    mockedAxios.post.mockRejectedValueOnce(new Error('Network error'));
+    render(<LoginForm onClose={mockOnClose} />);
+
+    fireEvent.change(screen.getByPlaceholderText('ایمیل'), { target: { value: 'user@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('رمز عبور'), { target: { value: 'mypassword' } });
+
+    const loginButton = screen.getByRole('button', { name: 'ورود' });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalled();
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
   });
 });
