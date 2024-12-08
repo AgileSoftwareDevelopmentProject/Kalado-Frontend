@@ -3,13 +3,20 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './UserInput.css';
 
 interface PasswordInputProps {
+    name: string;
     placeholder: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder, value, onChange, isRequired = true }) => {
+const PasswordInput: React.FC<PasswordInputProps> = ({
+    name,
+    placeholder,
+    value,
+    onChange,
+    isRequired = true
+}) => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
     const handleToggleVisibility = () => {
@@ -20,7 +27,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ placeholder, value, onCha
         <div style={{ position: 'relative', marginBottom: '20px' }}>
             <input
                 type={isVisible ? 'text' : 'password'}
-                name="password"
+                name={name}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}

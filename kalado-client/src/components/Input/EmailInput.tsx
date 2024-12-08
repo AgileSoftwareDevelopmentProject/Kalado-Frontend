@@ -2,18 +2,25 @@ import React from 'react';
 import './UserInput.css';
 
 interface EmailInputProps {
+    name: string;
     placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
 }
 
-const EmailInput: React.FC<EmailInputProps> = ({ placeholder = "ایمیل", value, onChange, isRequired = true }) => {
+const EmailInput: React.FC<EmailInputProps> = ({
+    name,
+    placeholder = "ایمیل",
+    value,
+    onChange,
+    isRequired = true
+}) => {
     return (
         <div style={{ marginBottom: '20px' }}>
             <input
                 type="email"
-                name="email"
+                name={name}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
