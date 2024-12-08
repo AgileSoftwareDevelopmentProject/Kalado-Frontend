@@ -5,8 +5,11 @@ import PasswordInput from '../Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
+interface LoginFormProps {
+  onClose: () => void;
+}
 
-const LoginForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -35,18 +38,20 @@ const LoginForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     return (
         <div className="login-popup">
             <div className="login-header">
-                {/* <img src="/path/to/logo.png" alt="Logo" className="logo" /> */}
                 <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'Bold', padding: '0px' }}>کالادو</p>
-                <button onClick={onClose} className="close-button">
+                <button onClick={onClose} className="close-button" aria-label="close">
                     <FaTimes size={24} color="#FFFFFF" />
                 </button>
             </div>
             <form onSubmit={handleSubmit} className="login-form">
                 <EmailInput
+                    name="email"
+                    placeholder="ایمیل"
                     value={formData.email}
                     onChange={handleChange}
                 />
                 <PasswordInput
+                    name="password"
                     placeholder="رمز عبور"
                     value={formData.password}
                     onChange={handleChange}

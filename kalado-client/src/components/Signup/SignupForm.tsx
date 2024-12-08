@@ -7,8 +7,11 @@ import PasswordInput from '../Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
+interface SignupFormProps {
+  onClose: () => void;
+}
 
-const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const SignupForm: React.FC<SignupFormProps> = ({ onClose }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -27,7 +30,6 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }));
   };
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -43,44 +45,53 @@ const SignupForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="signup-popup">
       <div className="signup-header">
-        {/* <img src="/path/to/logo.png" alt="Logo" className="logo" /> */}
         <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'Bold', padding: '0px' }}>کالادو</p>
-        <button onClick={onClose} className="close-button">
+        <button onClick={onClose} className="close-button" aria-label="close">
           <FaTimes size={24} color="#FFFFFF" />
         </button>
       </div>
       <form onSubmit={handleSubmit} className="signup-form">
         <NameInput
+          name="firstName"
+          placeholder="نام"
           value={formData.firstName}
           onChange={handleChange}
           isRequired={true}
         />
         <NameInput
+          name="lastName"
           placeholder="نام‌خانوادگی"
           value={formData.lastName}
           onChange={handleChange}
           isRequired={true}
         />
         <NameInput
+          name="username"
           placeholder="نام کاربری"
           value={formData.username}
           onChange={handleChange}
           isRequired={true}
         />
         <EmailInput
+          name="email"
+          placeholder="ایمیل"
           value={formData.email}
           onChange={handleChange}
         />
         <PhoneNumberInput
+          name="phoneNumber"
+          placeholder="شماره تلفن"
           value={formData.phoneNumber}
           onChange={handleChange}
         />
         <PasswordInput
+          name="password"
           placeholder="رمز عبور"
           value={formData.password}
           onChange={handleChange}
         />
         <PasswordInput
+          name="passwordRepeat"
           placeholder="تکرار رمز عبور"
           value={formData.passwordRepeat}
           onChange={handleChange}
