@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
         {/* Search Bar */}
         <div className="navbar-search">
           <input type="text" placeholder="جستجوی کالا" />
-          <button>
+          <button aria-label="search">
             <FaSearch />
           </button>
         </div>
