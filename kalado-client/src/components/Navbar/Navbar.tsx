@@ -19,8 +19,8 @@ const Navbar: React.FC = () => {
 
         {/* Buttons */}
         <div className="navbar-buttons">
-          <button className="navbar-button signup">ثبت آگهی</button>
           <button className="navbar-button login">ورود/ثبت‌نام</button>
+          <button className="navbar-button signup">ثبت آگهی</button>
         </div>
       </nav>
     </div>
