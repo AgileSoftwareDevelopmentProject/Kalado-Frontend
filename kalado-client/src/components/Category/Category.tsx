@@ -1,0 +1,45 @@
+import React from 'react';
+import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
+import './Category.css';
+
+const CategorySidebar: React.FC = () => {
+  const handleCategoryClick = (category: string) => {
+    console.log(`${category} clicked`);
+  };
+
+  return (
+    <div className="sidebar-container">
+      <div className="sidebar-header">دسته‌بندی‌ها</div>
+      <div className="category-item" onClick={() => handleCategoryClick('املاک')}>
+        <FaHome className="category-icon" />
+        <span>املاک</span>
+      </div>
+      <div className="category-item" onClick={() => handleCategoryClick('وسایل نقلیه')}>
+        <FaCar className="category-icon" />
+        <span>وسایل نقلیه</span>
+      </div>
+      <div className="category-item" onClick={() => handleCategoryClick('خانه و آشپزخانه')}>
+        <FaUtensils className="category-icon" />
+        <span>خانه و آشپزخانه</span>
+      </div>
+      <div className="category-item" onClick={() => handleCategoryClick('کالای دیجیتال')}>
+        <FaLaptop className="category-icon" />
+        <span>کالای دیجیتال</span>
+      </div>
+      <div className="category-item" onClick={() => handleCategoryClick('سرگرمی')}>
+        <FaGamepad className="category-icon" />
+        <span>سرگرمی</span>
+      </div>
+      <div className="category-item" onClick={() => handleCategoryClick('لوازم شخصی')}>
+        <FaSuitcase className="category-icon" />
+        <span>لوازم شخصی</span>
+      </div>
+      <div className="category-item" onClick={() => handleCategoryClick('... موارد دیگر')}>
+        <FaPlusCircle className="category-icon" />
+        <span>... موارد دیگر</span>
+      </div>
+    </div>
+  );
+};
+
+export default CategorySidebar;
