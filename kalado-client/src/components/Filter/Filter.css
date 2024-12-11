@@ -1,75 +1,75 @@
 .filter-container {
-  position: fixed;
-  top: 350px;
-  right: 0px;
-  width: 200px;
-  background-color: #272C48;
-  padding: 20px;
-  color: white;
-  z-index: 1000;
-}
-
-
-.filter-header {
-  font-size: 17px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.filter-label {
-  font-size: 16px;
-  margin-bottom: 10px;
-  text-align: right;
-  direction: rtl;
-}
-
-.filter-section {
-  margin-bottom: 20px;
-  text-align: right;
-  direction: rtl;
-}
-
-
-.price-inputs {
-  display: flex;
-  gap: 20px;
-}
-
-.price-input {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid white;
-  padding: 5px 0;
-  color: white;
-  font-size: 14px;
-  outline: none;
-  width: 100%;
-  text-align: right;
-}
-.price-input::placeholder {
-  color: #bbb;
-  font-size: 14px;
-}
-
-.price-input:focus {
-  border-bottom: 1px solid #ddd;
-}
-.ad-age-options {
-  display: flex;
-  gap: 6px;
-}
-
-.ad-age-option {
-  flex: 1;
-  padding: 5px;
-  background-color: rgb(212, 212, 216);
-  border: none;
-  border-radius: 35px;
-  font-size: 12px;
-  color: #000000;
-  cursor: pointer;
-}
-
-.ad-age-option:hover {
-  background-color: #575970;
-}
+    position: fixed;
+    top: 350px;
+    right: 0px;
+    width: 200px;
+    background-color: #272C48;
+    padding: 20px;
+    color: white;
+    z-index: 1000;
+  }
+  
+  
+  .filter-header {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .filter-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: right;
+    direction: rtl;
+  }
+  
+  .filter-section {
+    margin-bottom: 20px;
+    text-align: right;
+    direction: rtl;
+  }
+  
+  
+  .price-inputs {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .price-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 5px 0;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    text-align: right;
+  }
+  .price-input::placeholder {
+    color: #bbb;
+    font-size: 14px;
+  }
+  
+  .price-input:focus {
+    border-bottom: 1px solid #ddd;
+  }
+  .ad-age-options {
+    display: flex;
+    gap: 6px;
+  }
+  
+  .ad-age-option {
+    flex: 1;
+    padding: 5px;
+    background-color: rgb(212, 212, 216);
+    border: none;
+    border-radius: 35px;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+  }
+  
+  .ad-age-option:hover {
+    background-color: #575970;
+  }
