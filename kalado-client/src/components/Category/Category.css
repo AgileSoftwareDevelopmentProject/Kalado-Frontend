@@ -5,25 +5,23 @@ body {
 }
 
 .sidebar-container {
-  background-color: #1C1E34;
-  border-radius: 10px;
+  background-color: #272C48;
   padding: 20px;
   position: fixed;
-  top: 50px;
-  right: 10px;
-  width: 250px;
+  top: 100px;
+  right: 0px;
+  width: 200px;
   height: calc(100% - 60px);
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
   color: #fff;
   text-align: right;
   z-index: 1000;
 }
 
 .sidebar-header {
-  font-size: 22px;
+  font-size: 17px;
   font-weight: bold;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -33,7 +31,7 @@ body {
   justify-content: flex-start;
   padding: 10px;
   border-radius: 5px;
-  margin-bottom: -10px;
+  margin-bottom: -15px;
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
   direction: rtl;
@@ -54,7 +52,7 @@ body {
 
 .category-item:hover .category-icon {
   transform: scale(1.1);
-  color: white;
+  color: #da4e13;
 }
 
 .page-container {
@@ -70,4 +68,9 @@ body {
   padding: 20px;
   direction: rtl;
   text-align: right;
+}
+
+.category-item span {
+  font-size: 14px;
+  color: #fff;
 }
