@@ -21,7 +21,7 @@ describe('Navbar Component', () => {
 
   test('renders the search button', () => {
     render(<Navbar />);
-    const searchButton = screen.getByRole('button', { name: 'search' });
+    const searchButton = screen.getByRole('button', { name: /search/i });
     expect(searchButton).toBeInTheDocument();
   });
 

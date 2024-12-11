@@ -14,7 +14,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
 
         <div className="navbar-search">
           <input type="text" placeholder="جستجوی کالا" />
-          <button>
+          <button aria-label="search">
             <FaSearch />
           </button>
         </div>
