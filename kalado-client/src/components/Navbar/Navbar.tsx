@@ -2,14 +2,16 @@ import React from 'react';
 import './Navbar.css';
 import { FaSearch } from 'react-icons/fa';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onLoginClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
   return (
-    <div className="page-container">
+    <div className="navbar-container">
       <nav className="navbar">
-        {/* Logo */}
         <div className="navbar-logo">کالادو</div>
 
-        {/* Search Bar */}
         <div className="navbar-search">
           <input type="text" placeholder="جستجوی کالا" />
           <button>
@@ -17,9 +19,8 @@ const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* Buttons */}
         <div className="navbar-buttons">
-          <button className="navbar-button login">ورود/ثبت‌نام</button>
+          <button className="navbar-button login" onClick={onLoginClick}>ورود/ثبت‌نام</button>
           <button className="navbar-button signup">ثبت آگهی</button>
         </div>
       </nav>

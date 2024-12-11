@@ -6,10 +6,11 @@ import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
 interface LoginFormProps {
-  onClose: () => void;
+    onClose: () => void;
+    onOpenSignUp: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignUp }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -35,6 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
         }
     };
 
+
     return (
         <div className="login-popup">
             <div className="login-header">
@@ -58,7 +60,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
                 />
                 <button type="submit" className="login-button">ورود</button>
                 <p>
-                    <a href="/signup" className="signup-link">ایجاد حساب جدید</a>
+                    <a href="#" className="signup-link" onClick={(e) => { e.preventDefault(); onOpenSignUp(); }}>ایجاد حساب جدید</a>
                 </p>
             </form>
         </div>

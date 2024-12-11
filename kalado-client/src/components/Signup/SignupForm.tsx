@@ -9,9 +9,10 @@ import axios from 'axios';
 
 interface SignupFormProps {
   onClose: () => void;
+  onOpenLogin: () => void;
 }
 
-const SignupForm: React.FC<SignupFormProps> = ({ onClose }) => {
+const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -98,7 +99,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose }) => {
         />
         <button type="submit" className="signup-button">ثبت‌نام</button>
         <p>
-          <a href="/login" className="login-link">در صورت داشتن حساب کاربری اینجا را کلیک کنید</a>
+          <a href="#" className="login-link" onClick={(e) => { e.preventDefault(); onOpenLogin(); }}>در صورت داشتن حساب کاربری اینجا را کلیک کنید</a>
         </p>
       </form>
     </div>
