@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Category from './Category';
 
-describe('CategorySidebar', () => {
+describe('Category', () => {
   it('renders the sidebar header and all category items', () => {
     render(<Category />);
 
