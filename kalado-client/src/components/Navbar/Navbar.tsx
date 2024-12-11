@@ -10,7 +10,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
   return (
     <div className="navbar-container">
       <nav className="navbar">
-        <div className="navbar-logo">کالادو</div>
+        <img src="/images/logo.png" alt="کالادو" className="navbar-logo" />
 
         <div className="navbar-search">
           <input type="text" placeholder="جستجوی کالا" />

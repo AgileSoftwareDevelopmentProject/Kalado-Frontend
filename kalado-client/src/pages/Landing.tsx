@@ -51,24 +51,24 @@ const items: Item[] = [
 
 const Landing: React.FC = () => {
     const [isLoginVisible, setLoginVisible] = useState(false);
-    const [isSignUpVisible, setSignUpVisible] = useState(false);
+    const [isSignupVisible, setSignupVisible] = useState(false);
 
     const handleOpenLogin = () => {
         setLoginVisible(true);
-        setSignUpVisible(false);
+        setSignupVisible(false);
     };
 
     const handleCloseLogin = () => {
         setLoginVisible(false);
     };
 
-    const handleOpenSignUp = () => {
+    const handleOpenSignup = () => {
         setLoginVisible(false);
-        setSignUpVisible(true);
+        setSignupVisible(true);
     };
 
-    const handleCloseSignUp = () => {
-        setSignUpVisible(false);
+    const handleCloseSignup = () => {
+        setSignupVisible(false);
     };
 
     return (
@@ -88,8 +88,8 @@ const Landing: React.FC = () => {
                 ))}
             </div>
 
-            {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignUp={handleOpenSignUp} />}
-            {isSignUpVisible && <SignupForm onClose={handleCloseSignUp} onOpenLogin={handleOpenLogin} />}
+            {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}
+            {isSignupVisible && <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />}
         </div>
     );
 };

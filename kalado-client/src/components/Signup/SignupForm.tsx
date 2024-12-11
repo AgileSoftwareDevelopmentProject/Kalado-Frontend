@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SignupForm.css';
+import '../Common.css';
 import NameInput from '../Input/NameInput';
 import EmailInput from '../Input/EmailInput';
 import PhoneNumberInput from '../Input/PhoneNumberInput';
@@ -13,6 +14,7 @@ interface SignupFormProps {
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -46,7 +48,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   return (
     <div className="signup-popup">
       <div className="signup-header">
-        <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'Bold', padding: '0px' }}>کالادو</p>
+        <img src="/images/logo.png" alt="کالادو" className="logo" />
         <button onClick={onClose} className="close-button" aria-label="close">
           <FaTimes size={24} color="#FFFFFF" />
         </button>

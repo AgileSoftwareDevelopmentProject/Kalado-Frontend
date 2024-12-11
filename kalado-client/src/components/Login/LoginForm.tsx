@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Loginform.css';
+import '../Common.css';
 import EmailInput from '../Input/EmailInput';
 import PasswordInput from '../Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
@@ -7,10 +8,11 @@ import axios from 'axios';
 
 interface LoginFormProps {
     onClose: () => void;
-    onOpenSignUp: () => void;
+    onOpenSignup: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignUp }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -40,7 +42,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignUp }) => {
     return (
         <div className="login-popup">
             <div className="login-header">
-                <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'Bold', padding: '0px' }}>کالادو</p>
+                <img src="/images/logo.png" alt="کالادو" className="logo" />
                 <button onClick={onClose} className="close-button" aria-label="close">
                     <FaTimes size={24} color="#FFFFFF" />
                 </button>
@@ -60,7 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignUp }) => {
                 />
                 <button type="submit" className="login-button">ورود</button>
                 <p>
-                    <a href="#" className="signup-link" onClick={(e) => { e.preventDefault(); onOpenSignUp(); }}>ایجاد حساب جدید</a>
+                    <a href="#" className="signup-link" onClick={(e) => { e.preventDefault(); onOpenSignup(); }}>ایجاد حساب جدید</a>
                 </p>
             </form>
         </div>
