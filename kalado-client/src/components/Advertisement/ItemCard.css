@@ -1,0 +1,26 @@
+.marketplace-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.marketplace-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.item-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.item-price {
+    color: green;
+}
+
+.item-city,
+.item-date {
+    color: #666;
+}
