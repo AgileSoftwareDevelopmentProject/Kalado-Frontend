@@ -7,10 +7,8 @@ describe('CategorySidebar', () => {
   it('renders the sidebar header and all category items', () => {
     render(<Category />);
 
-    // Check if the header is displayed
     expect(screen.getByText('دسته‌بندی‌ها')).toBeInTheDocument();
 
-    // Check all category names
     const categories = [
       'املاک',
       'وسایل نقلیه',
@@ -25,7 +23,6 @@ describe('CategorySidebar', () => {
       expect(screen.getByText(category)).toBeInTheDocument();
     });
 
-    // Ensure all icons are rendered
     expect(screen.getAllByRole('img')).toHaveLength(categories.length);
   });
 
