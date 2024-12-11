@@ -14,40 +14,7 @@ interface Item {
     itemId: string;
 }
 
-const items: Item[] = [
-    {
-        title: 'Samsung A54',
-        imageUrl: '',
-        price: 15000000,
-        city: 'تهران',
-        date: 'دقایقی پیش',
-        itemId: '1'
-    },
-    {
-        title: 'Iphone 15',
-        imageUrl: '',
-        price: 60000000,
-        city: 'شیراز',
-        date: 'یک ساعت پیش',
-        itemId: '2'
-    },
-    {
-        title: 'Iphone 15',
-        imageUrl: '',
-        price: 60000000,
-        city: 'شیراز',
-        date: 'یک ساعت پیش',
-        itemId: '3'
-    },
-    {
-        title: 'Iphone 15',
-        imageUrl: '',
-        price: 60000000,
-        city: 'شیراز',
-        date: 'یک ساعت پیش',
-        itemId: '4'
-    },
-];
+const items: Item[] = [];
 
 const Landing: React.FC = () => {
     const [isLoginVisible, setLoginVisible] = useState(false);

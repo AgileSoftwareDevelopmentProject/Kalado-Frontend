@@ -9,23 +9,17 @@
 
 .item-content {
     display: flex;
-    /* Use flexbox for content layout */
     justify-content: space-between;
-    /* Space between text and image */
     width: 100%;
-    /* Allow it to take full width */
 }
 
 .item-details {
     flex-grow: 1;
-    /* Allow details to take remaining space */
 }
 
 .item-image {
     width: 100px;
-    /* Set a fixed width for the image */
     height: auto;
-    /* Maintain aspect ratio */
     border-radius: 4px;
 }
 

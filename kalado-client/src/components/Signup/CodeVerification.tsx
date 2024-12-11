@@ -11,6 +11,7 @@ interface CodeVerificationProps {
 }
 
 const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) => {
+
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
 
