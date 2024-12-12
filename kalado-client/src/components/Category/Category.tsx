@@ -2,6 +2,7 @@ import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensil
 import './Category.css';
 
 const CategorySidebar: React.FC = () => {
+
   const handleCategoryClick = (category: string) => {
     console.log(`${category} clicked`);
   };
@@ -33,9 +34,9 @@ const CategorySidebar: React.FC = () => {
         <FaSuitcase className="category-icon" aria-label="Suitcase" role="img" />
         <span>لوازم شخصی</span>
       </div>
-      <div className="category-item" onClick={() => handleCategoryClick('... موارد دیگر')}>
+      <div className="category-item" onClick={() => handleCategoryClick('موارد دیگر')}>
         <FaPlusCircle className="category-icon" aria-label="More" role="img" />
-        <span>... موارد دیگر</span>
+        <span>موارد دیگر</span>
       </div>
     </div>
   );

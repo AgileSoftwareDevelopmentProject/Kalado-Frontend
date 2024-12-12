@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar/Navbar';
-import ItemCard from '../components/Advertisement/ItemCard';
-import LoginForm from '../components/Login/LoginForm';
-import SignupForm from '../components/Signup/SignupForm';
+import Navbar from '../../components/Navbar/Navbar';
+import CategorySidebar from '../../components/Category/Category';
+import Filter from '../../components/Filter/Filter';
+import ItemCard from '../../components/Advertisement/ItemCard';
+import LoginForm from '../../components/Login/LoginForm';
+import SignupForm from '../../components/Signup/SignupForm';
 import './Landing.css';
 
 interface Item {
@@ -41,6 +43,8 @@ const Landing: React.FC = () => {
     return (
         <div className="landing-page">
             <Navbar onLoginClick={handleOpenLogin} />
+            <CategorySidebar />
+            <Filter />
             <div className="item-cards-container">
                 {items.map(item => (
                     <ItemCard

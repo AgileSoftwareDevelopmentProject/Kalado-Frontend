@@ -1,22 +1,18 @@
 body {
   direction: rtl;
   text-align: right;
-  font-family: 'Tahoma', sans-serif;
 }
 
 .sidebar-container {
-  background-color: #1C1E34;
   border-radius: 10px;
   padding: 20px;
   position: fixed;
-  top: 50px;
+  top: 100px;
   right: 10px;
   width: 250px;
   height: calc(100% - 60px);
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
   color: #fff;
   text-align: right;
-  z-index: 1000;
 }
 
 .sidebar-header {
@@ -37,7 +33,7 @@ body {
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
   direction: rtl;
-  text-align: right; 
+  text-align: right;
 }
 
 .category-item:hover {

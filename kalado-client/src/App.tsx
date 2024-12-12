@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Landing from './pages/Landing';
-import ItemDetails from './pages/ItemDetails';
+import Landing from './pages/Landing/Landing';
+import ItemDetails from './pages/ItemDetails/ItemDetails';
 import './App.css'
 
 function App() {
