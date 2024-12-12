@@ -3,22 +3,23 @@ import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
 import CodeInput from '../Input/CodeInput';
 import './CodeVerification.css';
+import '../Common.css';
 
 interface CodeVerificationProps {
-    email: string; // Email address for which the code was sent
-    onClose: () => void; // Function to close the verification form
+    email: string;
+    onClose: () => void;
 }
 
 const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) => {
+
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
 
-        // Allow only digits and limit length to 5
         if (/^\d*$/.test(value) && value.length <= 5) {
-            setCode(value); // Update the code state
+            setCode(value);
         }
     };
 
@@ -42,8 +43,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
     return (
         <div className="code-verification-popup">
             <div className="code-verification-header">
-                {/* <img src="/path/to/logo.png" alt="Logo" className="logo" /> */}
-                <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'Bold', padding: '0px' }}>کالادو</p>
+                <img src="/images/logo.png" alt="کالادو" className="logo" />
                 <button onClick={onClose} className="close-button">
                     <FaTimes size={24} color="#FFFFFF" />
                 </button>

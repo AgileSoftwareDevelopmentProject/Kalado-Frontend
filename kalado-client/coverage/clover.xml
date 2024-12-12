@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1733931343833" clover="3.2.0">
+  <project timestamp="1733931343833" name="All files">
+    <metrics statements="64" coveredstatements="28" conditionals="18" coveredconditionals="5" methods="22" coveredmethods="9" elements="104" coveredelements="42" complexity="0" loc="64" ncloc="64" packages="5" files="10" classes="10"/>
+    <package name="Advertisement">
+      <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="ItemCard.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Advertisement/ItemCard.tsx">
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="Input">
+      <metrics statements="13" coveredstatements="11" conditionals="14" coveredconditionals="5" methods="6" coveredmethods="4"/>
+      <file name="CodeInput.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Input/CodeInput.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="12" count="1" type="cond" truecount="0" falsecount="3"/>
+        <line num="13" count="0" type="stmt"/>
+      </file>
+      <file name="EmailInput.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Input/EmailInput.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="19" count="25" type="stmt"/>
+      </file>
+      <file name="NameInput.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Input/NameInput.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="19" count="75" type="stmt"/>
+      </file>
+      <file name="PasswordInput.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Input/PasswordInput.tsx">
+        <metrics statements="5" coveredstatements="4" conditionals="5" coveredconditionals="3" methods="2" coveredmethods="1"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="20" count="50" type="stmt"/>
+        <line num="22" count="50" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="26" count="50" type="stmt"/>
+      </file>
+      <file name="PhoneNumberInput.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Input/PhoneNumberInput.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="19" count="25" type="stmt"/>
+      </file>
+    </package>
+    <package name="Login">
+      <metrics statements="14" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+      <file name="LoginForm.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Login/LoginForm.tsx">
+        <metrics statements="14" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="Navbar">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Navbar.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Navbar/Navbar.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="Signup">
+      <metrics statements="30" coveredstatements="14" conditionals="4" coveredconditionals="0" methods="8" coveredmethods="4"/>
+      <file name="CodeVerification.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Signup/CodeVerification.tsx">
+        <metrics statements="16" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
+      <file name="SignupForm.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/Signup/SignupForm.tsx">
+        <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="25" type="stmt"/>
+        <line num="28" count="25" type="stmt"/>
+        <line num="29" count="21" type="stmt"/>
+        <line num="30" count="21" type="stmt"/>
+        <line num="36" count="25" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="48" count="25" type="stmt"/>
+        <line num="104" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

@@ -1,0 +1,34 @@
+.item-card {
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    align-items: center;
+}
+
+.item-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-image {
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.item-title {
+    font-size: 1.25em;
+}
+
+.item-price,
+.item-city,
+.item-date {
+    margin: 4px 0;
+}
