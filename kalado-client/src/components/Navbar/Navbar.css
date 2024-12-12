@@ -1,4 +1,4 @@
-.navbar-container {
+.page-container {
     max-width: 100%;
     margin: 0 auto;
     padding: 20px 10px;
@@ -9,20 +9,23 @@
 .navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    margin: 0 auto;
-    width: calc(100% - 100px);
-    position: fixed;
-    top: 2%;
-    left: 2%;
-    right: 2%;
+    align-items: flex-start; ;
+    background-color: #272C48;
+    padding: 20px 20px;
+    padding-bottom: 40px;
+    width: 100%;
+    position: fixed; 
+    top: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 .navbar-logo {
-    height: 50px;
-    width: 60px;
+    font-size: 30px;
+    color: #da4e13;
+    font-weight: bold;
     margin-left: 10px;
+    margin-right: 20px;
 }
 
 .navbar-search {
@@ -30,10 +33,10 @@
     display: flex;
     align-items: center;
     background-color: #1C1E34;
-    border-radius: 30px;
+    border-radius: 25px;
     padding: 5px 15px;
     margin-right: 10px;
-    margin-left: 300px;
+    margin-left: 600px;
     text-align: right;
 }
 
@@ -53,6 +56,7 @@
     border: none;
     cursor: pointer;
     color: white;
+    transition: transform 0.3s ease;
 }
 
 .navbar-buttons {
@@ -71,7 +75,6 @@
 .navbar-button.signup {
     background-color: #D74101;
     color: white;
-    font-weight: bold;
     border: none;
 }
 
@@ -79,4 +82,21 @@
     background: none;
     color: white;
     border: none;
+    margin-right: -280px;
+}
+
+.navbar-button.login:hover {
+    background-color: #575970;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-button.signup:active {
+    background-color: #FF5722;
+    transform: scale(0.95);
+    transition: all 0.2s ease;
+}
+
+.navbar-search button:hover {
+    transform: scale(1.2);
 }

@@ -1,3 +1,4 @@
+import React from 'react';
 import './Filter.css';
 
 const Filter: React.FC = () => {
@@ -14,7 +15,7 @@ const Filter: React.FC = () => {
       <div className="filter-section">
         <div className="filter-label">قدمت آگهی</div>
         <div className="ad-age-options">
-          <button className="ad-age-option">۲۴ ساعت</button>
+          <button className="ad-age-option">یک روز</button>
           <button className="ad-age-option">یک هفته</button>
           <button className="ad-age-option">یک ماه</button>
         </div>
