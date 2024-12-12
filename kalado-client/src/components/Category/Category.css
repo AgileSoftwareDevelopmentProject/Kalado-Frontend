@@ -1,26 +1,14 @@
-body {
-  direction: rtl;
-  text-align: right;
-  font-family: 'Tahoma', sans-serif;
-}
-
 .sidebar-container {
-  background-color: #272C48;
-  padding: 20px;
   position: fixed;
-  top: 100px;
-  right: 0px;
+  top: 150px;
+  right: 30px;
   width: 200px;
-  height: calc(100% - 60px);
-  color: #fff;
   text-align: right;
-  z-index: 1000;
 }
 
 .sidebar-header {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: bold;
-  color: white;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -35,7 +23,7 @@ body {
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
   direction: rtl;
-  text-align: right; 
+  text-align: right;
 }
 
 .category-item:hover {
