@@ -7,6 +7,7 @@ interface NameInputProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
+    isStarNeeded?: boolean;
 }
 
 const NameInput: React.FC<NameInputProps> = ({
@@ -14,14 +15,15 @@ const NameInput: React.FC<NameInputProps> = ({
     placeholder = "نام",
     value,
     onChange,
-    isRequired = false
+    isRequired = false,
+    isStarNeeded = false
 }) => {
     return (
         <div style={{ marginBottom: '20px' }}>
             <input
                 type="text"
                 name={name}
-                placeholder={placeholder}
+                placeholder={isStarNeeded ? `* ${placeholder}` : placeholder}
                 value={value}
                 onChange={onChange}
                 required={isRequired}

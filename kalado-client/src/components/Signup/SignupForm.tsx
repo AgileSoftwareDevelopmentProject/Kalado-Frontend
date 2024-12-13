@@ -8,6 +8,7 @@ import PasswordInput from '../Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
+
 interface SignupFormProps {
   onClose: () => void;
   onOpenLogin: () => void;
