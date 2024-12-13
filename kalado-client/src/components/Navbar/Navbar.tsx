@@ -2,6 +2,7 @@ import React from 'react';
 import './Navbar.css';
 import '../Common.css';
 import { FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 
 interface NavbarProps {
@@ -13,7 +14,9 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick }) => {
 
   return (
     <nav className="navbar">
-      <img src="/images/logo.png" alt="کالادو" className="logo" />
+      <Link to="/">
+        <img src="/images/logo.png" alt="کالادو" className="logo" />
+      </Link>
 
       <div className="navbar-search">
         <input type="text" placeholder="جستجوی کالا" />

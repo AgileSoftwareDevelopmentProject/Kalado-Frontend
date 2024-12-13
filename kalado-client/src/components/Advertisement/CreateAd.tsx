@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CreateAd.css';
 import NameInput from '../Input/NameInput';
 import PriceInput from '../Input/PriceInput';
+import Dropdown from '../Input/Dropdown';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -12,13 +13,34 @@ interface CreateAdFormProps {
 
 const CreateAd: React.FC<CreateAdFormProps> = ({ onClose }) => {
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<{
+        title: string;
+        price: number;
+        category: string | null;
+        description: string;
+        images: string;
+    }>({
         title: '',
         price: 0,
-        category: '',
+        category: null,
         description: '',
         images: '',
     });
+
+    const categoryOptions = [
+        { value: 'electronics', label: 'الکترونیک' },
+        { value: 'clothing', label: 'پوشاک' },
+        { value: 'home', label: 'خانه و آشپزخانه' },
+        // Add more categories as needed
+    ];
+
+
+    const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
+        setFormData(prevData => ({
+            ...prevData,
+            category: selectedOption ? selectedOption.value : null
+        }));
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -70,6 +92,12 @@ const CreateAd: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     onChange={handlePriceChange}
                     isRequired={true}
                     isStarNeeded={true}
+                />
+                <Dropdown
+                    options={categoryOptions}
+                    placeholder="انتخاب دسته‌بندی"
+                    onChange={handleCategoryChange}
+                    value={categoryOptions.find(option => option.value === formData.category) || null}
                 />
                 <button type="submit" className="cerate-ad-button">ثبت آگهی</button>
             </form>
