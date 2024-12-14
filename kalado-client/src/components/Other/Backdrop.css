@@ -1,0 +1,15 @@
+/* Backdrop.css */
+.backdrop {
+    position: fixed;
+    /* Fixed positioning */
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Cover full width */
+    height: 100%;
+    /* Cover full height */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    z-index: 100;
+    /* Ensure it's above other content */
+}

@@ -7,6 +7,7 @@ import ItemCard from '../../components/Advertisement/ItemCard';
 import LoginForm from '../../components/Login/LoginForm';
 import SignupForm from '../../components/Signup/SignupForm';
 import CreateAdForm from '../../components/Advertisement/CreateAdForm';
+import Backdrop from '../../components/Other/Backdrop';
 
 
 interface Item {
@@ -56,6 +57,13 @@ const Landing: React.FC = () => {
         setCreateAdVisible(false);
     };
 
+    const handleBackdropClick = (event: React.MouseEvent, handleClose: () => void) => {
+        const target = event.target as HTMLElement;
+        if (target.classList.contains('backdrop')) {
+            handleClose();
+        }
+    };
+
     return (
         <div className="landing-page">
             <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} />
@@ -74,9 +82,27 @@ const Landing: React.FC = () => {
                     />
                 ))}
             </div>
-            {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}
-            {isSignupVisible && <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />}
-            {isCreateAdVisible && <CreateAdForm onClose={handleCloseCreateAd} />}
+            {isLoginVisible && (
+                <>
+                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>
+                        <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />
+                    </Backdrop>
+                </>
+            )}
+            {isSignupVisible && (
+                <>
+                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseSignup)}>
+                        <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
+                    </Backdrop>
+                </>
+            )}
+            {isCreateAdVisible && (
+                <>
+                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseCreateAd)}>
+                        <CreateAdForm onClose={handleCloseCreateAd} />
+                    </Backdrop>
+                </>
+            )}
         </div>
     );
 };
