@@ -44,7 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
             <div className="login-header">
                 <img src="/images/logo.png" alt="کالادو" className="logo" />
                 <button onClick={onClose} className="close-button" aria-label="close">
-                    <FaTimes size={24} color="#FFFFFF" />
+                    <FaTimes size={24} />
                 </button>
             </div>
             <form onSubmit={handleSubmit} className="login-form">

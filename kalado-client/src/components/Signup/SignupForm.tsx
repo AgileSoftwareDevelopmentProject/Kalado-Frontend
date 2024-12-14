@@ -51,7 +51,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
       <div className="signup-header">
         <img src="/images/logo.png" alt="کالادو" className="logo" />
         <button onClick={onClose} className="close-button" aria-label="close">
-          <FaTimes size={24} color="#FFFFFF" />
+          <FaTimes size={24} />
         </button>
       </div>
       <form onSubmit={handleSubmit} className="signup-form">

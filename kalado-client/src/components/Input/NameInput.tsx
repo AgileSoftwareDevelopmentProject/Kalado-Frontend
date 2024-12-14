@@ -1,6 +1,7 @@
 import React from 'react';
 import './UserInput.css';
 
+
 interface NameInputProps {
     name: string;
     placeholder?: string;
@@ -19,7 +20,7 @@ const NameInput: React.FC<NameInputProps> = ({
     isStarNeeded = false
 }) => {
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <div>
             <input
                 type="text"
                 name={name}

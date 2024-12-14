@@ -45,7 +45,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
             <div className="code-verification-header">
                 <img src="/images/logo.png" alt="کالادو" className="logo" />
                 <button onClick={onClose} className="close-button">
-                    <FaTimes size={24} color="#FFFFFF" />
+                    <FaTimes size={24} />
                 </button>
             </div>
             <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>

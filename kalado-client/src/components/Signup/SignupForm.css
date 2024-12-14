@@ -12,10 +12,16 @@
 }
 
 .signup-button {
+    margin-top: 10px;
     padding: 10px;
     background-color: #D74101;
     border-radius: 30px;
     width: 45%;
+}
+
+.signup-button:active {
+    transform: scale(0.95);
+    transition: all 0.2s ease;
 }
 
 .login-link {

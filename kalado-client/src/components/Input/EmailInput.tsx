@@ -1,6 +1,7 @@
 import React from 'react';
 import './UserInput.css';
 
+
 interface EmailInputProps {
     name: string;
     placeholder?: string;
@@ -17,7 +18,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
     isRequired = true
 }) => {
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <div>
             <input
                 type="email"
                 name={name}

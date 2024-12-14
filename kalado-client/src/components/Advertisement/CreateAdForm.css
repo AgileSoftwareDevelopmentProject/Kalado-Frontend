@@ -1,5 +1,5 @@
 .create-ad-popup {
-    width: 300px;
+    width: 350px;
     height: auto;
     padding: 20px;
     position: fixed;
@@ -16,4 +16,9 @@
     background-color: #D74101;
     border-radius: 30px;
     width: 45%;
+}
+
+.cerate-ad-button:active {
+    transform: scale(0.95);
+    transition: all 0.2s ease;
 }

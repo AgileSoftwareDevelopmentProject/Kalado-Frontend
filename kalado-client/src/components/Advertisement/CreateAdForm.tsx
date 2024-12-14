@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import './CreateAd.css';
+import './CreateAdForm.css';
 import NameInput from '../Input/NameInput';
 import PriceInput from '../Input/PriceInput';
 import Dropdown from '../Input/Dropdown';
+import DescriptionInput from '../Input/DescriptionInput';
+import ImageUpload from '../Input/ImageUpload';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -11,7 +13,7 @@ interface CreateAdFormProps {
     onClose: () => void;
 }
 
-const CreateAd: React.FC<CreateAdFormProps> = ({ onClose }) => {
+const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
 
     const [formData, setFormData] = useState<{
         title: string;
@@ -31,9 +33,7 @@ const CreateAd: React.FC<CreateAdFormProps> = ({ onClose }) => {
         { value: 'electronics', label: 'الکترونیک' },
         { value: 'clothing', label: 'پوشاک' },
         { value: 'home', label: 'خانه و آشپزخانه' },
-        // Add more categories as needed
     ];
-
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
         setFormData(prevData => ({
@@ -57,6 +57,13 @@ const CreateAd: React.FC<CreateAdFormProps> = ({ onClose }) => {
         }));
     };
 
+    const handleDescriptionchange = (description: string) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            description,
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -74,7 +81,7 @@ const CreateAd: React.FC<CreateAdFormProps> = ({ onClose }) => {
             <div className="create-ad-header">
                 <img src="/images/logo.png" alt="کالادو" className="logo" />
                 <button onClick={onClose} className="close-button" aria-label="close">
-                    <FaTimes size={24} color="#FFFFFF" />
+                    <FaTimes size={24} />
                 </button>
             </div>
             <form onSubmit={handleSubmit} className="create-ad-form">
@@ -99,10 +106,16 @@ const CreateAd: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     onChange={handleCategoryChange}
                     value={categoryOptions.find(option => option.value === formData.category) || null}
                 />
+                <DescriptionInput
+                    name="description"
+                    value={formData.description}
+                    onChange={handleDescriptionchange}
+                />
+                <ImageUpload />
                 <button type="submit" className="cerate-ad-button">ثبت آگهی</button>
             </form>
         </div>
     );
 };
 
-export default CreateAd;
+export default CreateAdForm;
