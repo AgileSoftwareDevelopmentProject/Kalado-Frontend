@@ -8,8 +8,8 @@
     position: fixed;
     top: 0;
     right: 0;
-    padding-right: 30px;
-    padding-top: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
 }
 
 .navbar-search {
@@ -18,9 +18,9 @@
     align-items: center;
     background-color: #1C1E34;
     border-radius: 25px;
-    padding: 5px 15px;
+    padding: 5px 10px;
     margin-right: 10px;
-    margin-left: 600px;
+    margin-left: 700px;
     text-align: right;
 }
 

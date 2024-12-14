@@ -40,7 +40,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
                 style={{
                     position: 'absolute',
                     left: '45px',
-                    top: '45%',
+                    top: '35%',
                     transform: 'translateY(-50%)',
                     cursor: 'pointer'
                 }}
