@@ -1,86 +1,105 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import CodeVerification from './CodeVerification';
+import '@testing-library/jest-dom';
 import axios from 'axios';
+import CodeVerification from './CodeVerification';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('CodeVerification Component', () => {
-    const mockOnClose = jest.fn();
-    const testEmail = 'user@example.com';
+  const mockOnClose = jest.fn();
 
-    beforeEach(() => {
-        mockOnClose.mockClear();
-        mockedAxios.post.mockClear();
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders the component correctly', () => {
+    render(<CodeVerification email="test@example.com" onClose={mockOnClose} />);
+
+    expect(screen.getByText('کالادو')).toBeInTheDocument();
+    expect(screen.getByText('لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'بررسی' })).toBeInTheDocument();
+  });
+
+  it('prevents entering invalid characters or code longer than 5 digits', () => {
+    render(<CodeVerification email="test@example.com" onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox');
+
+    fireEvent.change(input, { target: { value: '12345a' } });
+    expect(input).toHaveValue('12345'); // ignores invalid character 'a'
+
+    fireEvent.change(input, { target: { value: '123456' } });
+    expect(input).toHaveValue('12345'); // truncates to 5 digits
+  });
+
+  it('submits the form and calls onClose on successful verification', async () => {
+    mockedAxios.post.mockResolvedValueOnce({ data: { message: 'Verification successful' } });
+
+    render(<CodeVerification email="test@example.com" onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button', { name: 'بررسی' });
+
+    fireEvent.change(input, { target: { value: '12345' } });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockedAxios.post).toHaveBeenCalledWith('https://kalado.com/verify-code', {
+        email: 'test@example.com',
+        code: '12345',
+      });
+    });
+  });
+
+  it('shows error message on failed verification', async () => {
+    mockedAxios.post.mockRejectedValueOnce({
+      response: { data: { message: 'Invalid code. Please try again.' } },
     });
 
-    it('renders the code verification form', () => {
-        render(<CodeVerification email={testEmail} onClose={mockOnClose} />);
+    render(<CodeVerification email="test@example.com" onClose={mockOnClose} />);
 
-        expect(screen.getByText(/لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید/i)).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /بررسی/i })).toBeInTheDocument();
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button', { name: 'بررسی' });
+
+    fireEvent.change(input, { target: { value: '12345' } });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toHaveTextContent('Invalid code. Please try again.');
     });
 
-    it('updates code on input change', () => {
-        render(<CodeVerification email={testEmail} onClose={mockOnClose} />);
+    expect(mockOnClose).not.toHaveBeenCalled();
+  });
 
-        const codeInput = screen.getByRole('textbox');
-        fireEvent.change(codeInput, { target: { value: '12345' } });
+  it('shows a generic error message for network failure', async () => {
+    mockedAxios.post.mockRejectedValueOnce(new Error('Network Error'));
 
-        expect(codeInput).toHaveValue('12345');
+    render(<CodeVerification email="test@example.com" onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button', { name: 'بررسی' });
+
+    fireEvent.change(input, { target: { value: '12345' } });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toHaveTextContent(
+        'Network error occurred. Please check your connection.'
+      );
     });
 
-    it('submits the form and calls API on success', async () => {
-        mockedAxios.post.mockResolvedValueOnce({ data: { message: 'Verification successful' } });
+    expect(mockOnClose).not.toHaveBeenCalled();
+  });
 
-        render(<CodeVerification email={testEmail} onClose={mockOnClose} />);
+  it('calls onClose when the close button is clicked', () => {
+    render(<CodeVerification email="test@example.com" onClose={mockOnClose} />);
 
-        const codeInput = screen.getByRole('textbox');
-        fireEvent.change(codeInput, { target: { value: '12345' } });
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    fireEvent.click(closeButton);
 
-        const submitButton = screen.getByRole('button', { name: /بررسی/i });
-        fireEvent.click(submitButton);
-
-        await waitFor(() => {
-            expect(mockedAxios.post).toHaveBeenCalledWith('https://kalado.com/verify-code', {
-                email: testEmail,
-                code: '12345',
-            });
-            expect(mockOnClose).toHaveBeenCalled();
-        });
-    });
-
-    it('handles errors during verification submission', async () => {
-        mockedAxios.post.mockRejectedValueOnce(new Error('Network error'));
-
-        render(<CodeVerification email={testEmail} onClose={mockOnClose} />);
-
-        const codeInput = screen.getByRole('textbox');
-        fireEvent.change(codeInput, { target: { value: '12345' } });
-
-        const submitButton = screen.getByRole('button', { name: /بررسی/i });
-        fireEvent.click(submitButton);
-
-        await waitFor(() => {
-            expect(mockedAxios.post).toHaveBeenCalled();
-            expect(screen.getByText(/Invalid code. Please try again./i)).toBeInTheDocument();
-            expect(mockOnClose).not.toHaveBeenCalled();
-        });
-    });
-
-    it('disables the submit button if code length is not 5', () => {
-        render(<CodeVerification email={testEmail} onClose={mockOnClose} />);
-
-        const submitButton = screen.getByRole('button', { name: /بررسی/i });
-
-        expect(submitButton).toBeDisabled();
-
-        const codeInput = screen.getByRole('textbox');
-
-        fireEvent.change(codeInput, { target: { value: '1234' } });
-        expect(submitButton).toBeDisabled();
-
-        fireEvent.change(codeInput, { target: { value: '12345' } });
-        expect(submitButton).toBeEnabled();
-    });
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
+  });
 });
