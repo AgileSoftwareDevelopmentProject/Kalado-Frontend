@@ -1,19 +1,47 @@
 @font-face {
+  font-family: 'IranSans';
+  src: url('../fonts/Iran-Sans.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IranSans';
+  src: url('../fonts/Iran-Sans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
   font-family: 'Nazanin';
-  src: url('../fonts/b-nazanin.ttf') format('truetype');
+  src: url('../fonts/B-Nazanin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nazanin';
+  src: url('../fonts/B-Nazanin-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'Lotus';
+  src: url('../fonts/B-Lotus.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Lotus';
-  src: url('../fonts/b-lotus.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  src: url('../fonts/B-Lotus-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: bold;
 }
 
 :root {
-  font-family: 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nazanin', 'Lotus', 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -88,32 +116,32 @@ button:focus-visible {
 
 input,
 textarea {
-  font-family: 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-size: 18px;
 }
 
 ::placeholder {
-  font-family: 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   color: rgba(255, 255, 255, 0.5);
   font-size: 18px;
 }
 
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  font-family: 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nazanin', 'Lotus', 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 ::-moz-placeholder {
   /* Firefox 19+ */
-  font-family: 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nazanin', 'Lotus', 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 :-ms-input-placeholder {
   /* IE 10+ */
-  font-family: 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nazanin', 'Lotus', 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 :-moz-placeholder {
   /* Firefox 18- */
-  font-family: 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nazanin', 'Lotus', 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
