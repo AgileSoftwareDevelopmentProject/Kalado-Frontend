@@ -22,3 +22,18 @@
     transform: scale(0.95);
     transition: all 0.2s ease;
 }
+
+.image-upload-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.image-upload-row>div {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.image-upload-row>div:last-child {
+    margin-right: 0;
+}

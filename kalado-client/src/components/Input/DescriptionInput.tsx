@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './UserInput.css';
 
-
 interface DescriptionInputProps {
     name: string;
     value: string;

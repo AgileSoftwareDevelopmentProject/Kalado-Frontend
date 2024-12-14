@@ -30,7 +30,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://kalado.com/login', formData);
+            const response = await axios.post('https://kaladoshop.com/v1/auth/login', formData);
             console.log('Login successful:', response.data);
             onClose();
         } catch (error) {

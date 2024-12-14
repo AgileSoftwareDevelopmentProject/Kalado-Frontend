@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Dropdown.css';
 
-
 interface Option {
     value: string;
     label: string;

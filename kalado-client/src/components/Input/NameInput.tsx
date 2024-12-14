@@ -1,7 +1,6 @@
 import React from 'react';
 import './UserInput.css';
 
-
 interface NameInputProps {
     name: string;
     placeholder?: string;

@@ -1,7 +1,6 @@
 import React from 'react';
 import './UserInput.css';
 
-
 interface EmailInputProps {
     name: string;
     placeholder?: string;

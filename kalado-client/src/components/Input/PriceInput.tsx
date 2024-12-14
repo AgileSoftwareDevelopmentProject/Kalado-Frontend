@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './UserInput.css';
 
-
 interface PriceInputProps {
     name: string;
     placeholder?: string;

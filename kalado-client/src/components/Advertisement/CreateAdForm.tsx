@@ -115,7 +115,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     value={formData.description}
                     onChange={handleDescriptionchange}
                 />
-                <ImageUpload />
+                <p>انتخاب عکس</p>
+                <div className="image-upload-row">
+                    <ImageUpload />
+                    <ImageUpload />
+                    <ImageUpload />
+                </div>
+
                 <button type="submit" className="cerate-ad-button">ثبت آگهی</button>
             </form>
         </div>
