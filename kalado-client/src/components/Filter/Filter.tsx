@@ -1,3 +1,4 @@
+import React from 'react';
 import './Filter.css';
 
 const Filter: React.FC = () => {

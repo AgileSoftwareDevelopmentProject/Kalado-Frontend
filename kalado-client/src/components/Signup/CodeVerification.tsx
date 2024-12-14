@@ -5,59 +5,56 @@ import CodeInput from '../Input/CodeInput';
 import './CodeVerification.css';
 
 interface CodeVerificationProps {
-    email: string; // Email address for which the code was sent
-    onClose: () => void; // Function to close the verification form
+  email: string;
+  onClose: () => void;
 }
 
 const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) => {
-    const [code, setCode] = useState('');
-    const [error, setError] = useState('');
+  const [code, setCode] = useState('');
+  const [error, setError] = useState('');
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const sanitizedValue = value.replace(/\D/g, '').slice(0, 5); // only digits, max 5 characters
+    setCode(sanitizedValue);
+  };
 
-        // Allow only digits and limit length to 5
-        if (/^\d*$/.test(value) && value.length <= 5) {
-            setCode(value); // Update the code state
-        }
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    try {
+      const response = await axios.post('https://kalado.com/verify-code', { email, code });
+      console.log('Verification successful:', response.data);
+      onClose();
+    } catch (error: any) {
+      console.error('Verification error:', error);
+      const errorMessage =
+        error.response?.data?.message ||
+        (error.message.includes('Network Error')
+          ? 'Network error occurred. Please check your connection.'
+          : 'Invalid code. Please try again.');
+      setError(errorMessage);
+    }
+  };
 
-        try {
-            const response = await axios.post('https://kalado.com/verify-code', {
-                email,
-                code,
-            });
-
-            console.log('Verification successful:', response.data);
-            onClose();
-        } catch (error) {
-            console.error('Verification error:', error);
-            setError('Invalid code. Please try again.');
-        }
-    };
-
-    return (
-        <div className="code-verification-popup">
-            <div className="code-verification-header">
-                {/* <img src="/path/to/logo.png" alt="Logo" className="logo" /> */}
-                <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'Bold', padding: '0px' }}>کالادو</p>
-                <button onClick={onClose} className="close-button">
-                    <FaTimes size={24} color="#FFFFFF" />
-                </button>
-            </div>
-            <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
-            <form onSubmit={handleSubmit} className="code-verification-form">
-                <CodeInput
-                    value={code}
-                    onChange={handleChange}
-                />
-                <button type="submit" className="code-verification-button" disabled={code.length !== 5}>بررسی</button>
-            </form>
-        </div>
-    );
+  return (
+    <div className="code-verification-popup">
+      <div className="code-verification-header">
+        <p style={{ fontSize: '30px', color: '#D74101', fontWeight: 'bold' }}>کالادو</p>
+        <button onClick={onClose} className="close-button" aria-label="Close">
+          <FaTimes size={24} color="#FFFFFF" />
+        </button>
+      </div>
+      <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
+      <form onSubmit={handleSubmit} className="code-verification-form">
+        <CodeInput value={code} onChange={handleChange} />
+        {error && <p role="alert" className="error-message">{error}</p>}
+        <button type="submit" className="code-verification-button" disabled={code.length !== 5}>
+          بررسی
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default CodeVerification;
