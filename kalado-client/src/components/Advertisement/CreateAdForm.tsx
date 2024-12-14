@@ -30,9 +30,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     });
 
     const categoryOptions = [
-        { value: 'electronics', label: 'الکترونیک' },
-        { value: 'clothing', label: 'پوشاک' },
-        { value: 'home', label: 'خانه و آشپزخانه' },
+        { value: 'Real estate', label: 'املاک' },
+        { value: 'Transportation', label: 'وسایل نقلیه' },
+        { value: 'House and Kitchen', label: 'خانه و آشپزخانه' },
+        { value: 'Digital Stuff', label: 'کالای دیجیتال' },
+        { value: 'Entertainment', label: 'سرگرمی' },
+        { value: 'Personal Stuff', label: 'لوازم شخصی' },
+        { value: 'Others', label: 'موارد دیگر' },
     ];
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {

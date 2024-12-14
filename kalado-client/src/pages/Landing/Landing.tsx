@@ -7,7 +7,6 @@ import ItemCard from '../../components/Advertisement/ItemCard';
 import LoginForm from '../../components/Login/LoginForm';
 import SignupForm from '../../components/Signup/SignupForm';
 import CreateAdForm from '../../components/Advertisement/CreateAdForm';
-import DeletePopup from '../../components/Advertisement/DeletePopup';
 
 
 interface Item {
@@ -77,7 +76,7 @@ const Landing: React.FC = () => {
             </div>
             {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}
             {isSignupVisible && <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />}
-            {isCreateAdVisible && <DeletePopup message={"آیا از حذف این آگهی اطمینان دارید؟"} onClose={handleCloseCreateAd} />}
+            {isCreateAdVisible && <CreateAdForm onClose={handleCloseCreateAd} />}
         </div>
     );
 };

@@ -47,7 +47,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         <div className="dropdown" ref={dropdownRef}>
             <div className="dropdown-header" onClick={handleToggle}>
                 {value ? value.label : placeholder}
-                <span className={`arrow ${isOpen ? 'open' : ''}`}>▼</span>
+                <span className={`arrow ${isOpen ? 'open' : ''}`}>   ▼</span>
             </div>
             {isOpen && (
                 <ul className="dropdown-list">
