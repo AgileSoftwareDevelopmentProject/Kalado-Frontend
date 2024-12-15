@@ -17,54 +17,67 @@ interface Item {
     itemId: string;
 }
 
-const items: Item[] = [];
-
-const Landing: React.FC = () => {
-
+const mockItems: Item[] = [
+    {
+      title: 'Test Item 1',
+      imageUrl: '/images/test1.jpg',
+      price: 1500000,
+      city: 'Tehran',
+      date: '۱۴۰۲/۹/۲۴',
+      itemId: '1',
+    },
+    {
+      title: 'Test Item 2',
+      imageUrl: '/images/test2.jpg',
+      price: 1200000,
+      city: 'Shiraz',
+      date: '۱۴۰۲/۹/۲۵',
+      itemId: '2',
+    },
+  ];
+  
+  const Landing: React.FC = () => {
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
-
+  
     const handleOpenLogin = () => {
-        setLoginVisible(true);
-        setSignupVisible(false);
+      setLoginVisible(true);
+      setSignupVisible(false);
     };
-
-    const handleCloseLogin = () => {
-        setLoginVisible(false);
-    };
-
+  
+    const handleCloseLogin = () => setLoginVisible(false);
+  
     const handleOpenSignup = () => {
-        setLoginVisible(false);
-        setSignupVisible(true);
+      setSignupVisible(true);
+      setLoginVisible(false);
     };
-
-    const handleCloseSignup = () => {
-        setSignupVisible(false);
-    };
-
+  
+    const handleCloseSignup = () => setSignupVisible(false);
+  
     return (
-        <div className="landing-page">
-            <Navbar onLoginClick={handleOpenLogin} />
-            <CategorySidebar />
-            <Filter />
-            <div className="item-cards-container">
-                {items.map(item => (
-                    <ItemCard
-                        key={item.itemId}
-                        title={item.title}
-                        imageUrl={item.imageUrl}
-                        price={item.price}
-                        city={item.city}
-                        date={item.date}
-                        itemId={item.itemId}
-                    />
-                ))}
-            </div>
-
-            {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}
-            {isSignupVisible && <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />}
+      <div className="landing-page">
+        <Navbar onLoginClick={handleOpenLogin} />
+        <CategorySidebar />
+        <Filter />
+        <div className="item-cards-container" data-testid="item-cards-container">
+          {mockItems.map((item) => (
+            <ItemCard
+              key={item.itemId}
+              title={item.title}
+              image={item.imageUrl}
+              price={`$${item.price}`}
+              city={item.city}
+              date={item.date}
+              onClick={() => {}}
+            />
+          ))}
         </div>
+  
+        {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}
+        {isSignupVisible && <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />}
+      </div>
     );
-};
-
-export default Landing;
+  };
+  
+  export default Landing;
+  

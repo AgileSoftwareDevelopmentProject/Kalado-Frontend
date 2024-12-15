@@ -12,15 +12,16 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
     <nav className="navbar">
       <img src="/images/logo.png" alt="کالادو" className="logo" />
 
-      <div className="navbar-search">
-        <input type="text" placeholder="جستجوی کالا" />
-        <button aria-label="search">
-          <FaSearch />
-        </button>
-      </div>
-
+        <div className="navbar-search">
+          <input type="text" placeholder="جستجوی کالا" />
+          <button aria-label="search">
+            <FaSearch />
+          </button>
+        </div>
       <div className="navbar-buttons">
-        <button className="navbar-button login" onClick={onLoginClick}>ورود/ثبت‌نام</button>
+        <button className="navbar-button login" onClick={onLoginClick}>
+          ورود/ثبت‌نام
+        </button>
         <button className="navbar-button signup">ثبت آگهی</button>
       </div>
     </nav>
