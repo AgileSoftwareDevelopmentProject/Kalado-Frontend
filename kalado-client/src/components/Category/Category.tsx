@@ -1,7 +1,8 @@
+import React from 'react';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 import './Category.css';
 
-const CategorySidebar: React.FC = () => {
+const Category: React.FC = () => {
   const handleCategoryClick = (category: string) => {
     console.log(`${category} clicked`);
   };
@@ -41,4 +42,4 @@ const CategorySidebar: React.FC = () => {
   );
 };
 
-export default CategorySidebar;
+export default Category;
