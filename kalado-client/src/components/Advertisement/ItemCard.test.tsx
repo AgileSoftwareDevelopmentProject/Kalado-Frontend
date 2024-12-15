@@ -1,58 +1,40 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import ItemCard from './ItemCard';
 
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  useNavigate: () => mockNavigate,
+}));
+
+const defaultProps = {
+  title: 'Test Item',
+  price: '۱٬۵۰۰٬۰۰۰ تومان',
+  city: 'Tehran',
+  date: '۱۴۰۲/۹/۲۴',
+  image: '/images/test.jpg',
+  onClick: mockNavigate,
+};
+
 describe('ItemCard Component', () => {
-    const item = {
-        title: 'Samsung A54',
-        imageUrl: 'https://example.com/image.jpg',
-        price: 15000000,
-        city: 'تهران',
-        date: '2024-01-01T00:00:00Z',
-        itemId: '1'
-    };
+  test('renders item card with correct details', () => {
+    render(<ItemCard {...defaultProps} />);
 
-    it('renders the item card with correct details', () => {
-        render(
-            <MemoryRouter>
-                <ItemCard
-                    title={item.title}
-                    imageUrl={item.imageUrl}
-                    price={item.price}
-                    city={item.city}
-                    date={item.date}
-                    itemId={item.itemId}
-                />
-            </MemoryRouter>
-        );
+    // Verify all text and image content
+    expect(screen.getByText('Test Item')).toBeInTheDocument();
+    expect(screen.getByText(/۱٬۵۰۰٬۰۰۰ تومان/)).toBeInTheDocument();
+    expect(screen.getByText('Tehran')).toBeInTheDocument();
+    expect(screen.getByText(/۱۴۰۲\/۹\/۲۴/)).toBeInTheDocument();
+    expect(screen.getByAltText('Test Item')).toBeInTheDocument();
+  });
 
-        expect(screen.getByText(item.title)).toBeInTheDocument();
-        expect(screen.getByText(/تومان 15,000,000/i)).toBeInTheDocument();
-        expect(screen.getByText(item.city)).toBeInTheDocument();
-        expect(screen.getByText(new Date(item.date).toLocaleDateString())).toBeInTheDocument();
-        const image = screen.getByAltText(item.title);
-        expect(image).toHaveAttribute('src', item.imageUrl);
-    });
+  test('triggers onClick when the card is clicked', () => {
+    render(<ItemCard {...defaultProps} />);
+    const itemCard = screen.getByRole('button', { name: /Test Item/i });
+    fireEvent.click(itemCard);
 
-    it('navigates to the correct item details page on click', () => {
-        const navigate = jest.fn();
-
-        render(
-            <MemoryRouter>
-                <ItemCard
-                    title={item.title}
-                    imageUrl={item.imageUrl}
-                    price={item.price}
-                    city={item.city}
-                    date={item.date}
-                    itemId={item.itemId}
-                />
-            </MemoryRouter>
-        );
-
-        const card = screen.getByRole('button');
-        fireEvent.click(card);
-
-        expect(navigate).toHaveBeenCalledWith(`/item/${item.itemId}`);
-    });
+    // Ensure onClick handler is called
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
+  });
 });

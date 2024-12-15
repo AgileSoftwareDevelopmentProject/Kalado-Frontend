@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import './Landing.css';
 import Navbar from '../../components/Navbar/Navbar';
 import CategorySidebar from '../../components/Category/Category';
 import Filter from '../../components/Filter/Filter';
 import ItemCard from '../../components/Advertisement/ItemCard';
 import LoginForm from '../../components/Login/LoginForm';
 import SignupForm from '../../components/Signup/SignupForm';
-import './Landing.css';
+
 
 interface Item {
     title: string;
@@ -19,6 +20,7 @@ interface Item {
 const items: Item[] = [];
 
 const Landing: React.FC = () => {
+
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
 

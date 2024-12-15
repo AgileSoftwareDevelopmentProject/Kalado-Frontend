@@ -7,9 +7,9 @@ import Navbar from './Navbar';
 describe('Navbar Component', () => {
   test('renders the logo correctly', () => {
     render(<Navbar />);
-    const logo = screen.getByText('کالادو');
+    const logo = screen.getByAltText('کالادو');
     expect(logo).toBeInTheDocument();
-    expect(logo).toHaveClass('navbar-logo');
+    expect(logo).toHaveClass('logo');
   });
 
   test('renders the search bar correctly', () => {
@@ -55,7 +55,6 @@ describe('Navbar Component', () => {
     await user.click(signupButton);
     await user.click(loginButton);
 
-    // Since there are no specific events, we just verify that they are clickable
     expect(signupButton).toBeInTheDocument();
     expect(loginButton).toBeInTheDocument();
   });
