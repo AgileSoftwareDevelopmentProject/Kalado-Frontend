@@ -1,35 +1,23 @@
 import React from 'react';
-import './DeletePopup.css';
-import '../Common.css';
-import { FaCheck, FaTimes } from 'react-icons/fa';
 
 interface DeletePopupProps {
-    message: string;
-    onConfirm: () => void;
-    onCancel: () => void;
-    onClose: () => void;
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
-const DeletePopup: React.FC<DeletePopupProps> = ({ message, onConfirm, onCancel, onClose }) => {
-
-    return (
-        <div className="delete-popup">
-            <div className="delete-popup-header">
-                <button onClick={onClose} className="close-button" aria-label="close">
-                    <FaTimes size={24} color="#FFFFFF" />
-                </button>
-            </div>
-            <h3>{message}</h3>
-            <div className="delete-popup-buttons">
-                <button className="confirm-button" onClick={onConfirm}>
-                    <FaCheck size={60} color="#318C00" />
-                </button>
-                <button className="cancel-button" onClick={onCancel}>
-                    <FaTimes size={60} color="#FF0000" />
-                </button>
-            </div>
-        </div>
-    );
+const DeletePopup: React.FC<DeletePopupProps> = ({ onConfirm, onCancel }) => {
+  return (
+    <div className="delete-popup">
+      <div className="delete-popup-header">
+        <button aria-label="close" className="close-button">✖</button>
+      </div>
+      <h3>Are you sure you want to delete this item?</h3>
+      <div className="delete-popup-buttons">
+        <button className="confirm-button" aria-label="confirm" onClick={onConfirm}>✔</button>
+        <button className="cancel-button" aria-label="cancel" onClick={onCancel}>✖</button>
+      </div>
+    </div>
+  );
 };
 
 export default DeletePopup;
