@@ -8,9 +8,11 @@ import { Link } from 'react-router-dom';
 interface NavbarProps {
   onLoginClick: () => void;
   onCreateAdClick: () => void;
+  isLoggedIn: boolean;
+  onProfileClick: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick }) => {
 
   return (
     <nav className="navbar">
@@ -26,7 +28,11 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick }) => {
       </div>
 
       <div className="navbar-buttons">
-        <button className="navbar-button login" onClick={onLoginClick}>ورود/ثبت‌نام</button>
+        {isLoggedIn ? (
+          <button className="navbar-button profile" onClick={onProfileClick}>پروفایل کاربری</button>
+        ) : (
+          <button className="navbar-button login" onClick={onLoginClick}>ورود/ثبت‌نام</button>
+        )}
         <button className="navbar-button createAd" onClick={onCreateAdClick}>ثبت آگهی</button>
       </div>
     </nav>

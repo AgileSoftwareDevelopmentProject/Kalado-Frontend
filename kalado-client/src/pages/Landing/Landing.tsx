@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Landing.css';
 import Navbar from '../../components/Navbar/Navbar';
 import CategorySidebar from '../../components/Category/Category';
@@ -23,9 +24,13 @@ const items: Item[] = [];
 
 const Landing: React.FC = () => {
 
+    const navigate = useNavigate();
+
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState<string>('');
 
     const handleOpenLogin = () => {
         setLoginVisible(true);
@@ -57,6 +62,12 @@ const Landing: React.FC = () => {
         setCreateAdVisible(false);
     };
 
+    const handleLoginSuccess = (username: string) => {
+        setIsLoggedIn(true);
+        setUsername(username);
+        handleCloseLogin();
+    };
+
     const handleBackdropClick = (event: React.MouseEvent, handleClose: () => void) => {
         const target = event.target as HTMLElement;
         if (target.classList.contains('backdrop')) {
@@ -64,9 +75,13 @@ const Landing: React.FC = () => {
         }
     };
 
+    const handleOpenProfilePage = () => {
+        navigate('/profile');
+    }
+
     return (
         <div className="landing-page">
-            <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} />
+            <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
             <CategorySidebar />
             <Filter />
             <div className="item-cards-container">
@@ -85,7 +100,7 @@ const Landing: React.FC = () => {
             {isLoginVisible && (
                 <>
                     <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>
-                        <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />
+                        <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
                     </Backdrop>
                 </>
             )}

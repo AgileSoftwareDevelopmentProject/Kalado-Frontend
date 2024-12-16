@@ -9,9 +9,13 @@ import axios from 'axios';
 interface LoginFormProps {
     onClose: () => void;
     onOpenSignup: () => void;
+    onLoginSuccess: (username: string) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const [formData, setFormData] = useState({
         email: '',
@@ -28,6 +32,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (formData.email && formData.password) {
+            // Call the success handler with the username
+            onLoginSuccess(formData.email);
+            // Optionally clear fields or perform other actions
+            setUsername('');
+            setPassword('');
+            onClose(); // Close the form after successful login
+        }
 
         try {
             const response = await axios.post('https://kaladoshop.com/v1/auth/login', formData);
