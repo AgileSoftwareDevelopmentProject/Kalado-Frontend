@@ -5,6 +5,7 @@ import PriceInput from '../../atoms/Input/PriceInput';
 import Dropdown from '../../atoms/Input/Dropdown';
 import DescriptionInput from '../../atoms/Input/DescriptionInput';
 import ImageUpload from '../../atoms/Input/ImageUpload';
+import Button from '../../atoms/Button/Button';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -121,8 +122,10 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     <ImageUpload />
                     <ImageUpload />
                 </div>
-
-                <button type="submit" className="cerate-ad-button">ثبت آگهی</button>
+                <Button
+                    text="ثبت آگهی"
+                    type="submit">
+                </Button>
             </form>
         </div>
     );

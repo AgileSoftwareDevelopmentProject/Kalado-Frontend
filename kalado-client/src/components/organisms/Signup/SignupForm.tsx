@@ -5,6 +5,7 @@ import NameInput from '../../atoms/Input/NameInput';
 import EmailInput from '../../atoms/Input/EmailInput';
 import PhoneNumberInput from '../../atoms/Input/PhoneNumberInput';
 import PasswordInput from '../../atoms/Input/PasswordInput';
+import Button from '../../atoms/Button/Button';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -49,7 +50,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   return (
     <div className="signup-popup">
       <div className="signup-header">
-        <img src="/images/logo.png" alt="کالادو" className="logo" />
+        <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
         <button onClick={onClose} className="close-button" aria-label="close">
           <FaTimes size={24} />
         </button>
@@ -100,7 +101,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
-        <button type="submit" className="signup-button">ثبت‌نام</button>
+        <Button
+          text="ثبت‌نام"
+          type="submit">
+        </Button>
         <p>
           <a href="#" className="login-link" onClick={(e) => { e.preventDefault(); onOpenLogin(); }}>در صورت داشتن حساب کاربری اینجا را کلیک کنید</a>
         </p>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
 import CodeInput from '../../atoms/Input/CodeInput';
+import Button from '../../atoms/Button/Button';
 import './CodeVerification.css';
 
 interface CodeVerificationProps {
@@ -42,7 +43,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
     return (
         <div className="code-verification-popup">
             <div className="code-verification-header">
-                <img src="/images/logo.png" alt="کالادو" className="logo" />
+                <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
                 <button onClick={onClose} className="close-button">
                     <FaTimes size={24} />
                 </button>
@@ -53,7 +54,11 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
                     value={code}
                     onChange={handleChange}
                 />
-                <button type="submit" className="code-verification-button" disabled={code.length !== 5}>بررسی</button>
+                <Button
+                    text="بررسی"
+                    type="submit"
+                    disabled={code.length !== 5}>
+                </Button>
             </form>
         </div>
     );

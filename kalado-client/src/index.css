@@ -1,49 +1,50 @@
 @font-face {
   font-family: 'IranSans';
-  src: url('../fonts/Iran-Sans.ttf') format('truetype');
+  src: url('../assets/fonts/Iran-Sans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'IranSans';
-  src: url('../fonts/Iran-Sans-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/Iran-Sans-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: bold;
 }
 
 @font-face {
   font-family: 'Nazanin';
-  src: url('../fonts/B-Nazanin.ttf') format('truetype');
+  src: url('../assets/fonts/B-Nazanin.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Nazanin';
-  src: url('../fonts/B-Nazanin-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/B-Nazanin-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: bold;
 }
 
 @font-face {
   font-family: 'Lotus';
-  src: url('../fonts/B-Lotus.ttf') format('truetype');
+  src: url('../assets/fonts/B-Lotus.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Lotus';
-  src: url('../fonts/B-Lotus-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/B-Lotus-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: bold;
 }
 
 :root {
-  font-family: 'IranSans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'IranSans', 'Nazanin', 'Lotus', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-size: 20px;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);

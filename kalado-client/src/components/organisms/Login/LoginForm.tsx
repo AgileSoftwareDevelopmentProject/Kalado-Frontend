@@ -3,6 +3,7 @@ import './LoginForm.css';
 import '../../Common.css';
 import EmailInput from '../../atoms/Input/EmailInput';
 import PasswordInput from '../../atoms/Input/PasswordInput';
+import Button from '../../atoms/Button/Button';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -32,14 +33,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (formData.email && formData.password) {
-            // Call the success handler with the username
-            onLoginSuccess(formData.email);
-            // Optionally clear fields or perform other actions
-            setUsername('');
-            setPassword('');
-            onClose(); // Close the form after successful login
-        }
+        // if (formData.email && formData.password) {
+        //     // Call the success handler with the username
+        //     onLoginSuccess(formData.email);
+        //     // Optionally clear fields or perform other actions
+        //     setUsername('');
+        //     setPassword('');
+        //     onClose(); // Close the form after successful login
+        // }
 
         try {
             const response = await axios.post('https://kaladoshop.com/v1/auth/login', formData);
@@ -54,7 +55,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
     return (
         <div className="login-popup">
             <div className="login-header">
-                <img src="/images/logo.png" alt="کالادو" className="logo" />
+                <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
                 <button onClick={onClose} className="close-button" aria-label="close">
                     <FaTimes size={24} />
                 </button>
@@ -72,7 +73,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                     value={formData.password}
                     onChange={handleChange}
                 />
-                <button type="submit" className="login-button">ورود</button>
+                <Button
+                    text="ورود"
+                    type="submit">
+                </Button>
                 <p>
                     <a href="#" className="signup-link" onClick={(e) => { e.preventDefault(); onOpenSignup(); }}>ایجاد حساب جدید</a>
                 </p>

@@ -11,18 +11,6 @@
     border-radius: 30px;
 }
 
-.cerate-ad-button {
-    padding: 10px;
-    background-color: #D74101;
-    border-radius: 30px;
-    width: 45%;
-}
-
-.cerate-ad-button:active {
-    transform: scale(0.95);
-    transition: all 0.2s ease;
-}
-
 .image-upload-row {
     display: flex;
     justify-content: space-between;

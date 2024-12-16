@@ -1,6 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 import '../../Common.css';
+import Button from '../../atoms/Button/Button';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLogged
   return (
     <nav className="navbar">
       <Link to="/">
-        <img src="/images/logo.png" alt="کالادو" className="logo" />
+        <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
       </Link>
 
       <div className="navbar-search">
@@ -28,11 +29,21 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLogged
       </div>
       <div className="navbar-buttons">
         {isLoggedIn ? (
-          <button className="navbar-button profile" onClick={onProfileClick}>پروفایل کاربری</button>
+          <Button
+            text="پروفایل کاربری"
+            onClick={onProfileClick}>
+          </Button>
         ) : (
-          <button className="navbar-button login" onClick={onLoginClick}>ورود/ثبت‌نام</button>
+          <Button
+            text="ورود/ثبت‌نام"
+            backgroundColor="transparent"
+            onClick={onLoginClick}>
+          </Button>
         )}
-        <button className="navbar-button createAd" onClick={onCreateAdClick}>ثبت آگهی</button>
+        <Button
+          text="ثبت آگهی"
+          onClick={onCreateAdClick}>
+        </Button>
       </div>
     </nav>
   );
