@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Landing.css';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Navbar from '../../components/organisms/Navbar/Navbar';
 import CategorySidebar from '../../components/organisms/Category/Category';
 import Filter from '../../components/organisms/Filter/Filter';
@@ -9,7 +10,6 @@ import LoginForm from '../../components/organisms/Login/LoginForm';
 import SignupForm from '../../components/organisms/Signup/SignupForm';
 import CreateAdForm from '../../components/organisms/CreateAd/CreateAdForm';
 import Backdrop from '../../components/atoms/Backdrop/Backdrop';
-import PrimarySearchAppBar from './PrimarySearchAppBar';
 
 interface Item {
     title: string;
@@ -20,7 +20,41 @@ interface Item {
     itemId: string;
 }
 
-const items: Item[] = [];
+const items: Item[] = [
+    {
+        title: 'Samsung A54',
+        imageUrl: '',
+        price: 15000000,
+        city: 'تهران',
+        date: 'دقایقی پیش',
+        itemId: '1'
+    },
+    {
+        title: 'Iphone 15',
+        imageUrl: '',
+        price: 60000000,
+        city: 'شیراز',
+        date: 'یک ساعت پیش',
+        itemId: '2'
+    },
+    {
+        title: 'Iphone 15',
+        imageUrl: '',
+        price: 60000000,
+        city: 'شیراز',
+        date: 'یک ساعت پیش',
+        itemId: '3'
+    },
+    {
+        title: 'Iphone 15',
+        imageUrl: '',
+        price: 60000000,
+        city: 'شیراز',
+        date: 'یک ساعت پیش',
+        itemId: '4'
+    },
+];
+
 
 const Landing: React.FC = () => {
 
@@ -30,7 +64,6 @@ const Landing: React.FC = () => {
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState<string>('');
 
     const handleOpenLogin = () => {
         setLoginVisible(true);
@@ -60,9 +93,8 @@ const Landing: React.FC = () => {
         setCreateAdVisible(false);
     };
 
-    const handleLoginSuccess = (username: string) => {
+    const handleLoginSuccess = () => {
         setIsLoggedIn(true);
-        setUsername(username);
         handleCloseLogin();
     };
 
@@ -78,46 +110,41 @@ const Landing: React.FC = () => {
     }
 
     return (
-        <div className="landing-page">
-            {/* <PrimarySearchAppBar /> */}
+        <Box>
             <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
             <CategorySidebar />
             <Filter />
-            <div className="item-cards-container">
+            <Grid container spacing={2}>
                 {items.map(item => (
-                    <ItemCard
-                        key={item.itemId}
-                        title={item.title}
-                        imageUrl={item.imageUrl}
-                        price={item.price}
-                        city={item.city}
-                        date={item.date}
-                        itemId={item.itemId}
-                    />
+                    <Grid item xs={12} sm={6} md={4} key={item.itemId}>
+                        <ItemCard
+                            title={item.title}
+                            price={`تومان ${item.price.toLocaleString()}`}
+                            city={item.city}
+                            date={item.date}
+                            image={item.imageUrl || 'default-image-url.jpg'}
+                            onClick={() => console.log(`Item clicked: ${item.title}`)}
+                        />
+                    </Grid>
                 ))}
-            </div>
+            </Grid>
+
             {isLoginVisible && (
-                <>
-                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>
-                        <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
-                    </Backdrop>
-                </>
+                <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>
+                    <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
+                </Backdrop>
             )}
             {isSignupVisible && (
-                <>
-                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseSignup)}>
-                        <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
-                    </Backdrop>
-                </>
+                <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseSignup)}>
+                    <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
+                </Backdrop>
             )}
             {isCreateAdVisible && (
-                <>
-                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseCreateAd)}>
-                        <CreateAdForm onClose={handleCloseCreateAd} />
-                    </Backdrop>
-                </>
+                <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseCreateAd)}>
+                    <CreateAdForm onClose={handleCloseCreateAd} />
+                </Backdrop>
             )}
-        </div>
+        </Box>
     );
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import './ItemCard.css';
+import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
 
 interface ItemCardProps {
   title: string;
-  price: string; // Updated to match the type used in the test case
+  price: string;
   city: string;
   date: string;
   image: string;
@@ -12,17 +12,37 @@ interface ItemCardProps {
 
 const ItemCard: React.FC<ItemCardProps> = ({ title, price, city, date, image, onClick }) => {
   return (
-    <div className="item-card" role="button" aria-label={title} onClick={onClick}>
-      <div className="item-content">
-        <div className="item-details">
-          <h3 className="item-title">{title}</h3>
-          <p className="item-price">{price}</p>
-          <p className="item-city">{city}</p>
-          <p className="item-date">{date}</p>
-        </div>
-        <img src={image} alt={title} className="item-image" />
-      </div>
-    </div>
+    <Card
+      sx={{
+        cursor: 'pointer',
+        transition: 'transform 0.2s',
+        '&:hover': { transform: 'scale(1.05)' }
+      }}
+      onClick={onClick}
+    >
+      <CardMedia
+        component="img"
+        height="140"
+        image={image}
+        alt={title}
+      />
+      <CardContent>
+        <Typography variant="h6" component="div" noWrap>
+          {title}
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          {price}
+        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+          <Typography variant="body2" color="text.secondary">
+            {city}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {date}
+          </Typography>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 
