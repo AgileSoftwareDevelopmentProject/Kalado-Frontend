@@ -1,5 +1,5 @@
-.login-popup {
-    width: 300px;
+.create-ad-popup {
+    width: 350px;
     height: auto;
     padding: 20px;
     position: fixed;
@@ -11,24 +11,29 @@
     border-radius: 30px;
 }
 
-.login-button {
-    margin-top: 10px;
+.cerate-ad-button {
     padding: 10px;
     background-color: #D74101;
     border-radius: 30px;
     width: 45%;
 }
 
-.login-button:active {
+.cerate-ad-button:active {
     transform: scale(0.95);
     transition: all 0.2s ease;
 }
 
-.signup-link {
-    color: white;
-    margin-top: 10px;
+.image-upload-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-.signup-link:hover {
-    color: #D74101;
+.image-upload-row>div {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.image-upload-row>div:last-child {
+    margin-right: 0;
 }

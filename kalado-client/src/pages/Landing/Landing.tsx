@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Landing.css';
 import Navbar from '../../components/Navbar/Navbar';
 import CategorySidebar from '../../components/Category/Category';
@@ -6,6 +7,8 @@ import Filter from '../../components/Filter/Filter';
 import ItemCard from '../../components/Advertisement/ItemCard';
 import LoginForm from '../../components/Login/LoginForm';
 import SignupForm from '../../components/Signup/SignupForm';
+import CreateAdForm from '../../components/Advertisement/CreateAdForm';
+import Backdrop from '../../components/Other/Backdrop';
 
 
 interface Item {
@@ -17,60 +20,102 @@ interface Item {
     itemId: string;
 }
 
-const mockItems: Item[] = [
-    {
-      title: 'Test Item 1',
-      imageUrl: '/images/test1.jpg',
-      price: 1500000,
-      city: 'Tehran',
-      date: '۱۴۰۲/۹/۲۴',
-      itemId: '1',
-    },
-    {
-      title: 'Test Item 2',
-      imageUrl: '/images/test2.jpg',
-      price: 1200000,
-      city: 'Shiraz',
-      date: '۱۴۰۲/۹/۲۵',
-      itemId: '2',
-    },
-  ];
-  
-  const Landing: React.FC = () => {
+const items: Item[] = [];
+
+const Landing: React.FC = () => {
+
+    const navigate = useNavigate();
+
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
-  
+    const [isCreateAdVisible, setCreateAdVisible] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState<string>('');
+
     const handleOpenLogin = () => {
-      setLoginVisible(true);
-      setSignupVisible(false);
+        setLoginVisible(true);
+        setSignupVisible(false);
+        setCreateAdVisible(false);
     };
   
     const handleCloseLogin = () => setLoginVisible(false);
   
     const handleOpenSignup = () => {
-      setSignupVisible(true);
-      setLoginVisible(false);
+        setLoginVisible(false);
+        setSignupVisible(true);
+        setCreateAdVisible(false);
     };
-  
-    const handleCloseSignup = () => setSignupVisible(false);
-  
+
+    const handleCloseSignup = () => {
+        setSignupVisible(false);
+    };
+
+    const handleOpenCreateAd = () => {
+        setCreateAdVisible(true);
+        setSignupVisible(false);
+        setLoginVisible(false);
+    };
+
+    const handleCloseCreateAd = () => {
+        setCreateAdVisible(false);
+    };
+
+    const handleLoginSuccess = (username: string) => {
+        setIsLoggedIn(true);
+        setUsername(username);
+        handleCloseLogin();
+    };
+
+    const handleBackdropClick = (event: React.MouseEvent, handleClose: () => void) => {
+        const target = event.target as HTMLElement;
+        if (target.classList.contains('backdrop')) {
+            handleClose();
+        }
+    };
+
+    const handleOpenProfilePage = () => {
+        navigate('/profile');
+    }
+
     return (
-      <div className="landing-page">
-        <Navbar onLoginClick={handleOpenLogin} />
-        <CategorySidebar />
-        <Filter />
-        <div className="item-cards-container" data-testid="item-cards-container">
-          {mockItems.map((item) => (
-            <ItemCard
-              key={item.itemId}
-              title={item.title}
-              image={item.imageUrl}
-              price={`$${item.price}`}
-              city={item.city}
-              date={item.date}
-              onClick={() => {}}
-            />
-          ))}
+        <div className="landing-page">
+            <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
+            <CategorySidebar />
+            <Filter />
+            <div className="item-cards-container">
+                {items.map(item => (
+                    <ItemCard
+                        key={item.itemId}
+                        title={item.title}
+                        imageUrl={item.imageUrl}
+                        price={item.price}
+                        city={item.city}
+                        date={item.date}
+                        itemId={item.itemId}
+                    />
+                ))}
+            </div>
+            {isLoginVisible && (
+                <>
+                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>
+                        <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
+                    </Backdrop>
+                </>
+            )}
+            {isSignupVisible && (
+                <>
+                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseSignup)}>
+                        <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
+                    </Backdrop>
+                </>
+            )}
+            {isCreateAdVisible && (
+                <>
+                    <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseCreateAd)}>
+                        <CreateAdForm onClose={handleCloseCreateAd} />
+                    </Backdrop>
+                </>
+            )}
         </div>
   
         {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}

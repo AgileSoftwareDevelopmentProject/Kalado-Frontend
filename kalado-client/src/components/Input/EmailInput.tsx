@@ -17,7 +17,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
     isRequired = true
 }) => {
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <div>
             <input
                 type="email"
                 name={name}
