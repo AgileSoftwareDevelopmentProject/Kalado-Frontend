@@ -9,7 +9,7 @@ import LoginForm from '../../components/organisms/Login/LoginForm';
 import SignupForm from '../../components/organisms/Signup/SignupForm';
 import CreateAdForm from '../../components/organisms/CreateAd/CreateAdForm';
 import Backdrop from '../../components/atoms/Backdrop/Backdrop';
-
+import PrimarySearchAppBar from './PrimarySearchAppBar';
 
 interface Item {
     title: string;
@@ -79,6 +79,7 @@ const Landing: React.FC = () => {
 
     return (
         <div className="landing-page">
+            {/* <PrimarySearchAppBar /> */}
             <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
             <CategorySidebar />
             <Filter />
