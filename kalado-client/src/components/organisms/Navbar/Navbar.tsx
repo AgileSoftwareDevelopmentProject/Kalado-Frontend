@@ -1,6 +1,6 @@
 import React from 'react';
 import './Navbar.css';
-import Button from '../../atoms/Button/Button';
+import Button from '../../atoms/Buttons/Button';
 import Logo from '../../atoms/Logo/Logo';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';

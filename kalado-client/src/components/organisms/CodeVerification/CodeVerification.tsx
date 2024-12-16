@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import Box from '@mui/material/Box';
 import { FaTimes } from 'react-icons/fa';
-import CodeInput from '../../atoms/Input/CodeInput';
-import Button from '../../atoms/Button/Button';
+import CodeInput from '../../atoms/Inputs/CodeInput';
+import Button from '../../atoms/Buttons/Button';
 import Logo from '../../atoms/Logo/Logo';
-import './CodeVerification.css';
+import axios from 'axios';
 
 interface CodeVerificationProps {
     email: string;
@@ -42,23 +42,34 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
     };
 
     return (
-        <div className="code-verification-popup">
-            <div className="code-verification-header">
-                <Logo />
-                <Button
-                    onClick={onClose}
-                    children={<FaTimes size={24} />}
-                    backgroundColor="transparent"
-                    style={{
-                        color: 'white',
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                    }}
-                />
-            </div>
+        <Box
+            sx={{
+                width: 350,
+                padding: 2,
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                backgroundColor: '#272C48',
+                borderRadius: 10,
+                border: '1px solid rgba(255, 255, 255, 0.5)',
+                boxShadow: 3,
+            }}
+        >
+            <Logo />
+            <Button
+                onClick={onClose}
+                children={<FaTimes size={24} />}
+                backgroundColor="transparent"
+                style={{
+                    color: 'white',
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                }}
+            />
             <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
-            <form onSubmit={handleSubmit} className="code-verification-form">
+            <form onSubmit={handleSubmit}>
                 <CodeInput
                     value={code}
                     onChange={handleChange}
@@ -66,10 +77,9 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
                 <Button
                     text="بررسی"
                     type="submit"
-                    disabled={code.length !== 5}>
-                </Button>
+                    disabled={code.length !== 5} />
             </form>
-        </div>
+        </Box>
     );
 };
 

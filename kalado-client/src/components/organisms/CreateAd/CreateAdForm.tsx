@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './CreateAdForm.css';
-import NameInput from '../../atoms/Input/NameInput';
-import PriceInput from '../../atoms/Input/PriceInput';
-import Dropdown from '../../atoms/Input/Dropdown';
-import DescriptionInput from '../../atoms/Input/DescriptionInput';
-import ImageUpload from '../../atoms/Input/ImageUpload';
-import Button from '../../atoms/Button/Button';
+import Box from '@mui/material/Box';
+import NameInput from '../../atoms/Inputs/NameInput';
+import PriceInput from '../../atoms/Inputs/PriceInput';
+import Dropdown from '../../atoms/Inputs/Dropdown';
+import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
+import ImageUpload from '../../atoms/Inputs/ImageUpload';
+import Button from '../../atoms/Buttons/Button';
 import Logo from '../../atoms/Logo/Logo';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
@@ -83,21 +83,32 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     };
 
     return (
-        <div className="create-ad-popup">
-            <div className="create-ad-header">
-                <Logo />
-                <Button
-                    onClick={onClose}
-                    children={<FaTimes size={24} />}
-                    style={{
-                        color: 'white',
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                    }}
-                />
-            </div>
-            <form onSubmit={handleSubmit} className="create-ad-form">
+        <Box
+            sx={{
+                width: 350,
+                padding: 2,
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                backgroundColor: '#272C48',
+                borderRadius: 10,
+                border: '1px solid rgba(255, 255, 255, 0.5)',
+                boxShadow: 3,
+            }}
+        >
+            <Logo />
+            <Button
+                onClick={onClose}
+                children={<FaTimes size={24} />}
+                style={{
+                    color: 'white',
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                }}
+            />
+            <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
                     placeholder="عنوان آگهی"
@@ -125,17 +136,17 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     onChange={handleDescriptionchange}
                 />
                 <p>انتخاب عکس</p>
-                <div className="image-upload-row">
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                     <ImageUpload />
                     <ImageUpload />
                     <ImageUpload />
-                </div>
+                </Box>
                 <Button
                     text="ثبت آگهی"
-                    type="submit">
-                </Button>
+                    type="submit"
+                />
             </form>
-        </div>
+        </Box>
     );
 };
 

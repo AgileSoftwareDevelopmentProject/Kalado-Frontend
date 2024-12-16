@@ -45,7 +45,7 @@ const Button: React.FC<ButtonProps> = ({
 
     return (
         <MuiButton style={buttonStyles} {...props}>
-            {text == undefined ? children : text}
+            {text || children}
         </MuiButton>
     );
 };

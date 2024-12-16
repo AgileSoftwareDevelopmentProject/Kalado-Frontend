@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import './LoginForm.css';
-import EmailInput from '../../atoms/Input/EmailInput';
-import PasswordInput from '../../atoms/Input/PasswordInput';
-import Button from '../../atoms/Button/Button';
+import Box from '@mui/material/Box';
+import EmailInput from '../../atoms/Inputs/EmailInput';
+import PasswordInput from '../../atoms/Inputs/PasswordInput';
+import Button from '../../atoms/Buttons/Button';
 import Logo from '../../atoms/Logo/Logo';
+import CustomLink from '../../atoms/Links/CustomLink';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -48,23 +49,33 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
         }
     };
 
-
     return (
-        <div className="login-popup">
-            <div className="login-header">
-                <Logo />
-                <Button
-                    onClick={onClose}
-                    children={<FaTimes size={24} />}
-                    style={{
-                        color: 'white',
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                    }}
-                />
-            </div>
-            <form onSubmit={handleSubmit} className="login-form">
+        <Box
+            sx={{
+                width: 350,
+                padding: 2,
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                backgroundColor: '#272C48',
+                borderRadius: 10,
+                border: '1px solid rgba(255, 255, 255, 0.5)',
+                boxShadow: 3,
+            }}
+        >
+            <Logo />
+            <Button
+                onClick={onClose}
+                children={<FaTimes size={24} />}
+                style={{
+                    color: 'white',
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                }}
+            />
+            <form onSubmit={handleSubmit}>
                 <EmailInput
                     name="email"
                     placeholder="ایمیل"
@@ -79,13 +90,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                 />
                 <Button
                     text="ورود"
-                    type="submit">
-                </Button>
-                <p>
-                    <a href="#" className="signup-link" onClick={(e) => { e.preventDefault(); onOpenSignup(); }}>ایجاد حساب جدید</a>
-                </p>
+                    type="submit" />
+                <CustomLink
+                    to="/#"
+                    onClick={(e) => { e.preventDefault(); onOpenSignup(); }}
+                    color="primary"
+                    text="ایجاد حساب جدید"
+                />
             </form>
-        </div>
+        </Box>
     );
 };
 

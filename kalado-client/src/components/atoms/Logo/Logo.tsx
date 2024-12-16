@@ -10,6 +10,7 @@ const Logo: React.FC = () => {
             sx={{
                 height: 54,
                 width: 'auto',
+                marginBottom: '10px',
             }}
         />
     );
