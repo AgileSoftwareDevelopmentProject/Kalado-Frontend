@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './SignupForm.css';
-import '../../Common.css';
 import NameInput from '../../atoms/Input/NameInput';
 import EmailInput from '../../atoms/Input/EmailInput';
 import PhoneNumberInput from '../../atoms/Input/PhoneNumberInput';
 import PasswordInput from '../../atoms/Input/PasswordInput';
 import Button from '../../atoms/Button/Button';
+import Logo from '../../atoms/Logo/Logo';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -50,10 +50,18 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   return (
     <div className="signup-popup">
       <div className="signup-header">
-        <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
-        <button onClick={onClose} className="close-button" aria-label="close">
-          <FaTimes size={24} />
-        </button>
+        <Logo />
+        <Button
+          onClick={onClose}
+          children={<FaTimes size={24} />}
+          backgroundColor="transparent"
+          style={{
+            color: 'white',
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+          }}
+        />
       </div>
       <form onSubmit={handleSubmit} className="signup-form">
         <NameInput

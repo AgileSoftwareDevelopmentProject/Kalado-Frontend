@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
 import CodeInput from '../../atoms/Input/CodeInput';
 import Button from '../../atoms/Button/Button';
+import Logo from '../../atoms/Logo/Logo';
 import './CodeVerification.css';
 
 interface CodeVerificationProps {
@@ -43,10 +44,18 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
     return (
         <div className="code-verification-popup">
             <div className="code-verification-header">
-                <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
-                <button onClick={onClose} className="close-button">
-                    <FaTimes size={24} />
-                </button>
+                <Logo />
+                <Button
+                    onClick={onClose}
+                    children={<FaTimes size={24} />}
+                    backgroundColor="transparent"
+                    style={{
+                        color: 'white',
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                    }}
+                />
             </div>
             <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
             <form onSubmit={handleSubmit} className="code-verification-form">

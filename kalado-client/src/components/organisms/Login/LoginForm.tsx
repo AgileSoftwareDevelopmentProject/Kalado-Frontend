@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
-import '../../Common.css';
 import EmailInput from '../../atoms/Input/EmailInput';
 import PasswordInput from '../../atoms/Input/PasswordInput';
 import Button from '../../atoms/Button/Button';
+import Logo from '../../atoms/Logo/Logo';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -14,9 +14,6 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
     const [formData, setFormData] = useState({
         email: '',
@@ -55,10 +52,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
     return (
         <div className="login-popup">
             <div className="login-header">
-                <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
-                <button onClick={onClose} className="close-button" aria-label="close">
-                    <FaTimes size={24} />
-                </button>
+                <Logo />
+                <Button
+                    onClick={onClose}
+                    children={<FaTimes size={24} />}
+                    style={{
+                        color: 'white',
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                    }}
+                />
             </div>
             <form onSubmit={handleSubmit} className="login-form">
                 <EmailInput

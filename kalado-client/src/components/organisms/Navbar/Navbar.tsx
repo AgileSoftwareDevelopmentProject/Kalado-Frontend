@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css';
-import '../../Common.css';
 import Button from '../../atoms/Button/Button';
+import Logo from '../../atoms/Logo/Logo';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLogged
   return (
     <nav className="navbar">
       <Link to="/">
-        <img src="/assets/images/logo.png" alt="کالادو" className="logo" />
+        <Logo />
       </Link>
 
       <div className="navbar-search">

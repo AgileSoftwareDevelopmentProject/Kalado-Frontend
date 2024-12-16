@@ -14,6 +14,7 @@ interface ButtonProps extends MuiButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({
+    children,
     text,
     shape = 'rounded',
     width = 'auto',
@@ -44,7 +45,7 @@ const Button: React.FC<ButtonProps> = ({
 
     return (
         <MuiButton style={buttonStyles} {...props}>
-            {text}
+            {text == undefined ? children : text}
         </MuiButton>
     );
 };

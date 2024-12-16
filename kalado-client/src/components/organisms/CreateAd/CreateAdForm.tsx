@@ -6,6 +6,7 @@ import Dropdown from '../../atoms/Input/Dropdown';
 import DescriptionInput from '../../atoms/Input/DescriptionInput';
 import ImageUpload from '../../atoms/Input/ImageUpload';
 import Button from '../../atoms/Button/Button';
+import Logo from '../../atoms/Logo/Logo';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -84,10 +85,17 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     return (
         <div className="create-ad-popup">
             <div className="create-ad-header">
-                <img src="/images/logo.png" alt="کالادو" className="logo" />
-                <button onClick={onClose} className="close-button" aria-label="close">
-                    <FaTimes size={24} />
-                </button>
+                <Logo />
+                <Button
+                    onClick={onClose}
+                    children={<FaTimes size={24} />}
+                    style={{
+                        color: 'white',
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                    }}
+                />
             </div>
             <form onSubmit={handleSubmit} className="create-ad-form">
                 <NameInput
