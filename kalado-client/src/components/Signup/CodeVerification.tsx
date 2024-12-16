@@ -3,11 +3,10 @@ import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
 import CodeInput from '../Input/CodeInput';
 import './CodeVerification.css';
-import '../Common.css';
 
 interface CodeVerificationProps {
-    email: string;
-    onClose: () => void;
+  email: string;
+  onClose: () => void;
 }
 
 const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) => {

@@ -20,13 +20,12 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLogged
         <img src="/images/logo.png" alt="کالادو" className="logo" />
       </Link>
 
-      <div className="navbar-search">
-        <input type="text" placeholder="جستجوی کالا" />
-        <button aria-label="search">
-          <FaSearch />
-        </button>
-      </div>
-
+        <div className="navbar-search">
+          <input type="text" placeholder="جستجوی کالا" />
+          <button aria-label="search">
+            <FaSearch />
+          </button>
+        </div>
       <div className="navbar-buttons">
         {isLoggedIn ? (
           <button className="navbar-button profile" onClick={onProfileClick}>پروفایل کاربری</button>

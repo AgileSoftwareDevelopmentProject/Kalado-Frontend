@@ -37,11 +37,9 @@ const Landing: React.FC = () => {
         setSignupVisible(false);
         setCreateAdVisible(false);
     };
-
-    const handleCloseLogin = () => {
-        setLoginVisible(false);
-    };
-
+  
+    const handleCloseLogin = () => setLoginVisible(false);
+  
     const handleOpenSignup = () => {
         setLoginVisible(false);
         setSignupVisible(true);
@@ -119,7 +117,12 @@ const Landing: React.FC = () => {
                 </>
             )}
         </div>
+  
+        {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}
+        {isSignupVisible && <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />}
+      </div>
     );
-};
-
-export default Landing;
+  };
+  
+  export default Landing;
+  

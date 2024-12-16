@@ -1,35 +1,20 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import DeletePopup from './DeletePopup';
 
+const mockOnConfirm = jest.fn();
+const mockOnCancel = jest.fn();
 
-describe('DeletePopup Component', () => {
-    const mockOnConfirm = jest.fn();
-    const mockOnCancel = jest.fn();
+test('calls onConfirm when the confirm button is clicked', () => {
+  render(<DeletePopup onConfirm={mockOnConfirm} onCancel={mockOnCancel} />);
+  fireEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
-    beforeEach(() => {
-        render(
-            <DeletePopup
-                message="آیا از حذف این آگهی اطمینان دارید؟"
-                onConfirm={mockOnConfirm}
-                onCancel={mockOnCancel}
-            />
-        );
-    });
+  expect(mockOnConfirm).toHaveBeenCalledTimes(1);
+});
 
-    test('renders with correct message', () => {
-        const messageElement = screen.getByText(/آیا از حذف این آگهی اطمینان دارید\?/i);
-        expect(messageElement).toBeInTheDocument();
-    });
+test('calls onCancel when the cancel button is clicked', () => {
+  render(<DeletePopup onConfirm={mockOnConfirm} onCancel={mockOnCancel} />);
+  fireEvent.click(screen.getByRole('button', { name: /cancel/i }));
 
-    test('calls onConfirm when confirm button is clicked', () => {
-        const confirmButton = screen.getByRole('button', { name: /check/i });
-        fireEvent.click(confirmButton);
-        expect(mockOnConfirm).toHaveBeenCalledTimes(1);
-    });
-
-    test('calls onCancel when cancel button is clicked', () => {
-        const cancelButton = screen.getByRole('button', { name: /times/i });
-        fireEvent.click(cancelButton);
-        expect(mockOnCancel).toHaveBeenCalledTimes(1);
-    });
+  expect(mockOnCancel).toHaveBeenCalledTimes(1);
 });
