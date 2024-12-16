@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Landing.css';
-import Navbar from '../../components/Navbar/Navbar';
-import CategorySidebar from '../../components/Category/Category';
-import Filter from '../../components/Filter/Filter';
-import ItemCard from '../../components/Advertisement/ItemCard';
-import LoginForm from '../../components/Login/LoginForm';
-import SignupForm from '../../components/Signup/SignupForm';
-import CreateAdForm from '../../components/Advertisement/CreateAdForm';
-import Backdrop from '../../components/Other/Backdrop';
+import Navbar from '../../components/organisms/Navbar/Navbar';
+import CategorySidebar from '../../components/organisms/Category/Category';
+import Filter from '../../components/organisms/Filter/Filter';
+import ItemCard from '../../components/organisms/ItemCard/ItemCard';
+import LoginForm from '../../components/organisms/Login/LoginForm';
+import SignupForm from '../../components/organisms/Signup/SignupForm';
+import CreateAdForm from '../../components/organisms/CreateAd/CreateAdForm';
+import Backdrop from '../../components/atoms/Backdrop/Backdrop';
 
 
 interface Item {
@@ -37,9 +37,9 @@ const Landing: React.FC = () => {
         setSignupVisible(false);
         setCreateAdVisible(false);
     };
-  
+
     const handleCloseLogin = () => setLoginVisible(false);
-  
+
     const handleOpenSignup = () => {
         setLoginVisible(false);
         setSignupVisible(true);
@@ -117,12 +117,7 @@ const Landing: React.FC = () => {
                 </>
             )}
         </div>
-  
-        {isLoginVisible && <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} />}
-        {isSignupVisible && <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />}
-      </div>
     );
-  };
-  
-  export default Landing;
-  
+};
+
+export default Landing;

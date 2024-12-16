@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './SignupForm.css';
-import '../Common.css';
-import NameInput from '../Input/NameInput';
-import EmailInput from '../Input/EmailInput';
-import PhoneNumberInput from '../Input/PhoneNumberInput';
-import PasswordInput from '../Input/PasswordInput';
+import '../../Common.css';
+import NameInput from '../../atoms/Input/NameInput';
+import EmailInput from '../../atoms/Input/EmailInput';
+import PhoneNumberInput from '../../atoms/Input/PhoneNumberInput';
+import PasswordInput from '../../atoms/Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 

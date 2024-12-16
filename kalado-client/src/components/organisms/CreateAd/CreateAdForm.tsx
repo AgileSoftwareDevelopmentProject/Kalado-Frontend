@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './CreateAdForm.css';
-import NameInput from '../Input/NameInput';
-import PriceInput from '../Input/PriceInput';
-import Dropdown from '../Input/Dropdown';
-import DescriptionInput from '../Input/DescriptionInput';
-import ImageUpload from '../Input/ImageUpload';
+import NameInput from '../../atoms/Input/NameInput';
+import PriceInput from '../../atoms/Input/PriceInput';
+import Dropdown from '../../atoms/Input/Dropdown';
+import DescriptionInput from '../../atoms/Input/DescriptionInput';
+import ImageUpload from '../../atoms/Input/ImageUpload';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 

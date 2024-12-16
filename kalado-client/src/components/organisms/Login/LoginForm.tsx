@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './Loginform.css';
-import '../Common.css';
-import EmailInput from '../Input/EmailInput';
-import PasswordInput from '../Input/PasswordInput';
+import './LoginForm.css';
+import '../../Common.css';
+import EmailInput from '../../atoms/Input/EmailInput';
+import PasswordInput from '../../atoms/Input/PasswordInput';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
