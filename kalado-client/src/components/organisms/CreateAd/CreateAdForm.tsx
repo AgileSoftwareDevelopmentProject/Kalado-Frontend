@@ -6,8 +6,7 @@ import Dropdown from '../../atoms/Inputs/Dropdown';
 import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
 import ImageUpload from '../../atoms/Inputs/ImageUpload';
 import Button from '../../atoms/Buttons/Button';
-import Logo from '../../atoms/Logo/Logo';
-import CloseButton from '../../atoms/Buttons/CloseButton';
+import PopupBox from '../../molecules/PopupBox/PopupBox';
 import axios from 'axios';
 
 
@@ -83,22 +82,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     };
 
     return (
-        <Box
-            sx={{
-                width: 350,
-                padding: 2,
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: '#272C48',
-                borderRadius: 10,
-                border: '1px solid rgba(255, 255, 255, 0.5)',
-                boxShadow: 3,
-            }}
-        >
-            <Logo />
-            <CloseButton onClose={onClose} />
+        <PopupBox onClose={onClose}>
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
@@ -137,7 +121,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     type="submit"
                 />
             </form>
-        </Box>
+        </PopupBox>
     );
 };
 

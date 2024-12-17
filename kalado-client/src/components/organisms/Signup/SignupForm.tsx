@@ -5,9 +5,8 @@ import EmailInput from '../../atoms/Inputs/EmailInput';
 import PhoneNumberInput from '../../atoms/Inputs/PhoneNumberInput';
 import PasswordInput from '../../atoms/Inputs/PasswordInput';
 import Button from '../../atoms/Buttons/Button';
-import Logo from '../../atoms/Logo/Logo';
 import CustomLink from '../../atoms/Links/CustomLink';
-import CloseButton from '../../atoms/Buttons/CloseButton';
+import PopupBox from '../../molecules/PopupBox/PopupBox';
 import axios from 'axios';
 
 interface SignupFormProps {
@@ -48,22 +47,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: 400,
-        padding: 2,
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        backgroundColor: '#272C48',
-        borderRadius: 10,
-        border: '1px solid rgba(255, 255, 255, 0.5)',
-        boxShadow: 3,
-      }}
-    >
-      <Logo />
-      <CloseButton onClose={onClose} />
+    <PopupBox onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <NameInput
           name="firstName"
@@ -110,9 +94,12 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
-        <Button
-          text="ثبت‌نام"
-          type="submit" />
+        <Box sx={{ mt: 2 }}>
+          <Button
+            text="ثبت‌نام"
+            type="submit"
+          />
+        </Box>
         <CustomLink
           to="/login"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
@@ -120,7 +107,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           text="در صورت داشتن حساب کاربری اینجا را کلیک کنید"
         />
       </form>
-    </Box>
+    </PopupBox>
   );
 };
 

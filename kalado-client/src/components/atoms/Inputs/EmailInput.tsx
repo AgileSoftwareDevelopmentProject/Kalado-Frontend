@@ -7,8 +7,8 @@ interface EmailInputProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
-    error?: boolean; // Optional prop to indicate an error
-    helperText?: string; // Optional prop to display an error message
+    error?: boolean;
+    helperText?: string;
 }
 
 const EmailInput: React.FC<EmailInputProps> = ({

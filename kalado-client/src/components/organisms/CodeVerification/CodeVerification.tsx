@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import CodeInput from '../../atoms/Inputs/CodeInput';
 import Button from '../../atoms/Buttons/Button';
-import Logo from '../../atoms/Logo/Logo';
-import CloseButton from '../../atoms/Buttons/CloseButton';
+import PopupBox from '../../molecules/PopupBox/PopupBox';
 import axios from 'axios';
 
 interface CodeVerificationProps {
@@ -42,34 +41,21 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
     };
 
     return (
-        <Box
-            sx={{
-                width: 350,
-                padding: 2,
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: '#272C48',
-                borderRadius: 10,
-                border: '1px solid rgba(255, 255, 255, 0.5)',
-                boxShadow: 3,
-            }}
-        >
-            <Logo />
-            <CloseButton onClose={onClose} />
+        <PopupBox onClose={onClose}>
             <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput
                     value={code}
                     onChange={handleChange}
                 />
-                <Button
-                    text="بررسی"
-                    type="submit"
-                    disabled={code.length !== 5} />
+                <Box sx={{ mt: 2 }}>
+                    <Button
+                        text="بررسی"
+                        type="submit"
+                        disabled={code.length !== 5} />
+                </Box>
             </form>
-        </Box>
+        </PopupBox>
     );
 };
 
