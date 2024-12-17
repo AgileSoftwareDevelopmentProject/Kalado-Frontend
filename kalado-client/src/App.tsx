@@ -1,19 +1,22 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 import './App.css';
 import './index.css';
 import Landing from './pages/Landing/Landing';
 import ItemDetails from './pages/ItemDetails/ItemDetails';
 
-
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/item/:itemId" element={<ItemDetails />} />
-      </Routes>
-    </Router>
-  )
+    <I18nextProvider i18n={i18n}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/item/:itemId" element={<ItemDetails />} />
+        </Routes>
+      </Router>
+    </I18nextProvider>
+  );
 }
 
 export default App;

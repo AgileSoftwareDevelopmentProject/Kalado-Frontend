@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Navbar from '../../components/organisms/Navbar/Navbar';
+import NavBar from '../../components/organisms/NavBar/NavBar';
 import Category from '../../components/organisms/Category/Category';
 import Filter from '../../components/organisms/Filter/Filter';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
@@ -127,7 +127,7 @@ const Landing = () => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-            <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
+            <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
             <Box>
                 <Category />
                 <Filter />

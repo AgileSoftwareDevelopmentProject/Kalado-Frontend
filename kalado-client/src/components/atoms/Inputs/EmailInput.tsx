@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
+import { validateEmail } from '../../../validators/validateEmail';
 
 interface EmailInputProps {
     name: string;
@@ -16,25 +18,15 @@ const EmailInput: React.FC<EmailInputProps> = ({
     onChange,
     isRequired = true,
 }) => {
+    const { t } = useTranslation();
     const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     useEffect(() => {
-        if (value) {
-            if (!emailRegex.test(value)) {
-                setError(true);
-                setHelperText('لطفا یک ایمیل معتبر وارد کنید.');
-            } else {
-                setError(false);
-                setHelperText('');
-            }
-        } else {
-            setError(false);
-            setHelperText('');
-        }
-    }, [value]);
+        const validationResult = validateEmail(value, t);
+        setError(!validationResult.valid);
+        setHelperText(validationResult.error);
+    }, [value, t]);
 
     return (
         <TextField
