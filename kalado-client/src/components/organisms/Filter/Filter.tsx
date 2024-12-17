@@ -11,17 +11,16 @@ const Filter: React.FC = () => {
   return (
     <Box
       sx={{
-        position: 'fixed',
-        top: '450px',
-        right: '30px',
-        width: '200px',
+        position: 'relative', // Change to relative for proper positioning
+        width: '300px', // Increase width to 300px
         bgcolor: '#272C48',
         p: 2,
         borderRadius: 2,
         boxShadow: 3,
+        marginTop: '10px', // Add some space above
       }}
     >
-      <Typography variant="h6" sx={{ mb: 2, textAlign: 'right', color: '#FFFFFF' }}>
+      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>
         فیلترها
       </Typography>
 
@@ -33,7 +32,6 @@ const Filter: React.FC = () => {
           <TextField
             type="number"
             placeholder="حداقل"
-            inputProps={{ min: 0 }}
             onChange={handlePriceChange}
             variant="outlined"
             size="small"
@@ -42,7 +40,6 @@ const Filter: React.FC = () => {
           <TextField
             type="number"
             placeholder="حداکثر"
-            inputProps={{ min: 0 }}
             onChange={handlePriceChange}
             variant="outlined"
             size="small"

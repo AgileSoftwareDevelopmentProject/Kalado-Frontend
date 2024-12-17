@@ -5,7 +5,7 @@ import PasswordInput from '../../atoms/Inputs/PasswordInput';
 import Button from '../../atoms/Buttons/Button';
 import Logo from '../../atoms/Logo/Logo';
 import CustomLink from '../../atoms/Links/CustomLink';
-import { FaTimes } from 'react-icons/fa';
+import CloseButton from '../../atoms/Buttons/CloseButton';
 import axios from 'axios';
 
 interface LoginFormProps {
@@ -31,14 +31,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // if (formData.email && formData.password) {
-        //     // Call the success handler with the username
-        //     onLoginSuccess(formData.email);
-        //     // Optionally clear fields or perform other actions
-        //     setUsername('');
-        //     setPassword('');
-        //     onClose(); // Close the form after successful login
-        // }
+        if (formData.email && formData.password) {
+            // Call the success handler with the username
+            onLoginSuccess(formData.email);
+            // Optionally clear fields or perform other actions
+            onClose(); // Close the form after successful login
+        }
 
         try {
             const response = await axios.post('https://kaladoshop.com/v1/auth/login', formData);
@@ -65,16 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
             }}
         >
             <Logo />
-            <Button
-                onClick={onClose}
-                children={<FaTimes size={24} />}
-                style={{
-                    color: 'white',
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                }}
-            />
+            <CloseButton onClose={onClose} />
             <form onSubmit={handleSubmit}>
                 <EmailInput
                     name="email"

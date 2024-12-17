@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import { FaTimes } from 'react-icons/fa';
 import CodeInput from '../../atoms/Inputs/CodeInput';
 import Button from '../../atoms/Buttons/Button';
 import Logo from '../../atoms/Logo/Logo';
+import CloseButton from '../../atoms/Buttons/CloseButton';
 import axios from 'axios';
 
 interface CodeVerificationProps {
@@ -57,17 +57,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
             }}
         >
             <Logo />
-            <Button
-                onClick={onClose}
-                children={<FaTimes size={24} />}
-                backgroundColor="transparent"
-                style={{
-                    color: 'white',
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                }}
-            />
+            <CloseButton onClose={onClose} />
             <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput

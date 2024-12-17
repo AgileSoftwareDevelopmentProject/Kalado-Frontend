@@ -7,7 +7,7 @@ import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
 import ImageUpload from '../../atoms/Inputs/ImageUpload';
 import Button from '../../atoms/Buttons/Button';
 import Logo from '../../atoms/Logo/Logo';
-import { FaTimes } from 'react-icons/fa';
+import CloseButton from '../../atoms/Buttons/CloseButton';
 import axios from 'axios';
 
 
@@ -98,16 +98,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
             }}
         >
             <Logo />
-            <Button
-                onClick={onClose}
-                children={<FaTimes size={24} />}
-                style={{
-                    color: 'white',
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                }}
-            />
+            <CloseButton onClose={onClose} />
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
