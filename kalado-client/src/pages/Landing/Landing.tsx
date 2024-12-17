@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid'; // Importing Grid from @mui/material
 import Navbar from '../../components/organisms/Navbar/Navbar';
-import CategoryList from '../../components/molecules/Lists/CategoryList';
-import Filter from '../../components/organisms/Filter/Filter';
+import Category from '../../components/organisms/Category/Category';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import LoginForm from '../../components/organisms/Login/LoginForm';
 import SignupForm from '../../components/organisms/Signup/SignupForm';
@@ -23,7 +22,7 @@ interface Item {
 const items: Item[] = [
     {
         title: 'Samsung A54',
-        imageUrl: '',
+        imageUrl: 'https://example.com/samsung-a54.jpg',
         price: 15000000,
         city: 'تهران',
         date: 'دقایقی پیش',
@@ -31,33 +30,47 @@ const items: Item[] = [
     },
     {
         title: 'Iphone 15',
-        imageUrl: '',
+        imageUrl: 'https://example.com/iphone-15.jpg',
         price: 60000000,
         city: 'شیراز',
         date: 'یک ساعت پیش',
         itemId: '2'
     },
     {
-        title: 'Iphone 15',
-        imageUrl: '',
-        price: 60000000,
-        city: 'شیراز',
-        date: 'یک ساعت پیش',
+        title: 'Xiaomi Redmi Note 11',
+        imageUrl: 'https://example.com/redmi-note-11.jpg',
+        price: 8000000,
+        city: 'اصفهان',
+        date: 'دو ساعت پیش',
         itemId: '3'
     },
     {
-        title: 'Iphone 15',
-        imageUrl: '',
-        price: 60000000,
-        city: 'شیراز',
-        date: 'یک ساعت پیش',
+        title: 'OnePlus Nord CE 5G',
+        imageUrl: 'https://example.com/nord-ce-5g.jpg',
+        price: 12000000,
+        city: 'مشهد',
+        date: 'سه ساعت پیش',
         itemId: '4'
+    },
+    {
+        title: 'Google Pixel 6a',
+        imageUrl: 'https://example.com/pixel-6a.jpg',
+        price: 9000000,
+        city: 'تبریز',
+        date: 'چهار ساعت پیش',
+        itemId: '5'
+    },
+    {
+        title: 'Oppo Reno8 Pro',
+        imageUrl: 'https://example.com/oppo-reno8-pro.jpg',
+        price: 11000000,
+        city: 'شیراز',
+        date: 'پنج ساعت پیش',
+        itemId: '6'
     },
 ];
 
-
 const Landing: React.FC = () => {
-
     const navigate = useNavigate();
 
     const [isLoginVisible, setLoginVisible] = useState(false);
@@ -110,24 +123,25 @@ const Landing: React.FC = () => {
     }
 
     return (
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
             <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
-            {/* <CategoryList /> */}
-            {/* <Filter /> */}
-            {/* <Grid container spacing={2}>
-                {items.map(item => (
-                    <Grid item xs={12} sm={6} md={4} key={item.itemId}>
-                        <ItemCard
-                            title={item.title}
-                            price={`تومان ${item.price.toLocaleString()}`}
-                            city={item.city}
-                            date={item.date}
-                            image={item.imageUrl || 'default-image-url.jpg'}
-                            onClick={() => console.log(`Item clicked: ${item.title}`)}
-                        />
-                    </Grid>
-                ))}
-            </Grid> */}
+            <Category />
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingBottom: 20, paddingRight: 20 }}>
+                <Grid container spacing={2}>
+                    {items.map(item => (
+                        <Grid item xs={12} sm={6} md={4} key={item.itemId}>
+                            <ItemCard
+                                title={item.title}
+                                price={`تومان ${item.price.toLocaleString()}`}
+                                city={item.city}
+                                date={item.date}
+                                image={item.imageUrl || '/assets/images/default-image-url.jpg'}
+                                onClick={() => navigate(`/item/${item.itemId}`)} // Navigate to item details page
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
 
             {isLoginVisible && (
                 <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Button as MuiButton, Box } from '@mui/material';
+import { AppBar, Toolbar, Box } from '@mui/material';
 import Logo from '../../atoms/Logo/Logo';
 import Button from '../../atoms/Buttons/Button';
 import SearchBar from '../../molecules/SearchBar/SearchBar';
@@ -16,12 +16,11 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLogged
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
-    // Add your search logic here (e.g., API call)
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#272C48', width: '100%' }}>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: 'transparent', width: '100%', boxShadow: 'none' }}>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, ml: 10, mr: 10 }}>
         <Logo />
 
         <Box sx={{ flexGrow: 1, mx: 2 }}>

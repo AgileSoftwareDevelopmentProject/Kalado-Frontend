@@ -10,7 +10,7 @@ const Logo: React.FC = () => {
                 src="/assets/images/logo.png"
                 alt="کالادو"
                 sx={{
-                    height: 54,
+                    height: 70,
                     width: 'auto',
                     marginBottom: '10px',
                 }}

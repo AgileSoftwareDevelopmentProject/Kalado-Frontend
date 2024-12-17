@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, onSearch }) => {
     };
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'right', width: '100%', mr: 3 }}>
             <TextField
                 variant="outlined"
                 placeholder="جستجوی کالا"
@@ -25,40 +25,48 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, onSearch }) => {
                 onKeyDown={handleKeyDown}
                 size="small"
                 sx={{
-                    flexGrow: 1,
-                    borderRadius: 30, // Set border radius to 30
+                    width: '40%',
+                    borderRadius: 30,
                     bgcolor: 'transparent',
                     '& .MuiOutlinedInput-root': {
+                        borderRadius: 30,
                         '& fieldset': {
-                            borderColor: 'white', // Change border color
+                            borderColor: 'white',
                         },
                         '&:hover fieldset': {
-                            borderColor: 'white', // Change border color on hover
+                            borderColor: 'white',
                         },
                         '&.Mui-focused fieldset': {
-                            borderColor: 'white', // Change border color when focused
+                            borderColor: 'white',
                         },
                     },
-                    '& input::placeholder': {
-                        color: 'white', // Set placeholder color to white
-                        opacity: 1, // Ensure full opacity
+                    '& input': {
+                        color: 'white',
                     },
+                    '& input::placeholder': {
+                        color: 'white',
+                        opacity: 1,
+                    },
+                }}
+                InputProps={{
+                    endAdornment: (
+                        <IconButton
+                            onClick={onSearch}
+                            aria-label="search"
+                            sx={{
+                                bgcolor: 'transparent',
+                                color: 'white',
+                                borderRadius: 0,
+                                '&:hover': {
+                                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                                },
+                            }}
+                        >
+                            <SearchIcon />
+                        </IconButton>
+                    ),
                 }}
             />
-            <IconButton
-                onClick={onSearch}
-                aria-label="search"
-                sx={{
-                    bgcolor: 'transparent', // Transparent background for the button
-                    color: 'white', // Set button text/icon color to white
-                    borderRadius: 30, // Optional: set border radius for the button
-                    '&:hover': {
-                        bgcolor: 'rgba(255, 255, 255, 0.1)', // Optional hover effect
-                    },
-                }}
-            >
-                <SearchIcon />
-            </IconButton>
         </Box>
     );
 };
