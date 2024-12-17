@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
+import { validatePhoneNumber } from '../../../validators/validatePhoneNumber';
+
 
 interface PhoneNumberInputProps {
     name: string;
@@ -16,17 +19,14 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     onChange,
     isRequired = true
 }) => {
+    const { t } = useTranslation();
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
-        const iranMobileRegex = /^09\d{9}$/;
 
-        if (iranMobileRegex.test(inputValue) || inputValue === "") {
-            setError(null);
-        } else {
-            setError("لطفا یک شماره تلفن همراه معتبر وارد کنید.");
-        }
+        const validationResult = validatePhoneNumber(inputValue, t);
+        setError(validationResult.error);
 
         onChange(e);
     };
@@ -64,6 +64,10 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
                 '& .MuiInputBase-input': {
                     textAlign: 'right',
                     color: 'white',
+                },
+                '& .MuiFormHelperText-root': {
+                    textAlign: 'right',
+                    direction: 'rtl',
                 }
             }}
         />
