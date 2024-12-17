@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 
@@ -18,8 +18,13 @@ const categories: Category[] = [
 ];
 
 const Category: React.FC = () => {
-  const handleCategoryClick = (category: string) => {
-    console.log(`${category} clicked`);
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const handleCategoryClick = (categoryTitle: string) => {
+    setSelectedCategory(categoryTitle);
+    console.log(`${categoryTitle} clicked`);
+    // Add logic to load items based on selected category
   };
 
   return (
@@ -40,48 +45,27 @@ const Category: React.FC = () => {
         دسته‌بندی‌ها
       </Typography>
       <List>
-        <ListItem button onClick={() => handleCategoryClick('املاک')}>
-          <ListItemIcon>
-            <FaHome style={{ color: '#FFFFFF' }} />
-          </ListItemIcon>
-          <ListItemText primary="املاک" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
-        </ListItem>
-        <ListItem button onClick={() => handleCategoryClick('وسایل نقلیه')}>
-          <ListItemIcon>
-            <FaCar style={{ color: '#FFFFFF' }} />
-          </ListItemIcon>
-          <ListItemText primary="وسایل نقلیه" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
-        </ListItem>
-        <ListItem button onClick={() => handleCategoryClick('خانه و آشپزخانه')}>
-          <ListItemIcon>
-            <FaUtensils style={{ color: '#FFFFFF' }} />
-          </ListItemIcon>
-          <ListItemText primary="خانه و آشپزخانه" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
-        </ListItem>
-        <ListItem button onClick={() => handleCategoryClick('کالای دیجیتال')}>
-          <ListItemIcon>
-            <FaLaptop style={{ color: '#FFFFFF' }} />
-          </ListItemIcon>
-          <ListItemText primary="کالای دیجیتال" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
-        </ListItem>
-        <ListItem button onClick={() => handleCategoryClick('سرگرمی')}>
-          <ListItemIcon>
-            <FaGamepad style={{ color: '#FFFFFF' }} />
-          </ListItemIcon>
-          <ListItemText primary="سرگرمی" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
-        </ListItem>
-        <ListItem button onClick={() => handleCategoryClick('لوازم شخصی')}>
-          <ListItemIcon>
-            <FaSuitcase style={{ color: '#FFFFFF' }} />
-          </ListItemIcon>
-          <ListItemText primary="لوازم شخصی" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
-        </ListItem>
-        <ListItem button onClick={() => handleCategoryClick('... موارد دیگر')}>
-          <ListItemIcon>
-            <FaPlusCircle style={{ color: '#FFFFFF' }} />
-          </ListItemIcon>
-          <ListItemText primary="... موارد دیگر" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
-        </ListItem>
+        {categories.map((category) => (
+          <ListItem
+            component="li"
+            button
+            key={category.title}
+            onClick={() => handleCategoryClick(category.title)}
+            sx={{
+              backgroundColor: selectedCategory === category.title ? '#D74101' : 'transparent',
+              '&:hover': {
+                backgroundColor: '#C85A01',
+              },
+              cursor: 'pointer',
+              textAlign: 'right',
+            }}
+          >
+            <ListItemIcon>
+              {React.cloneElement(category.icon, { style: { color: '#FFFFFF' } })}
+            </ListItemIcon>
+            <ListItemText primary={category.title} />
+          </ListItem>
+        ))}
       </List>
     </Box>
   );

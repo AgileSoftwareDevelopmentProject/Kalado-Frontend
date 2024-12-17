@@ -2,7 +2,7 @@ import React from 'react';
 import { List, ListItem, ListItemIcon, ListItemText, Box, Typography } from '@mui/material';
 
 
-const CategoryList: React.FC = () => {
+const CustomList: React.FC = () => {
 
     const handleCategoryClick = (categoryTitle: string) => {
         console.log(`${categoryTitle} clicked`);
@@ -27,4 +27,4 @@ const CategoryList: React.FC = () => {
     );
 };
 
-export default CategoryList;
+export default CustomList;

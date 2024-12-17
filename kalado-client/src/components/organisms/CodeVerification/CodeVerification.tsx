@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import { FaTimes } from 'react-icons/fa';
 import CodeInput from '../../atoms/Inputs/CodeInput';
-import Button from '../../atoms/Buttons/Button';
-import Logo from '../../atoms/Logo/Logo';
-import axios from 'axios';
+import CustomButton from '../../atoms/Buttons/CustomButton';
+import PopupBox from '../../molecules/PopupBox/PopupBox';
+import { verifyCode } from '../../../services/CodeVerificationService';
 
 interface CodeVerificationProps {
     email: string;
@@ -26,14 +25,11 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
 
         try {
-            const response = await axios.post('https://kalado.com/verify-code', {
-                email,
-                code,
-            });
-
-            console.log('Verification successful:', response.data);
+            const response = await verifyCode(email, code);
+            console.log('Verification successful:', response);
             onClose();
         } catch (error) {
             console.error('Verification error:', error);
@@ -42,44 +38,17 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
     };
 
     return (
-        <Box
-            sx={{
-                width: 350,
-                padding: 2,
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: '#272C48',
-                borderRadius: 10,
-                border: '1px solid rgba(255, 255, 255, 0.5)',
-                boxShadow: 3,
-            }}
-        >
-            <Logo />
-            <Button
-                onClick={onClose}
-                children={<FaTimes size={24} />}
-                backgroundColor="transparent"
-                style={{
-                    color: 'white',
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                }}
-            />
+        <PopupBox onClose={onClose}>
             <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
             <form onSubmit={handleSubmit}>
-                <CodeInput
-                    value={code}
-                    onChange={handleChange}
-                />
-                <Button
-                    text="بررسی"
-                    type="submit"
-                    disabled={code.length !== 5} />
+                <CodeInput value={code} onChange={handleChange} />
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <CustomButton text="بررسی" type="submit" disabled={code.length !== 5} />
+                {/* <Box sx={{ mt: 2 }}>
+                    
+                </Box> */}
             </form>
-        </Box>
+        </PopupBox>
     );
 };
 

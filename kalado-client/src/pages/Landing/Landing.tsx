@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid'; // Importing Grid from @mui/material
+import Grid from '@mui/material/Grid';
 import Navbar from '../../components/organisms/Navbar/Navbar';
 import Category from '../../components/organisms/Category/Category';
+import Filter from '../../components/organisms/Filter/Filter';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import LoginForm from '../../components/organisms/Login/LoginForm';
 import SignupForm from '../../components/organisms/Signup/SignupForm';
@@ -70,7 +71,7 @@ const items: Item[] = [
     },
 ];
 
-const Landing: React.FC = () => {
+const Landing = () => {
     const navigate = useNavigate();
 
     const [isLoginVisible, setLoginVisible] = useState(false);
@@ -111,22 +112,27 @@ const Landing: React.FC = () => {
         handleCloseLogin();
     };
 
-    const handleBackdropClick = (event: React.MouseEvent, handleClose: () => void) => {
-        const target = event.target as HTMLElement;
+    const handleBackdropClick = (event) => {
+        const target = event.target;
         if (target.classList.contains('backdrop')) {
-            handleClose();
+            handleCloseLogin();
+            handleCloseSignup();
+            handleCloseCreateAd();
         }
     };
 
     const handleOpenProfilePage = () => {
-        navigate('/profile');
+        navigate('/dashboard');
     }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
             <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
-            <Category />
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingBottom: 20, paddingRight: 20 }}>
+            <Box>
+                <Category />
+                <Filter />
+            </Box>
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingBottom: '20px', paddingRight: '20px' }}>
                 <Grid container spacing={2}>
                     {items.map(item => (
                         <Grid item xs={12} sm={6} md={4} key={item.itemId}>
@@ -136,7 +142,7 @@ const Landing: React.FC = () => {
                                 city={item.city}
                                 date={item.date}
                                 image={item.imageUrl || '/assets/images/default-image-url.jpg'}
-                                onClick={() => navigate(`/item/${item.itemId}`)} // Navigate to item details page
+                                onClick={() => navigate(`/item/${item.itemId}`)}
                             />
                         </Grid>
                     ))}
@@ -144,17 +150,17 @@ const Landing: React.FC = () => {
             </Box>
 
             {isLoginVisible && (
-                <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>
+                <Backdrop open={isLoginVisible} onClick={handleBackdropClick}>
                     <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
                 </Backdrop>
             )}
             {isSignupVisible && (
-                <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseSignup)}>
+                <Backdrop open={isSignupVisible} onClick={handleBackdropClick}>
                     <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
                 </Backdrop>
             )}
             {isCreateAdVisible && (
-                <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseCreateAd)}>
+                <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
                     <CreateAdForm onClose={handleCloseCreateAd} />
                 </Backdrop>
             )}

@@ -1,3 +1,4 @@
+// CreateAdForm.tsx
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import NameInput from '../../atoms/Inputs/NameInput';
@@ -5,18 +6,15 @@ import PriceInput from '../../atoms/Inputs/PriceInput';
 import Dropdown from '../../atoms/Inputs/Dropdown';
 import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
 import ImageUpload from '../../atoms/Inputs/ImageUpload';
-import Button from '../../atoms/Buttons/Button';
-import Logo from '../../atoms/Logo/Logo';
-import { FaTimes } from 'react-icons/fa';
-import axios from 'axios';
-
+import CustomButton from '../../atoms/Buttons/CustomButton';
+import PopupBox from '../../molecules/PopupBox/PopupBox';
+import { createAd } from '../../../services/CreateAdService';
 
 interface CreateAdFormProps {
     onClose: () => void;
 }
 
 const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
-
     const [formData, setFormData] = useState<{
         title: string;
         price: number;
@@ -74,40 +72,16 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://kalado.com/create-ad', formData);
-            console.log('Create Ad successfully:', response.data);
+            await createAd(formData);
+            console.log('Create Ad successfully');
             onClose();
         } catch (error) {
-            console.error('Create Ad error:', error);
+            console.error(error);
         }
     };
 
     return (
-        <Box
-            sx={{
-                width: 350,
-                padding: 2,
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: '#272C48',
-                borderRadius: 10,
-                border: '1px solid rgba(255, 255, 255, 0.5)',
-                boxShadow: 3,
-            }}
-        >
-            <Logo />
-            <Button
-                onClick={onClose}
-                children={<FaTimes size={24} />}
-                style={{
-                    color: 'white',
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                }}
-            />
+        <PopupBox onClose={onClose}>
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
@@ -141,12 +115,9 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     <ImageUpload />
                     <ImageUpload />
                 </Box>
-                <Button
-                    text="ثبت آگهی"
-                    type="submit"
-                />
+                <CustomButton text="ثبت آگهی" type="submit" />
             </form>
-        </Box>
+        </PopupBox>
     );
 };
 

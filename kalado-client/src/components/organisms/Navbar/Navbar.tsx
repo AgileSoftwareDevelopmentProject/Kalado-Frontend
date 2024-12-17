@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Box } from '@mui/material';
 import Logo from '../../atoms/Logo/Logo';
-import Button from '../../atoms/Buttons/Button';
+import CustomButton from '../../atoms/Buttons/CustomButton';
 import SearchBar from '../../molecules/SearchBar/SearchBar';
 
 interface NavbarProps {
@@ -33,11 +33,11 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLogged
 
         <Box sx={{ display: 'flex', gap: 1 }}>
           {isLoggedIn ? (
-            <Button text="پروفایل کاربری" onClick={onProfileClick} />
+            <CustomButton text="پروفایل کاربری" onClick={onProfileClick} />
           ) : (
-            <Button text="ورود/ثبت‌نام" backgroundColor="transparent" onClick={onLoginClick} />
+            <CustomButton text="ورود/ثبت‌نام" backgroundColor="transparent" onClick={onLoginClick} />
           )}
-          <Button text="ثبت آگهی" onClick={onCreateAdClick} />
+          <CustomButton text="ثبت آگهی" onClick={onCreateAdClick} />
         </Box>
       </Toolbar>
     </AppBar>

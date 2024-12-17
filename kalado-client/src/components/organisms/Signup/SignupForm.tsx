@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import NameInput from '../../atoms/Inputs/NameInput';
 import EmailInput from '../../atoms/Inputs/EmailInput';
 import PhoneNumberInput from '../../atoms/Inputs/PhoneNumberInput';
 import PasswordInput from '../../atoms/Inputs/PasswordInput';
-import Button from '../../atoms/Buttons/Button';
-import Logo from '../../atoms/Logo/Logo';
+import CustomButton from '../../atoms/Buttons/CustomButton';
 import CustomLink from '../../atoms/Links/CustomLink';
-import { FaTimes } from 'react-icons/fa';
-import axios from 'axios';
+import PopupBox from '../../molecules/PopupBox/PopupBox';
+import { signupUser } from '../../../services/SignupService';
 
 interface SignupFormProps {
   onClose: () => void;
@@ -16,7 +15,6 @@ interface SignupFormProps {
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
-
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -26,6 +24,8 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     password: '',
     passwordRepeat: ''
   });
+
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,42 +39,19 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://kalado.com/signup', formData);
-      console.log('Login successful:', response.data);
+      const response = await signupUser(formData);
+      console.log('Signup successful:', response);
       onClose();
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Signup error:', error);
+      setError('Failed to sign up. Please check your details and try again.');
     }
   };
 
   return (
-    <Box
-      sx={{
-        width: 400,
-        padding: 2,
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        backgroundColor: '#272C48',
-        borderRadius: 10,
-        border: '1px solid rgba(255, 255, 255, 0.5)',
-        boxShadow: 3,
-      }}
-    >
-      <Logo />
-      <Button
-        onClick={onClose}
-        children={<FaTimes size={24} />}
-        backgroundColor="transparent"
-        style={{
-          color: 'white',
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
-        }}
-      />
+    <PopupBox onClose={onClose}>
       <form onSubmit={handleSubmit}>
+        {error && <Typography color="error">{error}</Typography>}
         <NameInput
           name="firstName"
           placeholder="نام"
@@ -120,17 +97,17 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
-        <Button
-          text="ثبت‌نام"
-          type="submit" />
+        <Box sx={{ mt: 2 }}>
+          <CustomButton text="ثبت‌نام" type="submit" />
+        </Box>
         <CustomLink
-          to="/login"
+          to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
           color="primary"
           text="در صورت داشتن حساب کاربری اینجا را کلیک کنید"
         />
       </form>
-    </Box>
+    </PopupBox>
   );
 };
 

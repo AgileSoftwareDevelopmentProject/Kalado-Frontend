@@ -21,6 +21,7 @@ const PriceInput: React.FC<PriceInputProps> = ({
     isStarNeeded = false,
     currency = "تومان",
 }) => {
+
     const [inputValue, setInputValue] = useState<string>('');
 
     useEffect(() => {
@@ -44,14 +45,15 @@ const PriceInput: React.FC<PriceInputProps> = ({
             required={isRequired}
             variant="standard"
             margin="normal"
-            InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                        {currency}
-                    </InputAdornment>
-                ),
-                inputMode: 'numeric',
-                pattern: '[0-9]*'
+            slotProps={{
+                input: {
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            {currency}
+                        </InputAdornment>
+                    ),
+                    inputMode: 'numeric',
+                },
             }}
             sx={{
                 width: '80%',

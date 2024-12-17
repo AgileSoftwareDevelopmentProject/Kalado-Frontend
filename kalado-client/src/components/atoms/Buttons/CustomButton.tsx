@@ -1,19 +1,21 @@
 import React from 'react';
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
+import { OverridableStringUnion } from '@mui/types'; // Corrected import
 
-interface ButtonProps extends MuiButtonProps {
+interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
     text?: string;
-    shape?: string,
+    shape?: 'rounded' | 'square'; // Define specific shapes if needed
     width?: string;
     borderRadius?: string;
     backgroundColor?: string;
-    color?: string;
+    color?: OverridableStringUnion<'inherit' | 'primary' | 'secondary' | 'success' | 'error',
+        React.ElementType>; // Use OverridableStringUnion for color
     padding?: string;
     margin?: string;
     type?: 'button' | 'submit' | 'reset';
 }
 
-const Button: React.FC<ButtonProps> = ({
+const CustomButton: React.FC<CustomButtonProps> = ({
     children,
     text,
     shape = 'rounded',
@@ -21,8 +23,8 @@ const Button: React.FC<ButtonProps> = ({
     borderRadius,
     backgroundColor = '#D74101',
     color = '#FFFFFF',
-    padding = '6px 16px',
-    margin = '0',
+    padding = '10px 30px',
+    margin = '20px 0px',
     type = 'button',
     ...props
 }) => {
@@ -50,4 +52,4 @@ const Button: React.FC<ButtonProps> = ({
     );
 };
 
-export default Button;
+export default CustomButton;

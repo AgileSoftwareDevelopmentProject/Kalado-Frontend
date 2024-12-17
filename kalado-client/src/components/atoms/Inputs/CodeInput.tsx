@@ -24,21 +24,31 @@ const CodeInput: React.FC<CodeInputProps> = ({
             value={value}
             onChange={onChange}
             required={isRequired}
-            inputProps={{ maxLength }}
             fullWidth
-            variant="outlined"
+            variant="standard"
             margin="normal"
+            inputProps={{
+                maxLength: maxLength
+            }}
             sx={{
-                '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                width: '80%',
+                '& .MuiInputBase-root': {
+                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
+                    '&:hover': {
+                        borderBottom: '2px solid white',
                     },
-                    '&:hover fieldset': {
-                        borderColor: 'white',
+                    '&.Mui-focused': {
+                        borderBottom: '2px solid white',
                     },
                 },
                 '& .MuiInputBase-input': {
-                    textAlign: 'right',
+                    padding: '10px 0',
+                    border: 'none',
+                },
+                '& .MuiFormLabel-root': {
+                    color: 'rgba(255, 255, 255, 0.7)',
+                },
+                '& .Mui-focused .MuiFormLabel-root': {
                     color: 'white',
                 }
             }}
