@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import NameInput from '../../atoms/Inputs/NameInput';
 import EmailInput from '../../atoms/Inputs/EmailInput';
 import PhoneNumberInput from '../../atoms/Inputs/PhoneNumberInput';
@@ -7,7 +7,7 @@ import PasswordInput from '../../atoms/Inputs/PasswordInput';
 import Button from '../../atoms/Buttons/Button';
 import CustomLink from '../../atoms/Links/CustomLink';
 import PopupBox from '../../molecules/PopupBox/PopupBox';
-import axios from 'axios';
+import { signupUser } from '../../../services/SignupService';
 
 interface SignupFormProps {
   onClose: () => void;
@@ -15,7 +15,6 @@ interface SignupFormProps {
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
-
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -25,6 +24,8 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     password: '',
     passwordRepeat: ''
   });
+
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,17 +39,19 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://kalado.com/signup', formData);
-      console.log('Login successful:', response.data);
+      const response = await signupUser(formData);
+      console.log('Signup successful:', response);
       onClose();
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Signup error:', error);
+      setError('Failed to sign up. Please check your details and try again.');
     }
   };
 
   return (
     <PopupBox onClose={onClose}>
       <form onSubmit={handleSubmit}>
+        {error && <Typography color="error">{error}</Typography>}
         <NameInput
           name="firstName"
           placeholder="نام"
@@ -95,13 +98,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           onChange={handleChange}
         />
         <Box sx={{ mt: 2 }}>
-          <Button
-            text="ثبت‌نام"
-            type="submit"
-          />
+          <Button text="ثبت‌نام" type="submit" />
         </Box>
         <CustomLink
-          to="/login"
+          to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
           color="primary"
           text="در صورت داشتن حساب کاربری اینجا را کلیک کنید"

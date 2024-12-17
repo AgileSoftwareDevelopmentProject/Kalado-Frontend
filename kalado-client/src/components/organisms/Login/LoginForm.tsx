@@ -36,12 +36,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
             try {
                 const response = await loginUser(formData);
                 console.log('Login successful:', response);
-                onLoginSuccess(formData.email); // Call success handler with email
-                setFormData({ email: '', password: '' }); // Clear fields
-                onClose(); // Close the form after successful login
+                onLoginSuccess(formData.email);
+                setFormData({ email: '', password: '' });
+                onClose();
             } catch (error) {
                 console.error('Login error:', error);
-                setError('Invalid email or password'); // Set error message
+                setError('Invalid email or password');
             }
         }
     };
