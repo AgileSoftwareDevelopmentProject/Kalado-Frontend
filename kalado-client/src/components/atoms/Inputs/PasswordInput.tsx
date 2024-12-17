@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import './UserInput.css';
 
 interface PasswordInputProps {
     name: string;
@@ -17,37 +19,53 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
     onChange,
     isRequired = true
 }) => {
-
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
     const handleToggleVisibility = () => {
-        setIsVisible(!isVisible);
+        setIsVisible(prev => !prev);
     };
 
     return (
-        <div style={{ position: 'relative' }}>
-            <input
-                type={isVisible ? 'text' : 'password'}
-                name={name}
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-                required={isRequired}
-                className="input"
-            />
-            <span
-                onClick={handleToggleVisibility}
-                style={{
-                    position: 'absolute',
-                    left: '45px',
-                    top: '35%',
-                    transform: 'translateY(-50%)',
-                    cursor: 'pointer'
-                }}
-            >
-                {isVisible ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-            </span>
-        </div>
+        <TextField
+            type={isVisible ? 'text' : 'password'}
+            name={name}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            required={isRequired}
+            fullWidth
+            variant="standard"
+            margin="normal"
+            InputProps={{
+                endAdornment: (
+                    <InputAdornment position="end">
+                        <IconButton
+                            onClick={handleToggleVisibility}
+                            edge="end"
+                            sx={{ color: 'white' }}
+                        >
+                            {isVisible ? <FaEyeSlash /> : <FaEye />}
+                        </IconButton>
+                    </InputAdornment>
+                ),
+            }}
+            sx={{
+                width: '80%',
+                '& .MuiInputBase-root': {
+                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
+                    '&:hover': {
+                        borderBottom: '2px solid white',
+                    },
+                    '&.Mui-focused': {
+                        borderBottom: '2px solid transparent',
+                    },
+                },
+                '& .MuiInputBase-input': {
+                    textAlign: 'right',
+                    color: 'white',
+                }
+            }}
+        />
     );
 };
 

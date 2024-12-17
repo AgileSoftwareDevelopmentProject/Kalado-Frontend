@@ -1,6 +1,21 @@
 import React from 'react';
+import { Box, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
-import './Category.css';
+
+interface Category {
+  title: string;
+  icon: React.ReactNode;
+}
+
+const categories: Category[] = [
+  { title: 'املاک', icon: <FaHome /> },
+  { title: 'وسایل نقلیه', icon: <FaCar /> },
+  { title: 'خانه و آشپزخانه', icon: <FaUtensils /> },
+  { title: 'کالای دیجیتال', icon: <FaLaptop /> },
+  { title: 'سرگرمی', icon: <FaGamepad /> },
+  { title: 'لوازم شخصی', icon: <FaSuitcase /> },
+  { title: '... موارد دیگر', icon: <FaPlusCircle /> },
+];
 
 const Category: React.FC = () => {
   const handleCategoryClick = (category: string) => {
@@ -8,37 +23,67 @@ const Category: React.FC = () => {
   };
 
   return (
-    <div className="sidebar-container">
-      <div className="sidebar-header">دسته‌بندی‌ها</div>
-      <div className="category-item" onClick={() => handleCategoryClick('املاک')}>
-        <FaHome className="category-icon" aria-label="Home" role="img" />
-        <span>املاک</span>
-      </div>
-      <div className="category-item" onClick={() => handleCategoryClick('وسایل نقلیه')}>
-        <FaCar className="category-icon" aria-label="Car" role="img" />
-        <span>وسایل نقلیه</span>
-      </div>
-      <div className="category-item" onClick={() => handleCategoryClick('خانه و آشپزخانه')}>
-        <FaUtensils className="category-icon" aria-label="Utensils" role="img" />
-        <span>خانه و آشپزخانه</span>
-      </div>
-      <div className="category-item" onClick={() => handleCategoryClick('کالای دیجیتال')}>
-        <FaLaptop className="category-icon" aria-label="Laptop" role="img" />
-        <span>کالای دیجیتال</span>
-      </div>
-      <div className="category-item" onClick={() => handleCategoryClick('سرگرمی')}>
-        <FaGamepad className="category-icon" aria-label="Gamepad" role="img" />
-        <span>سرگرمی</span>
-      </div>
-      <div className="category-item" onClick={() => handleCategoryClick('لوازم شخصی')}>
-        <FaSuitcase className="category-icon" aria-label="Suitcase" role="img" />
-        <span>لوازم شخصی</span>
-      </div>
-      <div className="category-item" onClick={() => handleCategoryClick('... موارد دیگر')}>
-        <FaPlusCircle className="category-icon" aria-label="More" role="img" />
-        <span>... موارد دیگر</span>
-      </div>
-    </div>
+    <Box
+      sx={{
+        position: 'fixed',
+        top: '150px',
+        right: '30px',
+        width: '300px',
+        textAlign: 'right',
+        bgcolor: '#272C48',
+        borderRadius: 2,
+        boxShadow: 3,
+        p: 2,
+      }}
+    >
+      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>
+        دسته‌بندی‌ها
+      </Typography>
+      <List>
+        <ListItem button onClick={() => handleCategoryClick('املاک')}>
+          <ListItemIcon>
+            <FaHome style={{ color: '#FFFFFF' }} />
+          </ListItemIcon>
+          <ListItemText primary="املاک" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
+        </ListItem>
+        <ListItem button onClick={() => handleCategoryClick('وسایل نقلیه')}>
+          <ListItemIcon>
+            <FaCar style={{ color: '#FFFFFF' }} />
+          </ListItemIcon>
+          <ListItemText primary="وسایل نقلیه" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
+        </ListItem>
+        <ListItem button onClick={() => handleCategoryClick('خانه و آشپزخانه')}>
+          <ListItemIcon>
+            <FaUtensils style={{ color: '#FFFFFF' }} />
+          </ListItemIcon>
+          <ListItemText primary="خانه و آشپزخانه" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
+        </ListItem>
+        <ListItem button onClick={() => handleCategoryClick('کالای دیجیتال')}>
+          <ListItemIcon>
+            <FaLaptop style={{ color: '#FFFFFF' }} />
+          </ListItemIcon>
+          <ListItemText primary="کالای دیجیتال" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
+        </ListItem>
+        <ListItem button onClick={() => handleCategoryClick('سرگرمی')}>
+          <ListItemIcon>
+            <FaGamepad style={{ color: '#FFFFFF' }} />
+          </ListItemIcon>
+          <ListItemText primary="سرگرمی" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
+        </ListItem>
+        <ListItem button onClick={() => handleCategoryClick('لوازم شخصی')}>
+          <ListItemIcon>
+            <FaSuitcase style={{ color: '#FFFFFF' }} />
+          </ListItemIcon>
+          <ListItemText primary="لوازم شخصی" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
+        </ListItem>
+        <ListItem button onClick={() => handleCategoryClick('... موارد دیگر')}>
+          <ListItemIcon>
+            <FaPlusCircle style={{ color: '#FFFFFF' }} />
+          </ListItemIcon>
+          <ListItemText primary="... موارد دیگر" primaryTypographyProps={{ style: { color: '#FFFFFF', textAlign: 'right' } }} />
+        </ListItem>
+      </List>
+    </Box>
   );
 };
 

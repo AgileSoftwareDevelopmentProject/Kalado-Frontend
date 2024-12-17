@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './UserInput.css';
+import TextField from '@mui/material/TextField';
 
 interface PhoneNumberInputProps {
     name: string;
@@ -16,7 +16,6 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     onChange,
     isRequired = true
 }) => {
-
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,18 +32,41 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     };
 
     return (
-        <div>
-            <input
-                type="tel"
-                name={name}
-                placeholder={placeholder}
-                value={value}
-                onChange={handleChange}
-                required={isRequired}
-                className="input"
-            />
-            {error && <p className="error-message">{error}</p>}
-        </div>
+        <TextField
+            type="tel"
+            name={name}
+            placeholder={placeholder}
+            value={value}
+            onChange={handleChange}
+            required={isRequired}
+            variant="standard"
+            margin="normal"
+            error={!!error}
+            helperText={error}
+            inputProps={{
+                inputMode: 'numeric',
+                pattern: '[0-9]*'
+            }}
+            sx={{
+                width: '80%',
+                '& .MuiInputBase-root': {
+                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
+                    '&:hover': {
+                        borderBottom: '2px solid white',
+                    },
+                    '&.Mui-focused': {
+                        borderBottom: '2px solid transparent',
+                    },
+                },
+                '& .MuiFormLabel-root': {
+                    color: 'white',
+                },
+                '& .MuiInputBase-input': {
+                    textAlign: 'right',
+                    color: 'white',
+                }
+            }}
+        />
     );
 };
 

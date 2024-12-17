@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './UserInput.css';
+import TextField from '@mui/material/TextField';
 
 interface DescriptionInputProps {
     name: string;
@@ -30,15 +30,41 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
 
     return (
         <div style={{ marginBottom: '20px' }}>
-            <textarea
+            <TextField
                 name={name}
                 value={value}
                 onChange={handleChange}
                 placeholder={isStarNeeded ? `* ${placeholder}` : placeholder}
                 required={isRequired}
-                maxLength={maxLength}
-                className="input"
+                multiline
+                rows={4}
+                maxRows={6}
+                variant="outlined"
+                fullWidth
+                sx={{
+                    '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                            borderColor: 'rgba(255, 255, 255, 0.5)',
+                        },
+                        '&:hover fieldset': {
+                            borderColor: 'white',
+                        },
+                        '&.Mui-focused fieldset': {
+                            borderColor: '#D74101',
+                        },
+                    },
+                    '& .MuiFormLabel-root': {
+                        color: 'white',
+                    },
+                    '& .MuiInputBase-input': {
+                        textAlign: 'right',
+                        color: 'white',
+                    }
+                }}
             />
+            <div style={{ color: 'white', textAlign: 'right', marginTop: '5px' }}>
+                {charCount}/{maxLength}
+            </div>
         </div>
     );
 };

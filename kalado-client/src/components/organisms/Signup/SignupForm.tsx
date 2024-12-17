@@ -10,7 +10,6 @@ import CustomLink from '../../atoms/Links/CustomLink';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
-
 interface SignupFormProps {
   onClose: () => void;
   onOpenLogin: () => void;
@@ -40,7 +39,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://kalado.com/login', formData);
+      const response = await axios.post('https://kalado.com/signup', formData);
       console.log('Login successful:', response.data);
       onClose();
     } catch (error) {
@@ -51,7 +50,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   return (
     <Box
       sx={{
-        width: 350,
+        width: 400,
         padding: 2,
         position: 'fixed',
         top: '50%',

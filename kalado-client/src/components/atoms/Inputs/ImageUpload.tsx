@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import './ImageUpload.css';
+import { Box, Button, IconButton } from '@mui/material';
 import { FaTrash } from 'react-icons/fa';
 
 const ImageUpload: React.FC = () => {
@@ -30,30 +30,55 @@ const ImageUpload: React.FC = () => {
     };
 
     return (
-        <div className="image-upload-container">
+        <Box className="image-upload-container" sx={{ position: 'relative' }}>
             <input
                 type="file"
                 accept="image/*"
                 multiple
                 onChange={handleImageChange}
-                className="image-input"
+                style={{ display: 'none' }}
                 ref={fileInputRef}
             />
-            <div className="image-preview-square" onClick={handleBrowseClick}>
+            <Box
+                className="image-preview-square"
+                onClick={handleBrowseClick}
+                sx={{
+                    width: 100,
+                    height: 100,
+                    border: '2px dashed white',
+                    borderRadius: 2,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    overflow: 'hidden',
+                }}
+            >
                 {imagePreviews.length === 0 ? (
-                    <label className="upload-label">افزودن عکس</label>
+                    <Button variant="outlined" sx={{ color: 'white' }}>افزودن عکس</Button>
                 ) : (
                     imagePreviews.map((preview, index) => (
-                        <div key={index} className="image-preview">
-                            <img src={preview} alt={`Preview ${index + 1}`} />
-                            <button onClick={() => handleRemoveImage(index)} className="remove-button">
+                        <Box key={index} className="image-preview" sx={{ position: 'relative', width: '100%', height: '100%' }}>
+                            <img src={preview} alt={`Preview ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <IconButton
+                                onClick={() => handleRemoveImage(index)}
+                                sx={{
+                                    position: 'absolute',
+                                    top: 5,
+                                    right: 5,
+                                    backgroundColor: 'transparent',
+                                    '&:hover': {
+                                        color: '#D74101',
+                                    },
+                                }}
+                            >
                                 <FaTrash />
-                            </button>
-                        </div>
+                            </IconButton>
+                        </Box>
                     ))
                 )}
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };
 

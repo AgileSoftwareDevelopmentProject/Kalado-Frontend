@@ -1,5 +1,5 @@
 import React from 'react';
-import './UserInput.css';
+import TextField from '@mui/material/TextField';
 
 interface CodeInputProps {
     placeholder?: string;
@@ -9,20 +9,40 @@ interface CodeInputProps {
     maxLength?: number;
 }
 
-const CodeInput: React.FC<CodeInputProps> = ({ placeholder = "کد تایید", value, onChange, isRequired = true, maxLength = 5 }) => {
+const CodeInput: React.FC<CodeInputProps> = ({
+    placeholder = "کد تایید",
+    value,
+    onChange,
+    isRequired = true,
+    maxLength = 5
+}) => {
     return (
-        <div style={{ marginBottom: '20px' }}>
-            <input
-                type="text"
-                name="code"
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-                required={isRequired}
-                maxLength={maxLength}
-                className="input"
-            />
-        </div>
+        <TextField
+            type="text"
+            name="code"
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            required={isRequired}
+            inputProps={{ maxLength }}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            sx={{
+                '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                    },
+                    '&:hover fieldset': {
+                        borderColor: 'white',
+                    },
+                },
+                '& .MuiInputBase-input': {
+                    textAlign: 'right',
+                    color: 'white',
+                }
+            }}
+        />
     );
 };
 

@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './Dropdown.css';
+import React from 'react';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 interface Option {
     value: string;
@@ -19,49 +19,40 @@ const Dropdown: React.FC<DropdownProps> = ({
     onChange,
     value
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    const handleToggle = () => setIsOpen(!isOpen);
-
-    const handleOptionClick = (option: Option) => {
-        onChange(option);
-        setIsOpen(false);
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const selectedValue = event.target.value as string;
+        const selectedOption = options.find(option => option.value === selectedValue) || null;
+        onChange(selectedOption);
     };
 
     return (
-        <div className="dropdown" ref={dropdownRef}>
-            <div className="dropdown-header" onClick={handleToggle}>
-                {value ? value.label : placeholder}
-                <span className={`arrow ${isOpen ? 'open' : ''}`}>   ▼</span>
-            </div>
-            {isOpen && (
-                <ul className="dropdown-list">
-                    {options.map((option) => (
-                        <li
-                            key={option.value}
-                            onClick={() => handleOptionClick(option)}
-                            className={value?.value === option.value ? 'selected' : ''}
-                        >
-                            {option.label}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+        <FormControl variant="standard" sx={{ mb: 2, width: '80%' }}>
+            <InputLabel sx={{ color: 'white' }}>{placeholder}</InputLabel>
+            <Select
+                value={value ? value.value : ''}
+                onChange={handleChange}
+                label={placeholder}
+                displayEmpty
+                sx={{
+                    '& .MuiInputBase-root': {
+                        borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
+                        '&:hover': {
+                            borderBottom: '2px solid white',
+                        },
+                        '&.Mui-focused': {
+                            borderBottom: '2px solid transparent',
+                        },
+                    },
+                    color: 'white',
+                }}
+            >
+                {options.map(option => (
+                    <MenuItem key={option.value} value={option.value} sx={{ textAlign: 'right' }}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 };
 

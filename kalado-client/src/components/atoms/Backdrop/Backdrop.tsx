@@ -1,5 +1,5 @@
 import React from 'react';
-import './Backdrop.css';
+import { Backdrop as MuiBackdrop } from '@mui/material';
 
 interface BackdropProps {
     onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -8,9 +8,16 @@ interface BackdropProps {
 
 const Backdrop: React.FC<BackdropProps> = ({ onClick, children }) => {
     return (
-        <div className="backdrop" onClick={onClick}>
+        <MuiBackdrop
+            open={true}
+            onClick={onClick}
+            sx={{
+                backgroundColor: 'rgba(39, 44, 72, 0.7)',
+                zIndex: 100
+            }}
+        >
             {children}
-        </div>
+        </MuiBackdrop>
     );
 };
 

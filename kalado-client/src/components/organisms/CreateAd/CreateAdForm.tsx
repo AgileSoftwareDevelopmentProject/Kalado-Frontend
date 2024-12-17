@@ -126,7 +126,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                 />
                 <Dropdown
                     options={categoryOptions}
-                    placeholder="انتخاب دسته‌بندی"
+                    placeholder="دسته‌بندی"
                     onChange={handleCategoryChange}
                     value={categoryOptions.find(option => option.value === formData.category) || null}
                 />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './UserInput.css';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 
 interface PriceInputProps {
     name: string;
@@ -13,23 +14,18 @@ interface PriceInputProps {
 
 const PriceInput: React.FC<PriceInputProps> = ({
     name,
-    placeholder = "(تومان) قیمت",
+    placeholder = "قیمت",
     value,
     onChange,
     isRequired = false,
     isStarNeeded = false,
     currency = "تومان",
 }) => {
-
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState<string>('');
 
     useEffect(() => {
         setInputValue(value ? value.toString() : '');
     }, [value]);
-
-    const formatPrice = (price: number): string => {
-        return price.toLocaleString('fa-IR');
-    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const rawValue = e.target.value.replace(/[^\d]/g, '');
@@ -39,17 +35,44 @@ const PriceInput: React.FC<PriceInputProps> = ({
     };
 
     return (
-        <div style={{ marginBottom: '20px' }}>
-            <input
-                type="text"
-                name={name}
-                placeholder={isStarNeeded ? `* ${placeholder}` : placeholder}
-                value={inputValue}
-                onChange={handleInputChange}
-                required={isRequired}
-                className="input"
-            />
-        </div>
+        <TextField
+            type="text"
+            name={name}
+            placeholder={isStarNeeded ? `${placeholder} *` : placeholder}
+            value={inputValue}
+            onChange={handleInputChange}
+            required={isRequired}
+            variant="standard"
+            margin="normal"
+            InputProps={{
+                startAdornment: (
+                    <InputAdornment position="start">
+                        {currency}
+                    </InputAdornment>
+                ),
+                inputMode: 'numeric',
+                pattern: '[0-9]*'
+            }}
+            sx={{
+                width: '80%',
+                '& .MuiInputBase-root': {
+                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
+                    '&:hover': {
+                        borderBottom: '2px solid white',
+                    },
+                    '&.Mui-focused': {
+                        borderBottom: '2px solid transparent',
+                    },
+                },
+                '& .MuiFormLabel-root': {
+                    color: 'white',
+                },
+                '& .MuiInputBase-input': {
+                    textAlign: 'right',
+                    color: 'white',
+                }
+            }}
+        />
     );
 };
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Navbar from '../../components/organisms/Navbar/Navbar';
-import CategorySidebar from '../../components/organisms/Category/Category';
+import CategoryList from '../../components/molecules/Lists/CategoryList';
 import Filter from '../../components/organisms/Filter/Filter';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
 import LoginForm from '../../components/organisms/Login/LoginForm';
@@ -112,9 +112,9 @@ const Landing: React.FC = () => {
     return (
         <Box>
             <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
-            <CategorySidebar />
-            <Filter />
-            <Grid container spacing={2}>
+            {/* <CategoryList /> */}
+            {/* <Filter /> */}
+            {/* <Grid container spacing={2}>
                 {items.map(item => (
                     <Grid item xs={12} sm={6} md={4} key={item.itemId}>
                         <ItemCard
@@ -127,7 +127,7 @@ const Landing: React.FC = () => {
                         />
                     </Grid>
                 ))}
-            </Grid>
+            </Grid> */}
 
             {isLoginVisible && (
                 <Backdrop onClick={(event) => handleBackdropClick(event, handleCloseLogin)}>
