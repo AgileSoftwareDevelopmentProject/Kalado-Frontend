@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 
 interface EmailInputProps {
@@ -7,8 +7,6 @@ interface EmailInputProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
-    error?: boolean;
-    helperText?: string;
 }
 
 const EmailInput: React.FC<EmailInputProps> = ({
@@ -17,9 +15,27 @@ const EmailInput: React.FC<EmailInputProps> = ({
     value,
     onChange,
     isRequired = true,
-    error = false,
-    helperText = ''
 }) => {
+    const [error, setError] = useState<boolean>(false);
+    const [helperText, setHelperText] = useState<string>('');
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    useEffect(() => {
+        if (value) {
+            if (!emailRegex.test(value)) {
+                setError(true);
+                setHelperText('لطفا یک ایمیل معتبر وارد کنید.');
+            } else {
+                setError(false);
+                setHelperText('');
+            }
+        } else {
+            setError(false);
+            setHelperText('');
+        }
+    }, [value]);
+
     return (
         <TextField
             type="email"
@@ -31,7 +47,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             variant="standard"
             margin="normal"
             error={error}
-            helperText={helperText}
+            helperText={error ? helperText : ''}
             sx={{
                 width: '80%',
                 '& .MuiInputBase-root': {
@@ -52,6 +68,10 @@ const EmailInput: React.FC<EmailInputProps> = ({
                 '& .MuiInputBase-input': {
                     textAlign: 'right',
                     color: 'white',
+                },
+                '& .MuiFormHelperText-root': {
+                    textAlign: 'right',
+                    direction: 'rtl',
                 }
             }}
         />

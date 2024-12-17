@@ -10,7 +10,6 @@
 // };
 
 export const loginUser = async (formData: { email: string; password: string }) => {
-    // Simulate a successful response
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve({
@@ -18,9 +17,8 @@ export const loginUser = async (formData: { email: string; password: string }) =
                 message: 'Login successful',
                 user: {
                     email: formData.email,
-                    // Add any other user data you want to simulate
                 }
             });
-        }, 1000); // Simulate a delay of 1 second
+        }, 1000);
     });
 };

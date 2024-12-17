@@ -1,3 +1,4 @@
+// CreateAdForm.tsx
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import NameInput from '../../atoms/Inputs/NameInput';
@@ -7,15 +8,13 @@ import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
 import ImageUpload from '../../atoms/Inputs/ImageUpload';
 import CustomButton from '../../atoms/Buttons/CustomButton';
 import PopupBox from '../../molecules/PopupBox/PopupBox';
-import axios from 'axios';
-
+import { createAd } from '../../../services/CreateAdService';
 
 interface CreateAdFormProps {
     onClose: () => void;
 }
 
 const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
-
     const [formData, setFormData] = useState<{
         title: string;
         price: number;
@@ -73,11 +72,11 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://kalado.com/create-ad', formData);
-            console.log('Create Ad successfully:', response.data);
+            await createAd(formData);
+            console.log('Create Ad successfully');
             onClose();
         } catch (error) {
-            console.error('Create Ad error:', error);
+            console.error(error);
         }
     };
 
