@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
-import Button from './Button';
+import Button from './CustomButton';
 
 interface CloseButtonProps {
     onClose: () => void;

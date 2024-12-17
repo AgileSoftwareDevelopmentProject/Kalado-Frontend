@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import CodeInput from '../../atoms/Inputs/CodeInput';
-import Button from '../../atoms/Buttons/Button';
+import CustomButton from '../../atoms/Buttons/CustomButton';
 import PopupBox from '../../molecules/PopupBox/PopupBox';
-import axios from 'axios';
+import { verifyCode } from '../../../services/CodeVerificationService';
 
 interface CodeVerificationProps {
     email: string;
@@ -25,14 +25,11 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
 
         try {
-            const response = await axios.post('https://kalado.com/verify-code', {
-                email,
-                code,
-            });
-
-            console.log('Verification successful:', response.data);
+            const response = await verifyCode(email, code);
+            console.log('Verification successful:', response);
             onClose();
         } catch (error) {
             console.error('Verification error:', error);
@@ -44,16 +41,12 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
         <PopupBox onClose={onClose}>
             <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
             <form onSubmit={handleSubmit}>
-                <CodeInput
-                    value={code}
-                    onChange={handleChange}
-                />
-                <Box sx={{ mt: 2 }}>
-                    <Button
-                        text="بررسی"
-                        type="submit"
-                        disabled={code.length !== 5} />
-                </Box>
+                <CodeInput value={code} onChange={handleChange} />
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <CustomButton text="بررسی" type="submit" disabled={code.length !== 5} />
+                {/* <Box sx={{ mt: 2 }}>
+                    
+                </Box> */}
             </form>
         </PopupBox>
     );

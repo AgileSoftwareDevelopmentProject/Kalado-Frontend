@@ -18,6 +18,7 @@ const categories: Category[] = [
 ];
 
 const Category: React.FC = () => {
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleCategoryClick = (categoryTitle: string) => {
@@ -46,6 +47,7 @@ const Category: React.FC = () => {
       <List>
         {categories.map((category) => (
           <ListItem
+            component="li"
             button
             key={category.title}
             onClick={() => handleCategoryClick(category.title)}
@@ -55,15 +57,13 @@ const Category: React.FC = () => {
                 backgroundColor: '#C85A01',
               },
               cursor: 'pointer',
-              textAlign: 'Right',
+              textAlign: 'right',
             }}
           >
             <ListItemIcon>
               {React.cloneElement(category.icon, { style: { color: '#FFFFFF' } })}
             </ListItemIcon>
-            <ListItemText
-              primary={category.title}
-            />
+            <ListItemText primary={category.title} />
           </ListItem>
         ))}
       </List>

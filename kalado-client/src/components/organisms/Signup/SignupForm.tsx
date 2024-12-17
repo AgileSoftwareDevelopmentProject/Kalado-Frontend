@@ -4,7 +4,7 @@ import NameInput from '../../atoms/Inputs/NameInput';
 import EmailInput from '../../atoms/Inputs/EmailInput';
 import PhoneNumberInput from '../../atoms/Inputs/PhoneNumberInput';
 import PasswordInput from '../../atoms/Inputs/PasswordInput';
-import Button from '../../atoms/Buttons/Button';
+import CustomButton from '../../atoms/Buttons/CustomButton';
 import CustomLink from '../../atoms/Links/CustomLink';
 import PopupBox from '../../molecules/PopupBox/PopupBox';
 import { signupUser } from '../../../services/SignupService';
@@ -98,7 +98,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           onChange={handleChange}
         />
         <Box sx={{ mt: 2 }}>
-          <Button text="ثبت‌نام" type="submit" />
+          <CustomButton text="ثبت‌نام" type="submit" />
         </Box>
         <CustomLink
           to="/#"

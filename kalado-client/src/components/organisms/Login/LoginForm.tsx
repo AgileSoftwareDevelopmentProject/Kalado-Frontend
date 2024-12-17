@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import EmailInput from '../../atoms/Inputs/EmailInput';
 import PasswordInput from '../../atoms/Inputs/PasswordInput';
-import Button from '../../atoms/Buttons/Button';
+import CustomButton from '../../atoms/Buttons/CustomButton';
 import CustomLink from '../../atoms/Links/CustomLink';
 import { loginUser } from '../../../services/LoginService';
 import PopupBox from '../../molecules/PopupBox/PopupBox';
@@ -61,10 +61,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                     onChange={handleChange}
                 />
                 <Box sx={{ mt: 2 }}>
-                    <Button
-                        text="ورود"
-                        type="submit"
-                    />
+                    <CustomButton text="ورود" type="submit" />
                 </Box>
                 <CustomLink
                     to="/#"

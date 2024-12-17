@@ -122,14 +122,16 @@ const Landing = () => {
     };
 
     const handleOpenProfilePage = () => {
-        navigate('/profile');
+        navigate('/dashboard');
     }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
             <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
-            <Category />
-            <Filter /> {/* Positioning Filter directly below Category */}
+            <Box>
+                <Category />
+                <Filter />
+            </Box>
             <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingBottom: '20px', paddingRight: '20px' }}>
                 <Grid container spacing={2}>
                     {items.map(item => (
@@ -140,7 +142,7 @@ const Landing = () => {
                                 city={item.city}
                                 date={item.date}
                                 image={item.imageUrl || '/assets/images/default-image-url.jpg'}
-                                onClick={() => navigate(`/item/${item.itemId}`)} // Navigate to item details page
+                                onClick={() => navigate(`/item/${item.itemId}`)}
                             />
                         </Grid>
                     ))}
@@ -148,17 +150,17 @@ const Landing = () => {
             </Box>
 
             {isLoginVisible && (
-                <Backdrop onClick={(event) => handleBackdropClick(event)}>
+                <Backdrop open={isLoginVisible} onClick={handleBackdropClick}>
                     <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
                 </Backdrop>
             )}
             {isSignupVisible && (
-                <Backdrop onClick={(event) => handleBackdropClick(event)}>
+                <Backdrop open={isSignupVisible} onClick={handleBackdropClick}>
                     <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
                 </Backdrop>
             )}
             {isCreateAdVisible && (
-                <Backdrop onClick={(event) => handleBackdropClick(event)}>
+                <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
                     <CreateAdForm onClose={handleCloseCreateAd} />
                 </Backdrop>
             )}

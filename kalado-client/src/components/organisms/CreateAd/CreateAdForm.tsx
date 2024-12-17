@@ -5,7 +5,7 @@ import PriceInput from '../../atoms/Inputs/PriceInput';
 import Dropdown from '../../atoms/Inputs/Dropdown';
 import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
 import ImageUpload from '../../atoms/Inputs/ImageUpload';
-import Button from '../../atoms/Buttons/Button';
+import CustomButton from '../../atoms/Buttons/CustomButton';
 import PopupBox from '../../molecules/PopupBox/PopupBox';
 import axios from 'axios';
 
@@ -116,10 +116,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     <ImageUpload />
                     <ImageUpload />
                 </Box>
-                <Button
-                    text="ثبت آگهی"
-                    type="submit"
-                />
+                <CustomButton text="ثبت آگهی" type="submit" />
             </form>
         </PopupBox>
     );

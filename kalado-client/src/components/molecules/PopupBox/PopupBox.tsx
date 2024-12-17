@@ -13,7 +13,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ onClose, children }) => {
         <Box
             sx={{
                 width: 400,
-                padding: 2,
+                padding: 5,
                 position: 'fixed',
                 top: '50%',
                 left: '50%',
