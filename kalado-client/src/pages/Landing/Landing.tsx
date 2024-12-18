@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Navbar from '../../components/organisms/Navbar/Navbar';
+import NavBar from '../../components/organisms/NavBar/NavBar';
 import Category from '../../components/organisms/Category/Category';
 import Filter from '../../components/organisms/Filter/Filter';
 import ItemCard from '../../components/organisms/ItemCard/ItemCard';
@@ -10,6 +10,7 @@ import LoginForm from '../../components/organisms/Login/LoginForm';
 import SignupForm from '../../components/organisms/Signup/SignupForm';
 import CreateAdForm from '../../components/organisms/CreateAd/CreateAdForm';
 import Backdrop from '../../components/atoms/Backdrop/Backdrop';
+import mockData from '../../mockData.json';
 
 interface Item {
     title: string;
@@ -20,56 +21,7 @@ interface Item {
     itemId: string;
 }
 
-const items: Item[] = [
-    {
-        title: 'Samsung A54',
-        imageUrl: 'https://example.com/samsung-a54.jpg',
-        price: 15000000,
-        city: 'تهران',
-        date: 'دقایقی پیش',
-        itemId: '1'
-    },
-    {
-        title: 'Iphone 15',
-        imageUrl: 'https://example.com/iphone-15.jpg',
-        price: 60000000,
-        city: 'شیراز',
-        date: 'یک ساعت پیش',
-        itemId: '2'
-    },
-    {
-        title: 'Xiaomi Redmi Note 11',
-        imageUrl: 'https://example.com/redmi-note-11.jpg',
-        price: 8000000,
-        city: 'اصفهان',
-        date: 'دو ساعت پیش',
-        itemId: '3'
-    },
-    {
-        title: 'OnePlus Nord CE 5G',
-        imageUrl: 'https://example.com/nord-ce-5g.jpg',
-        price: 12000000,
-        city: 'مشهد',
-        date: 'سه ساعت پیش',
-        itemId: '4'
-    },
-    {
-        title: 'Google Pixel 6a',
-        imageUrl: 'https://example.com/pixel-6a.jpg',
-        price: 9000000,
-        city: 'تبریز',
-        date: 'چهار ساعت پیش',
-        itemId: '5'
-    },
-    {
-        title: 'Oppo Reno8 Pro',
-        imageUrl: 'https://example.com/oppo-reno8-pro.jpg',
-        price: 11000000,
-        city: 'شیراز',
-        date: 'پنج ساعت پیش',
-        itemId: '6'
-    },
-];
+const items: Item[] = mockData.Items
 
 const Landing = () => {
     const navigate = useNavigate();
@@ -126,12 +78,10 @@ const Landing = () => {
     }
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-            <Navbar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
-            <Box>
-                <Category />
-                <Filter />
-            </Box>
+        <Box>
+            <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
+            <Category />
+            <Filter />
             <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingBottom: '20px', paddingRight: '20px' }}>
                 <Grid container spacing={2}>
                     {items.map(item => (

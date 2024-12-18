@@ -1,0 +1,100 @@
+{
+    "en": {
+        "navbar": {
+            "create_ad": "Create Ad",
+            "login/signup": "Login/Signup",
+            "profile": "User Profile",
+            "searchbar": "Search Item"
+        },
+        "category": {
+            "title": "Categories",
+            "one": "Real estate",
+            "two": "Transportation",
+            "three": "House & Kitchen",
+            "four": "Digital Stuff",
+            "five": "Entertainment",
+            "six": "Personal Stuff",
+            "seven": "Others"
+        },
+        "filter": {
+            "title": "Filters",
+            "price": "Price",
+            "min_price": "Minimum",
+            "max_price": "Maximum",
+            "ad_date": "Ad's Date",
+            "one_day": "One Day",
+            "one_week": "One Week",
+            "one_month": "One Month",
+            "apply": "Apply Filters"
+        },
+        "login": {},
+        "signup": {},
+        "code_verification": {},
+        "create_ad": {
+            "input": {
+                "title": "Ad Title",
+                "price": "Price",
+                "category": "Category",
+                "description": "Description",
+                "add_image": "Add Image"
+            },
+            "choose_image": "Choose Image",
+            "create_ad_btn": "Submit Ad"
+        }
+    },
+    "fa": {
+        "navbar": {
+            "create_ad": "ثبت آگهی",
+            "login/signup": "ورود/ثبت‌نام",
+            "profile": "پروفایل کاربری",
+            "searchbar": "جستجوی کالا"
+        },
+        "category": {
+            "title": "دسته‌بندی‌ها",
+            "one": "املاک",
+            "two": "وسایل نقلیه",
+            "three": "خانه و آشپزخانه",
+            "four": "کالای دیجیتال",
+            "five": "سرگرمی",
+            "six": "لوازم شخصی",
+            "seven": "موارد دیگر"
+        },
+        "filter": {
+            "title": "فیلترها",
+            "price": "قیمت",
+            "min_price": "حداقل",
+            "max_price": "حداکثر",
+            "ad_date": "قدمت آگهی",
+            "one_day": "یک روز",
+            "one_week": "یک هفته",
+            "one_month": "یک ماه",
+            "apply": "اعمال فیلتر"
+        },
+        "create_ad": {
+            "input": {
+                "title": "عنوان آگهی",
+                "price": "قیمت",
+                "category": "دسته‌بندی",
+                "description": "توضیحات",
+                "add_image": "افزودن عکس"
+            },
+            "choose_image": "انتخاب عکس",
+            "create_ad_btn": "ثبت آگهی"
+        },
+        "error": {
+            "input": {
+                "invalid_email": "لطفا یک ایمیل معتبر وارد کنید",
+                "invalid_password": {
+                    "min_length": "رمز عبور باید حداقل ۸ کاراکتر باشد",
+                    "has_number": "رمز عبور باید شامل حداقل یک عدد باشد",
+                    "has_uppercase": "رمز عبور باید شامل حداقل یک حرف بزرگ باشد",
+                    "has_special_char": "رمز عبور باید شامل حداقل یک کاراکتر ویژه باشد"
+                },
+                "invalid_phone_number": "لطفا یک شماره تلفن معتبر وارد کنید",
+                "invalid_image": {
+                    "max_size": "لطفا تصاویری با حجم بیشتر از 1 مگابایت انتخاب نکنید"
+                }
+            }
+        }
+    }
+}

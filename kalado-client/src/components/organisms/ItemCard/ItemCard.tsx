@@ -17,9 +17,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ title, price, city, date, image, on
         cursor: 'pointer',
         transition: 'transform 0.2s',
         '&:hover': { transform: 'scale(1.05)' },
-        backgroundColor: 'transparent', // Set background to transparent
-        boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)', // Add shadow effect
-        borderBottom: '2px solid rgba(255, 255, 255, 0.5)', // Bottom border
+        backgroundColor: 'transparent',
+        boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
+        borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
       }}
       onClick={onClick}
     >

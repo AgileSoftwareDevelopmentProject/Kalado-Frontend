@@ -27,7 +27,9 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     return (
         <FormControl variant="standard" sx={{ mb: 2, width: '80%' }}>
-            <InputLabel sx={{ color: 'white' }}>{placeholder}</InputLabel>
+            <InputLabel sx={{ color: 'white', textAlign: 'right', width: '100%' }}>
+                {placeholder}
+            </InputLabel>
             <Select
                 value={value ? value.value : ''}
                 onChange={handleChange}
@@ -44,6 +46,10 @@ const Dropdown: React.FC<DropdownProps> = ({
                         },
                     },
                     color: 'white',
+                    textAlign: 'right',
+                    '& .MuiSelect-select': {
+                        textAlign: 'right',
+                    },
                 }}
             >
                 {options.map(option => (

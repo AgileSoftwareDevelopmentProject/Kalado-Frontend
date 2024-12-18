@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 
@@ -7,19 +8,21 @@ interface Category {
   icon: React.ReactNode;
 }
 
-const categories: Category[] = [
-  { title: 'املاک', icon: <FaHome /> },
-  { title: 'وسایل نقلیه', icon: <FaCar /> },
-  { title: 'خانه و آشپزخانه', icon: <FaUtensils /> },
-  { title: 'کالای دیجیتال', icon: <FaLaptop /> },
-  { title: 'سرگرمی', icon: <FaGamepad /> },
-  { title: 'لوازم شخصی', icon: <FaSuitcase /> },
-  { title: '... موارد دیگر', icon: <FaPlusCircle /> },
-];
-
 const Category: React.FC = () => {
 
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+
+  const categories: Category[] = [
+    { title: t("category.one"), icon: <FaHome /> },
+    { title: t("category.two"), icon: <FaCar /> },
+    { title: t("category.three"), icon: <FaUtensils /> },
+    { title: t("category.four"), icon: <FaLaptop /> },
+    { title: t("category.five"), icon: <FaGamepad /> },
+    { title: t("category.six"), icon: <FaSuitcase /> },
+    { title: t("category.seven"), icon: <FaPlusCircle /> },
+  ];
 
   const handleCategoryClick = (categoryTitle: string) => {
     setSelectedCategory(categoryTitle);
@@ -42,7 +45,7 @@ const Category: React.FC = () => {
       }}
     >
       <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>
-        دسته‌بندی‌ها
+        {t("category.title")}
       </Typography>
       <List>
         {categories.map((category) => (

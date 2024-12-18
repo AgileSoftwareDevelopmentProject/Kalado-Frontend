@@ -1,5 +1,5 @@
-// CreateAdForm.tsx
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import NameInput from '../../atoms/Inputs/NameInput';
 import PriceInput from '../../atoms/Inputs/PriceInput';
@@ -15,6 +15,7 @@ interface CreateAdFormProps {
 }
 
 const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState<{
         title: string;
         price: number;
@@ -30,13 +31,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     });
 
     const categoryOptions = [
-        { value: 'Real estate', label: 'املاک' },
-        { value: 'Transportation', label: 'وسایل نقلیه' },
-        { value: 'House and Kitchen', label: 'خانه و آشپزخانه' },
-        { value: 'Digital Stuff', label: 'کالای دیجیتال' },
-        { value: 'Entertainment', label: 'سرگرمی' },
-        { value: 'Personal Stuff', label: 'لوازم شخصی' },
-        { value: 'Others', label: 'موارد دیگر' },
+        { value: 'Real estate', label: t("category.one") },
+        { value: 'Transportation', label: t("category.two") },
+        { value: 'House and Kitchen', label: t("category.three") },
+        { value: 'Digital Stuff', label: t("category.four") },
+        { value: 'Entertainment', label: t("category.five") },
+        { value: 'Personal Stuff', label: t("category.six") },
+        { value: 'Others', label: t("category.seven") },
     ];
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
@@ -85,7 +86,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
-                    placeholder="عنوان آگهی"
+                    placeholder={t("create_ad.input.title")}
                     value={formData.title}
                     onChange={handleChange}
                     isRequired={true}
@@ -100,7 +101,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                 />
                 <Dropdown
                     options={categoryOptions}
-                    placeholder="دسته‌بندی"
+                    placeholder={t("create_ad.input.category")}
                     onChange={handleCategoryChange}
                     value={categoryOptions.find(option => option.value === formData.category) || null}
                 />
@@ -109,13 +110,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     value={formData.description}
                     onChange={handleDescriptionchange}
                 />
-                <p>انتخاب عکس</p>
+                <p>{t("create_ad.choose_image")}</p>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                     <ImageUpload />
                     <ImageUpload />
                     <ImageUpload />
                 </Box>
-                <CustomButton text="ثبت آگهی" type="submit" />
+                <CustomButton text={t("create_ad.create_ad_btn")} type="submit" />
             </form>
         </PopupBox>
     );

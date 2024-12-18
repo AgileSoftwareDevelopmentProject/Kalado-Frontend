@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AppBar, Toolbar, Box } from '@mui/material';
 import Logo from '../../atoms/Logo/Logo';
 import CustomButton from '../../atoms/Buttons/CustomButton';
 import SearchBar from '../../molecules/SearchBar/SearchBar';
 
-interface NavbarProps {
+interface NavBarProps {
   onLoginClick: () => void;
   onCreateAdClick: () => void;
   isLoggedIn: boolean;
   onProfileClick: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick }) => {
+const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
@@ -33,15 +35,15 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, onCreateAdClick, isLogged
 
         <Box sx={{ display: 'flex', gap: 1 }}>
           {isLoggedIn ? (
-            <CustomButton text="پروفایل کاربری" onClick={onProfileClick} />
+            <CustomButton text={t('navbar.profile')} onClick={onProfileClick} />
           ) : (
-            <CustomButton text="ورود/ثبت‌نام" backgroundColor="transparent" onClick={onLoginClick} />
+            <CustomButton text={t('navbar.login/signup')} backgroundColor="transparent" onClick={onLoginClick} />
           )}
-          <CustomButton text="ثبت آگهی" onClick={onCreateAdClick} />
+          <CustomButton text={t('navbar.create_ad')} onClick={onCreateAdClick} />
         </Box>
       </Toolbar>
     </AppBar>
   );
 };
 
-export default Navbar;
+export default NavBar;

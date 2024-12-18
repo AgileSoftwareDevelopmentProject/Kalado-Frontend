@@ -1,6 +1,7 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Box, Typography, Button, CardMedia, CardContent, Card } from '@mui/material';
+import mockData from '../../mockData.json';
 
 interface Item {
     title: string;
@@ -11,43 +12,19 @@ interface Item {
     itemId: string;
 }
 
-// Sample data for demonstration purposes
-const items: Item[] = [
-    {
-        title: 'Samsung A54',
-        imageUrl: 'https://example.com/samsung-a54.jpg',
-        price: 15000000,
-        city: 'تهران',
-        date: 'دقایقی پیش',
-        itemId: '1'
-    },
-    {
-        title: 'Iphone 15',
-        imageUrl: 'https://example.com/iphone-15.jpg',
-        price: 60000000,
-        city: 'شیراز',
-        date: 'یک ساعت پیش',
-        itemId: '2'
-    },
-    // Add more items as needed for testing
-];
+const items: Item[] = mockData.Items
 
 const ItemDetails: React.FC = () => {
-    const { itemId } = useParams<{ itemId: string }>(); // Get the item ID from the URL
-    const navigate = useNavigate();
+    const { itemId } = useParams<{ itemId: string }>();
 
-    // Find the item based on the ID
     const item = items.find((item) => item.itemId === itemId);
 
     if (!item) {
-        return <Typography variant="h6">Item not found</Typography>; // Handle case where item is not found
+        return <Typography variant="h6">Item not found</Typography>;
     }
 
     return (
         <Box sx={{ padding: 2 }}>
-            <Button variant="outlined" onClick={() => navigate(-1)} sx={{ mb: 2 }}>
-                Back
-            </Button>
             <Card sx={{ maxWidth: 600 }}>
                 <CardMedia
                     component="img"
@@ -60,13 +37,13 @@ const ItemDetails: React.FC = () => {
                         {item.title}
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
-                        Price: تومان {item.price.toLocaleString()}
+                        قیمت: تومان {item.price.toLocaleString()}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        City: {item.city}
+                        شهر: {item.city}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Date Posted: {item.date}
+                        تاریخ ثبت: {item.date}
                     </Typography>
                 </CardContent>
             </Card>
