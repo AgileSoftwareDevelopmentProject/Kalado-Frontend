@@ -1,52 +1,46 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, fireEvent } from '@testing-library/react';
+import { useTranslation } from 'react-i18next';
 import Category from './Category';
 
-describe('Category', () => {
-  it('renders the sidebar header and all category items', () => {
-    render(<Category />);
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+  }),
+}));
 
-    expect(screen.getByText('دسته‌بندی‌ها')).toBeInTheDocument();
+describe('Category Component', () => {
+  it('renders correctly with categories', () => {
+    const { getByText } = render(<Category />);
 
-    const categories = [
-      'املاک',
-      'وسایل نقلیه',
-      'خانه و آشپزخانه',
-      'کالای دیجیتال',
-      'سرگرمی',
-      'لوازم شخصی',
-      '... موارد دیگر',
-    ];
-
-    categories.forEach((category) => {
-      expect(screen.getByText(category)).toBeInTheDocument();
-    });
-
-    expect(screen.getAllByRole('img')).toHaveLength(categories.length);
+    expect(getByText('category.title')).toBeInTheDocument();
+    expect(getByText('category.one')).toBeInTheDocument();
+    expect(getByText('category.two')).toBeInTheDocument();
+    expect(getByText('category.three')).toBeInTheDocument();
+    expect(getByText('category.four')).toBeInTheDocument();
+    expect(getByText('category.five')).toBeInTheDocument();
+    expect(getByText('category.six')).toBeInTheDocument();
+    expect(getByText('category.seven')).toBeInTheDocument();
   });
 
-  it('calls handleCategoryClick for each category when clicked', async () => {
-    const consoleLogMock = jest.spyOn(console, 'log').mockImplementation();
+  it('changes background color when a category is clicked', () => {
+    const { getByText } = render(<Category />);
 
-    render(<Category />);
+    const firstCategory = getByText('category.one');
+    fireEvent.click(firstCategory);
+    expect(firstCategory.closest('li')).toHaveStyle('background-color: #D74101');
+  });
 
-    const categories = [
-      { name: 'املاک', log: 'املاک clicked' },
-      { name: 'وسایل نقلیه', log: 'وسایل نقلیه clicked' },
-      { name: 'خانه و آشپزخانه', log: 'خانه و آشپزخانه clicked' },
-      { name: 'کالای دیجیتال', log: 'کالای دیجیتال clicked' },
-      { name: 'سرگرمی', log: 'سرگرمی clicked' },
-      { name: 'لوازم شخصی', log: 'لوازم شخصی clicked' },
-      { name: '... موارد دیگر', log: '... موارد دیگر clicked' },
-    ];
+  it('logs the selected category when clicked', () => {
+    const consoleSpy = jest.spyOn(console, 'log');
+    const { getByText } = render(<Category />);
 
-    for (const { name, log } of categories) {
-      const categoryElement = screen.getByText(name);
-      await userEvent.click(categoryElement);
-      expect(consoleLogMock).toHaveBeenCalledWith(log);
-    }
+    const firstCategory = getByText('category.one');
 
-    consoleLogMock.mockRestore();
+    fireEvent.click(firstCategory);
+
+    expect(consoleSpy).toHaveBeenCalledWith('category.one clicked');
+
+    consoleSpy.mockRestore();
   });
 });

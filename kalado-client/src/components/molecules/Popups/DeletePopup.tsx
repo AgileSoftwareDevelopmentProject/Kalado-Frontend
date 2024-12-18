@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaTimes, FaCheck } from 'react-icons/fa';
 
 interface DeletePopupProps {
     message: string;
