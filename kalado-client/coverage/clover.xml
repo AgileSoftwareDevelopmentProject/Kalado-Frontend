@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1734546406077" clover="3.2.0">
-  <project timestamp="1734546406077" name="All files">
-    <metrics statements="236" coveredstatements="46" conditionals="111" coveredconditionals="30" methods="81" coveredmethods="16" elements="428" coveredelements="92" complexity="0" loc="236" ncloc="236" packages="17" files="26" classes="26"/>
+<coverage generated="1734547225150" clover="3.2.0">
+  <project timestamp="1734547225150" name="All files">
+    <metrics statements="229" coveredstatements="2" conditionals="109" coveredconditionals="0" methods="75" coveredmethods="1" elements="413" coveredelements="3" complexity="0" loc="229" ncloc="229" packages="16" files="25" classes="25"/>
     <package name="atoms.Backdrop">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="Backdrop.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Backdrop/Backdrop.tsx">
@@ -11,25 +11,25 @@
       </file>
     </package>
     <package name="atoms.Buttons">
-      <metrics statements="5" coveredstatements="5" conditionals="13" coveredconditionals="13" methods="2" coveredmethods="2"/>
+      <metrics statements="5" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="CloseButton.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Buttons/CloseButton.tsx">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
       </file>
       <file name="CustomButton.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Buttons/CustomButton.tsx">
-        <metrics statements="3" coveredstatements="3" conditionals="13" coveredconditionals="13" methods="1" coveredmethods="1"/>
-        <line num="18" count="3" type="stmt"/>
-        <line num="32" count="65" type="stmt"/>
-        <line num="48" count="65" type="stmt"/>
+        <metrics statements="3" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
       </file>
     </package>
     <package name="atoms.Inputs">
-      <metrics statements="91" coveredstatements="2" conditionals="54" coveredconditionals="3" methods="28" coveredmethods="1"/>
+      <metrics statements="91" coveredstatements="0" conditionals="54" coveredconditionals="0" methods="28" coveredmethods="0"/>
       <file name="CodeInput.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Inputs/CodeInput.tsx">
-        <metrics statements="2" coveredstatements="2" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="19" count="6" type="stmt"/>
+        <metrics statements="2" coveredstatements="0" conditionals="3" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
       </file>
       <file name="DescriptionInput.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Inputs/DescriptionInput.tsx">
         <metrics statements="7" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
@@ -164,17 +164,6 @@
         <line num="6" count="0" type="stmt"/>
       </file>
     </package>
-    <package name="molecules.Lists">
-      <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
-      <file name="CustomList.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/molecules/Lists/CustomList.tsx">
-        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-      </file>
-    </package>
     <package name="molecules.PopupBox">
       <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="PopupBox.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/molecules/PopupBox/PopupBox.tsx">
@@ -184,11 +173,11 @@
       </file>
     </package>
     <package name="molecules.Popups">
-      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="DeletePopup.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/molecules/Popups/DeletePopup.tsx">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="4" type="stmt"/>
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
       </file>
     </package>
     <package name="molecules.SearchBar">
@@ -203,19 +192,17 @@
       </file>
     </package>
     <package name="organisms.Category">
-      <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+      <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="Category.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/Category/Category.tsx">
-        <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="13" count="5" type="stmt"/>
-        <line num="14" count="5" type="stmt"/>
-        <line num="17" count="5" type="stmt"/>
-        <line num="27" count="5" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="33" count="5" type="stmt"/>
-        <line num="52" count="35" type="stmt"/>
-        <line num="56" count="2" type="stmt"/>
+        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
       </file>
     </package>
     <package name="organisms.CodeVerification">
@@ -270,41 +257,41 @@
       </file>
     </package>
     <package name="organisms.Filter">
-      <metrics statements="24" coveredstatements="23" conditionals="16" coveredconditionals="12" methods="7" coveredmethods="6"/>
+      <metrics statements="24" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="7" coveredmethods="0"/>
       <file name="Filter.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/Filter/Filter.tsx">
-        <metrics statements="24" coveredstatements="23" conditionals="16" coveredconditionals="12" methods="7" coveredmethods="6"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="14" type="stmt"/>
-        <line num="10" count="14" type="stmt"/>
-        <line num="11" count="14" type="stmt"/>
-        <line num="12" count="14" type="stmt"/>
-        <line num="14" count="14" type="stmt"/>
-        <line num="15" count="6" type="stmt"/>
-        <line num="16" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="19" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="20" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="21" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="22" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="26" count="14" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="30" count="14" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="32" count="2" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="39" count="14" type="stmt"/>
-        <line num="86" count="1" type="stmt"/>
-        <line num="91" count="1" type="stmt"/>
+        <metrics statements="24" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
         <line num="96" count="0" type="stmt"/>
       </file>
     </package>
     <package name="organisms.ItemCard">
-      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="ItemCard.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/ItemCard/ItemCard.tsx">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
       </file>
     </package>
     <package name="organisms.Login">

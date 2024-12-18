@@ -9,10 +9,8 @@ interface Category {
 }
 
 const Category: React.FC = () => {
-
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
 
   const categories: Category[] = [
     { title: t("category.one"), icon: <FaHome /> },
@@ -27,7 +25,6 @@ const Category: React.FC = () => {
   const handleCategoryClick = (categoryTitle: string) => {
     setSelectedCategory(categoryTitle);
     console.log(`${categoryTitle} clicked`);
-    // Add logic to load items based on selected category
   };
 
   return (
@@ -47,7 +44,7 @@ const Category: React.FC = () => {
       <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>
         {t("category.title")}
       </Typography>
-      <List>
+      {/* <List>
         {categories.map((category) => (
           <ListItem
             component="li"
@@ -64,12 +61,12 @@ const Category: React.FC = () => {
             }}
           >
             <ListItemIcon>
-              {React.cloneElement(category.icon, { style: { color: '#FFFFFF' } })}
+              {React.cloneElement(category.icon as React.ReactElement<any>, { style: { color: '#FFFFFF' } })}
             </ListItemIcon>
             <ListItemText primary={category.title} />
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </Box>
   );
 };

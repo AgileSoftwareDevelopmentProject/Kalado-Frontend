@@ -14,10 +14,10 @@ const CustomLink: React.FC<CustomLinkProps> = ({ to, onClick, children, text, ..
             <MuiLink
                 component={RouterLink}
                 to={to}
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                     if (onClick) {
-                        e.preventDefault();
-                        onClick(e);
+                        e.preventDefault(); // Prevent default link behavior
+                        onClick(e); // Call the provided onClick handler
                     }
                 }}
                 sx={{
