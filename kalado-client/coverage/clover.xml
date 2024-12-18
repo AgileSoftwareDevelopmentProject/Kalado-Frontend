@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1734545954124" clover="3.2.0">
-  <project timestamp="1734545954124" name="All files">
-    <metrics statements="236" coveredstatements="29" conditionals="111" coveredconditionals="20" methods="81" coveredmethods="9" elements="428" coveredelements="58" complexity="0" loc="236" ncloc="236" packages="17" files="26" classes="26"/>
+<coverage generated="1734546191163" clover="3.2.0">
+  <project timestamp="1734546191163" name="All files">
+    <metrics statements="236" coveredstatements="32" conditionals="111" coveredconditionals="21" methods="81" coveredmethods="11" elements="428" coveredelements="64" complexity="0" loc="236" ncloc="236" packages="17" files="26" classes="26"/>
     <package name="atoms.Backdrop">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="Backdrop.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Backdrop/Backdrop.tsx">
@@ -203,19 +203,19 @@
       </file>
     </package>
     <package name="organisms.Category">
-      <metrics statements="10" coveredstatements="7" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="2"/>
+      <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
       <file name="Category.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/Category/Category.tsx">
-        <metrics statements="10" coveredstatements="7" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="2"/>
+        <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="33" count="2" type="stmt"/>
-        <line num="52" count="14" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="52" count="35" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
       </file>
     </package>
     <package name="organisms.CodeVerification">
