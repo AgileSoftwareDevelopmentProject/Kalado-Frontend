@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1734546191163" clover="3.2.0">
-  <project timestamp="1734546191163" name="All files">
-    <metrics statements="236" coveredstatements="32" conditionals="111" coveredconditionals="21" methods="81" coveredmethods="11" elements="428" coveredelements="64" complexity="0" loc="236" ncloc="236" packages="17" files="26" classes="26"/>
+<coverage generated="1734546406077" clover="3.2.0">
+  <project timestamp="1734546406077" name="All files">
+    <metrics statements="236" coveredstatements="46" conditionals="111" coveredconditionals="30" methods="81" coveredmethods="16" elements="428" coveredelements="92" complexity="0" loc="236" ncloc="236" packages="17" files="26" classes="26"/>
     <package name="atoms.Backdrop">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="Backdrop.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Backdrop/Backdrop.tsx">
@@ -20,8 +20,8 @@
       <file name="CustomButton.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Buttons/CustomButton.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="13" coveredconditionals="13" methods="1" coveredmethods="1"/>
         <line num="18" count="3" type="stmt"/>
-        <line num="32" count="21" type="stmt"/>
-        <line num="48" count="21" type="stmt"/>
+        <line num="32" count="65" type="stmt"/>
+        <line num="48" count="65" type="stmt"/>
       </file>
     </package>
     <package name="atoms.Inputs">
@@ -270,32 +270,32 @@
       </file>
     </package>
     <package name="organisms.Filter">
-      <metrics statements="24" coveredstatements="9" conditionals="16" coveredconditionals="3" methods="7" coveredmethods="1"/>
+      <metrics statements="24" coveredstatements="23" conditionals="16" coveredconditionals="12" methods="7" coveredmethods="6"/>
       <file name="Filter.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/Filter/Filter.tsx">
-        <metrics statements="24" coveredstatements="9" conditionals="16" coveredconditionals="3" methods="7" coveredmethods="1"/>
+        <metrics statements="24" coveredstatements="23" conditionals="16" coveredconditionals="12" methods="7" coveredmethods="6"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="11" count="3" type="stmt"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="26" count="3" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="30" count="3" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="39" count="3" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
+        <line num="10" count="14" type="stmt"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="12" count="14" type="stmt"/>
+        <line num="14" count="14" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="16" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="21" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="14" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="30" count="14" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="39" count="14" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
         <line num="96" count="0" type="stmt"/>
       </file>
     </package>
