@@ -86,7 +86,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
-                    placeholder={t("createad.input.title")}
+                    placeholder={t("create_ad.input.title")}
                     value={formData.title}
                     onChange={handleChange}
                     isRequired={true}
@@ -101,7 +101,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                 />
                 <Dropdown
                     options={categoryOptions}
-                    placeholder={t("createad.input.category")}
+                    placeholder={t("create_ad.input.category")}
                     onChange={handleCategoryChange}
                     value={categoryOptions.find(option => option.value === formData.category) || null}
                 />
@@ -110,13 +110,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     value={formData.description}
                     onChange={handleDescriptionchange}
                 />
-                <p>{t("createad.choose_image")}</p>
+                <p>{t("create_ad.choose_image")}</p>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                     <ImageUpload />
                     <ImageUpload />
                     <ImageUpload />
                 </Box>
-                <CustomButton text={t("createad.create_ad_btn")} type="submit" />
+                <CustomButton text={t("create_ad.create_ad_btn")} type="submit" />
             </form>
         </PopupBox>
     );

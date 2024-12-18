@@ -1,7 +1,7 @@
 {
     "en": {
         "navbar": {
-            "createad": "Create Ad",
+            "create_ad": "Create Ad",
             "login/signup": "Login/Signup",
             "profile": "User Profile",
             "searchbar": "Search Item"
@@ -70,7 +70,7 @@
             "one_month": "یک ماه",
             "apply": "اعمال فیلتر"
         },
-        "createad": {
+        "create_ad": {
             "input": {
                 "title": "عنوان آگهی",
                 "price": "قیمت",
@@ -90,7 +90,10 @@
                     "has_uppercase": "رمز عبور باید شامل حداقل یک حرف بزرگ باشد",
                     "has_special_char": "رمز عبور باید شامل حداقل یک کاراکتر ویژه باشد"
                 },
-                "invalid_phone_number": "لطفا یک شماره تلفن معتبر وارد کنید"
+                "invalid_phone_number": "لطفا یک شماره تلفن معتبر وارد کنید",
+                "invalid_image": {
+                    "max_size": "لطفا تصاویری با حجم بیشتر از 1 مگابایت انتخاب نکنید"
+                }
             }
         }
     }

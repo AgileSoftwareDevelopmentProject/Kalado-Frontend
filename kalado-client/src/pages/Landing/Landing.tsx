@@ -78,12 +78,10 @@ const Landing = () => {
     }
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <Box>
             <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
-            <Box>
-                <Category />
-                <Filter />
-            </Box>
+            <Category />
+            <Filter />
             <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingBottom: '20px', paddingRight: '20px' }}>
                 <Grid container spacing={2}>
                     {items.map(item => (
