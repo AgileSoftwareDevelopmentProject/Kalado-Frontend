@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, Button, CardMedia, CardContent, Card } from '@mui/material';
+import { Box, Typography, CardMedia, CardContent, Card } from '@mui/material';
 import mockData from '../../mockData.json';
+import defaultImage from '../../assets/images/default-image-url.jpg';
 
 interface Item {
     title: string;
@@ -12,7 +13,7 @@ interface Item {
     itemId: string;
 }
 
-const items: Item[] = mockData.Items
+const items: Item[] = mockData.Items;
 
 const ItemDetails: React.FC = () => {
     const { itemId } = useParams<{ itemId: string }>();
@@ -24,12 +25,19 @@ const ItemDetails: React.FC = () => {
     }
 
     return (
-        <Box sx={{ padding: 2 }}>
-            <Card sx={{ maxWidth: 600 }}>
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                // minHeight: '200vh',
+            }}
+        >
+            <Card sx={{ width: 500, height: 800 }}>
                 <CardMedia
                     component="img"
-                    height="300"
-                    image={item.imageUrl}
+                    // height="300"
+                    image={defaultImage}
                     alt={item.title}
                 />
                 <CardContent>

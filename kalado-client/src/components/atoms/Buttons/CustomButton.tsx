@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
-import { OverridableStringUnion } from '@mui/types'; // Corrected import
+import { OverridableStringUnion } from '@mui/types';
 
 interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
     text?: string;
-    shape?: 'rounded' | 'square'; // Define specific shapes if needed
+    shape?: 'rounded' | 'square';
     width?: string;
     borderRadius?: string;
     backgroundColor?: string;
@@ -23,7 +23,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     borderRadius,
     backgroundColor = '#D74101',
     color = '#FFFFFF',
-    padding = '10px 30px',
+    padding = '5px 15px',
     margin = '20px 0px',
     type = 'button',
     ...props

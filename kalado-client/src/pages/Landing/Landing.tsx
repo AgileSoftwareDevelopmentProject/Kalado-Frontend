@@ -11,6 +11,7 @@ import SignupForm from '../../components/organisms/Signup/SignupForm';
 import CreateAdForm from '../../components/organisms/CreateAd/CreateAdForm';
 import Backdrop from '../../components/atoms/Backdrop/Backdrop';
 import mockData from '../../mockData.json';
+import defaultImage from '../../assets/images/default-image-url.jpg';
 
 interface Item {
     title: string;
@@ -82,7 +83,7 @@ const Landing = () => {
             <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
             <Category />
             <Filter />
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingBottom: '20px', paddingRight: '20px' }}>
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingTop: '200px', paddingRight: '200px' }}>
                 <Grid container spacing={2}>
                     {items.map(item => (
                         <Grid item xs={12} sm={6} md={4} key={item.itemId}>
@@ -91,7 +92,7 @@ const Landing = () => {
                                 price={`تومان ${item.price.toLocaleString()}`}
                                 city={item.city}
                                 date={item.date}
-                                image={item.imageUrl || '/assets/images/default-image-url.jpg'}
+                                image={item.imageUrl || defaultImage}
                                 onClick={() => navigate(`/item/${item.itemId}`)}
                             />
                         </Grid>
