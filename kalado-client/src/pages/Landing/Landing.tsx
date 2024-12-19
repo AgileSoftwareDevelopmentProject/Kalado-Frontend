@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { NavBar, Category, Filter, ItemCard, LoginForm, SignupForm, CreateAdForm } from '../../components/organisms';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
@@ -15,7 +15,7 @@ interface Item {
     itemId: string;
 }
 
-const items: Item[] = mockData.Items
+const items = mockData.Items;
 
 const Landing = () => {
     const navigate = useNavigate();
@@ -24,6 +24,7 @@ const Landing = () => {
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>('املاک');
 
     const handleOpenLogin = () => {
         setLoginVisible(true);
@@ -71,12 +72,22 @@ const Landing = () => {
         navigate('/dashboard');
     }
 
+    const handleSelectCategory = (categoryTitle: string) => {
+        setSelectedCategoryTitle(categoryTitle);
+    };
+
+
     return (
         <Box>
             <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
-            <Category />
+
+            <Category onSelectCategory={handleSelectCategory} />
             <Filter />
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', paddingTop: '200px', paddingRight: '200px' }}>
+
+            <Box sx={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'flex-end', paddingTop: '200px', paddingRight: '200px' }}>
+                <Typography variant="h4" sx={{ textAlign: 'center', mt: 4, color: "#FFFFFF", mb: 10, fontWeight: 'bold' }}>
+                    {selectedCategoryTitle ? selectedCategoryTitle : "Select a Category"}
+                </Typography>
                 <Grid container spacing={2}>
                     {items.map(item => (
                         <Grid item xs={12} sm={6} md={4} key={item.itemId}>

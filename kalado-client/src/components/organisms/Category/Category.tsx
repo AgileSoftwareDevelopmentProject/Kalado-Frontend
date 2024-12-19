@@ -8,9 +8,13 @@ interface Category {
   icon: React.ReactNode;
 }
 
-const Category: React.FC = () => {
+interface CategoryProps {
+  onSelectCategory: (categoryTitle: string) => void; // Prop to handle category selection
+}
+
+const Category: React.FC<CategoryProps> = ({ onSelectCategory }) => {
   const { t } = useTranslation();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>('Real Estate');
 
   const categories: Category[] = [
     { title: t("category.one"), icon: <FaHome /> },
@@ -24,7 +28,7 @@ const Category: React.FC = () => {
 
   const handleCategoryClick = (categoryTitle: string) => {
     setSelectedCategory(categoryTitle);
-    console.log(`${categoryTitle} clicked`);
+    onSelectCategory(categoryTitle);
   };
 
   return (
@@ -51,13 +55,13 @@ const Category: React.FC = () => {
             sx={{
               backgroundColor: selectedCategory === category.title ? '#D74101' : 'transparent',
               '&:hover': {
-                backgroundColor: '#C85A01',
-                transform: 'translateX(-30px)', // Move left by 5 pixels
-                color: 'orange', // Change font color to orange
+                backgroundColor: '#D74101',
+                transform: 'translateX(-30px)',
+                color: '#D74101',
               },
               cursor: 'pointer',
               textAlign: 'right',
-              transition: 'transform 0.5s ease, color 0.5s ease', // Smooth transition for transform and color
+              transition: 'transform 0.5s ease, color 0.5s ease',
             }}
           >
             <ListItemIcon>

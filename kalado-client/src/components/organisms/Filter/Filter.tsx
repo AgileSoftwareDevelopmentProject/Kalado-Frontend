@@ -92,10 +92,11 @@ const Filter: React.FC = () => {
           onClick={() => handleFilterSelect('oneDay')}
           sx={{
             cursor: 'pointer',
-            backgroundColor: selectedFilter === 'oneDay' ? '#D74101' : '#FFFFFF',
+            backgroundColor: selectedFilter === 'oneDay' ? '#D74101' : 'transparent',
             color: selectedFilter === 'oneDay' ? '#FFFFFF' : '#000000',
             padding: '10px',
-            borderRadius: '5px',
+            borderRadius: '10px',
+            border: '3px solid white',
             textAlign: 'center',
             flexGrow: 1,
             marginRight: '5px',
@@ -108,10 +109,11 @@ const Filter: React.FC = () => {
           onClick={() => handleFilterSelect('oneWeek')}
           sx={{
             cursor: 'pointer',
-            backgroundColor: selectedFilter === 'oneWeek' ? '#D74101' : '#FFFFFF',
+            backgroundColor: selectedFilter === 'oneWeek' ? '#D74101' : 'transparent',
             color: selectedFilter === 'oneWeek' ? '#FFFFFF' : '#000000',
             padding: '10px',
-            borderRadius: '5px',
+            borderRadius: '10px',
+            border: '3px solid white',
             textAlign: 'center',
             flexGrow: 1,
             marginRight: '5px',
@@ -124,16 +126,18 @@ const Filter: React.FC = () => {
           onClick={() => handleFilterSelect('oneMonth')}
           sx={{
             cursor: 'pointer',
-            backgroundColor: selectedFilter === 'oneMonth' ? '#D74101' : '#000000',
-            color: selectedFilter === 'oneMonth' ? '#FFFFFF' : '#FFFFFF',
+            backgroundColor: selectedFilter === 'oneMonth' ? '#D74101' : 'transparent',
+            color: selectedFilter === 'oneMonth' ? '#FFFFFF' : '#000000',
             padding: '10px',
-            borderRadius: '5px',
+            borderRadius: '10px',
+            border: '3px solid white',
             textAlign: 'center',
             flexGrow: 1,
           }}
         >
           {t('filter.one_month')}
         </Typography>
+
       </Box>
 
       <CustomButton
