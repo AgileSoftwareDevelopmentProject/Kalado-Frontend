@@ -26,12 +26,11 @@ const ItemCard: React.FC<ItemCardProps> = ({ title, price, city, date, image, on
     >
       <CardMedia
         component="img"
-        // height="140"
         image={defaultImage}
         alt={title}
       />
       <CardContent>
-        <Typography variant="h6" component="div" noWrap>
+        <Typography variant="h6" component="div" noWrap sx={{ fontWeight: 'bold' }}>
           {title}
         </Typography>
         <Typography variant="body1" color="text.secondary">

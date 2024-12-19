@@ -53,9 +53,12 @@ const Category: React.FC = () => {
               backgroundColor: selectedCategory === category.title ? '#D74101' : 'transparent',
               '&:hover': {
                 backgroundColor: '#C85A01',
+                transform: 'translateX(-30px)', // Move left by 5 pixels
+                color: 'orange', // Change font color to orange
               },
               cursor: 'pointer',
               textAlign: 'right',
+              transition: 'transform 0.5s ease, color 0.5s ease', // Smooth transition for transform and color
             }}
           >
             <ListItemIcon>

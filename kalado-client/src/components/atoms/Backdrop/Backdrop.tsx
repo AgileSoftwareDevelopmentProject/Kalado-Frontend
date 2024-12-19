@@ -7,15 +7,17 @@ interface BackdropProps {
     children?: React.ReactNode;
 }
 
+const style = {
+    backgroundColor: 'rgba(39, 44, 72, 0.7)',
+    zIndex: 1300,
+}
+
 const Backdrop: React.FC<BackdropProps> = ({ open, onClick, children }) => {
     return (
         <MuiBackdrop
             open={open}
             onClick={onClick}
-            sx={{
-                backgroundColor: 'rgba(39, 44, 72, 0.7)',
-                zIndex: 1300,
-            }}
+            sx={style}
         >
             {children}
         </MuiBackdrop>

@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import logo from '../../../assets/images/logo.png';
 
+const style = {
+    height: 70,
+    width: 'auto',
+    marginBottom: '10px',
+}
+
 const Logo: React.FC = () => {
     return (
         <Link to="/" style={{ textDecoration: 'none' }}>
@@ -10,11 +16,7 @@ const Logo: React.FC = () => {
                 component="img"
                 src={logo}
                 alt="کالادو"
-                sx={{
-                    height: 70,
-                    width: 'auto',
-                    marginBottom: '10px',
-                }}
+                sx={style}
             />
         </Link>
     );
