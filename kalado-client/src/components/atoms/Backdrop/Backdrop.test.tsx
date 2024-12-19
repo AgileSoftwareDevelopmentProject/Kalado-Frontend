@@ -32,7 +32,6 @@ describe('Backdrop Component', () => {
 
         const backdrop = getByTestId('backdrop');
         fireEvent.click(backdrop);
-
         expect(handleClick).toHaveBeenCalledTimes(1);
     });
 

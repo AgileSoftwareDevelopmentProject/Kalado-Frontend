@@ -9,7 +9,7 @@ interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
     borderRadius?: string;
     backgroundColor?: string;
     color?: OverridableStringUnion<'inherit' | 'primary' | 'secondary' | 'success' | 'error',
-        React.ElementType>; // Use OverridableStringUnion for color
+        React.ElementType>;
     padding?: string;
     margin?: string;
     type?: 'button' | 'submit' | 'reset';

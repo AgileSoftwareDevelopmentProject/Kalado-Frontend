@@ -1,15 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import NavBar from '../../components/organisms/NavBar/NavBar';
-import Category from '../../components/organisms/Category/Category';
-import Filter from '../../components/organisms/Filter/Filter';
-import ItemCard from '../../components/organisms/ItemCard/ItemCard';
-import LoginForm from '../../components/organisms/Login/LoginForm';
-import SignupForm from '../../components/organisms/Signup/SignupForm';
-import CreateAdForm from '../../components/organisms/CreateAd/CreateAdForm';
-import Backdrop from '../../components/atoms/Backdrop/Backdrop';
+import { Box, Grid } from '@mui/material';
+import { NavBar, Category, Filter, ItemCard, LoginForm, SignupForm, CreateAdForm } from '../../components/organisms';
+import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
 import defaultImage from '../../assets/images/default-image-url.jpg';
 

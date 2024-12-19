@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppBar, Toolbar, Box } from '@mui/material';
-import Logo from '../../atoms/Logo/Logo';
-import CustomButton from '../../atoms/Buttons/CustomButton';
-import SearchBar from '../../molecules/SearchBar/SearchBar';
+import { Logo, CustomButton } from '../../atoms';
+import { SearchBar } from '../../molecules';
 
 interface NavBarProps {
   onLoginClick: () => void;

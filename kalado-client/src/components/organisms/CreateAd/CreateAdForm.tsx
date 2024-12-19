@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
-import NameInput from '../../atoms/Inputs/NameInput';
-import PriceInput from '../../atoms/Inputs/PriceInput';
-import Dropdown from '../../atoms/Inputs/Dropdown';
-import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
-import ImageUpload from '../../atoms/Inputs/ImageUpload';
-import CustomButton from '../../atoms/Buttons/CustomButton';
-import PopupBox from '../../molecules/PopupBox/PopupBox';
+import { NameInput, PriceInput, Dropdown, DescriptionInput, ImageUpload, CustomButton } from '../../atoms';
+import { PopupBox } from '../../molecules';
 import { createAd } from '../../../services/CreateAdService';
 
 interface CreateAdFormProps {

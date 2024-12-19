@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography, TextField, ButtonGroup } from '@mui/material';
-import CustomButton from '../../atoms/Buttons/CustomButton';
+import { CustomButton } from '../../atoms';
 import { fetchItems } from '../../../services/filterService';
 
 const Filter: React.FC = () => {
@@ -85,16 +85,22 @@ const Filter: React.FC = () => {
           text={t('filter.one_day')}
           onClick={() => handleFilterSelect('oneDay')}
           variant={selectedFilter === 'oneDay' ? 'contained' : 'text'}
+          backgroundColor="#FFFFFF" // Set background to white
+          color="#000000" // Set text color to black
         />
         <CustomButton
           text={t('filter.one_week')}
           onClick={() => handleFilterSelect('oneWeek')}
           variant={selectedFilter === 'oneWeek' ? 'contained' : 'text'}
+          backgroundColor="#FFFFFF" // Set background to white
+          color="#000000" // Set text color to black
         />
         <CustomButton
           text={t('filter.one_month')}
           onClick={() => handleFilterSelect('oneMonth')}
           variant={selectedFilter === 'oneMonth' ? 'contained' : 'text'}
+          backgroundColor="#FFFFFF" // Set background to white
+          color="#000000" // Set text color to black
         />
       </ButtonGroup>
 

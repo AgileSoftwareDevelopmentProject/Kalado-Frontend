@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import EmailInput from '../../atoms/Inputs/EmailInput';
-import PasswordInput from '../../atoms/Inputs/PasswordInput';
-import CustomButton from '../../atoms/Buttons/CustomButton';
-import CustomLink from '../../atoms/Links/CustomLink';
+import { EmailInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
+import { PopupBox } from '../../molecules';
 import { loginUser } from '../../../services/LoginService';
-import PopupBox from '../../molecules/PopupBox/PopupBox';
 
 interface LoginFormProps {
     onClose: () => void;
