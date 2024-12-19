@@ -41,7 +41,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             error={error}
             helperText={error ? helperText : ''}
             sx={{
-                width: '80%',
+                width: '70%',
                 '& .MuiInputBase-root': {
                     borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
                     '&:hover': {

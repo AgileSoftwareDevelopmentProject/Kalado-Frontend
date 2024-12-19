@@ -26,7 +26,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     };
 
     return (
-        <FormControl variant="standard" sx={{ mb: 2, width: '80%' }}>
+        <FormControl variant="standard" sx={{ mb: 2, width: '70%' }}>
             <InputLabel sx={{ color: 'white', textAlign: 'right', width: '100%' }}>
                 {placeholder}
             </InputLabel>
@@ -40,6 +40,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                         borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
                         '&:hover': {
                             borderBottom: '2px solid white',
+                            backgroundColor: '#D74101'
                         },
                         '&.Mui-focused': {
                             borderBottom: '2px solid transparent',

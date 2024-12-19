@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import CodeInput from '../../atoms/Inputs/CodeInput';
-import CustomButton from '../../atoms/Buttons/CustomButton';
-import PopupBox from '../../molecules/PopupBox/PopupBox';
+import { CodeInput, CustomButton } from '../../atoms';
+import { PopupBox } from '../../molecules';
 import { verifyCode } from '../../../services/CodeVerificationService';
 
 interface CodeVerificationProps {

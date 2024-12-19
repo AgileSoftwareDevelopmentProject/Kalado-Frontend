@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
-import NameInput from '../../atoms/Inputs/NameInput';
-import PriceInput from '../../atoms/Inputs/PriceInput';
-import Dropdown from '../../atoms/Inputs/Dropdown';
-import DescriptionInput from '../../atoms/Inputs/DescriptionInput';
-import ImageUpload from '../../atoms/Inputs/ImageUpload';
-import CustomButton from '../../atoms/Buttons/CustomButton';
-import PopupBox from '../../molecules/PopupBox/PopupBox';
+import { NameInput, PriceInput, Dropdown, DescriptionInput, ImageUpload, CustomButton } from '../../atoms';
+import { PopupBox } from '../../molecules';
 import { createAd } from '../../../services/CreateAdService';
 
 interface CreateAdFormProps {
@@ -116,7 +111,11 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     <ImageUpload />
                     <ImageUpload />
                 </Box>
-                <CustomButton text={t("create_ad.create_ad_btn")} type="submit" />
+                <CustomButton
+                    text={t("create_ad.create_ad_btn")}
+                    type="submit"
+                    padding="10px 40px"
+                />
             </form>
         </PopupBox>
     );

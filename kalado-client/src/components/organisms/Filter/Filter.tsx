@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, TextField, ButtonGroup } from '@mui/material';
-import CustomButton from '../../atoms/Buttons/CustomButton';
+import { Box, Typography, TextField } from '@mui/material';
+import { CustomButton } from '../../atoms';
 import { fetchItems } from '../../../services/filterService';
 
 const Filter: React.FC = () => {
@@ -43,11 +43,10 @@ const Filter: React.FC = () => {
         top: '600px',
         right: '30px',
         width: '300px',
-        bgcolor: '#272C48',
         p: 2,
       }}
     >
-      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>
+      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF', fontWeight: 'bold' }}>
         {t("filter.title")}
       </Typography>
 
@@ -80,25 +79,71 @@ const Filter: React.FC = () => {
       <Typography variant="body1" sx={{ mb: 1, textAlign: 'right', color: '#FFFFFF' }}>
         {t("filter.ad_date")}
       </Typography>
-      <ButtonGroup variant="text" aria-label="ad age options" fullWidth>
-        <CustomButton
-          text={t('filter.one_day')}
-          onClick={() => handleFilterSelect('oneDay')}
-          variant={selectedFilter === 'oneDay' ? 'contained' : 'text'}
-        />
-        <CustomButton
-          text={t('filter.one_week')}
-          onClick={() => handleFilterSelect('oneWeek')}
-          variant={selectedFilter === 'oneWeek' ? 'contained' : 'text'}
-        />
-        <CustomButton
-          text={t('filter.one_month')}
-          onClick={() => handleFilterSelect('oneMonth')}
-          variant={selectedFilter === 'oneMonth' ? 'contained' : 'text'}
-        />
-      </ButtonGroup>
 
-      <CustomButton text={t('filter.apply')} onClick={handleApplyFilters} />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          mb: 2,
+        }}
+      >
+        <Typography
+          onClick={() => handleFilterSelect('oneDay')}
+          sx={{
+            cursor: 'pointer',
+            backgroundColor: selectedFilter === 'oneDay' ? '#D74101' : 'transparent',
+            color: selectedFilter === 'oneDay' ? '#FFFFFF' : '#000000',
+            padding: '10px',
+            borderRadius: '10px',
+            border: '3px solid white',
+            textAlign: 'center',
+            flexGrow: 1,
+            marginRight: '5px',
+          }}
+        >
+          {t('filter.one_day')}
+        </Typography>
+
+        <Typography
+          onClick={() => handleFilterSelect('oneWeek')}
+          sx={{
+            cursor: 'pointer',
+            backgroundColor: selectedFilter === 'oneWeek' ? '#D74101' : 'transparent',
+            color: selectedFilter === 'oneWeek' ? '#FFFFFF' : '#000000',
+            padding: '10px',
+            borderRadius: '10px',
+            border: '3px solid white',
+            textAlign: 'center',
+            flexGrow: 1,
+            marginRight: '5px',
+          }}
+        >
+          {t('filter.one_week')}
+        </Typography>
+
+        <Typography
+          onClick={() => handleFilterSelect('oneMonth')}
+          sx={{
+            cursor: 'pointer',
+            backgroundColor: selectedFilter === 'oneMonth' ? '#D74101' : 'transparent',
+            color: selectedFilter === 'oneMonth' ? '#FFFFFF' : '#000000',
+            padding: '10px',
+            borderRadius: '10px',
+            border: '3px solid white',
+            textAlign: 'center',
+            flexGrow: 1,
+          }}
+        >
+          {t('filter.one_month')}
+        </Typography>
+
+      </Box>
+
+      <CustomButton
+        text={t('filter.apply')}
+        onClick={handleApplyFilters}
+        margin="0px 0px"
+      />
     </Box>
   );
 };

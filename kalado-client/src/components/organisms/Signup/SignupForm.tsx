@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import NameInput from '../../atoms/Inputs/NameInput';
-import EmailInput from '../../atoms/Inputs/EmailInput';
-import PhoneNumberInput from '../../atoms/Inputs/PhoneNumberInput';
-import PasswordInput from '../../atoms/Inputs/PasswordInput';
-import CustomButton from '../../atoms/Buttons/CustomButton';
-import CustomLink from '../../atoms/Links/CustomLink';
-import PopupBox from '../../molecules/PopupBox/PopupBox';
+import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
+import { PopupBox } from '../../molecules';
 import { signupUser } from '../../../services/SignupService';
 
 interface SignupFormProps {
@@ -97,9 +92,12 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
-        <Box sx={{ mt: 2 }}>
-          <CustomButton text="ثبت‌نام" type="submit" />
-        </Box>
+        <CustomButton
+          text="ثبت‌نام"
+          type="submit"
+          padding="10px 40px"
+          margin="30px 0px 0px 0px"
+        />
         <CustomLink
           to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
