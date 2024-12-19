@@ -62,7 +62,7 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
                     }
                 }}
             />
-            <div style={{ color: 'white', textAlign: 'right', marginTop: '5px' }}>
+            <div style={{ color: 'white', textAlign: 'right', marginTop: '5px', marginRight: '100px' }}>
                 {charCount}/{maxLength}
             </div>
         </div>

@@ -80,7 +80,6 @@ const Filter: React.FC = () => {
         {t("filter.ad_date")}
       </Typography>
 
-      {/* Replace ButtonGroup with Box for labels */}
       <Box
         sx={{
           display: 'flex',

@@ -51,7 +51,7 @@ const ImageUpload: React.FC = () => {
     };
 
     return (
-        <Box className="image-upload-container" sx={{ position: 'relative' }}>
+        <Box className="image-upload-container" sx={{ position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             <input
                 type="file"
                 accept="image/*"
@@ -73,6 +73,8 @@ const ImageUpload: React.FC = () => {
                     alignItems: 'center',
                     cursor: 'pointer',
                     overflow: 'hidden',
+                    margin: 0, // Remove margin
+                    padding: 0, // Remove padding
                 }}
             >
                 {imagePreviews.length === 0 ? (
