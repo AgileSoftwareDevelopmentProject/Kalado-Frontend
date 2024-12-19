@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { EmailInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { loginUser } from '../../../services/LoginService';
@@ -57,9 +57,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                     value={formData.password}
                     onChange={handleChange}
                 />
-                <Box sx={{ mt: 2 }}>
-                    <CustomButton text="ورود" type="submit" />
-                </Box>
+                <CustomButton
+                    text="ورود"
+                    type="submit"
+                    padding="10px 40px"
+                    margin="30px 0px 0px 0px"
+                />
                 <CustomLink
                     to="/#"
                     onClick={(e) => { e.preventDefault(); onOpenSignup(); }}

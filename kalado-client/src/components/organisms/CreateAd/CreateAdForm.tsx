@@ -111,7 +111,11 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     <ImageUpload />
                     <ImageUpload />
                 </Box>
-                <CustomButton text={t("create_ad.create_ad_btn")} type="submit" />
+                <CustomButton
+                    text={t("create_ad.create_ad_btn")}
+                    type="submit"
+                    padding="10px 40px"
+                />
             </form>
         </PopupBox>
     );

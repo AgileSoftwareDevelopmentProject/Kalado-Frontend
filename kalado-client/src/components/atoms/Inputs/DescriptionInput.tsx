@@ -40,8 +40,8 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
                 rows={4}
                 maxRows={6}
                 variant="outlined"
-                fullWidth
                 sx={{
+                    width: '70%',
                     '& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: 'rgba(255, 255, 255, 0.5)',

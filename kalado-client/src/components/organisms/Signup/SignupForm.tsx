@@ -92,9 +92,12 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
-        <Box sx={{ mt: 2 }}>
-          <CustomButton text="ثبت‌نام" type="submit" />
-        </Box>
+        <CustomButton
+          text="ثبت‌نام"
+          type="submit"
+          padding="10px 40px"
+          margin="30px 0px 0px 0px"
+        />
         <CustomLink
           to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}

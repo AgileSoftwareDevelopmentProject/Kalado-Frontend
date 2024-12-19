@@ -35,11 +35,10 @@ const Category: React.FC = () => {
         right: '30px',
         width: '300px',
         textAlign: 'right',
-        bgcolor: '#272C48',
         p: 2,
       }}
     >
-      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>
+      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF', fontWeight: 'bold' }}>
         {t("category.title")}
       </Typography>
       <List>

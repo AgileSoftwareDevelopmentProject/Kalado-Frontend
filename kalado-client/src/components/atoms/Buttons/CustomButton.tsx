@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
+import { Box, Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 import { OverridableStringUnion } from '@mui/types';
 
 interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
@@ -46,9 +46,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     };
 
     return (
-        <MuiButton style={buttonStyles} {...props}>
-            {text || children}
-        </MuiButton>
+        <Box>
+            <MuiButton style={buttonStyles} {...props}>
+                {text || children}
+            </MuiButton>
+        </Box>
     );
 };
 
