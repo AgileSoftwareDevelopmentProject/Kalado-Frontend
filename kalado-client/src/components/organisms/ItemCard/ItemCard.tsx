@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
+import defaultImage from '../../../assets/images/default-image-url.jpg';
 
 interface ItemCardProps {
   title: string;
@@ -25,8 +26,8 @@ const ItemCard: React.FC<ItemCardProps> = ({ title, price, city, date, image, on
     >
       <CardMedia
         component="img"
-        height="140"
-        image={image}
+        // height="140"
+        image={defaultImage}
         alt={title}
       />
       <CardContent>

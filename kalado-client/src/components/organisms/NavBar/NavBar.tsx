@@ -21,7 +21,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: 'transparent', width: '100%', boxShadow: 'none' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: '#272C48', width: '100%', boxShadow: 'none' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, ml: 10, mr: 10 }}>
         <Logo />
 

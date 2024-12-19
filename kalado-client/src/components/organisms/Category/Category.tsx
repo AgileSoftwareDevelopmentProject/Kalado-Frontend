@@ -36,15 +36,13 @@ const Category: React.FC = () => {
         width: '300px',
         textAlign: 'right',
         bgcolor: '#272C48',
-        borderRadius: 2,
-        boxShadow: 3,
         p: 2,
       }}
     >
       <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>
         {t("category.title")}
       </Typography>
-      {/* <List>
+      <List>
         {categories.map((category) => (
           <ListItem
             component="li"
@@ -66,7 +64,7 @@ const Category: React.FC = () => {
             <ListItemText primary={category.title} />
           </ListItem>
         ))}
-      </List> */}
+      </List>
     </Box>
   );
 };

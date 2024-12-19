@@ -39,12 +39,12 @@ const Filter: React.FC = () => {
   return (
     <Box
       sx={{
-        position: 'relative',
-        width: '400px',
+        position: 'fixed',
+        top: '600px',
+        right: '30px',
+        width: '300px',
         bgcolor: '#272C48',
         p: 2,
-        borderRadius: 2,
-        marginTop: '10px',
       }}
     >
       <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF' }}>

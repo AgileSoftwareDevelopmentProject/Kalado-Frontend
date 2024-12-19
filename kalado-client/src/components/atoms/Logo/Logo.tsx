@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import logo from '../../../assets/images/logo.png';
 
 const Logo: React.FC = () => {
     return (
         <Link to="/" style={{ textDecoration: 'none' }}>
             <Box
                 component="img"
-                src="/assets/images/logo.png"
+                src={logo}
                 alt="کالادو"
                 sx={{
                     height: 70,
