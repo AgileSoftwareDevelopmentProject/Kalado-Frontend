@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { EmailInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
 import { PopupBox } from '../../molecules';
@@ -11,7 +12,7 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
-
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -46,7 +47,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
     return (
         <PopupBox onClose={onClose}>
             <form onSubmit={handleSubmit}>
-                {error && <Typography color="error">{error}</Typography>}
                 <EmailInput
                     name="email"
                     value={formData.email}
@@ -58,7 +58,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                     onChange={handleChange}
                 />
                 <CustomButton
-                    text="ورود"
+                    text={t("login_form.login_btn")}
                     type="submit"
                     padding="10px 40px"
                     margin="30px 0px 0px 0px"
@@ -66,8 +66,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                 <CustomLink
                     to="/#"
                     onClick={(e) => { e.preventDefault(); onOpenSignup(); }}
-                    text="ایجاد حساب جدید"
+                    text={t("login_form.signup_link")}
                 />
+                {error && <Typography color="error">{error}</Typography>}
             </form>
         </PopupBox>
     );

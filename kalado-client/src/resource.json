@@ -43,6 +43,15 @@
         }
     },
     "fa": {
+        "general_inputs": {
+            "email": "ایمیل",
+            "password": "رمز عبور",
+            "password_repeat": "تکرار رمز عبور",
+            "phone_number": "شماره تلفن",
+            "first_name": "نام",
+            "last_name": "نام‌خانوادگی",
+            "user_name": "نام کاربری"
+        },
         "navbar": {
             "create_ad": "ثبت آگهی",
             "login/signup": "ورود/ثبت‌نام",
@@ -80,6 +89,21 @@
             },
             "choose_image": "انتخاب عکس",
             "create_ad_btn": "ثبت آگهی"
+        },
+        "login_form": {
+            "login_btn": "ورود",
+            "signup_link": "ایجاد حساب جدید"
+        },
+        "signup_form": {
+            "signup_btn": "ثبت‌نام",
+            "login_link": "در صورت داشتن حساب کاربری اینجا را کلیک کنید"
+        },
+        "item_details": {},
+        "report": {
+            "input": {
+                "category": "نوع تخلف"
+            },
+            "choose_evidence": "شواهد/مدارک"
         },
         "error": {
             "input": {

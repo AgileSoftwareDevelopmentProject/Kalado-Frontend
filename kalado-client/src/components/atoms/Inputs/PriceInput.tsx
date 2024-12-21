@@ -57,22 +57,9 @@ const PriceInput: React.FC<PriceInputProps> = ({
             }}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root': {
-                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
-                    '&:hover': {
-                        borderBottom: '2px solid white',
-                    },
-                    '&.Mui-focused': {
-                        borderBottom: '2px solid transparent',
-                    },
+                '& .MuiInputBase-root::after': {
+                    borderBottom: '2px solid #D74101',
                 },
-                '& .MuiFormLabel-root': {
-                    color: 'white',
-                },
-                '& .MuiInputBase-input': {
-                    textAlign: 'right',
-                    color: 'white',
-                }
             }}
         />
     );

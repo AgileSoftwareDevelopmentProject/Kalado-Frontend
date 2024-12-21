@@ -5,7 +5,7 @@ import { validateEmail } from '../../../validators/validateEmail';
 
 interface EmailInputProps {
     name: string;
-    placeholder?: string;
+    placeholder?: string; // Optional placeholder prop
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
@@ -13,12 +13,13 @@ interface EmailInputProps {
 
 const EmailInput: React.FC<EmailInputProps> = ({
     name,
-    placeholder = "ایمیل",
+    placeholder,
     value,
     onChange,
     isRequired = true,
 }) => {
     const { t } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.email');
     const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
 
@@ -32,7 +33,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
         <TextField
             type="email"
             name={name}
-            placeholder={placeholder}
+            placeholder={translatedPlaceholder}
             value={value}
             onChange={onChange}
             required={isRequired}
@@ -42,24 +43,8 @@ const EmailInput: React.FC<EmailInputProps> = ({
             helperText={error ? helperText : ''}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root': {
-                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
-                    '&:hover': {
-                        borderBottom: '2px solid white',
-                    },
-                    '&.Mui-focused': {
-                        borderBottom: '2px solid transparent',
-                        '&:before': {
-                            borderBottom: 'none',
-                        },
-                    },
-                },
-                '& .MuiFormLabel-root': {
-                    color: 'white',
-                },
-                '& .MuiInputBase-input': {
-                    textAlign: 'right',
-                    color: 'white',
+                '& .MuiInputBase-root::after': {
+                    borderBottom: '2px solid #D74101',
                 },
                 '& .MuiFormHelperText-root': {
                     textAlign: 'right',

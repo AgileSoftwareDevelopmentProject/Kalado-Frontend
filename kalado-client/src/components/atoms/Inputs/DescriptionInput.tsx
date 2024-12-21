@@ -43,22 +43,9 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
                 sx={{
                     width: '70%',
                     '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                            borderColor: 'rgba(255, 255, 255, 0.5)',
-                        },
-                        '&:hover fieldset': {
-                            borderColor: 'white',
-                        },
                         '&.Mui-focused fieldset': {
                             borderColor: '#D74101',
                         },
-                    },
-                    '& .MuiFormLabel-root': {
-                        color: 'white',
-                    },
-                    '& .MuiInputBase-input': {
-                        textAlign: 'right',
-                        color: 'white',
                     }
                 }}
             />

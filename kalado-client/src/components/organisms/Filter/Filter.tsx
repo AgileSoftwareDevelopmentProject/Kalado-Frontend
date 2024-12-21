@@ -6,7 +6,6 @@ import { fetchItems } from '../../../services/filterService';
 
 const Filter: React.FC = () => {
   const { t } = useTranslation();
-
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number | ''>('');
   const [maxPrice, setMaxPrice] = useState<number | ''>('');
