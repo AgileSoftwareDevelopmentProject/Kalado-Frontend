@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Box, Typography } from '@mui/material';
 import { validatePassword } from '../../../validators/validatePassword';
 
 interface PasswordInputProps {
@@ -17,12 +16,13 @@ interface PasswordInputProps {
 
 const PasswordInput: React.FC<PasswordInputProps> = ({
     name,
-    placeholder = "رمز عبور",
+    placeholder,
     value,
     onChange,
     isRequired = true
 }) => {
     const { t } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.password');
     const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
 
@@ -41,7 +41,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         <TextField
             type={isVisible ? 'text' : 'password'}
             name={name}
-            placeholder={placeholder}
+            placeholder={translatedPlaceholder}
             value={value}
             onChange={onChange}
             required={isRequired}
@@ -51,24 +51,8 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
             helperText={error ? helperText : ''}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root': {
-                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
-                    '&:hover': {
-                        borderBottom: '2px solid white',
-                    },
-                    '&.Mui-focused': {
-                        borderBottom: '2px solid transparent',
-                        '&:before': {
-                            borderBottom: 'none',
-                        },
-                    },
-                },
-                '& .MuiFormLabel-root': {
-                    color: 'white',
-                },
-                '& .MuiInputBase-input': {
-                    textAlign: 'right',
-                    color: 'white',
+                '& .MuiInputBase-root::after': {
+                    borderBottom: '2px solid #D74101',
                 },
                 '& .MuiFormHelperText-root': {
                     textAlign: 'right',

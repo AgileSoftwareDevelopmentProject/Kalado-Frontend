@@ -6,4 +6,5 @@ export { default as ItemCard } from './ItemCard/ItemCard';
 export { default as LoginForm } from './Login/LoginForm';
 export { default as NavBar } from './NavBar/NavBar';
 export { default as SignupForm } from './Signup/SignupForm';
+export { default as ReportSubmissionForm } from './Report/ReportSubmissionForm';
 

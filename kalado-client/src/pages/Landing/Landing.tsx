@@ -59,14 +59,15 @@ const Landing = () => {
         handleCloseLogin();
     };
 
-    const handleBackdropClick = (event) => {
-        const target = event.target;
+    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        const target = event.target as HTMLElement;
         if (target.classList.contains('backdrop')) {
             handleCloseLogin();
             handleCloseSignup();
             handleCloseCreateAd();
         }
     };
+
 
     const handleOpenProfilePage = () => {
         navigate('/dashboard');

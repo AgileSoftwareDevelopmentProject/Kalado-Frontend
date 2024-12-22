@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 
 interface NameInputProps {
@@ -12,7 +13,7 @@ interface NameInputProps {
 
 const NameInput: React.FC<NameInputProps> = ({
     name,
-    placeholder = "نام",
+    placeholder,
     value,
     onChange,
     isRequired = false,
@@ -28,19 +29,10 @@ const NameInput: React.FC<NameInputProps> = ({
             required={isRequired}
             variant="standard"
             margin="normal"
-            inputProps={{
-                style: { color: 'white' },
-            }}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root': {
-                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
-                    '&:hover': {
-                        borderBottom: '2px solid white',
-                    },
-                    '&.Mui-focused': {
-                        borderBottom: '2px solid transparent',
-                    },
+                '& .MuiInputBase-root::after': {
+                    borderBottom: '2px solid #D74101',
                 },
             }}
         />

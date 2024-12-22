@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
-import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
+import { useTranslation } from 'react-i18next';
+import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { signupUser } from '../../../services/SignupService';
 
@@ -10,6 +10,7 @@ interface SignupFormProps {
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -33,6 +34,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (formData.password !== formData.passwordRepeat) {
+      setError(t("signup_form.error.password_mismatch"));
+      return;
+    }
+
     try {
       const response = await signupUser(formData);
       console.log('Signup successful:', response);
@@ -46,54 +52,50 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   return (
     <PopupBox onClose={onClose}>
       <form onSubmit={handleSubmit}>
-        {error && <Typography color="error">{error}</Typography>}
         <NameInput
           name="firstName"
-          placeholder="نام"
+          placeholder={t("general_inputs.first_name")}
           value={formData.firstName}
           onChange={handleChange}
           isRequired={true}
         />
         <NameInput
           name="lastName"
-          placeholder="نام‌خانوادگی"
+          placeholder={t("general_inputs.last_name")}
           value={formData.lastName}
           onChange={handleChange}
           isRequired={true}
         />
         <NameInput
           name="username"
-          placeholder="نام کاربری"
+          placeholder={t("general_inputs.user_name")}
           value={formData.username}
           onChange={handleChange}
           isRequired={true}
         />
         <EmailInput
           name="email"
-          placeholder="ایمیل"
           value={formData.email}
           onChange={handleChange}
         />
         <PhoneNumberInput
           name="phoneNumber"
-          placeholder="شماره تلفن"
           value={formData.phoneNumber}
           onChange={handleChange}
         />
         <PasswordInput
           name="password"
-          placeholder="رمز عبور"
           value={formData.password}
           onChange={handleChange}
         />
         <PasswordInput
           name="passwordRepeat"
-          placeholder="تکرار رمز عبور"
+          placeholder={t("general_inputs.password_repeat")}
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
         <CustomButton
-          text="ثبت‌نام"
+          text={t("signup_form.signup_btn")}
           type="submit"
           padding="10px 40px"
           margin="30px 0px 0px 0px"
@@ -102,8 +104,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
           color="primary"
-          text="در صورت داشتن حساب کاربری اینجا را کلیک کنید"
+          text={t("signup_form.login_link")}
         />
+        <FormError message={error} />
       </form>
     </PopupBox>
   );

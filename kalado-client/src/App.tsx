@@ -3,8 +3,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import './App.css';
 import './index.css';
-import Landing from './pages/Landing/Landing';
-import ItemDetails from './pages/ItemDetails/ItemDetails';
+import { Landing, ItemDetails } from './pages';
 
 function App() {
   return (

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CardMedia, CardContent, Card } from '@mui/material';
-import { CustomButton } from '../../components/atoms';
+import { CustomButton, Backdrop } from '../../components/atoms';
+import { ReportSubmissionForm } from '../../components/organisms';
 import mockData from '../../mockData.json';
 import defaultImage from '../../assets/images/default-image-url.jpg';
 
@@ -18,6 +19,20 @@ interface Item {
 const items: Item[] = mockData.Items;
 
 const ItemDetails: React.FC = () => {
+    const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
+
+    const handleOpenReportSubmission = () => setReportSubmissionVisible(true);
+
+    const handleCloseReportSubmission = () => setReportSubmissionVisible(false);
+
+    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        const target = event.target as HTMLElement;
+        if (target.classList.contains('backdrop')) {
+            handleCloseReportSubmission
+        }
+    };
+
+
     const { itemId } = useParams<{ itemId: string }>();
 
     const item = items.find((item) => item.itemId === itemId);
@@ -62,8 +77,14 @@ const ItemDetails: React.FC = () => {
                 </CardContent>
                 <CustomButton
                     text="ثبت تخلف"
+                    onClick={handleOpenReportSubmission}
                 />
             </Card>
+            {isReportSubmissionVisible && (
+                <Backdrop open={isReportSubmissionVisible} onClick={handleBackdropClick}>
+                    <ReportSubmissionForm onClose={handleCloseReportSubmission} />
+                </Backdrop>
+            )}
         </Box>
     );
 };

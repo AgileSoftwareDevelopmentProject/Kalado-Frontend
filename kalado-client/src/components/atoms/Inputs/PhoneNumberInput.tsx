@@ -14,12 +14,13 @@ interface PhoneNumberInputProps {
 
 const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     name,
-    placeholder = "شماره تلفن",
+    placeholder,
     value,
     onChange,
     isRequired = true
 }) => {
     const { t } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.phone_number');
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +36,7 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         <TextField
             type="tel"
             name={name}
-            placeholder={placeholder}
+            placeholder={translatedPlaceholder}
             value={value}
             onChange={handleChange}
             required={isRequired}
@@ -49,21 +50,12 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             }}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root': {
-                    borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
-                    '&:hover': {
-                        borderBottom: '2px solid white',
-                    },
-                    '&.Mui-focused': {
-                        borderBottom: '2px solid transparent',
-                    },
-                },
-                '& .MuiFormLabel-root': {
-                    color: 'white',
-                },
                 '& .MuiInputBase-input': {
                     textAlign: 'right',
                     color: 'white',
+                },
+                '& .MuiInputBase-root::after': {
+                    borderBottom: '2px solid #D74101',
                 },
                 '& .MuiFormHelperText-root': {
                     textAlign: 'right',
