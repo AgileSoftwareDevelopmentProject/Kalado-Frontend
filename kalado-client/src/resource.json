@@ -50,7 +50,8 @@
             "phone_number": "شماره تلفن",
             "first_name": "نام",
             "last_name": "نام‌خانوادگی",
-            "user_name": "نام کاربری"
+            "user_name": "نام کاربری",
+            "price": "قیمت"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -96,7 +97,13 @@
         },
         "signup_form": {
             "signup_btn": "ثبت‌نام",
-            "login_link": "در صورت داشتن حساب کاربری اینجا را کلیک کنید"
+            "login_link": "در صورت داشتن حساب کاربری اینجا را کلیک کنید",
+            "error": {
+                "password_mismatch": "رمز عبورهای واردشده یکسان نیستند"
+            }
+        },
+        "code_verification": {
+            "enter_code": "لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید"
         },
         "item_details": {},
         "report": {

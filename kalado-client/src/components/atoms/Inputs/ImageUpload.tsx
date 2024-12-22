@@ -73,8 +73,8 @@ const ImageUpload: React.FC = () => {
                     alignItems: 'center',
                     cursor: 'pointer',
                     overflow: 'hidden',
-                    margin: 0, // Remove margin
-                    padding: 0, // Remove padding
+                    margin: 0,
+                    padding: 0,
                 }}
             >
                 {imagePreviews.length === 0 ? (

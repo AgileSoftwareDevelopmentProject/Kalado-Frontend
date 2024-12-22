@@ -13,6 +13,7 @@ interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
     padding?: string;
     margin?: string;
     type?: 'button' | 'submit' | 'reset';
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -26,6 +27,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     padding = '5px 15px',
     margin = '20px 0px',
     type = 'button',
+    onClick,
     ...props
 }) => {
 
@@ -47,7 +49,12 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
     return (
         <Box>
-            <MuiButton style={buttonStyles} {...props}>
+            <MuiButton
+                style={buttonStyles}
+                onClick={onClick}
+                type={type}
+                {...props}
+            >
                 {text || children}
             </MuiButton>
         </Box>

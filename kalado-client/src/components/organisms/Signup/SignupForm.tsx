@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
-import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
+import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { signupUser } from '../../../services/SignupService';
 
@@ -35,6 +34,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (formData.password !== formData.passwordRepeat) {
+      setError(t("signup_form.error.password_mismatch"));
+      return;
+    }
+
     try {
       const response = await signupUser(formData);
       console.log('Signup successful:', response);
@@ -48,7 +52,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   return (
     <PopupBox onClose={onClose}>
       <form onSubmit={handleSubmit}>
-        {error && <Typography color="error">{error}</Typography>}
         <NameInput
           name="firstName"
           placeholder={t("general_inputs.first_name")}
@@ -103,6 +106,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           color="primary"
           text={t("signup_form.login_link")}
         />
+        <FormError message={error} />
       </form>
     </PopupBox>
   );

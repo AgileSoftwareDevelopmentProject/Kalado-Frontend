@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CodeInput, CustomButton } from '../../atoms';
+import { useTranslation } from 'react-i18next';
+import { CodeInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { verifyCode } from '../../../services/CodeVerificationService';
 
@@ -9,7 +10,7 @@ interface CodeVerificationProps {
 }
 
 const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) => {
-
+    const { t } = useTranslation();
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
 
@@ -37,14 +38,11 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
 
     return (
         <PopupBox onClose={onClose}>
-            <p>لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید</p>
+            <p>{t("code_verification.enter_code")}</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput value={code} onChange={handleChange} />
-                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <CustomButton text="بررسی" type="submit" disabled={code.length !== 5} />
-                {/* <Box sx={{ mt: 2 }}>
-                    
-                </Box> */}
+                <FormError message={error} />
             </form>
         </PopupBox>
     );

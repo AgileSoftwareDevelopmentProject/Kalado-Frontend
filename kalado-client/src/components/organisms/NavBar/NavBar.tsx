@@ -34,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
 
         <Box sx={{ display: 'flex', gap: 1 }}>
           {isLoggedIn ? (
-            <CustomButton text={t('navbar.profile')} onClick={onProfileClick} />
+            <CustomButton text={t('navbar.profile')} backgroundColor="transparent" onClick={onProfileClick} />
           ) : (
             <CustomButton text={t('navbar.login/signup')} backgroundColor="transparent" onClick={onLoginClick} />
           )}

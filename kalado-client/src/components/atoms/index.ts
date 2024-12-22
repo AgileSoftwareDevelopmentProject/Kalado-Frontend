@@ -1,6 +1,7 @@
 export { default as Backdrop } from './Backdrop/Backdrop';
 export { default as CustomButton } from './Buttons/CustomButton';
 export { default as CloseButton } from './Buttons/CloseButton';
+export { default as FormError } from './Errors/FormError';
 export { default as CodeInput } from './Inputs/CodeInput';
 export { default as DateInput } from './Inputs/DateInput';
 export { default as DescriptionInput } from './Inputs/DescriptionInput';

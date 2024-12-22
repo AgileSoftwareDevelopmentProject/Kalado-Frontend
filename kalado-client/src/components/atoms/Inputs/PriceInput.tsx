@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 
@@ -14,14 +15,15 @@ interface PriceInputProps {
 
 const PriceInput: React.FC<PriceInputProps> = ({
     name,
-    placeholder = "قیمت",
+    placeholder,
     value,
     onChange,
     isRequired = false,
     isStarNeeded = false,
     currency = "تومان",
 }) => {
-
+    const { t } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.price');
     const [inputValue, setInputValue] = useState<string>('');
 
     useEffect(() => {
@@ -39,7 +41,7 @@ const PriceInput: React.FC<PriceInputProps> = ({
         <TextField
             type="text"
             name={name}
-            placeholder={isStarNeeded ? `${placeholder} *` : placeholder}
+            placeholder={isStarNeeded ? `${translatedPlaceholder} *` : translatedPlaceholder}
             value={inputValue}
             onChange={handleInputChange}
             required={isRequired}
