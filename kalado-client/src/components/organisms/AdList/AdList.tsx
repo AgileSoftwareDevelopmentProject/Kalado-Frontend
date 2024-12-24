@@ -53,7 +53,7 @@ const AdList = () => {
       >
         <Typography
           variant="h5"
-          sx={{color: '#FFF', marginBottom: '15px' }}
+          sx={{fontWeight: 'bold', color: '#FFF', marginBottom: '15px' }}
         >
           {t('ad_list.heading')}
         </Typography>
