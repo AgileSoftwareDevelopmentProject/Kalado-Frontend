@@ -4,14 +4,15 @@ import i18n from './i18n';
 import './App.css';
 import './index.css';
 import { Landing, ItemDetails } from './pages';
+import AdList from './components/organisms/AdList/AdList';
 
 function App() {
   return (
     <I18nextProvider i18n={i18n}>
       <Router>
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/item/:itemId" element={<ItemDetails />} />
+          <Route path="/" element={<AdList />} />
+          {/* <Route path="/item/:itemId" element={<ItemDetails />} /> */}
         </Routes>
       </Router>
     </I18nextProvider>

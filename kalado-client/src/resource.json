@@ -40,7 +40,25 @@
             },
             "choose_image": "Choose Image",
             "create_ad_btn": "Submit Ad"
-        }
+        },
+        "ad_list": {
+            "heading": "Registered Ads History",
+            "create_ad": {
+              "input": {
+                "title": "Ad Title"
+              }
+            },
+            "ad_status": {
+              "label": "Status",
+              "active": "Active",
+              "reserved": "Reserved",
+              "sold": "Sold"
+            },
+            "buttons": {
+              "edit": "Edit",
+              "delete": "Delete"
+            }
+          }      
     },
     "fa": {
         "general_inputs": {
@@ -126,6 +144,24 @@
                     "max_size": "لطفا تصاویری با حجم بیشتر از 1 مگابایت انتخاب نکنید"
                 }
             }
-        }
+        },
+        "ad_list": {
+            "heading": "تاریخچه‌ی آگهی‌های ثبت شده",
+            "create_ad": {
+              "input": {
+                "title": "عنوان آگهی"
+              }
+            },
+            "ad_status": {
+              "label": "وضعیت",
+              "active": "فعال",
+              "reserved": "رزرو شده",
+              "sold": "فروخته شده"
+            },
+            "buttons": {
+              "edit": "ویرایش",
+              "delete": "حذف"
+            }
+        }     
     }
 }
