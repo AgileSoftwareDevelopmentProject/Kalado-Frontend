@@ -20,29 +20,30 @@ import { sendRequest } from '../axiosInstance';
 import { AUTH } from '../urls';
 import { toast } from 'sonner';
 
-export async function signupUser() {
-    const firstName = 'dni';
-    const lastName = 'nvb';
-    const email = 'dnimioooo@gmail.com';
-    const phoneNumber = '1234567890';
-    const password = 'Asdf1234j';
-    const role = 'USER';
-    
-    // if (!firstName || !lastName || !email || !phoneNumber) {
-    //     toast.error('All fields are required.');
-    //     return {
-    //         isSuccess: false,
-    //         message: 'Validation error: Missing required fields.',
-    //     };
-    // }
+export async function signupUser(
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    password: string,
+    role: string
+) {
+
+    const sanitizedFirstName = String(firstName);
+    const sanitizedLastName = String(lastName);
+    const sanitizedEmail = String(email);
+    const sanitizedPhoneNumber = String(phoneNumber);
+    const sanitizedPassword = String(password);
+    const sanitizedRole = String(role);
+
     try {
         const response = await sendRequest(AUTH.REGISTER, 'POST', {
-            firstName,
-            lastName,
-            email,
-            phoneNumber,
-            password,
-            role,
+            firstName: sanitizedFirstName,
+            lastName: sanitizedLastName,
+            email: sanitizedEmail,
+            phoneNumber: sanitizedPhoneNumber,
+            password: sanitizedPassword,
+            role: sanitizedRole,
         });
 
         if (response.isSuccess) {
