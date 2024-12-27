@@ -12,31 +12,45 @@ const DeleteAd: React.FC<DeleteAdProps> = ({ isOpen, onClose, onConfirm }) => {
   const { t } = useTranslation();
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
-      <Box
-        sx={{
-          padding: '20px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      PaperProps={{
+        style: {
           backgroundColor: '#2c2f3e',
-          color: '#fff',
-          borderRadius: '10px',
-        }}
-      >
-        <Typography variant="h6" sx={{ marginBottom: '20px' }}>
-          {t('delete_confirmation.title')}
+          borderRadius: '20px',
+          padding: '20px',
+          minWidth: '450px',
+          textAlign: 'center',
+          border: '2px solid #fff',
+        },
+      }}
+    >
+      <Box>
+        {/* Title */}
+        <Typography
+          variant="h6"
+          sx={{
+            color: '#fff',
+            marginBottom: '20px',
+            fontWeight: 'normal',
+            fontSize: '1.25rem',
+          }}
+        >
+          {t('ad_list.delete_confirmation.title')}
         </Typography>
-        <Box sx={{ display: 'flex', gap: '20px' }}>
+
+        {/* Buttons */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '30px' }}>
           <Button
             onClick={onConfirm}
             sx={{
               backgroundColor: 'green',
               color: '#fff',
-              width: '50px',
-              height: '50px',
+              width: '60px',
+              height: '60px',
               borderRadius: '50%',
+              fontSize: '1.5rem',
               '&:hover': { backgroundColor: 'darkgreen' },
             }}
           >
@@ -47,9 +61,10 @@ const DeleteAd: React.FC<DeleteAdProps> = ({ isOpen, onClose, onConfirm }) => {
             sx={{
               backgroundColor: 'red',
               color: '#fff',
-              width: '50px',
-              height: '50px',
+              width: '60px',
+              height: '60px',
               borderRadius: '50%',
+              fontSize: '1.5rem',
               '&:hover': { backgroundColor: 'darkred' },
             }}
           >
