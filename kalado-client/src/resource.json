@@ -51,7 +51,9 @@
             "first_name": "نام",
             "last_name": "نام‌خانوادگی",
             "user_name": "نام کاربری",
-            "price": "قیمت"
+            "price": "قیمت",
+            "date": "تاریخ",
+            "code": "کد تایید"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -98,6 +100,7 @@
         "signup_form": {
             "signup_btn": "ثبت‌نام",
             "login_link": "در صورت داشتن حساب کاربری اینجا را کلیک کنید",
+            "is_admin": "مدیر هستم",
             "error": {
                 "password_mismatch": "رمز عبورهای واردشده یکسان نیستند"
             }
@@ -115,6 +118,11 @@
         "report": {
             "input": {
                 "category": "نوع تخلف"
+            },
+            "category": {
+                "one": "فحاشی",
+                "two": "محتوای نامناسب",
+                "three": "قیمت نامتناسب با بازار"
             },
             "choose_evidence": "شواهد/مدارک"
         },

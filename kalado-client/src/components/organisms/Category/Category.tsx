@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Typography, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 
 interface Category {
@@ -47,9 +47,7 @@ const Category: React.FC<CategoryProps> = ({ onSelectCategory }) => {
       </Typography>
       <List>
         {categories.map((category) => (
-          <ListItem
-            component="li"
-            button
+          <ListItemButton
             key={category.title}
             onClick={() => handleCategoryClick(category.title)}
             sx={{
@@ -68,7 +66,7 @@ const Category: React.FC<CategoryProps> = ({ onSelectCategory }) => {
               {React.cloneElement(category.icon as React.ReactElement<any>, { style: { color: '#FFFFFF' } })}
             </ListItemIcon>
             <ListItemText primary={category.title} />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </Box>

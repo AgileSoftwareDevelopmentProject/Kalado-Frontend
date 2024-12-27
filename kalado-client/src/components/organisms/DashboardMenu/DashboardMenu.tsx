@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Typography, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
 
 interface DashboardMenu {
@@ -38,14 +38,9 @@ const DashboardMenu: React.FC<DashboardMenuProps> = ({ onSelectMenu }) => {
                 p: 2,
             }}
         >
-            <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF', fontWeight: 'bold' }}>
-                {t("category.title")}
-            </Typography>
             <List>
                 {categories.map((category) => (
-                    <ListItem
-                        component="li"
-                        button
+                    <ListItemButton
                         key={category.title}
                         onClick={() => handleDashboardMenuClick(category.title)}
                         sx={{
@@ -64,7 +59,7 @@ const DashboardMenu: React.FC<DashboardMenuProps> = ({ onSelectMenu }) => {
                             {React.cloneElement(category.icon as React.ReactElement<any>, { style: { color: '#FFFFFF' } })}
                         </ListItemIcon>
                         <ListItemText primary={category.title} />
-                    </ListItem>
+                    </ListItemButton>
                 ))}
             </List>
         </Box>

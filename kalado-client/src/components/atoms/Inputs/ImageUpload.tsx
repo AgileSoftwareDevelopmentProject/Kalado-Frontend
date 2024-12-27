@@ -1,9 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, IconButton } from '@mui/material';
 import { FaTrash } from 'react-icons/fa';
 
-const ImageUpload: React.FC = () => {
+
+interface ImageUploadProps {
+    onUpload: (files: File[]) => void;
+}
+
+const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
     const { t } = useTranslation();
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [imagePreviews, setImagePreviews] = useState<string[]>([]);
@@ -18,7 +23,7 @@ const ImageUpload: React.FC = () => {
             let errorFound = false;
 
             Array.from(files).forEach((file) => {
-                if (file.size <= 1 * 1024 * 1024) {
+                if (file.size <= 1 * 1024 * 1024) { // Limit size to 1MB
                     newImages.push(file);
                     newPreviews.push(URL.createObjectURL(file));
                 } else {
@@ -49,6 +54,10 @@ const ImageUpload: React.FC = () => {
             fileInputRef.current.click();
         }
     };
+
+    // useEffect(() => {
+    //     onUpload(selectedImages); // Call onUpload with the current images
+    // }, [selectedImages, onUpload]);
 
     return (
         <Box className="image-upload-container" sx={{ position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 1 }}>

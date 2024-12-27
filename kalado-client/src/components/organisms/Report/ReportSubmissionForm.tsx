@@ -18,23 +18,20 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
         price: number;
         category: string | null;
         description: string;
-        images: string;
+        images: File[]; // Change to File[] to hold uploaded images
     }>({
         title: '',
         price: 0,
         category: null,
         description: '',
-        images: '',
+        images: [],
     });
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
     const reportOptions = [
-        { value: 'Real estate', label: t("category.one") },
-        { value: 'Transportation', label: t("category.two") },
-        { value: 'House and Kitchen', label: t("category.three") },
-        { value: 'Digital Stuff', label: t("category.four") },
-        { value: 'Entertainment', label: t("category.five") },
-        { value: 'Personal Stuff', label: t("category.six") },
-        { value: 'Others', label: t("category.seven") },
+        { value: 'Abuse', label: t("report.category.one") },
+        { value: 'Inproper Content', label: t("report.category.two") },
+        { value: 'Inproper Price', label: t("report.category.three") },
     ];
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
@@ -44,18 +41,32 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
         }));
     };
 
-    const handleDescriptionchange = (description: string) => {
-        setFormData((prevData) => ({
+    const handleDescriptionChange = (description: string) => {
+        setFormData(prevData => ({
             ...prevData,
             description,
+        }));
+    };
+
+    const handleImageUpload = (files: File[]) => {
+        setFormData(prevData => ({
+            ...prevData,
+            images: files // Update images state with uploaded files
         }));
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // Prepare data to send
+        const submissionData = {
+            ...formData,
+            date: selectedDate, // Include selected date
+            price: formData.price // Ensure price is included
+        };
+
         try {
-            await createAd(formData);
+            await createAd(submissionData);
             console.log('Create Ad successfully');
             onClose();
         } catch (error) {
@@ -74,22 +85,21 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateInput
-                        label="Select a date"
+                        label={t("general_inputs.date")}
                         value={selectedDate}
                         onChange={(newValue) => setSelectedDate(newValue)}
-                        renderInput={(params) => <TextField {...params} />}
                     />
                 </LocalizationProvider>
                 <DescriptionInput
                     name="description"
                     value={formData.description}
-                    onChange={handleDescriptionchange}
+                    onChange={handleDescriptionChange}
                 />
                 <p>{t("report.choose_evidence")}</p>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                    <ImageUpload />
-                    <ImageUpload />
-                    <ImageUpload />
+                    <ImageUpload onUpload={handleImageUpload} />
+                    <ImageUpload onUpload={handleImageUpload} />
+                    <ImageUpload onUpload={handleImageUpload} />
                 </Box>
                 <CustomButton
                     text={t("create_ad.create_ad_btn")}

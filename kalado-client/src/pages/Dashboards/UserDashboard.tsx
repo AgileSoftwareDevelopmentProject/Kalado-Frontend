@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
-import { DashboardMenu } from '../../components/organisms';
+import { DashboardMenu, ProfileManagement, AdManagement, ReportHistory } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
 import mockData from '../../mockData.json';
 
@@ -30,12 +30,11 @@ const UserDashboard = () => {
 
     return (
         <Box>
-
             <SideBar>
                 <DashboardMenu onSelectMenu={handleSelectMenu} />
             </SideBar>
-            <Box>
-
+            <Box sx={{ flexGrow: 1, padding: 2 }}>
+                {renderContent()}
             </Box>
         </Box>
     );
