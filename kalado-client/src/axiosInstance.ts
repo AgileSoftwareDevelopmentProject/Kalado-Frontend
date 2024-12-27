@@ -1,28 +1,33 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { BASE_URL as baseURL } from './urls';
 import { toast } from 'sonner';
 import errorTranslations from './errorTranslations';
 
 const axiosInstance = axios.create({ baseURL });
 
-// Request Interceptor
-axiosInstance.interceptors.request.use(async (config) => {
-    const token = localStorage.getItem('token');
-    const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
-    console.log('-----------------------------------');
-    if (token && !isPublicEndpoint) {
-        console.log('[Request] Attaching Authorization Token:', token);
-        config.headers['Authorization'] = token;
-    } else {
-        console.log('[Request] No Authorization Token or Public Endpoint');
-    }
-    if (process.env.NODE_ENV === 'development') {
-        console.log('[Request] Config:', config);
-    }
-    return config;
-});
+axiosInstance.interceptors.request.use(
+    async (config) => {
+        const token = localStorage.getItem('token');
+        const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
+        console.log('-----------------------------------');
+        if (token && !isPublicEndpoint) {
+            console.log('[Request] Attaching Authorization Token:', token);
+            config.headers['Authorization'] = `Bearer ${token}`;
+        } else {
+            console.log('[Request] No Authorization Token or Public Endpoint');
+        }
 
-// Response Interceptor
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[Request] Config:', config);
+        }
+        return config;
+    },
+    (error) => {
+        console.error('[Request] Interceptor Error:', error);
+        return Promise.reject(error);
+    }
+);
+
 axiosInstance.interceptors.response.use(
     (response) => {
         if (process.env.NODE_ENV === 'development') {
@@ -31,8 +36,8 @@ axiosInstance.interceptors.response.use(
         }
         return response;
     },
-    (error) => {
-        const statusCode = error?.response?.status;
+    (error: AxiosError) => {
+        const statusCode = error.response?.status;
         console.log('-----------------------------------');
         console.error('[Response] Error Status Code:', statusCode, 'Error:', error);
 
@@ -52,10 +57,9 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-// API Request Function
 type TApiResponse<T> = {
     isSuccess: boolean;
-    data: T;
+    data: T | null;
     status: number;
     message?: string;
 };
@@ -68,48 +72,48 @@ export async function sendRequest<T>(
     requestData?: any,
     signal?: AbortSignal
 ): Promise<TApiResponse<T>> {
-    console.log('-----------------------------------');
-    if (process.env.NODE_ENV === 'development') {
-        console.log(`[Request] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
-    }
+    try {
+        console.log('-----------------------------------');
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`[Request] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
+        }
 
-    return axiosInstance
-        .request({
+        const response = await axiosInstance.request({
             method,
             url,
             data: requestData,
             ...(signal ? { signal } : {}),
-        })
-        .then((response) => {
-            console.log('-----------------------------------');
-            if (process.env.NODE_ENV === 'development') {
-                console.log('[Request] Success:', response.data);
-            }
-            return {
-                isSuccess: true,
-                data: response.data as T,
-                status: response.status,
-            };
-        })
-        .catch((error) => {
-            const response = error?.response?.data || {};
-            let message = response.message || 'An unknown error occurred.';
-
-            console.log('-----------------------------------');
-            if (message && errorTranslations[message]) {
-                message = errorTranslations[message];
-            } else {
-                message = message.replace(/_/g, ' ');
-            }
-
-            console.error('[Request] Error Message:', message, 'Response Data:', response);
-            toast.error(message || 'An unexpected error occurred.');
-
-            return {
-                isSuccess: false,
-                data: response.data || null,
-                status: error?.response?.status || 500,
-                message,
-            };
         });
+
+        console.log('-----------------------------------');
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[Request] Success:', response.data);
+        }
+
+        return {
+            isSuccess: true,
+            data: response.data as T,
+            status: response.status,
+        };
+    } catch (error) {
+        const axiosError = error as AxiosError<{ message?: string; [key: string]: any }>;
+        const response = axiosError.response?.data || {};
+        const message = response.message || 'An unknown error occurred.';
+
+        console.log('-----------------------------------');
+        if (message && errorTranslations[message]) {
+            toast.error(errorTranslations[message]);
+        } else {
+            toast.error(message.replace(/_/g, ' '));
+        }
+
+        console.error('[Request] Error Message:', message, 'Response Data:', response);
+
+        return {
+            isSuccess: false,
+            data: null,
+            status: axiosError.response?.status || 500,
+            message,
+        };
+    }
 }
