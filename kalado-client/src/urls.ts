@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://dishdash.mmmirzaei.info/v1' // 'http://91.107.129.255:8083/v1'
+export const BASE_URL = 'http://localhost:8083/v1'
 
 // AUTH
 export const AUTH = {

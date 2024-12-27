@@ -53,6 +53,8 @@ export async function sendRequest<T>(
             ...(signal ? { signal } : {}),
         })
         .then((response) => {
+            console.log('lscjlwsanclsndc wndc wpsjcd j;wsd;wsclnld ncslnc ln')
+            console.log(response.data)
             return {
                 isSuccess: true,
                 data: response.data as T,
