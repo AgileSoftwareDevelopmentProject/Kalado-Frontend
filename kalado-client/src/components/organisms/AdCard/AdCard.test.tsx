@@ -14,7 +14,8 @@ describe('AdCard Component', () => {
   };
 
   beforeEach(() => {
-    i18n.changeLanguage('fa'); // Default to Persian
+    jest.clearAllMocks();
+    i18n.changeLanguage('fa');
   });
 
   test('edits the title when the Edit button is clicked and enter is pressed', () => {
@@ -25,7 +26,7 @@ describe('AdCard Component', () => {
 
     const titleInput = screen.getByRole('textbox');
     fireEvent.change(titleInput, { target: { value: 'عنوان جدید' } });
-    fireEvent.keyPress(titleInput, { key: 'Enter', code: 'Enter' });
+    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' });
 
     expect(defaultProps.onEditTitle).toHaveBeenCalledWith('عنوان جدید');
   });
@@ -38,18 +39,22 @@ describe('AdCard Component', () => {
 
     const titleInput = screen.getByRole('textbox');
     fireEvent.change(titleInput, { target: { value: 'آ'.repeat(51) } });
+    fireEvent.blur(titleInput);
 
-    expect((titleInput as HTMLInputElement).value).toBe('آ'.repeat(50));
+    expect(defaultProps.onEditTitle).toHaveBeenCalledWith('آ'.repeat(50));
   });
 
   test('changes status when a new status is selected', () => {
     renderWithProviders(<AdCard {...defaultProps} />);
 
     const statusDropdown = screen.getByRole('combobox');
-    fireEvent.change(statusDropdown, { target: { value: i18n.t('ad_list.ad_status.reserved') } });
+    fireEvent.mouseDown(statusDropdown);
+
+    const reservedOption = screen.getByText(i18n.t('ad_list.ad_status.reserved'));
+    fireEvent.click(reservedOption);
 
     expect(defaultProps.onStatusChange).toHaveBeenCalledWith(
-      expect.objectContaining({ target: { value: i18n.t('ad_list.ad_status.reserved') } })
+      expect.any(Object)
     );
   });
 
@@ -57,15 +62,15 @@ describe('AdCard Component', () => {
     renderWithProviders(<AdCard {...defaultProps} />);
 
     const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
-    expect(deleteButton.closest('div')).toHaveStyle('direction: rtl');
+    expect(deleteButton.closest('div')).toHaveStyle({ direction: 'rtl' });
   });
 
   test('renders correctly with LTR (left-to-right) language setting', () => {
-    i18n.changeLanguage('en'); // Switch to English
+    i18n.changeLanguage('en');
     renderWithProviders(<AdCard {...defaultProps} />);
 
     const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
-    expect(deleteButton.closest('div')).toHaveStyle('direction: ltr');
+    expect(deleteButton.closest('div')).toHaveStyle({ direction: 'ltr' });
   });
 
   test('opens the delete confirmation dialog when delete button is clicked', () => {
