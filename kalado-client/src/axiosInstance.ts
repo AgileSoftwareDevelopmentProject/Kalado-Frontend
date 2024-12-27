@@ -5,23 +5,30 @@ import errorTranslations from './errorTranslations';
 
 const axiosInstance = axios.create({ baseURL });
 
+// Request Interceptor
 axiosInstance.interceptors.request.use(async (config) => {
     const token = localStorage.getItem('token');
+    const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
     console.log('-----------------------------------');
-    if (token) {
+    if (token && !isPublicEndpoint) {
         console.log('[Request] Attaching Authorization Token:', token);
         config.headers['Authorization'] = token;
     } else {
-        console.log('[Request] No Authorization Token Found');
+        console.log('[Request] No Authorization Token or Public Endpoint');
     }
-    console.log('[Request] Config:', config);
+    if (process.env.NODE_ENV === 'development') {
+        console.log('[Request] Config:', config);
+    }
     return config;
 });
 
+// Response Interceptor
 axiosInstance.interceptors.response.use(
     (response) => {
-        console.log('-----------------------------------');
-        console.log('[Response] Success:', response);
+        if (process.env.NODE_ENV === 'development') {
+            console.log('-----------------------------------');
+            console.log('[Response] Success:', response);
+        }
         return response;
     },
     (error) => {
@@ -45,6 +52,7 @@ axiosInstance.interceptors.response.use(
     }
 );
 
+// API Request Function
 type TApiResponse<T> = {
     isSuccess: boolean;
     data: T;
@@ -61,7 +69,10 @@ export async function sendRequest<T>(
     signal?: AbortSignal
 ): Promise<TApiResponse<T>> {
     console.log('-----------------------------------');
-    console.log(`[Request] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
+    if (process.env.NODE_ENV === 'development') {
+        console.log(`[Request] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
+    }
+
     return axiosInstance
         .request({
             method,
@@ -71,7 +82,9 @@ export async function sendRequest<T>(
         })
         .then((response) => {
             console.log('-----------------------------------');
-            console.log('[Request] Success:', response.data);
+            if (process.env.NODE_ENV === 'development') {
+                console.log('[Request] Success:', response.data);
+            }
             return {
                 isSuccess: true,
                 data: response.data as T,
@@ -80,7 +93,7 @@ export async function sendRequest<T>(
         })
         .catch((error) => {
             const response = error?.response?.data || {};
-            let message = response.message || 'خطایی رخ داده است.';
+            let message = response.message || 'An unknown error occurred.';
 
             console.log('-----------------------------------');
             if (message && errorTranslations[message]) {
@@ -90,11 +103,13 @@ export async function sendRequest<T>(
             }
 
             console.error('[Request] Error Message:', message, 'Response Data:', response);
-            toast.error(message);
+            toast.error(message || 'An unexpected error occurred.');
 
             return {
                 isSuccess: false,
-                ...response,
+                data: response.data || null,
+                status: error?.response?.status || 500,
+                message,
             };
         });
 }
