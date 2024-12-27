@@ -21,13 +21,13 @@ describe('DeleteAd Component', () => {
     // Check if dialog is open
     expect(screen.getByText(/آیا از حذف این آگهی اطمینان دارید؟/)).toBeInTheDocument();
     
-    // Close the dialog by clicking the "x" button
-    fireEvent.click(screen.getByRole('button', { name: /✘/ }));
-
+    // Close the dialog by clicking the "Cancel" button
+    fireEvent.click(screen.getByRole('button', { name: /Cancel/ }));
+  
     // Ensure onClose is called
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
-
+  
   test('clicking confirm button calls onConfirm', () => {
     const handleClose = jest.fn();
     const handleConfirm = jest.fn();
@@ -37,10 +37,10 @@ describe('DeleteAd Component', () => {
       <DeleteAd isOpen={true} onClose={handleClose} onConfirm={handleConfirm} />
     );
     
-    // Click the confirm button
-    fireEvent.click(screen.getByRole('button', { name: /✔/ }));
+    // Click the "Confirm" button
+    fireEvent.click(screen.getByRole('button', { name: /Confirm/ }));
     
     // Ensure onConfirm is called
     expect(handleConfirm).toHaveBeenCalledTimes(1);
-  });
+  });  
 });

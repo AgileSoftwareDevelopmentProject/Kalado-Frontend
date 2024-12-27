@@ -55,6 +55,7 @@ const DeleteAd: React.FC<DeleteAdProps> = ({ isOpen, onClose, onConfirm }) => {
               fontSize: '1.5rem',
               '&:hover': { backgroundColor: 'darkgreen' },
             }}
+            aria-label="Confirm"
           >
              <FiCheck size={30} />
           </Button>
@@ -69,6 +70,7 @@ const DeleteAd: React.FC<DeleteAdProps> = ({ isOpen, onClose, onConfirm }) => {
               fontSize: '1.5rem',
               '&:hover': { backgroundColor: 'darkred' },
             }}
+            aria-label="Cancel" 
           >
             <FiX size={30} />
           </Button>
