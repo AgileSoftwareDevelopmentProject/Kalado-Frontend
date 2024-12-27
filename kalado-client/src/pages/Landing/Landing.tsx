@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Grid, Typography } from '@mui/material';
-import { NavBar, Category, Filter, ItemCard, LoginForm, SignupForm, CreateAdForm } from '../../components/organisms';
+import { Box, Typography } from '@mui/material';
+import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
-import defaultImage from '../../assets/images/default-image-url.jpg';
 
-interface Item {
-    title: string;
-    imageUrl: string;
-    price: number;
-    city: string;
-    date: string;
-    itemId: string;
-}
 
 const items = mockData.Items;
 
@@ -68,7 +59,6 @@ const Landing = () => {
         }
     };
 
-
     const handleOpenProfilePage = () => {
         navigate('/dashboard');
     }
@@ -76,7 +66,6 @@ const Landing = () => {
     const handleSelectCategory = (categoryTitle: string) => {
         setSelectedCategoryTitle(categoryTitle);
     };
-
 
     return (
         <Box>
@@ -89,20 +78,7 @@ const Landing = () => {
                 <Typography variant="h4" sx={{ textAlign: 'center', mt: 4, color: "#FFFFFF", mb: 10, fontWeight: 'bold' }}>
                     {selectedCategoryTitle ? selectedCategoryTitle : "Select a Category"}
                 </Typography>
-                <Grid container spacing={2}>
-                    {items.map(item => (
-                        <Grid item xs={12} sm={6} md={4} key={item.itemId}>
-                            <ItemCard
-                                title={item.title}
-                                price={`تومان ${item.price.toLocaleString()}`}
-                                city={item.city}
-                                date={item.date}
-                                image={item.imageUrl || defaultImage}
-                                onClick={() => navigate(`/item/${item.itemId}`)}
-                            />
-                        </Grid>
-                    ))}
-                </Grid>
+                <ItemsHolder items={items} onItemSelect={(itemId) => navigate(`/item/${itemId}`)} />
             </Box>
 
             {isLoginVisible && (

@@ -105,7 +105,12 @@
         "code_verification": {
             "enter_code": "لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید"
         },
-        "item_details": {},
+        "item_details": {
+            "price": "قیمت",
+            "city": "شهر",
+            "date": "تاریخ ثبت",
+            "description": "توضیحات"
+        },
         "report": {
             "input": {
                 "category": "نوع تخلف"
