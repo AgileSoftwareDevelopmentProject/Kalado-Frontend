@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Button, Dialog } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
 type DeleteAdProps = {
   isOpen: boolean;
@@ -19,8 +20,9 @@ const DeleteAd: React.FC<DeleteAdProps> = ({ isOpen, onClose, onConfirm }) => {
         style: {
           backgroundColor: '#2c2f3e',
           borderRadius: '20px',
-          padding: '20px',
+          padding: '40px',
           minWidth: '450px',
+          minHeight: '200px',
           textAlign: 'center',
           border: '2px solid #fff',
         },
@@ -54,7 +56,7 @@ const DeleteAd: React.FC<DeleteAdProps> = ({ isOpen, onClose, onConfirm }) => {
               '&:hover': { backgroundColor: 'darkgreen' },
             }}
           >
-            ✔
+            <FaCheck />
           </Button>
           <Button
             onClick={onClose}
@@ -68,7 +70,7 @@ const DeleteAd: React.FC<DeleteAdProps> = ({ isOpen, onClose, onConfirm }) => {
               '&:hover': { backgroundColor: 'darkred' },
             }}
           >
-            ✘
+            <FaTimes />
           </Button>
         </Box>
       </Box>
