@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1735307880230" clover="3.2.0">
-  <project timestamp="1735307880230" name="All files">
-    <metrics statements="316" coveredstatements="3" conditionals="142" coveredconditionals="0" methods="115" coveredmethods="1" elements="573" coveredelements="4" complexity="0" loc="316" ncloc="316" packages="20" files="31" classes="31"/>
+<coverage generated="1735308506316" clover="3.2.0">
+  <project timestamp="1735308506316" name="All files">
+    <metrics statements="316" coveredstatements="17" conditionals="142" coveredconditionals="5" methods="115" coveredmethods="4" elements="573" coveredelements="26" complexity="0" loc="316" ncloc="316" packages="20" files="31" classes="31"/>
     <package name="atoms.Backdrop">
       <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="Backdrop.tsx" path="/Users/donyanavabi/Desktop/mio/Kalado-Frontend/kalado-client/src/components/atoms/Backdrop/Backdrop.tsx">
@@ -215,38 +215,38 @@
       </file>
     </package>
     <package name="organisms.AdCard">
-      <metrics statements="26" coveredstatements="3" conditionals="14" coveredconditionals="0" methods="9" coveredmethods="1"/>
+      <metrics statements="26" coveredstatements="17" conditionals="14" coveredconditionals="5" methods="9" coveredmethods="4"/>
       <file name="AdCard.tsx" path="/Users/donyanavabi/Desktop/mio/Kalado-Frontend/kalado-client/src/components/organisms/AdCard/AdCard.tsx">
-        <metrics statements="23" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="8" coveredmethods="0"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
+        <metrics statements="23" coveredstatements="14" conditionals="14" coveredconditionals="5" methods="8" coveredmethods="3"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="33" count="7" type="stmt"/>
+        <line num="35" count="7" type="stmt"/>
+        <line num="36" count="7" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="40" count="7" type="stmt"/>
+        <line num="42" count="7" type="stmt"/>
         <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="44" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
+        <line num="48" count="7" type="stmt"/>
         <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="50" count="0" type="stmt"/>
         <line num="51" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
+        <line num="55" count="7" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
+        <line num="60" count="7" type="stmt"/>
         <line num="194" count="0" type="stmt"/>
-        <line num="204" count="0" type="stmt"/>
+        <line num="204" count="2" type="stmt"/>
         <line num="217" count="0" type="stmt"/>
-        <line num="219" count="0" type="stmt"/>
-        <line num="220" count="0" type="stmt"/>
+        <line num="219" count="1" type="stmt"/>
+        <line num="220" count="1" type="stmt"/>
       </file>
       <file name="DeleteAd.tsx" path="/Users/donyanavabi/Desktop/mio/Kalado-Frontend/kalado-client/src/components/organisms/AdCard/DeleteAd.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="12" count="1" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
       </file>
     </package>
     <package name="organisms.AdList">
