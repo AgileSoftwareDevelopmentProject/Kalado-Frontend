@@ -6,12 +6,10 @@ import { CustomButton, Backdrop } from '../../components/atoms';
 import { ReportSubmissionForm } from '../../components/organisms';
 import mockData from '../../mockData.json';
 import defaultImage from '../../assets/images/default-image-url.jpg';
-
-// Import your icons
-import PriceIcon from '@mui/icons-material/AttachMoney'; // Example icon for price
-import CityIcon from '@mui/icons-material/LocationOn'; // Example icon for city
-import DateIcon from '@mui/icons-material/CalendarToday'; // Example icon for date
-import DescriptionIcon from '@mui/icons-material/Description'; // Example icon for description
+import PriceIcon from '@mui/icons-material/AttachMoney';
+import CityIcon from '@mui/icons-material/LocationOn';
+import DateIcon from '@mui/icons-material/CalendarToday';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 interface Item {
     title: string;
@@ -53,39 +51,39 @@ const ItemDetails: React.FC = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 minHeight: '100vh',
-                bgcolor: 'transparent', // Set background to transparent
+                bgcolor: 'transparent',
                 p: 2,
             }}
         >
-            <Card sx={{ width: 600, height: 'auto', bgcolor: "rgba(255, 255, 255, 0.8)" }}> {/* Semi-transparent white background */}
+            <Card sx={{ width: 800, height: 'auto', bgcolor: "#272C48" }}>
                 <Box sx={{ display: 'flex' }}>
                     <Box sx={{ flexGrow: 1 }}>
                         <CardContent>
-                            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}> {/* Increased font size */}
+                            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
                                 {item.title}
                             </Typography>
                             <Box display="flex" alignItems="center">
                                 <PriceIcon />
-                                <Typography variant="h6" color="text.secondary" sx={{ ml: 1 }}> {/* Increased font size */}
-                                    {t("item_details.price")}: {item.price.toLocaleString()} تومان
+                                <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
+                                    {item.price.toLocaleString()} تومان
                                 </Typography>
                             </Box>
                             <Box display="flex" alignItems="center">
                                 <CityIcon />
                                 <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
-                                    {t("item_details.city")}: {item.city}
+                                    {item.city}
                                 </Typography>
                             </Box>
                             <Box display="flex" alignItems="center">
                                 <DateIcon />
                                 <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
-                                    {t("item_details.date")}: {item.date}
+                                    {item.date}
                                 </Typography>
                             </Box>
                             <Box display="flex" alignItems="center">
                                 <DescriptionIcon />
                                 <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
-                                    {t("item_details.description")}: {item.description}
+                                    {item.description}
                                 </Typography>
                             </Box>
                         </CardContent>
@@ -94,11 +92,11 @@ const ItemDetails: React.FC = () => {
                         component="img"
                         image={defaultImage}
                         alt={item.title}
-                        sx={{ height: 400, width: '250px', objectFit: 'cover' }} // Increased height for the image and fixed width
+                        sx={{ height: 400, width: 500, objectFit: 'cover' }}
                     />
                 </Box>
                 <CustomButton
-                    text="ثبت تخلف"
+                    text={t("item_details.report_submission_btn")}
                     onClick={handleOpenReportSubmission}
                 />
             </Card>

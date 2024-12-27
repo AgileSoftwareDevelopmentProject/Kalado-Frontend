@@ -9,7 +9,7 @@ interface Category {
 }
 
 interface CategoryProps {
-  onSelectCategory: (categoryTitle: string) => void; // Prop to handle category selection
+  onSelectCategory: (categoryTitle: string) => void;
 }
 
 const Category: React.FC<CategoryProps> = ({ onSelectCategory }) => {

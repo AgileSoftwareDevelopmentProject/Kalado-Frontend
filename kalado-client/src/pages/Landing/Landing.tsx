@@ -61,7 +61,7 @@ const Landing = () => {
     };
 
     const handleOpenProfilePage = () => {
-        navigate('/dashboard');
+        navigate('/user-dashboard');
     }
 
     const handleSelectCategory = (categoryTitle: string) => {

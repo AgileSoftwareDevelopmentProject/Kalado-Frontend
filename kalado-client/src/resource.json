@@ -109,13 +109,24 @@
             "price": "قیمت",
             "city": "شهر",
             "date": "تاریخ ثبت",
-            "description": "توضیحات"
+            "description": "توضیحات",
+            "report_submission_btn": "ثبت تخلف"
         },
         "report": {
             "input": {
                 "category": "نوع تخلف"
             },
             "choose_evidence": "شواهد/مدارک"
+        },
+        "dashboard": {
+            "user": {
+                "menu": {
+                    "one": "مدیریت پروفایل",
+                    "two": "مدیریت آگهی‌ها",
+                    "three": "تاریخچه‌ی تخلفات"
+                }
+            },
+            "admin": {}
         },
         "error": {
             "input": {
