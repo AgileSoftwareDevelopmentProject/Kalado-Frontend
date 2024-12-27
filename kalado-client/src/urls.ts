@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:8083/v1'
+export const BASE_URL = 'http://kaladoshop.com:8083/v1'
 
 // AUTH
 export const AUTH = {

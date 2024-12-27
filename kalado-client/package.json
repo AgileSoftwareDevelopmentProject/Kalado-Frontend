@@ -16,6 +16,7 @@
     "@mui/icons-material": "^6.2.0",
     "@mui/material": "^6.2.1",
     "@mui/x-date-pickers": "^7.23.3",
+    "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "i18next": "^24.1.2",
     "react": "^19.0.0",
