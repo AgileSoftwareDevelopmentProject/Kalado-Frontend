@@ -1,69 +1,104 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import renderWithProviders from '../../../tests/renderWithProviders';
+import { screen, fireEvent } from '@testing-library/react';
 import AdCard from './AdCard';
-import { I18nextProvider } from 'react-i18next';
-import i18n from '../../../i18n';
+import i18n from 'i18next';
 
 describe('AdCard Component', () => {
-  const renderWithProviders = (ui: React.ReactElement) => {
-    render(<I18nextProvider i18n={i18n}>{ui}</I18nextProvider>);
+  const defaultProps = {
+    title: 'Test Ad',
+    status: 'active',
+    onStatusChange: jest.fn(),
+    onDelete: jest.fn(),
+    onEditTitle: jest.fn(),
   };
 
-  test('opens the delete confirmation dialog when delete button is clicked', () => {
-    const handleDelete = jest.fn();
-    const handleEditTitle = jest.fn();
-    const handleStatusChange = jest.fn();
-
-    // Render the AdCard component
-    renderWithProviders(
-      <AdCard
-        title="Test Ad"
-        status="active"
-        onStatusChange={handleStatusChange}
-        onDelete={handleDelete}
-        onEditTitle={handleEditTitle}
-      />
-    );
-    
-    // Ensure that delete button is rendered and has the correct aria-label
-    const deleteButton = screen.getByRole('button', { name: /حذف/i });
-    
-    // Click on delete button
-    fireEvent.click(deleteButton);
-
-    // Ensure that the delete confirmation dialog opens
-    expect(screen.getByText(/آیا از حذف این آگهی اطمینان دارید؟/)).toBeInTheDocument();
+  beforeEach(() => {
+    i18n.changeLanguage('fa'); // Default to Persian
   });
 
-  test('clicking confirm button in delete dialog calls onDelete', () => {
-    const handleDelete = jest.fn();
-    const handleEditTitle = jest.fn();
-    const handleStatusChange = jest.fn();
+  test('edits the title when the Edit button is clicked and enter is pressed', () => {
+    renderWithProviders(<AdCard {...defaultProps} />);
 
-    // Render the AdCard component
-    renderWithProviders(
-      <AdCard
-        title="Test Ad"
-        status="active"
-        onStatusChange={handleStatusChange}
-        onDelete={handleDelete}
-        onEditTitle={handleEditTitle}
-      />
+    const editButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.edit') });
+    fireEvent.click(editButton);
+
+    const titleInput = screen.getByRole('textbox');
+    fireEvent.change(titleInput, { target: { value: 'عنوان جدید' } });
+    fireEvent.keyPress(titleInput, { key: 'Enter', code: 'Enter' });
+
+    expect(defaultProps.onEditTitle).toHaveBeenCalledWith('عنوان جدید');
+  });
+
+  test('does not allow the title to exceed 50 characters', () => {
+    renderWithProviders(<AdCard {...defaultProps} />);
+
+    const editButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.edit') });
+    fireEvent.click(editButton);
+
+    const titleInput = screen.getByRole('textbox');
+    fireEvent.change(titleInput, { target: { value: 'آ'.repeat(51) } });
+
+    expect((titleInput as HTMLInputElement).value).toBe('آ'.repeat(50));
+  });
+
+  test('changes status when a new status is selected', () => {
+    renderWithProviders(<AdCard {...defaultProps} />);
+
+    const statusDropdown = screen.getByRole('combobox');
+    fireEvent.change(statusDropdown, { target: { value: i18n.t('ad_list.ad_status.reserved') } });
+
+    expect(defaultProps.onStatusChange).toHaveBeenCalledWith(
+      expect.objectContaining({ target: { value: i18n.t('ad_list.ad_status.reserved') } })
     );
+  });
 
-    // Click delete button to open dialog
-    fireEvent.click(screen.getByRole('button', { name: /حذف/i }));
-    
-    // Ensure that the delete dialog is open
-    expect(screen.getByText(/آیا از حذف این آگهی اطمینان دارید؟/)).toBeInTheDocument();
+  test('renders correctly with RTL (right-to-left) language setting', () => {
+    renderWithProviders(<AdCard {...defaultProps} />);
 
-    // Find the confirm button by its aria-label or text content
-    const confirmButton = screen.getByRole('button', { name: /Confirm/i });
-    
-    // Click the confirm button in the DeleteAd dialog
+    const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
+    expect(deleteButton.closest('div')).toHaveStyle('direction: rtl');
+  });
+
+  test('renders correctly with LTR (left-to-right) language setting', () => {
+    i18n.changeLanguage('en'); // Switch to English
+    renderWithProviders(<AdCard {...defaultProps} />);
+
+    const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
+    expect(deleteButton.closest('div')).toHaveStyle('direction: ltr');
+  });
+
+  test('opens the delete confirmation dialog when delete button is clicked', () => {
+    renderWithProviders(<AdCard {...defaultProps} />);
+
+    const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
+    fireEvent.click(deleteButton);
+
+    const dialogTitle = screen.getByText(i18n.t('ad_list.delete_confirmation.title'));
+    expect(dialogTitle).toBeInTheDocument();
+  });
+
+  test('confirms deletion when confirm button is clicked', () => {
+    renderWithProviders(<AdCard {...defaultProps} />);
+
+    const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
+    fireEvent.click(deleteButton);
+
+    const confirmButton = screen.getByLabelText('Confirm');
     fireEvent.click(confirmButton);
 
-    // Ensure the onDelete function was called
-    expect(handleDelete).toHaveBeenCalledTimes(1);
+    expect(defaultProps.onDelete).toHaveBeenCalledTimes(1);
+  });
+
+  test('cancels deletion when cancel button is clicked', () => {
+    renderWithProviders(<AdCard {...defaultProps} />);
+
+    const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
+    fireEvent.click(deleteButton);
+
+    const cancelButton = screen.getByLabelText('Cancel');
+    fireEvent.click(cancelButton);
+
+    expect(defaultProps.onDelete).not.toHaveBeenCalled();
   });
 });
