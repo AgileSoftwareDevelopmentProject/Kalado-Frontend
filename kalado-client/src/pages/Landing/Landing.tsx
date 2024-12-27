@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
+import { SideBar } from '../../components/molecules';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
 
@@ -71,8 +72,10 @@ const Landing = () => {
         <Box>
             <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
 
-            <Category onSelectCategory={handleSelectCategory} />
-            <Filter />
+            <SideBar>
+                <Category onSelectCategory={handleSelectCategory} />
+                <Filter />
+            </SideBar>
 
             <Box sx={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'flex-end', paddingTop: '200px', paddingRight: '200px' }}>
                 <Typography variant="h4" sx={{ textAlign: 'center', mt: 4, color: "#FFFFFF", mb: 10, fontWeight: 'bold' }}>

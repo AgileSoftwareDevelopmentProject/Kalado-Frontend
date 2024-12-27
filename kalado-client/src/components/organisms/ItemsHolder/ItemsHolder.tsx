@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import ItemCard from '../ItemCard/ItemCard';
-import defaultImage from '../../assets/images/default-image-url.jpg';
+import defaultImage from '../../../assets/images/default-image-url.jpg';
 
 interface Item {
     title: string;
