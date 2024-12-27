@@ -17,16 +17,50 @@
 // };
 
 
-import { sendRequest } from '../axiosInstance'
-import { AUTH } from '../urls'
+import { sendRequest } from '../axiosInstance';
+import { AUTH } from '../urls';
+import { toast } from 'sonner';
 
-
-export async function signupUser( password: string, role: string,
+export async function signupUser(
     firstName: string,
     lastName: string,
     email: string,
-    phoneNumber: string){
-role = "USER";
-password = 'Asdf1234j'
-return sendRequest(AUTH.REGISTER, 'POST', { firstName, lastName, email, phoneNumber, password, role})
+    phoneNumber: string
+) {
+    const password = 'Asdf1234j';
+    const role = 'USER';
+
+    if (!firstName || !lastName || !email || !phoneNumber) {
+        toast.error('All fields are required.');
+        return {
+            isSuccess: false,
+            message: 'Validation error: Missing required fields.',
+        };
+    }
+
+    try {
+        const response = await sendRequest(AUTH.REGISTER, 'POST', {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            password,
+            role,
+        });
+
+        if (response.isSuccess) {
+            toast.success('Signup successful!');
+        } else {
+            toast.error(response.message || 'Signup failed.');
+        }
+
+        return response;
+    } catch (error) {
+        console.error('[SignupUser] Error:', error);
+        toast.error('An error occurred during signup.');
+        return {
+            isSuccess: false,
+            message: 'An error occurred during signup.',
+        };
+    }
 }
