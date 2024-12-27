@@ -71,7 +71,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           placeholder={t("general_inputs.user_name")}
           value={formData.username}
           onChange={handleChange}
-          isRequired={true}
+          isRequired={false}
         />
         <EmailInput
           name="email"

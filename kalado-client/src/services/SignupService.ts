@@ -21,11 +21,11 @@ import { sendRequest } from '../axiosInstance'
 import { AUTH } from '../urls'
 
 
-export async function signupUser(username: string, password: string, role: string,
+export async function signupUser( password: string, role: string,
     firstName: string,
     lastName: string,
     email: string,
     phoneNumber: string){
 role = "USER";
-return sendRequest(AUTH.REGISTER, 'POST', { firstName, lastName, username, email, phoneNumber, password, role})
+return sendRequest(AUTH.REGISTER, 'POST', { firstName, lastName, email, phoneNumber, password, role})
 }
