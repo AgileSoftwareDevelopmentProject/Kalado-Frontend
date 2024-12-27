@@ -14,11 +14,11 @@ describe('AdCard Component', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    i18n.changeLanguage('fa');
+    jest.clearAllMocks(); // Reset mocks
+    i18n.changeLanguage('fa'); // Default to Persian (RTL)
   });
 
-  test('edits the title when the Edit button is clicked and enter is pressed', () => {
+  test('edits the title when the Edit button is clicked and Enter is pressed', () => {
     renderWithProviders(<AdCard {...defaultProps} />);
 
     const editButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.edit') });
@@ -26,7 +26,7 @@ describe('AdCard Component', () => {
 
     const titleInput = screen.getByRole('textbox');
     fireEvent.change(titleInput, { target: { value: 'عنوان جدید' } });
-    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' });
+    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' }); // Trigger Enter key
 
     expect(defaultProps.onEditTitle).toHaveBeenCalledWith('عنوان جدید');
   });
@@ -38,39 +38,39 @@ describe('AdCard Component', () => {
     fireEvent.click(editButton);
 
     const titleInput = screen.getByRole('textbox');
-    fireEvent.change(titleInput, { target: { value: 'آ'.repeat(51) } });
-    fireEvent.blur(titleInput);
+    fireEvent.change(titleInput, { target: { value: 'آ'.repeat(51) } }); // Attempt to exceed max length
+    fireEvent.blur(titleInput); // Simulate blur to save
 
-    expect(defaultProps.onEditTitle).toHaveBeenCalledWith('آ'.repeat(50));
+    expect(defaultProps.onEditTitle).toHaveBeenCalledWith('آ'.repeat(50)); // Verify truncated value
   });
 
   test('changes status when a new status is selected', () => {
     renderWithProviders(<AdCard {...defaultProps} />);
 
     const statusDropdown = screen.getByRole('combobox');
-    fireEvent.mouseDown(statusDropdown);
+    fireEvent.mouseDown(statusDropdown); // Open dropdown
 
     const reservedOption = screen.getByText(i18n.t('ad_list.ad_status.reserved'));
-    fireEvent.click(reservedOption);
+    fireEvent.click(reservedOption); // Select the "reserved" option
 
     expect(defaultProps.onStatusChange).toHaveBeenCalledWith(
-      expect.any(Object)
+      expect.objectContaining({ target: { value: 'reserved' } }) // Verify the new value
     );
   });
 
   test('renders correctly with RTL (right-to-left) language setting', () => {
     renderWithProviders(<AdCard {...defaultProps} />);
 
-    const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
-    expect(deleteButton.closest('div')).toHaveStyle({ direction: 'rtl' });
+    const cardElement = screen.getByTestId('ad-card-container'); // Ensure test ID matches
+    expect(cardElement).toHaveStyle({ direction: 'rtl' });
   });
 
   test('renders correctly with LTR (left-to-right) language setting', () => {
-    i18n.changeLanguage('en');
+    i18n.changeLanguage('en'); // Switch to English (LTR)
     renderWithProviders(<AdCard {...defaultProps} />);
 
-    const deleteButton = screen.getByRole('button', { name: i18n.t('ad_list.buttons.delete') });
-    expect(deleteButton.closest('div')).toHaveStyle({ direction: 'ltr' });
+    const cardElement = screen.getByTestId('ad-card-container'); // Ensure test ID matches
+    expect(cardElement).toHaveStyle({ direction: 'ltr' });
   });
 
   test('opens the delete confirmation dialog when delete button is clicked', () => {

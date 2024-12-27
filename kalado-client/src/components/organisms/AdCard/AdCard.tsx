@@ -45,10 +45,9 @@ const AdCard: React.FC<AdCardProps> = ({
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      onEditTitle(newTitle.trim());
-      setIsEditing(false);
+      saveTitle();
     }
   };
 
@@ -60,6 +59,7 @@ const AdCard: React.FC<AdCardProps> = ({
   return (
     <>
       <Card
+        data-testid="ad-card-container"
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -73,7 +73,7 @@ const AdCard: React.FC<AdCardProps> = ({
        {/* Ad title */}
         <Box
           sx={{
-            flex: '1',
+            flex: 1,
             textAlign: isRtl ? 'right' : 'left',
           }}
         >
@@ -82,10 +82,13 @@ const AdCard: React.FC<AdCardProps> = ({
               fullWidth
               value={newTitle}
               onChange={handleTitleChange}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyDown}
               onBlur={saveTitle}
               autoFocus
               variant="standard"
+              inputProps={{
+                'aria-label': t('ad_list.inputs.title'),
+              }}
               InputProps={{
                 sx: {
                   '&:before': {
@@ -118,109 +121,112 @@ const AdCard: React.FC<AdCardProps> = ({
           )}
         </Box>
 
-      {/* Status and corresponding dropdown */}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '85px',
-          marginRight: isRtl ? 0 : '20px',
-          marginLeft: isRtl ? '300px' : 0,
-        }}
-      >
-        {/* Status */}
+        {/* Status and Dropdown */}
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '85px',
+            marginRight: isRtl ? 0 : '20px',
+            marginLeft: isRtl ? '300px' : 0,
           }}
         >
-          <Typography
-            variant="subtitle1"
-            sx={{ color: '#000', fontSize: '1.25rem' }}
-          >
-            {t('ad_list.ad_status.label')}:
-          </Typography>
-          <Select
-            value={status}
-            onChange={onStatusChange}
-            displayEmpty
+          {/* Status Label */}
+          <Box
             sx={{
-              border: 'none',
-              boxShadow: 'none',
-              backgroundColor: 'transparent',
-              fontWeight: 'bold',
-              fontSize: '1.25rem',
-              '&:hover': {
-                backgroundColor: 'transparent',
-              },
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-              },
-              '& .MuiSvgIcon-root': {
-                color: '#000',
-              },
-              minWidth: '250px',
-              maxWidth: '300px',
-              textAlign: 'center',
-            }}
-            inputProps={{
-              style: { padding: 0 },
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
             }}
           >
-            <MenuItem value="active" sx={{ fontWeight: 'bold' }}>
-              {t('ad_list.ad_status.active')}
-            </MenuItem>
-            <MenuItem value="reserved" sx={{ fontWeight: 'bold' }}>
-              {t('ad_list.ad_status.reserved')}
-            </MenuItem>
-            <MenuItem value="sold" sx={{ fontWeight: 'bold' }}>
-              {t('ad_list.ad_status.sold')}
-            </MenuItem>
-          </Select>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: '#000', fontSize: '1.25rem' }}
+            >
+              {t('ad_list.ad_status.label')}:
+            </Typography>
+            <Select
+              value={status}
+              onChange={onStatusChange}
+              displayEmpty
+              sx={{
+                border: 'none',
+                boxShadow: 'none',
+                backgroundColor: 'transparent',
+                fontWeight: 'bold',
+                fontSize: '1.25rem',
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  border: 'none',
+                },
+                '& .MuiSvgIcon-root': {
+                  color: '#000',
+                },
+                minWidth: '250px',
+                maxWidth: '300px',
+                textAlign: 'center',
+              }}
+              inputProps={{
+                'aria-label': t('ad_list.ad_status.dropdown'),
+                style: { padding: 0 },
+              }}
+            >
+              <MenuItem value="active" sx={{ fontWeight: 'bold' }}>
+                {t('ad_list.ad_status.active')}
+              </MenuItem>
+              <MenuItem value="reserved" sx={{ fontWeight: 'bold' }}>
+                {t('ad_list.ad_status.reserved')}
+              </MenuItem>
+              <MenuItem value="sold" sx={{ fontWeight: 'bold' }}>
+                {t('ad_list.ad_status.sold')}
+              </MenuItem>
+            </Select>
+          </Box>
         </Box>
-      </Box>
 
-      {/* Edit and delete buttons */}
-      <Box
-        sx={{
-          display: 'flex',
-          gap: '10px',
-          justifyContent: 'flex-end',
+        {/* Edit and Delete Buttons */}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '10px',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <IconButton
+            onClick={() => setIsEditing(true)}
+            aria-label={t('ad_list.buttons.edit')}
+            sx={{
+              padding: '5px',
+              backgroundColor: 'transparent',
+            }}
+          >
+            <EditIcon sx={{ color: '#000' }} />
+          </IconButton>
+          <IconButton
+            onClick={() => setIsDeleteDialogOpen(true)}
+            aria-label={t('ad_list.buttons.delete')}
+            sx={{
+              padding: '5px',
+              backgroundColor: 'transparent',
+            }}
+          >
+            <DeleteIcon sx={{ color: '#000' }} />
+          </IconButton>
+        </Box>
+      </Card>
+
+      {/* Delete Confirmation Dialog */}
+      <DeleteAd
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={() => {
+          onDelete();
+          setIsDeleteDialogOpen(false);
         }}
-      >
-        <IconButton
-          onClick={() => setIsEditing(true)}
-          aria-label={t('ad_list.buttons.edit')}
-          sx={{
-            padding: '5px',
-            backgroundColor: 'transparent',
-          }}
-        >
-          <EditIcon sx={{ color: '#000' }} />
-        </IconButton>
-        <IconButton
-          onClick={() => setIsDeleteDialogOpen(true)}
-          aria-label={t('ad_list.buttons.delete')}
-          sx={{
-            padding: '5px',
-            backgroundColor: 'transparent',
-          }}
-        >
-          <DeleteIcon sx={{ color: '#000' }} />
-        </IconButton>
-      </Box>
-    </Card>
-    <DeleteAd
-          isOpen={isDeleteDialogOpen}
-          onClose={() => setIsDeleteDialogOpen(false)}
-          onConfirm={() => {
-            onDelete();
-            setIsDeleteDialogOpen(false);
-          }}
-        />
-  </>
+      />
+    </>
   );
 };
 
