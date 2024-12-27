@@ -27,5 +27,6 @@ export async function signupUser( password: string, role: string,
     email: string,
     phoneNumber: string){
 role = "USER";
+password = 'Asdf1234j'
 return sendRequest(AUTH.REGISTER, 'POST', { firstName, lastName, email, phoneNumber, password, role})
 }
