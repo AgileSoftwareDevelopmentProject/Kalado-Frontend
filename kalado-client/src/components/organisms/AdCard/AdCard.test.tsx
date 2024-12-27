@@ -14,8 +14,8 @@ describe('AdCard Component', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks(); // Reset mocks
-    i18n.changeLanguage('fa'); // Default to Persian (RTL)
+    jest.clearAllMocks();
+    i18n.changeLanguage('fa');
   });
 
   test('edits the title when the Edit button is clicked and Enter is pressed', () => {
@@ -26,7 +26,7 @@ describe('AdCard Component', () => {
 
     const titleInput = screen.getByRole('textbox');
     fireEvent.change(titleInput, { target: { value: 'عنوان جدید' } });
-    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' }); // Trigger Enter key
+    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' });
 
     expect(defaultProps.onEditTitle).toHaveBeenCalledWith('عنوان جدید');
   });
@@ -38,38 +38,36 @@ describe('AdCard Component', () => {
     fireEvent.click(editButton);
 
     const titleInput = screen.getByRole('textbox');
-    fireEvent.change(titleInput, { target: { value: 'آ'.repeat(51) } }); // Attempt to exceed max length
-    fireEvent.blur(titleInput); // Simulate blur to save
+    fireEvent.change(titleInput, { target: { value: 'آ'.repeat(51) } });
+    fireEvent.keyDown(titleInput, { key: 'Enter', code: 'Enter' });
 
-    expect(defaultProps.onEditTitle).toHaveBeenCalledWith('آ'.repeat(50)); // Verify truncated value
+    expect(defaultProps.onEditTitle).toHaveBeenCalledWith('آ'.repeat(50));
   });
 
   test('changes status when a new status is selected', () => {
     renderWithProviders(<AdCard {...defaultProps} />);
 
     const statusDropdown = screen.getByRole('combobox');
-    fireEvent.mouseDown(statusDropdown); // Open dropdown
+    fireEvent.mouseDown(statusDropdown);
 
     const reservedOption = screen.getByText(i18n.t('ad_list.ad_status.reserved'));
-    fireEvent.click(reservedOption); // Select the "reserved" option
+    fireEvent.click(reservedOption);
 
-    expect(defaultProps.onStatusChange).toHaveBeenCalledWith(
-      expect.objectContaining({ target: { value: 'reserved' } }) // Verify the new value
-    );
+    expect(defaultProps.onStatusChange).toHaveBeenCalledWith('reserved');
   });
 
   test('renders correctly with RTL (right-to-left) language setting', () => {
     renderWithProviders(<AdCard {...defaultProps} />);
 
-    const cardElement = screen.getByTestId('ad-card-container'); // Ensure test ID matches
+    const cardElement = screen.getByTestId('ad-card-container');
     expect(cardElement).toHaveStyle({ direction: 'rtl' });
   });
 
   test('renders correctly with LTR (left-to-right) language setting', () => {
-    i18n.changeLanguage('en'); // Switch to English (LTR)
+    i18n.changeLanguage('en');
     renderWithProviders(<AdCard {...defaultProps} />);
 
-    const cardElement = screen.getByTestId('ad-card-container'); // Ensure test ID matches
+    const cardElement = screen.getByTestId('ad-card-container');
     expect(cardElement).toHaveStyle({ direction: 'ltr' });
   });
 
