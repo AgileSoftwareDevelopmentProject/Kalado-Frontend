@@ -25,8 +25,7 @@ export async function signupUser(
     lastName: string,
     email: string,
     phoneNumber: string,
-    password: string,
-    role: string
+    password: string
 ) {
 
     const sanitizedFirstName = String(firstName);
@@ -34,7 +33,7 @@ export async function signupUser(
     const sanitizedEmail = String(email);
     const sanitizedPhoneNumber = String(phoneNumber);
     const sanitizedPassword = String(password);
-    const sanitizedRole = String(role);
+    const mockedRole = 'USER';
 
     try {
         const response = await sendRequest(AUTH.REGISTER, 'POST', {
@@ -43,7 +42,7 @@ export async function signupUser(
             email: sanitizedEmail,
             phoneNumber: sanitizedPhoneNumber,
             password: sanitizedPassword,
-            role: sanitizedRole,
+            role: mockedRole,
         });
 
         if (response.isSuccess) {
