@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material';
+import DeleteAd from './DeleteAd';
 
 type AdCardProps = {
   title: string;
@@ -34,6 +35,7 @@ const AdCard: React.FC<AdCardProps> = ({
   const isRtl = i18n.language === 'fa'; // check if the language is right-to-left
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const MAX_TITLE_LENGTH = 50; // maximum length for the title
 
@@ -56,64 +58,65 @@ const AdCard: React.FC<AdCardProps> = ({
   };
 
   return (
-    <Card
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '10px 40px',
-        marginBottom: '40px',
-        borderRadius: '45px',
-        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-        direction: isRtl ? 'rtl' : 'ltr', // set direction based on the language
-      }}
-    >
-      {/* Ad title */}
-      <Box
+    <>
+      <Card
         sx={{
-          flex: '1',
-          textAlign: isRtl ? 'right' : 'left',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '10px 40px',
+          marginBottom: '40px',
+          borderRadius: '45px',
+          boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+          direction: isRtl ? 'rtl' : 'ltr', // set direction based on the language
         }}
       >
-        {isEditing ? (
-          <TextField
-            fullWidth
-            value={newTitle}
-            onChange={handleTitleChange}
-            onKeyPress={handleKeyPress}
-            onBlur={saveTitle}
-            autoFocus
-            variant="standard"
-            InputProps={{
-              sx: {
-                '&:before': {
-                  borderBottom: '1px solid #000',
+       {/* Ad title */}
+        <Box
+          sx={{
+            flex: '1',
+            textAlign: isRtl ? 'right' : 'left',
+          }}
+        >
+          {isEditing ? (
+            <TextField
+              fullWidth
+              value={newTitle}
+              onChange={handleTitleChange}
+              onKeyPress={handleKeyPress}
+              onBlur={saveTitle}
+              autoFocus
+              variant="standard"
+              InputProps={{
+                sx: {
+                  '&:before': {
+                    borderBottom: '1px solid #000',
+                  },
+                  '&:after': {
+                    borderBottom: '2px solid #000',
+                    width: '50%',
+                    transition: 'width 0.2s ease-out',
+                  },
                 },
-                '&:after': {
-                  borderBottom: '2px solid #000',
-                  width: '50%',
-                  transition: 'width 0.2s ease-out',
-                },
-              },
-            }}
-          />
-        ) : (
-          <Tooltip title={title} arrow>
-            <Typography
-              variant="h6"
-              sx={{
-                color: '#000',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                maxWidth: '300px',
-                cursor: 'default',
               }}
-            >
-              {title}
-            </Typography>
-          </Tooltip>
-        )}
-      </Box>
+            />
+          ) : (
+            <Tooltip title={title} arrow>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: '#000',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  maxWidth: '300px',
+                  cursor: 'default',
+                }}
+              >
+                {title}
+              </Typography>
+            </Tooltip>
+          )}
+        </Box>
 
       {/* Status and corresponding dropdown */}
       <Box
@@ -198,7 +201,7 @@ const AdCard: React.FC<AdCardProps> = ({
           <EditIcon sx={{ color: '#000' }} />
         </IconButton>
         <IconButton
-          onClick={onDelete}
+          onClick={() => setIsDeleteDialogOpen(true)}
           aria-label={t('ad_list.buttons.delete')}
           sx={{
             padding: '5px',
@@ -209,6 +212,15 @@ const AdCard: React.FC<AdCardProps> = ({
         </IconButton>
       </Box>
     </Card>
+    <DeleteAd
+          isOpen={isDeleteDialogOpen}
+          onClose={() => setIsDeleteDialogOpen(false)}
+          onConfirm={() => {
+            onDelete();
+            setIsDeleteDialogOpen(false);
+          }}
+        />
+  </>
   );
 };
 
