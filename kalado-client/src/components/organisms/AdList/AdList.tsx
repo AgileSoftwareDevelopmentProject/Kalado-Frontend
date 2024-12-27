@@ -77,3 +77,56 @@ const AdList = () => {
 };
 
 export default AdList;
+
+// import React, { useState } from 'react';
+// import EditAdCard from '../AdCard/EditAdCard.tsx';
+
+// const AdList = () => {
+//   const [ads, setAds] = useState([
+//     {
+//       id: 1,
+//       title: 'فلان عنوان',
+//       price: '۹۰۰۰۰',
+//       category: 'لپتاپ',
+//       date: '۱۴۰۳/۱۲/۱۴',
+//       description: 'لپتاپ خوبی است.',
+//       images: [
+//         '/path/to/image1.jpg',
+//         '/path/to/image2.jpg',
+//         '/path/to/image3.jpg',
+//       ],
+//       status: 'فعال',
+//     },
+//   ]);
+
+//   const handleEdit = (id: number, updatedData: any) => {
+//     setAds((prevAds) =>
+//       prevAds.map((ad) => (ad.id === id ? { ...ad, ...updatedData } : ad))
+//     );
+//   };
+
+//   const handleDelete = (id: number) => {
+//     setAds((prevAds) => prevAds.filter((ad) => ad.id !== id));
+//   };
+
+//   return (
+//     <div style={{ padding: '20px' }}>
+//       {ads.map((ad) => (
+//         <EditAdCard
+//           key={ad.id}
+//           title={ad.title}
+//           price={ad.price}
+//           category={ad.category}
+//           date={ad.date}
+//           description={ad.description}
+//           images={ad.images}
+//           status={ad.status}
+//           onEdit={(updatedData) => handleEdit(ad.id, updatedData)}
+//           onDelete={() => handleDelete(ad.id)}
+//         />
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default AdList;
