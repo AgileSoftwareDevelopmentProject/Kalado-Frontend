@@ -5,7 +5,11 @@ import errorTranslations from './errorTranslations';
 
 const axiosInstance = axios.create({ baseURL });
 
-// Request Interceptor with Logging
+interface ErrorResponseData {
+    message?: string;
+    [key: string]: any;
+}
+
 axiosInstance.interceptors.request.use(
     async (config) => {
         const token = localStorage.getItem('token');
@@ -33,7 +37,7 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-// Response Interceptor with Logging
+
 axiosInstance.interceptors.response.use(
     (response) => {
         console.log('-----------------------------------');
@@ -43,7 +47,7 @@ axiosInstance.interceptors.response.use(
         console.log('-----------------------------------');
         return response;
     },
-    (error: AxiosError) => {
+    (error: AxiosError<ErrorResponseData>) => {
         const statusCode = error.response?.status;
         console.log('-----------------------------------');
         console.error('[Response Interceptor] Error Status:', statusCode);
@@ -91,14 +95,17 @@ export async function sendRequest<T>(
             status: response.status,
         };
     } catch (error) {
-        const axiosError = error as AxiosError<{ message?: string }>;
+        const axiosError = error as AxiosError<ErrorResponseData>;
         console.error('[Request Wrapper] Error:', axiosError);
+
+        // Accessing message from error.response?.data
+        const message = axiosError.response?.data?.message || 'An unknown error occurred.';
 
         return {
             isSuccess: false,
             data: null,
             status: axiosError.response?.status || 500,
-            message: axiosError.response?.data?.message || 'An unknown error occurred.',
+            message,
         };
     }
 }
