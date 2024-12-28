@@ -27,37 +27,29 @@ export async function signupUser(
     phoneNumber: string,
     password: string
 ) {
-
-    const sanitizedFirstName = String(firstName);
-    const sanitizedLastName = String(lastName);
-    const sanitizedEmail = String(email);
-    const sanitizedPhoneNumber = String(phoneNumber);
-    const sanitizedPassword = String(password);
-    const mockedRole = 'USER';
+    const payload = {
+        firstName: String(firstName),
+        lastName: String(lastName),
+        email: String(email),
+        phoneNumber: String(phoneNumber),
+        password: String(password),
+        role: 'USER',
+    };
 
     try {
-        const response = await sendRequest(AUTH.REGISTER, 'POST', {
-            firstName: sanitizedFirstName,
-            lastName: sanitizedLastName,
-            email: sanitizedEmail,
-            phoneNumber: sanitizedPhoneNumber,
-            password: sanitizedPassword,
-            role: mockedRole,
-        });
+        const response = await sendRequest<typeof payload>(AUTH.REGISTER, 'POST', payload);
 
         if (response.isSuccess) {
             toast.success('Signup successful!');
+        } else if (response.status === 409) {
+            toast.error('This email is already registered. Please log in.');
         } else {
             toast.error(response.message || 'Signup failed.');
         }
 
         return response;
     } catch (error) {
-        console.error('[SignupUser] Error:', error);
-        toast.error('An error occurred during signup.');
-        return {
-            isSuccess: false,
-            message: 'An error occurred during signup.',
-        };
+        toast.error('An unexpected error occurred during signup.');
+        return { isSuccess: false, message: 'An error occurred during signup.' };
     }
 }

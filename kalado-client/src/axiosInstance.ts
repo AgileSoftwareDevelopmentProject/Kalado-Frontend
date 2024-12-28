@@ -5,115 +5,100 @@ import errorTranslations from './errorTranslations';
 
 const axiosInstance = axios.create({ baseURL });
 
+// Request Interceptor with Logging
 axiosInstance.interceptors.request.use(
     async (config) => {
         const token = localStorage.getItem('token');
         const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
+
         console.log('-----------------------------------');
+        console.log('[Request] URL:', config.url);
+        console.log('[Request] Method:', config.method);
+        console.log('[Request] Headers:', config.headers);
+        console.log('[Request] Data:', config.data);
+
         if (token && !isPublicEndpoint) {
-            console.log('[Request] Attaching Authorization Token:', token);
             config.headers['Authorization'] = `Bearer ${token}`;
+            console.log('[Request] Authorization Token Attached');
         } else {
-            console.log('[Request] No Authorization Token or Public Endpoint');
+            console.log('[Request] Public Endpoint - No Token Attached');
         }
 
-        if (process.env.NODE_ENV === 'development') {
-            console.log('[Request] Config:', config);
-        }
+        console.log('-----------------------------------');
         return config;
     },
     (error) => {
-        console.error('[Request] Interceptor Error:', error);
+        console.error('[Request Interceptor] Error:', error);
         return Promise.reject(error);
     }
 );
 
+// Response Interceptor with Logging
 axiosInstance.interceptors.response.use(
     (response) => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('-----------------------------------');
-            console.log('[Response] Success:', response);
-        }
+        console.log('-----------------------------------');
+        console.log('[Response] URL:', response.config.url);
+        console.log('[Response] Status:', response.status);
+        console.log('[Response] Data:', response.data);
+        console.log('-----------------------------------');
         return response;
     },
     (error: AxiosError) => {
         const statusCode = error.response?.status;
         console.log('-----------------------------------');
-        console.error('[Response] Error Status Code:', statusCode, 'Error:', error);
+        console.error('[Response Interceptor] Error Status:', statusCode);
+        console.error('[Response Interceptor] Error Data:', error.response?.data);
+        console.log('-----------------------------------');
 
         if (statusCode === 401 || statusCode === 403) {
-            const currentPath = window.location.pathname;
-            console.warn('[Response] Unauthorized or Forbidden. Redirecting if needed.');
-            if (currentPath !== '/login' && currentPath !== '/signup') {
-                console.log('[Response] Clearing Auth Storage and Redirecting to /login');
-                localStorage.removeItem('auth-storage');
-                localStorage.removeItem('token');
-                localStorage.removeItem('role');
-                window.location.href = '/login';
-            }
+            console.warn('[Response Interceptor] Unauthorized or Forbidden. Redirecting...');
+            localStorage.clear();
+            window.location.href = '/login';
         }
+
+        const message = error.response?.data?.message || 'An unknown error occurred.';
+        toast.error(
+            statusCode === 409
+                ? 'This email is already registered.'
+                : errorTranslations[message] || message.replace(/_/g, ' ')
+        );
 
         return Promise.reject(error);
     }
 );
 
-type TApiResponse<T> = {
-    isSuccess: boolean;
-    data: T | null;
-    status: number;
-    message?: string;
-};
-
-type TMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-
+// Request Wrapper Function
 export async function sendRequest<T>(
     url: string,
-    method: TMethod,
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     requestData?: any,
     signal?: AbortSignal
-): Promise<TApiResponse<T>> {
+): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
         console.log('-----------------------------------');
-        if (process.env.NODE_ENV === 'development') {
-            console.log(`[Request] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
-        }
-
+        console.log(`[Request Wrapper] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
         const response = await axiosInstance.request({
             method,
             url,
             data: requestData,
-            ...(signal ? { signal } : {}),
+            signal,
         });
 
-        console.log('-----------------------------------');
-        if (process.env.NODE_ENV === 'development') {
-            console.log('[Request] Success:', response.data);
-        }
-
+        console.log('[Request Wrapper] Success:', response.data);
         return {
             isSuccess: true,
             data: response.data as T,
             status: response.status,
         };
     } catch (error) {
-        const axiosError = error as AxiosError<{ message?: string; [key: string]: any }>;
-        const response = axiosError.response?.data || {};
-        const message = response.message || 'An unknown error occurred.';
-
-        console.log('-----------------------------------');
-        if (message && errorTranslations[message]) {
-            toast.error(errorTranslations[message]);
-        } else {
-            toast.error(message.replace(/_/g, ' '));
-        }
-
-        console.error('[Request] Error Message:', message, 'Response Data:', response);
+        const axiosError = error as AxiosError<{ message?: string }>;
+        console.error('[Request Wrapper] Error:', axiosError);
 
         return {
             isSuccess: false,
             data: null,
             status: axiosError.response?.status || 500,
-            message,
+            message: axiosError.response?.data?.message || 'An unknown error occurred.',
         };
     }
 }
