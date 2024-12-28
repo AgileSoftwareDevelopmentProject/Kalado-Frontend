@@ -8,7 +8,7 @@ import { loginUser } from '../../../services/LoginService';
 interface LoginFormProps {
     onClose: () => void;
     onOpenSignup: () => void;
-    onLoginSuccess: (username: string) => void;
+    onLoginSuccess: (email: string) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
@@ -24,23 +24,33 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
         const { name, value } = e.target;
         setFormData(prevData => ({
             ...prevData,
-            [name]: value
+            [name]: value,
         }));
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (formData.email && formData.password) {
+
+        const { email, password } = formData;
+
+        if (email && password) {
             try {
-                const response = await loginUser(formData);
-                console.log('Login successful:', response);
-                onLoginSuccess(formData.email);
-                setFormData({ email: '', password: '' });
-                onClose();
+                const response = await loginUser(email, password);
+                if (response.isSuccess) {
+                    console.log('Login successful:', response);
+                    onLoginSuccess(email);
+                    setFormData({ email: '', password: '' });
+                    onClose();
+                } else {
+
+                    setError(response.message || 'Login failed. Please try again.');
+                }
             } catch (error) {
                 console.error('Login error:', error);
-                setError('Invalid email or password');
+                setError('An error occurred during login. Please try again later.');
             }
+        } else {
+            setError('Both email and password are required.');
         }
     };
 
