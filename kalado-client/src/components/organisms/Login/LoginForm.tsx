@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { EmailInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { loginUser } from '../../../services/LoginService';
+import { login } from '../../../services/apiService';
+import { LoginRequest, LoginResponse } from '../../../services/types';
 
 interface LoginFormProps {
     onClose: () => void;
@@ -13,34 +14,29 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<LoginRequest>({
         email: '',
         password: '',
     });
 
     const [error, setError] = useState<string | null>(null);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (formData.email && formData.password) {
-            try {
-                const response = await loginUser(formData);
+
+        try {
+            const response: LoginResponse = await login(formData);
+            if (response.success) {
                 console.log('Login successful:', response);
-                onLoginSuccess(formData.email);
-                setFormData({ email: '', password: '' });
-                onClose();
-            } catch (error) {
-                console.error('Login error:', error);
-                setError('Invalid email or password');
+                onLoginSuccess(formData.email); // Call the success handler with email
+                setFormData({ email: '', password: '' }); // Reset form data
+                onClose(); // Close the form or popup
+            } else {
+                setError(response.message || 'Login failed'); // Show error message to user
             }
+        } catch (error) {
+            console.error('Login error:', error);
+            setError('An unexpected error occurred. Please try again later.');
         }
     };
 
@@ -50,12 +46,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                 <EmailInput
                     name="email"
                     value={formData.email}
-                    onChange={handleChange}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
                 <PasswordInput
                     name="password"
                     value={formData.password}
-                    onChange={handleChange}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
                 <CustomButton
                     text={t("login_form.login_btn")}
