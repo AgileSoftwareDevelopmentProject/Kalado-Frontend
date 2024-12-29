@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { signupUser } from '../../../services/SignupService';
+import { Box, FormControlLabel, Checkbox } from '@mui/material';
 
 interface SignupFormProps {
   onClose: () => void;
@@ -14,21 +15,29 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    username: '',
     email: '',
     phoneNumber: '',
     password: '',
-    passwordRepeat: ''
+    passwordRepeat: '',
+
   });
 
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
+    const { name, value, type, checked } = e.target;
+
+    if (name === 'isAdmin') {
+      setFormData(prevData => ({
+        ...prevData,
+        role: checked ? 'ADMIN' : 'USER'
+      }));
+    } else {
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,13 +75,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           onChange={handleChange}
           isRequired={true}
         />
-        <NameInput
-          name="username"
-          placeholder={t("general_inputs.user_name")}
-          value={formData.username}
-          onChange={handleChange}
-          isRequired={false}
-        />
         <EmailInput
           name="email"
           value={formData.email}
@@ -94,18 +96,36 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
+
+        {/* Admin Checkbox */}
+        <Box>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={formData.role === 'ADMIN'} // Check if role is ADMIN
+                onChange={handleChange}
+                name="isAdmin" // Name for the checkbox input
+                color="primary"
+              />
+            }
+            label={t("signup_form.is_admin")} // Add translation key for checkbox label
+          />
+        </Box>
+
         <CustomButton
           text={t("signup_form.signup_btn")}
           type="submit"
           padding="10px 40px"
           margin="30px 0px 0px 0px"
         />
+
         <CustomLink
           to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
           color="primary"
           text={t("signup_form.login_link")}
         />
+
         <FormError message={error} />
       </form>
     </PopupBox>

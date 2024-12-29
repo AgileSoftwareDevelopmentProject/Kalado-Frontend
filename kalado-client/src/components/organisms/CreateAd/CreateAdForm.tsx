@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Box from '@mui/material/Box';
-import { NameInput, PriceInput, Dropdown, DescriptionInput, ImageUpload, CustomButton } from '../../atoms';
-import { PopupBox } from '../../molecules';
+import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton } from '../../atoms';
+import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../services/CreateAdService';
 
 interface CreateAdFormProps {
@@ -16,13 +15,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         price: number;
         category: string | null;
         description: string;
-        images: string;
+        images: File[];
     }>({
         title: '',
         price: 0,
         category: null,
         description: '',
-        images: '',
+        images: [],
     });
 
     const categoryOptions = [
@@ -61,6 +60,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         setFormData((prevData) => ({
             ...prevData,
             description,
+        }));
+    };
+
+    const handleImageUpload = (files: File[]) => {
+        setFormData(prevData => ({
+            ...prevData,
+            images: files
         }));
     };
 
@@ -105,12 +111,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     value={formData.description}
                     onChange={handleDescriptionchange}
                 />
-                <p>{t("create_ad.choose_image")}</p>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                    <ImageUpload />
-                    <ImageUpload />
-                    <ImageUpload />
-                </Box>
+                <ImageUploadBox onUpload={handleImageUpload} title={t("create_ad.choose_image")} />
                 <CustomButton
                     text={t("create_ad.create_ad_btn")}
                     type="submit"

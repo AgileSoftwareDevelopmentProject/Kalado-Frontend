@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 interface Option {
     value: string;
@@ -19,42 +20,57 @@ const Dropdown: React.FC<DropdownProps> = ({
     onChange,
     value
 }) => {
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const selectedValue = event.target.value as string;
+    const handleChange = (event: SelectChangeEvent<string>) => {
+        const selectedValue = event.target.value;
         const selectedOption = options.find(option => option.value === selectedValue) || null;
         onChange(selectedOption);
     };
 
     return (
         <FormControl variant="standard" sx={{ mb: 2, width: '70%' }}>
-            <InputLabel sx={{ color: 'white', textAlign: 'right', width: '100%' }}>
+            <InputLabel
+                sx={{
+                    color: 'white',
+                    textAlign: 'right',
+                    width: '100%',
+                    position: 'absolute',
+                    right: 30
+                }}
+            >
                 {placeholder}
             </InputLabel>
             <Select
                 value={value ? value.value : ''}
                 onChange={handleChange}
-                label={placeholder}
                 displayEmpty
                 sx={{
                     '& .MuiInputBase-root': {
                         borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
                         '&:hover': {
-                            borderBottom: '2px solid white',
+                            borderBottom: '2px solid #D74101',
                             backgroundColor: '#D74101'
                         },
                         '&.Mui-focused': {
                             borderBottom: '2px solid transparent',
                         },
                     },
-                    color: 'white',
                     textAlign: 'right',
                     '& .MuiSelect-select': {
                         textAlign: 'right',
                     },
+
                 }}
             >
                 {options.map(option => (
-                    <MenuItem key={option.value} value={option.value} sx={{ textAlign: 'right' }}>
+                    <MenuItem
+                        key={option.value}
+                        value={option.value}
+                        sx={{
+                            '&:hover': {
+                                backgroundColor: '#D74101',
+                            }
+                        }}
+                    >
                         {option.label}
                     </MenuItem>
                 ))}

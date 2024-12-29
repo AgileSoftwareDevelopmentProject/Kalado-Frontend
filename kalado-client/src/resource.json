@@ -73,7 +73,10 @@
             "first_name": "نام",
             "last_name": "نام‌خانوادگی",
             "user_name": "نام کاربری",
-            "price": "قیمت"
+            "price": "قیمت",
+            "date": "تاریخ",
+            "code": "کد تایید",
+            "add_image": "افزودن عکس"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -120,19 +123,51 @@
         "signup_form": {
             "signup_btn": "ثبت‌نام",
             "login_link": "در صورت داشتن حساب کاربری اینجا را کلیک کنید",
+            "is_admin": "مدیر هستم",
             "error": {
                 "password_mismatch": "رمز عبورهای واردشده یکسان نیستند"
             }
         },
         "code_verification": {
+            "verify_btn": "بررسی",
             "enter_code": "لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید"
         },
-        "item_details": {},
+        "item_details": {
+            "price": "قیمت",
+            "city": "شهر",
+            "date": "تاریخ ثبت",
+            "description": "توضیحات",
+            "report_submission_btn": "ثبت تخلف"
+        },
         "report": {
             "input": {
                 "category": "نوع تخلف"
             },
+            "category": {
+                "one": "فحاشی",
+                "two": "محتوای نامناسب",
+                "three": "قیمت نامتناسب با بازار"
+            },
             "choose_evidence": "شواهد/مدارک"
+        },
+        "dashboard": {
+            "user": {
+                "menu": {
+                    "one": "مدیریت پروفایل",
+                    "two": "مدیریت آگهی‌ها",
+                    "three": "تاریخچه‌ی تخلفات"
+                },
+                "profile_management": {
+                    "first_name": "نام",
+                    "last_name": "نام‌خانوادگی",
+                    "email": "ایمیل",
+                    "password": "رمز عبور",
+                    "phone_number": "شماره تلفن",
+                    "location": "محل سکونت",
+                    "save_changes_btn": "ذخیره تغییرات"
+                }
+            },
+            "admin": {}
         },
         "error": {
             "input": {

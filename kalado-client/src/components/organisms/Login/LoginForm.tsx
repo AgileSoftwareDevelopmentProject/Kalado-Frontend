@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { EmailInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { loginUser } from '../../../services/LoginService';
+import { login } from '../../../services/apiService';
+import { LoginRequest, LoginResponse } from '../../../services/types';
 
 interface LoginFormProps {
     onClose: () => void;
@@ -13,7 +14,7 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<LoginRequest>({
         email: '',
         password: '',
     });
@@ -60,12 +61,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                 <EmailInput
                     name="email"
                     value={formData.email}
-                    onChange={handleChange}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
                 <PasswordInput
                     name="password"
                     value={formData.password}
-                    onChange={handleChange}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
                 <CustomButton
                     text={t("login_form.login_btn")}
