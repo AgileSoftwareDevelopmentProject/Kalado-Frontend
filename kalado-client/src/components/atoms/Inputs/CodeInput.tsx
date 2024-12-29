@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 
 interface CodeInputProps {
@@ -10,17 +11,19 @@ interface CodeInputProps {
 }
 
 const CodeInput: React.FC<CodeInputProps> = ({
-    placeholder = "کد تایید",
+    placeholder,
     value,
     onChange,
     isRequired = true,
     maxLength = 5
 }) => {
+    const { t } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.code');
     return (
         <TextField
             type="text"
             name="code"
-            placeholder={placeholder}
+            placeholder={translatedPlaceholder}
             value={value}
             onChange={onChange}
             required={isRequired}

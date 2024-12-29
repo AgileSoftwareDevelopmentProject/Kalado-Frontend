@@ -1,9 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, IconButton } from '@mui/material';
 import { FaTrash } from 'react-icons/fa';
 
-const ImageUpload: React.FC = () => {
+
+interface ImageUploadProps {
+    onUpload: (files: File[]) => void;
+}
+
+const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
     const { t } = useTranslation();
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [imagePreviews, setImagePreviews] = useState<string[]>([]);
@@ -50,8 +55,12 @@ const ImageUpload: React.FC = () => {
         }
     };
 
+    // useEffect(() => {
+    //     onUpload(selectedImages); // Call onUpload with the current images
+    // }, [selectedImages, onUpload]);
+
     return (
-        <Box className="image-upload-container" sx={{ position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        <Box>
             <input
                 type="file"
                 accept="image/*"
@@ -72,13 +81,12 @@ const ImageUpload: React.FC = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     cursor: 'pointer',
-                    overflow: 'hidden',
                     margin: 0,
                     padding: 0,
                 }}
             >
                 {imagePreviews.length === 0 ? (
-                    <Button variant="outlined" sx={{ color: 'white' }}>{t("create_ad.input.add_image")}</Button>
+                    <Button variant="outlined" sx={{ color: 'white' }}>{t("general_inputs.add_image")}</Button>
                 ) : (
                     imagePreviews.map((preview, index) => (
                         <Box key={index} className="image-preview" sx={{ position: 'relative', width: '100%', height: '100%' }}>

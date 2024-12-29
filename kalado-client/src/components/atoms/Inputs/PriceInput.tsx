@@ -14,7 +14,6 @@ interface PriceInputProps {
 }
 
 const PriceInput: React.FC<PriceInputProps> = ({
-    name,
     placeholder,
     value,
     onChange,
@@ -40,7 +39,7 @@ const PriceInput: React.FC<PriceInputProps> = ({
     return (
         <TextField
             type="text"
-            name={name}
+            name="price"
             placeholder={isStarNeeded ? `${translatedPlaceholder} *` : translatedPlaceholder}
             value={inputValue}
             onChange={handleInputChange}

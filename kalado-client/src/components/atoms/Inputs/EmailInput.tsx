@@ -5,14 +5,13 @@ import { validateEmail } from '../../../validators/validateEmail';
 
 interface EmailInputProps {
     name: string;
-    placeholder?: string; // Optional placeholder prop
+    placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
 }
 
 const EmailInput: React.FC<EmailInputProps> = ({
-    name,
     placeholder,
     value,
     onChange,
@@ -32,7 +31,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
     return (
         <TextField
             type="email"
-            name={name}
+            name="email"
             placeholder={translatedPlaceholder}
             value={value}
             onChange={onChange}

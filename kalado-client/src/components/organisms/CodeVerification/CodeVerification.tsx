@@ -41,7 +41,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
             <p>{t("code_verification.enter_code")}</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput value={code} onChange={handleChange} />
-                <CustomButton text="بررسی" type="submit" disabled={code.length !== 5} />
+                <CustomButton text={t("code_verification.verify_btn")} type="submit" disabled={code.length !== 5} />
                 <FormError message={error} />
             </form>
         </PopupBox>
