@@ -17,6 +17,7 @@
     "@mui/icons-material": "^6.2.0",
     "@mui/material": "^6.2.1",
     "@mui/x-date-pickers": "^7.23.3",
+    "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "i18next": "^24.1.2",
     "jalaali-js": "^1.2.7",
@@ -25,7 +26,7 @@
     "react-i18next": "^15.2.0",
     "react-icons": "^5.4.0",
     "react-modern-calendar-datepicker": "^3.1.6",
-    "react-router-dom": "^7.0.2"
+    "sonner": "^1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

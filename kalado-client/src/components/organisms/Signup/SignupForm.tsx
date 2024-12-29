@@ -40,7 +40,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     }
 
     try {
-      const response = await signupUser(formData);
+      const response = await signupUser(formData.firstName, formData.lastName, formData.email, formData.phoneNumber, formData.password);
       console.log('Signup successful:', response);
       onClose();
     } catch (error) {
@@ -71,7 +71,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           placeholder={t("general_inputs.user_name")}
           value={formData.username}
           onChange={handleChange}
-          isRequired={true}
+          isRequired={false}
         />
         <EmailInput
           name="email"
