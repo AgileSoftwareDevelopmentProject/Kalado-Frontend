@@ -11,12 +11,11 @@ import {
   Divider,
   Button,
   Tooltip,
-  Modal,
 } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material';
-import { Calendar } from 'react-modern-calendar-datepicker';
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 type EditAdCardProps = {
   title: string;
@@ -43,19 +42,10 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedPrice, setEditedPrice] = useState(price);
   const [editedCategory, setEditedCategory] = useState(category);
-  const [editedDate, setEditedDate] = useState<{ year: number; month: number; day: number } | null>(
-    date
-      ? {
-          year: parseInt(date.split('-')[0]),
-          month: parseInt(date.split('-')[1]),
-          day: parseInt(date.split('-')[2]),
-        }
-      : null
-  );
+  const [editedDate, setEditedDate] = useState<Date | null>(new Date(date));
   const [editedDescription, setEditedDescription] = useState(description);
   const [editedStatus, setEditedStatus] = useState(status);
   const [editedImages, setEditedImages] = useState<string[]>(images);
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEditedTitle(e.target.value);
@@ -72,9 +62,8 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
     setEditedCategory(e.target.value);
   };
 
-  const handleDateChange = (newDate: { year: number; month: number; day: number } | null) => {
+  const handleDateChange = (newDate: Date | null) => {
     setEditedDate(newDate);
-    setIsCalendarOpen(false);
   };
 
   const handleDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -97,31 +86,17 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   };
 
   const handleSave = () => {
-    const formattedDate = editedDate
-      ? `${editedDate.year}-${String(editedDate.month).padStart(2, '0')}-${String(editedDate.day).padStart(2, '0')}`
-      : '';
     const editedData = {
       title: editedTitle,
       price: editedPrice,
       category: editedCategory,
-      date: formattedDate,
+      date: editedDate ? editedDate.toISOString().split('T')[0] : '',
       description: editedDescription,
       status: editedStatus,
       images: editedImages,
     };
     onEdit(editedData);
     setIsEditing(false);
-  };
-
-  const modalStyle = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: '8px',
   };
 
   return (
@@ -219,7 +194,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             {!isEditing && (
               <IconButton
                 onClick={() => setIsEditing(true)}
-                aria-label="Edit"
+                aria-label="ویرایش"
                 sx={{
                   backgroundColor: 'transparent',
                   color: '#000',
@@ -270,74 +245,34 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             value={editedCategory}
             onChange={handleCategoryChange}
             fullWidth
-            InputProps={{
-              readOnly: !isEditing,
-              disableUnderline: !isEditing,
-              style: {
-                textAlign: 'right',
-                fontSize: '1.1rem',
-                backgroundColor: isEditing ? '#fff' : 'transparent',
-                border: isEditing ? '1px solid #ccc' : 'none',
-                borderRadius: '4px',
-                padding: isEditing ? '8px' : '0px',
-              },
+            variant="outlined"
+            size="small"
+            sx={{
+              textAlign: 'right',
             }}
           />
 
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#555' }}>
             تاریخ ثبت:
           </Typography>
-          {isEditing ? (
-            <Box>
-              <Button
-                variant="outlined"
-                onClick={() => setIsCalendarOpen(true)}
-                sx={{
-                  width: '100%',
-                  textAlign: 'right',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                {editedDate
-                  ? `${editedDate.year}/${editedDate.month}/${editedDate.day}`
-                  : 'انتخاب تاریخ'}
-              </Button>
-              <Modal
-                open={isCalendarOpen}
-                onClose={() => setIsCalendarOpen(false)}
-                aria-labelledby="calendar-modal-title"
-                aria-describedby="calendar-modal-description"
-              >
-                <Box sx={modalStyle}>
-                  <Typography id="calendar-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
-                    انتخاب تاریخ
-                  </Typography>
-                  <Calendar
-                    value={editedDate}
-                    onChange={handleDateChange}
-                    locale="fa" // تنظیم زبان به فارسی
-                    shouldHighlightWeekends
-                  />
-                  <Box sx={{ textAlign: 'right', mt: 2 }}>
-                    <Button onClick={() => setIsCalendarOpen(false)}>بستن</Button>
-                  </Box>
-                </Box>
-              </Modal>
-            </Box>
-          ) : (
-            <Typography
-              sx={{
-                fontSize: '1.1rem',
-                color: '#555',
-                backgroundColor: 'transparent',
-                padding: '4px 8px',
-                borderRadius: '4px',
-                border: '1px solid #ccc',
-              }}
-            >
-              {date}
-            </Typography>
-          )}
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="انتخاب تاریخ"
+              value={editedDate}
+              onChange={handleDateChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    textAlign: 'right',
+                  }}
+                />
+              )}
+            />
+          </LocalizationProvider>
 
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#555' }}>
             توضیحات
