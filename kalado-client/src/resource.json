@@ -53,7 +53,8 @@
             "user_name": "نام کاربری",
             "price": "قیمت",
             "date": "تاریخ",
-            "code": "کد تایید"
+            "code": "کد تایید",
+            "add_image": "افزودن عکس"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -106,6 +107,7 @@
             }
         },
         "code_verification": {
+            "verify_btn": "بررسی",
             "enter_code": "لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید"
         },
         "item_details": {
@@ -132,6 +134,15 @@
                     "one": "مدیریت پروفایل",
                     "two": "مدیریت آگهی‌ها",
                     "three": "تاریخچه‌ی تخلفات"
+                },
+                "profile_management": {
+                    "first_name": "نام",
+                    "last_name": "نام‌خانوادگی",
+                    "email": "ایمیل",
+                    "password": "رمز عبور",
+                    "phone_number": "شماره تلفن",
+                    "location": "محل سکونت",
+                    "save_changes_btn": "ذخیره تغییرات"
                 }
             },
             "admin": {}

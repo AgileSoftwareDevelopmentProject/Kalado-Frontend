@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { DateInput, Dropdown, DescriptionInput, ImageUpload, CustomButton } from '../../atoms';
-import { PopupBox } from '../../molecules';
+import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../services/CreateAdService';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -18,7 +18,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
         price: number;
         category: string | null;
         description: string;
-        images: File[]; // Change to File[] to hold uploaded images
+        images: File[];
     }>({
         title: '',
         price: 0,
@@ -51,18 +51,17 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
     const handleImageUpload = (files: File[]) => {
         setFormData(prevData => ({
             ...prevData,
-            images: files // Update images state with uploaded files
+            images: files
         }));
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Prepare data to send
         const submissionData = {
             ...formData,
-            date: selectedDate, // Include selected date
-            price: formData.price // Ensure price is included
+            date: selectedDate,
+            price: formData.price
         };
 
         try {
@@ -95,12 +94,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                     value={formData.description}
                     onChange={handleDescriptionChange}
                 />
-                <p>{t("report.choose_evidence")}</p>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                    <ImageUpload onUpload={handleImageUpload} />
-                    <ImageUpload onUpload={handleImageUpload} />
-                    <ImageUpload onUpload={handleImageUpload} />
-                </Box>
+                <ImageUploadBox onUpload={handleImageUpload} title={t("report.choose_evidence")} />
                 <CustomButton
                     text={t("create_ad.create_ad_btn")}
                     type="submit"

@@ -19,22 +19,26 @@ const NameInput: React.FC<NameInputProps> = ({
     isRequired = false,
     isStarNeeded = false
 }) => {
+    const { t } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.first_name');
+    const style = {
+        width: '70%',
+        '& .MuiInputBase-root::after': {
+            borderBottom: '2px solid #D74101',
+        },
+    }
+
     return (
         <TextField
             type="text"
             name={name}
-            placeholder={isStarNeeded ? `${placeholder} *` : placeholder}
+            placeholder={isStarNeeded ? `${translatedPlaceholder} *` : translatedPlaceholder}
             value={value}
             onChange={onChange}
             required={isRequired}
             variant="standard"
             margin="normal"
-            sx={{
-                width: '70%',
-                '& .MuiInputBase-root::after': {
-                    borderBottom: '2px solid #D74101',
-                },
-            }}
+            sx={style}
         />
     );
 };

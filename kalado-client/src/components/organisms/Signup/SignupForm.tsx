@@ -27,11 +27,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
 
-    // Handle checkbox for admin role separately
     if (name === 'isAdmin') {
       setFormData(prevData => ({
         ...prevData,
-        role: checked ? 'ADMIN' : 'USER' // Set role based on checkbox state
+        role: checked ? 'ADMIN' : 'USER'
       }));
     } else {
       setFormData(prevData => ({

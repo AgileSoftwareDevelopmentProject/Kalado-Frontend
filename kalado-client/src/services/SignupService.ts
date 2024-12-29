@@ -10,11 +10,7 @@ export const signupUser = async (formData: {
     role: string;
 }) => {
     try {
-        console.log("PPPP");
-        console.log(formData);
-
         const { passwordRepeat, ...formDataWithoutRepeat } = formData;
-
         console.log(formDataWithoutRepeat);
 
         const response = await axios.post('http://kaladoshop.com:8083/v1/auth/register', formDataWithoutRepeat, {
