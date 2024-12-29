@@ -11,15 +11,12 @@ import {
   Divider,
   Button,
   Tooltip,
+  Modal,
 } from '@mui/material';
-import {
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Save as SaveIcon,
-  Add as AddIcon,
-} from '@mui/icons-material';
+import { Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material';
-import DeleteAd from './DeleteAd';
+import { Calendar } from 'react-modern-calendar-datepicker';
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 
 type EditAdCardProps = {
   title: string;
@@ -30,8 +27,6 @@ type EditAdCardProps = {
   images: string[];
   status: string;
   onEdit: (data: any) => void;
-  onDelete: () => void;
-  onEditTitle: (newTitle: string) => void;
 };
 
 const EditAdCard: React.FC<EditAdCardProps> = ({
@@ -43,33 +38,43 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   images,
   status,
   onEdit,
-  onDelete,
-  onEditTitle,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedPrice, setEditedPrice] = useState(price);
   const [editedCategory, setEditedCategory] = useState(category);
-  const [editedDate, setEditedDate] = useState(date);
+  const [editedDate, setEditedDate] = useState<{ year: number; month: number; day: number } | null>(
+    date
+      ? {
+          year: parseInt(date.split('-')[0]),
+          month: parseInt(date.split('-')[1]),
+          day: parseInt(date.split('-')[2]),
+        }
+      : null
+  );
   const [editedDescription, setEditedDescription] = useState(description);
   const [editedStatus, setEditedStatus] = useState(status);
   const [editedImages, setEditedImages] = useState<string[]>(images);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEditedTitle(e.target.value);
   };
 
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEditedPrice(e.target.value);
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setEditedPrice(value);
+    }
   };
 
   const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEditedCategory(e.target.value);
   };
 
-  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEditedDate(e.target.value);
+  const handleDateChange = (newDate: { year: number; month: number; day: number } | null) => {
+    setEditedDate(newDate);
+    setIsCalendarOpen(false);
   };
 
   const handleDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,9 +87,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newImages = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
+      const newImages = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
       setEditedImages((prevImages) => [...prevImages, ...newImages]);
     }
   };
@@ -94,19 +97,31 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   };
 
   const handleSave = () => {
-    onEditTitle(editedTitle.trim());
-
+    const formattedDate = editedDate
+      ? `${editedDate.year}-${String(editedDate.month).padStart(2, '0')}-${String(editedDate.day).padStart(2, '0')}`
+      : '';
     const editedData = {
       title: editedTitle,
       price: editedPrice,
       category: editedCategory,
-      date: editedDate,
+      date: formattedDate,
       description: editedDescription,
       status: editedStatus,
       images: editedImages,
     };
     onEdit(editedData);
     setIsEditing(false);
+  };
+
+  const modalStyle = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: '8px',
   };
 
   return (
@@ -171,7 +186,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
                 value={editedStatus}
                 onChange={handleStatusChange}
                 displayEmpty
-                IconComponent={() => null}
+                IconComponent={() => <></>}
                 sx={{
                   fontSize: '1rem',
                   backgroundColor: '#fff',
@@ -201,29 +216,13 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
 
           {/* Edit and Delete Buttons */}
           <Box sx={{ display: 'flex', gap: '10px' }}>
-            <IconButton
-              onClick={() => setIsDeleteDialogOpen(true)}
-              aria-label="Delete"
-              sx={{
-                backgroundColor: 'transparent',
-                color: '#000', // Black icon
-                border: '1px solid transparent',
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                  borderColor: '#FF4500',
-                },
-                padding: '10px',
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
             {!isEditing && (
               <IconButton
                 onClick={() => setIsEditing(true)}
                 aria-label="Edit"
                 sx={{
                   backgroundColor: 'transparent',
-                  color: '#000', // Black icon
+                  color: '#000',
                   border: '1px solid transparent',
                   '&:hover': {
                     backgroundColor: 'rgba(0, 0, 0, 0.1)',
@@ -256,19 +255,12 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             value={editedPrice}
             onChange={handlePriceChange}
             fullWidth
-            InputProps={{
-              readOnly: !isEditing,
-              disableUnderline: !isEditing,
-              style: {
-                textAlign: 'right',
-                fontSize: '1.1rem',
-                backgroundColor: isEditing ? '#fff' : 'transparent',
-                border: isEditing ? '1px solid #ccc' : 'none',
-                borderRadius: '4px',
-                padding: isEditing ? '8px' : '0px',
-              },
-            }}
             variant="outlined"
+            size="small"
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+            sx={{
+              textAlign: 'right',
+            }}
           />
 
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#555' }}>
@@ -290,30 +282,62 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
                 padding: isEditing ? '8px' : '0px',
               },
             }}
-            variant="outlined"
           />
 
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#555' }}>
             تاریخ ثبت:
           </Typography>
-          <TextField
-            value={editedDate}
-            onChange={handleDateChange}
-            fullWidth
-            InputProps={{
-              readOnly: !isEditing,
-              disableUnderline: !isEditing,
-              style: {
-                textAlign: 'right',
+          {isEditing ? (
+            <Box>
+              <Button
+                variant="outlined"
+                onClick={() => setIsCalendarOpen(true)}
+                sx={{
+                  width: '100%',
+                  textAlign: 'right',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                {editedDate
+                  ? `${editedDate.year}/${editedDate.month}/${editedDate.day}`
+                  : 'انتخاب تاریخ'}
+              </Button>
+              <Modal
+                open={isCalendarOpen}
+                onClose={() => setIsCalendarOpen(false)}
+                aria-labelledby="calendar-modal-title"
+                aria-describedby="calendar-modal-description"
+              >
+                <Box sx={modalStyle}>
+                  <Typography id="calendar-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+                    انتخاب تاریخ
+                  </Typography>
+                  <Calendar
+                    value={editedDate}
+                    onChange={handleDateChange}
+                    locale="fa" // تنظیم زبان به فارسی
+                    shouldHighlightWeekends
+                  />
+                  <Box sx={{ textAlign: 'right', mt: 2 }}>
+                    <Button onClick={() => setIsCalendarOpen(false)}>بستن</Button>
+                  </Box>
+                </Box>
+              </Modal>
+            </Box>
+          ) : (
+            <Typography
+              sx={{
                 fontSize: '1.1rem',
-                backgroundColor: isEditing ? '#fff' : 'transparent',
-                border: isEditing ? '1px solid #ccc' : 'none',
+                color: '#555',
+                backgroundColor: 'transparent',
+                padding: '4px 8px',
                 borderRadius: '4px',
-                padding: isEditing ? '8px' : '0px',
-              },
-            }}
-            variant="outlined"
-          />
+                border: '1px solid #ccc',
+              }}
+            >
+              {date}
+            </Typography>
+          )}
 
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#555' }}>
             توضیحات
@@ -324,19 +348,11 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             fullWidth
             multiline
             rows={3}
-            InputProps={{
-              readOnly: !isEditing,
-              disableUnderline: !isEditing,
-              style: {
-                textAlign: 'right',
-                fontSize: '1.1rem',
-                backgroundColor: isEditing ? '#fff' : 'transparent',
-                border: isEditing ? '1px solid #ccc' : 'none',
-                borderRadius: '4px',
-                padding: isEditing ? '8px' : '0px',
-              },
-            }}
             variant="outlined"
+            size="small"
+            sx={{
+              textAlign: 'right',
+            }}
           />
         </Box>
 
@@ -363,7 +379,35 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           }}
         >
           {editedImages.map((image, index) => (
-            <Box key={index} sx={{ position: 'relative' }}>
+            <Box
+              key={index}
+              sx={{
+                position: 'relative',
+                width: '160px',
+                height: '160px',
+              }}
+            >
+              {isEditing && (
+                <IconButton
+                  aria-label="حذف عکس"
+                  onClick={() => handleImageDelete(index)}
+                  size="small"
+                  sx={{
+                    position: 'absolute',
+                    top: '-8px', // تنظیم فاصله از بالای عکس
+                    right: '-8px', // تنظیم فاصله از سمت راست عکس
+                    backgroundColor: '#fff',
+                    color: '#000',
+                    border: '1px solid #ccc',
+                    '&:hover': {
+                      backgroundColor: '#f0f0f0',
+                      borderColor: '#FF4500',
+                    },
+                  }}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              )}
               <CardMedia
                 component="img"
                 image={image}
@@ -375,26 +419,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
                   boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
                 }}
               />
-              {isEditing && (
-                <IconButton
-                  aria-label="Delete Image"
-                  onClick={() => handleImageDelete(index)}
-                  sx={{
-                    position: 'absolute',
-                    top: '5px',
-                    right: '5px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                    color: '#000',
-                    border: '1px solid transparent',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 1)',
-                      borderColor: '#FF4500',
-                    },
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              )}
             </Box>
           ))}
 
@@ -410,7 +434,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
                 border: '2px dashed #ccc',
                 cursor: 'pointer',
                 position: 'relative',
-                '&:hover': { backgroundColor: '#f0f0f0', borderColor: '#FF4500' },
+                '&:hover': { backgroundColor: '#f0f0f0' },
               }}
               onClick={() => document.getElementById('image-upload-input')?.click()}
             >
@@ -432,18 +456,13 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
             <Button
               variant="contained"
+              color="primary"
               onClick={handleSave}
               startIcon={<SaveIcon />}
               sx={{
                 fontWeight: 'bold',
                 padding: '10px 20px',
-                backgroundColor: '#FF4500', // Desired color
-                color: '#fff',
-                border: '1px solid transparent',
-                '&:hover': {
-                  backgroundColor: '#e03e00',
-                  borderColor: '#FF4500',
-                },
+                boxShadow: '0px 6px 12px rgba(33, 150, 243, 0.4)',
               }}
             >
               ذخیره
@@ -453,6 +472,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
       </Card>
 
       {/* Delete Dialog */}
+      {/* 
       <DeleteAd
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
@@ -461,6 +481,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           setIsDeleteDialogOpen(false);
         }}
       />
+      */}
     </>
   );
 };
