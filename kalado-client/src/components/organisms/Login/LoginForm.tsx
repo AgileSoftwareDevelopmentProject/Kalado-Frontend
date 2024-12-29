@@ -9,7 +9,7 @@ import { LoginRequest, LoginResponse } from '../../../services/types';
 interface LoginFormProps {
     onClose: () => void;
     onOpenSignup: () => void;
-    onLoginSuccess: (username: string) => void;
+    onLoginSuccess: (email: string) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
@@ -21,22 +21,37 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
 
     const [error, setError] = useState<string | null>(null);
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        try {
-            const response: LoginResponse = await login(formData);
-            if (response.success) {
-                console.log('Login successful:', response);
-                onLoginSuccess(formData.email); // Call the success handler with email
-                setFormData({ email: '', password: '' }); // Reset form data
-                onClose(); // Close the form or popup
-            } else {
-                setError(response.message || 'Login failed'); // Show error message to user
+        const { email, password } = formData;
+
+        if (email && password) {
+            try {
+                const response = await loginUser(email, password);
+                if (response.isSuccess) {
+                    console.log('Login successful:', response);
+                    onLoginSuccess(email);
+                    setFormData({ email: '', password: '' });
+                    onClose();
+                } else {
+
+                    setError(response.message || 'Login failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                setError('An error occurred during login. Please try again later.');
             }
-        } catch (error) {
-            console.error('Login error:', error);
-            setError('An unexpected error occurred. Please try again later.');
+        } else {
+            setError('Both email and password are required.');
         }
     };
 

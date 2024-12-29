@@ -1,31 +1,55 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-export const signupUser = async (formData: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
-    passwordRepeat: string;
-    role: string;
-}) => {
+// export const signupUser = async (formData: {
+//     firstName: string;
+//     lastName: string;
+//     username: string;
+//     email: string;
+//     phoneNumber: string;
+//     password: string;
+// }) => {
+//     try {
+//         const response = await axios.post('https://kaladoshop.com/v1/auth/register', formData);
+//         return response.data;
+//     } catch (error) {
+//         throw error;
+//     }
+// };
+
+import { sendRequest } from '../axiosInstance';
+import { AUTH } from '../urls';
+import { toast } from 'sonner';
+
+export async function signupUser(
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    password: string
+) {
+    const payload = {
+        firstName: String(firstName),
+        lastName: String(lastName),
+        email: String(email),
+        phoneNumber: String(phoneNumber),
+        password: String(password),
+        role: 'USER',
+    };
+
     try {
-        const { passwordRepeat, ...formDataWithoutRepeat } = formData;
-        console.log(formDataWithoutRepeat);
+        const response = await sendRequest<typeof payload>(AUTH.REGISTER, 'POST', payload);
 
-        const response = await axios.post('http://kaladoshop.com:8083/v1/auth/register', formDataWithoutRepeat, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        return response.data;
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error('Signup error:', error.response?.data || error.message);
+        if (response.isSuccess) {
+            toast.success('Signup successful!');
+        } else if (response.status === 409) {
+            toast.error('This email is already registered. Please log in.');
         } else {
-            console.error('Unexpected error:', error);
+            toast.error(response.message || 'Signup failed.');
         }
-        throw error;
+
+        return response;
+    } catch (error) {
+        toast.error('An unexpected error occurred during signup.');
+        return { isSuccess: false, message: 'An error occurred during signup.' };
     }
-};
+}
