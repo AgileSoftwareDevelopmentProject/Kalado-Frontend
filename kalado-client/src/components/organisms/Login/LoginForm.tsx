@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { EmailInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { login } from '../../../services/apiService';
 import { LoginRequest, LoginResponse } from '../../../services/types';
+import { loginUser } from '../../../services/LoginService';
 
 interface LoginFormProps {
     onClose: () => void;
