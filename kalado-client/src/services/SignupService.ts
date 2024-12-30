@@ -18,7 +18,6 @@
 
 import { sendRequest } from '../axiosInstance';
 import { AUTH } from '../urls';
-import { toast } from 'sonner';
 
 export async function signupUser(
     firstName: string,
@@ -40,16 +39,20 @@ export async function signupUser(
         const response = await sendRequest<typeof payload>(AUTH.REGISTER, 'POST', payload);
 
         if (response.isSuccess) {
-            toast.success('Signup successful!');
+            // toast.success('Signup successful!');
+            console.log('Signup successful!');
         } else if (response.status === 409) {
-            toast.error('This email is already registered. Please log in.');
+            // toast.error('This email is already registered. Please log in.');
+            console.log('This email is already registered. Please log in.');
         } else {
-            toast.error(response.message || 'Signup failed.');
+            // toast.error(response.message || 'Signup failed.');
+            console.log(response.message || 'Signup failed.');
         }
 
         return response;
     } catch (error) {
-        toast.error('An unexpected error occurred during signup.');
+        // toast.error('An unexpected error occurred during signup.');
+        console.log('An unexpected error occurred during signup.');
         return { isSuccess: false, message: 'An error occurred during signup.' };
     }
 }

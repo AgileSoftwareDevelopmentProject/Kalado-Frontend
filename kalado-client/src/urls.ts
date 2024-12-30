@@ -7,6 +7,14 @@ export const AUTH = {
     LOGOUT: '/auth/logout',
 }
 
+// Ad
+export const PRODUCT = {
+    CREATE: '/product',
+    UPDATE: (adId: string) => `/product/${adId}`,
+    DELETE: (adId: string) => `/product/delete/${adId}`,
+    UPDATE_STATUS: (adId: string) => `/product/status/${adId}`,
+}
+
 // ORDERS
 
 // USER - CUSTOMER
