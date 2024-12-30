@@ -8,9 +8,10 @@ import { Box, FormControlLabel, Checkbox } from '@mui/material';
 interface SignupFormProps {
   onClose: () => void;
   onOpenLogin: () => void;
+  onSignUpSuccess: (email: string) => void;
 }
 
-const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
+const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpSuccess }) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -19,7 +20,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     phoneNumber: '',
     password: '',
     passwordRepeat: '',
-
+    role: 'USER'
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -49,8 +50,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
     }
 
     try {
-      const response = await signupUser(formData.firstName, formData.lastName, formData.email, formData.phoneNumber, formData.password);
+      const response = await signupUser(formData.firstName, formData.lastName, formData.email,
+        formData.phoneNumber, formData.password);
       console.log('Signup successful:', response);
+
+      onSignUpSuccess(formData.email);
       onClose();
     } catch (error) {
       console.error('Signup error:', error);
@@ -96,36 +100,31 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin }) => {
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
-
-        {/* Admin Checkbox */}
         <Box>
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.role === 'ADMIN'} // Check if role is ADMIN
+                checked={formData.role === 'ADMIN'}
                 onChange={handleChange}
-                name="isAdmin" // Name for the checkbox input
+                name="isAdmin"
                 color="primary"
               />
             }
-            label={t("signup_form.is_admin")} // Add translation key for checkbox label
+            label={t("signup_form.is_admin")}
           />
         </Box>
-
         <CustomButton
           text={t("signup_form.signup_btn")}
           type="submit"
           padding="10px 40px"
           margin="30px 0px 0px 0px"
         />
-
         <CustomLink
           to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
           color="primary"
           text={t("signup_form.login_link")}
         />
-
         <FormError message={error} />
       </form>
     </PopupBox>

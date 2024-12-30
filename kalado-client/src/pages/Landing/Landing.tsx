@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
+import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
@@ -14,6 +14,7 @@ const Landing = () => {
 
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
+    const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>('املاک');
@@ -49,6 +50,14 @@ const Landing = () => {
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);
         handleCloseLogin();
+    };
+
+    const handleOpenCodeVerification = (email: string) => {
+        // Pass email to CodeVerification and open it
+        // You might want to store the email in state or context
+        // For now, we'll just open it without passing email
+        setCodeVerificationVisible(true);
+        handleCloseSignup();
     };
 
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -91,12 +100,21 @@ const Landing = () => {
             )}
             {isSignupVisible && (
                 <Backdrop open={isSignupVisible} onClick={handleBackdropClick}>
-                    <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
+                    <SignupForm
+                        onClose={handleCloseSignup}
+                        onOpenLogin={handleOpenLogin}
+                        onSignUpSuccess={handleOpenCodeVerification} // Pass the handler for success
+                    />
                 </Backdrop>
             )}
             {isCreateAdVisible && (
                 <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
                     <CreateAdForm onClose={handleCloseCreateAd} />
+                </Backdrop>
+            )}
+            {isCodeVerificationVisible && (
+                <Backdrop open={isCodeVerificationVisible} onClick={handleBackdropClick}>
+                    <CodeVerification email="user@example.com" onClose={() => setCodeVerificationVisible(false)} /> {/* Replace with actual email */}
                 </Backdrop>
             )}
         </Box>
