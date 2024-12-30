@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { DashboardMenu, ProfileManagement, AdManagement, ReportHistory } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
-import mockData from '../../mockData.json';
-
-
-const items = mockData.Items;
 
 const UserDashboard = () => {
     const { t } = useTranslation();
-
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>('مدیریت پروفایل');
 
     const handleSelectMenu = (menuTitle: string) => {

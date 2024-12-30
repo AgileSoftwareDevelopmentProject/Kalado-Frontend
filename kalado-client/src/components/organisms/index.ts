@@ -12,4 +12,5 @@ export { default as ProfileManagement } from './ProfileManagement/ProfileManagem
 export { default as ReportSubmissionForm } from './Report/ReportSubmissionForm';
 export { default as ReportHistory } from './Report/ReportHistory';
 export { default as SignupForm } from './Signup/SignupForm';
+export { default as UserManagement } from './UserManagement/UserManagement';
 

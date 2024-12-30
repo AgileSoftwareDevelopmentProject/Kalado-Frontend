@@ -3,15 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { AppBar, Toolbar, Box } from '@mui/material';
 import { Logo, CustomButton } from '../../atoms';
 import { SearchBar } from '../../molecules';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 interface NavBarProps {
   onLoginClick: () => void;
   onCreateAdClick: () => void;
   isLoggedIn: boolean;
   onProfileClick: () => void;
+  toggleTheme: () => void;
+  isDarkMode: boolean;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick }) => {
+const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick, toggleTheme, isDarkMode }) => {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -20,7 +24,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#272C48', width: '100%', boxShadow: 'none' }}>
+    <AppBar position="fixed" sx={{ width: '100%', backgroundColor: 'transparent', boxShadow: 'none' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, ml: 10, mr: 10 }}>
         <Logo />
 
@@ -31,6 +35,13 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
             onSearch={handleSearch}
           />
         </Box>
+
+        <CustomButton
+          icon={isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+          onClick={toggleTheme}
+          color="inherit"
+          padding="5px 5px"
+        />
 
         <Box sx={{ display: 'flex', gap: 1 }}>
           {isLoggedIn ? (

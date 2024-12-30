@@ -9,14 +9,19 @@ import mockData from '../../mockData.json';
 
 const items = mockData.Items;
 
-const Landing = () => {
+interface LandingProps {
+    toggleTheme: () => void;
+    isDarkMode: boolean;
+}
+
+const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const navigate = useNavigate();
 
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>('املاک');
 
     const handleOpenLogin = () => {
@@ -47,15 +52,16 @@ const Landing = () => {
         setCreateAdVisible(false);
     };
 
+    const handleCloseCodeVerification = () => {
+        setCodeVerificationVisible(false);
+    };
+
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);
         handleCloseLogin();
     };
 
     const handleOpenCodeVerification = (email: string) => {
-        // Pass email to CodeVerification and open it
-        // You might want to store the email in state or context
-        // For now, we'll just open it without passing email
         setCodeVerificationVisible(true);
         handleCloseSignup();
     };
@@ -79,7 +85,14 @@ const Landing = () => {
 
     return (
         <Box>
-            <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
+            <NavBar
+                onLoginClick={handleOpenLogin}
+                onCreateAdClick={handleOpenCreateAd}
+                isLoggedIn={isLoggedIn}
+                onProfileClick={handleOpenProfilePage}
+                toggleTheme={toggleTheme}
+                isDarkMode={isDarkMode}
+            />
 
             <SideBar>
                 <Category onSelectCategory={handleSelectCategory} />
@@ -103,7 +116,7 @@ const Landing = () => {
                     <SignupForm
                         onClose={handleCloseSignup}
                         onOpenLogin={handleOpenLogin}
-                        onSignUpSuccess={handleOpenCodeVerification} // Pass the handler for success
+                        onSignUpSuccess={handleOpenCodeVerification}
                     />
                 </Backdrop>
             )}
@@ -114,7 +127,7 @@ const Landing = () => {
             )}
             {isCodeVerificationVisible && (
                 <Backdrop open={isCodeVerificationVisible} onClick={handleBackdropClick}>
-                    <CodeVerification email="user@example.com" onClose={() => setCodeVerificationVisible(false)} /> {/* Replace with actual email */}
+                    <CodeVerification email="" onClose={handleCloseCodeVerification} />
                 </Backdrop>
             )}
         </Box>

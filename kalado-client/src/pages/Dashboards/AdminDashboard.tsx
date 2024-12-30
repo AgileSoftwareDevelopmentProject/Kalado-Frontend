@@ -1,12 +1,39 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
+import { DashboardMenu, ProfileManagement, UserManagement, ReportHistory } from '../../components/organisms';
+import { SideBar } from '../../components/molecules';
 
 
 const AdminDashboard = () => {
 
+    const { t } = useTranslation();
+
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>('مدیریت پروفایل');
+
+    const handleSelectMenu = (menuTitle: string) => {
+        setSelectedMenuTitle(menuTitle);
+    };
+
+    const renderContent = () => {
+        switch (selectedMenuTitle) {
+            case 'مدیریت پروفایل':
+                return <ProfileManagement />;
+            case '‌مدیریت کاربران':
+                return <UserManagement />;
+            case 'مدیریت تخلفات':
+                return <ReportHistory />;
+        }
+    };
+
     return (
         <Box>
-
+            <SideBar>
+                <DashboardMenu onSelectMenu={handleSelectMenu} />
+            </SideBar>
+            <Box sx={{ flexGrow: 1, padding: 2 }}>
+                {renderContent()}
+            </Box>
         </Box>
     );
 };
