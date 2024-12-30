@@ -24,13 +24,13 @@ import { AUTH, PRODUCT } from '../urls';
 export async function createAd(
     title: string,
     description: string,
-    priceAmount: number, // Only the amount as input
+    priceAmount: number,
     category: string,
     productionYear: number,
-    brand: string,
+    // brand: string,
     sellerId: number
 ) {
-    // Create the payload
+
     const payload = {
         title,
         description,
@@ -40,12 +40,12 @@ export async function createAd(
         },
         category,
         productionYear,
-        brand,
+        // brand,
         sellerId,
     };
 
     try {
-        // Call the API with the payload
+
         const response = await sendRequest<typeof payload>(PRODUCT.CREATE, 'POST', payload);
 
         if (response.isSuccess) {
