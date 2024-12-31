@@ -23,7 +23,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userRole, setUserRole] = useState<string | null>('USER');
     const [userEmail, setUserEmail] = useState<string>('');
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));

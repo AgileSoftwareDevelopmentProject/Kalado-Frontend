@@ -15,7 +15,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ toggleTheme, isDarkMode
     const { t } = useTranslation();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.admin.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const adminCategories = [
         { title: t("dashboard.admin.menu.one"), icon: <FaUser /> },
