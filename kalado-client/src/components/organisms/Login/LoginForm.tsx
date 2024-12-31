@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { login } from '../../../services/apiService';
 import { LoginRequest, LoginResponse } from '../../../services/types';
+import { loginUser } from '../../../services/LoginService';
 
 interface LoginFormProps {
     onClose: () => void;

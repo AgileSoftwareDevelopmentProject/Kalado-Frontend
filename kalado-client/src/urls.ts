@@ -1,11 +1,22 @@
-export const BASE_URL = 'http://kaladoshop.com:8083/v1'
+export const BASE_URL = 'http://kaladoshop.com:8083/v1';
 
 // AUTH
 export const AUTH = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
-}
+};
+
+// PRODUCT
+export const PRODUCT = {
+    CREATE: '/product',
+    UPDATE: (adId: string) => `/product/${adId}`,
+    DELETE: (adId: string) => `/product/delete/${adId}`,
+    UPDATE_STATUS: (adId: string) => `/product/status/${adId}`,
+    GET_BY_SELLER: (sellerId: number) => `/product/seller/${sellerId}`, // Added seller endpoint
+    GET_BY_CATEGORY: (category: string) => `/product/category/${category}`, // Added category endpoint
+    GET_SINGLE: (productId: number) => `/product/${productId}`, // Added single product endpoint
+};
 
 // ORDERS
 
@@ -20,7 +31,7 @@ export const CUSTOMER_ORDER = {
     MODIFY_ORDER: (orderId: string) => `/order/customer/modifyOrder?orderId=${orderId}`,
     GET_CUSTOMER_ORDERS: `/order/customer/customerOrders`,
     GET_CUSTOMER_CURRENT_ORDER: `/order/customer/current`,
-}
+};
 
 // USER - RESTAURANT OWNER
 export const RESTAURANT_OWNER_ORDER = {
@@ -28,32 +39,30 @@ export const RESTAURANT_OWNER_ORDER = {
         `/order/restaurantOwner/status?orderId=${orderId}&status=${status}`,
     GET_ORDERS: `/order/restaurantOwner/orderHistory`,
     GET_ACTIVE_ORDERS: `/order/restaurantOwner/activeOrders`,
-}
+};
 
 // USER - DELIVERY PERSON
 export const DELIVERY_PERSON_ORDER = {
     UPDATE_ORDER_STATUS: (orderId: string, status: string) =>
         `/order/deliveryPerson/status?orderId=${orderId}&status=${status}`,
     GET_CURRENT_ORDER: `/order/deliveryPerson/current`,
-}
+};
 
 // REVIEW
 export const REVIEW = {
     SET_ORDER_REVIEW: (orderId: string, comment: string) => `/review/order?orderId=${orderId}&comment=${comment}`,
-}
+};
 
 // RATE
 export const RATE = {
     SET_ORDER_RATE: (orderId: string, point: number) => `/rate/order?orderId=${orderId}&point=${point}`,
     SET_DELIVERY_PERSON_RATE: (orderId: string, point: number) => `/rate/delivery?orderId=${orderId}&point=${point}`,
-}
+};
 
 // DELIVERY
 export const DELIVERY = {
     GET_INVOICE: (orderId: string) => `/delivery/getInvoice?orderId=${orderId}`,
-}
-
-// PRODUCTS
+};
 
 // CATEGORY
 export const CATEGORY = {
@@ -61,7 +70,7 @@ export const CATEGORY = {
     GET_BY_ID: (categoryId: string) => `/category/${categoryId}`,
     CREATE: `/category`,
     DELETE: (categoryId: string) => `/category/${categoryId}`,
-}
+};
 
 // FOOD
 export const FOOD = {
@@ -71,7 +80,7 @@ export const FOOD = {
     CREATE: `/food`,
     EDIT: (foodId: string) => `/food/${foodId}`,
     DELETE: (foodId: string) => `/food/${foodId}`,
-}
+};
 
 // MENU
 export const MENU = {
@@ -79,19 +88,19 @@ export const MENU = {
     GET_BY_RESTAURANT_ID: (restaurantId: string) => `/menu/${restaurantId}`,
     CREATE: `/menu`,
     DELETE: (menuId: string) => `/menu/${menuId}`,
-}
+};
 
 // USER - CUSTOMER
 export const CUSTOMER = {
     MODIFY: `/customer`,
     GET: `/customer`,
-}
+};
 
 // USER - RESTAURANT OWNER
 export const RESTAURANT_OWNER = {
     MODIFY: `/restaurantOwner`,
     GET: `/restaurantOwner`,
-}
+};
 
 // USER - DELIVERY PERSON
 export const DELIVERY_PERSON = {
@@ -100,4 +109,4 @@ export const DELIVERY_PERSON = {
     GET_STATUS: `/deliveryPerson/status`,
     SET_LOCATION: `/deliveryPerson/location`,
     GET_LOCATION: `/deliveryPerson/location`,
-}
+};
