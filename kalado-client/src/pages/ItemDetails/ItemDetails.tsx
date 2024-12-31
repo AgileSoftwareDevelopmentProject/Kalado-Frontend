@@ -55,7 +55,7 @@ const ItemDetails: React.FC = () => {
                 p: 2,
             }}
         >
-            <Card sx={{ width: 800, height: 'auto', bgcolor: "#272C48" }}>
+            <Card sx={{ width: 800, height: 'auto' }}>
                 <Box sx={{ display: 'flex' }}>
                     <Box sx={{ flexGrow: 1 }}>
                         <CardContent>

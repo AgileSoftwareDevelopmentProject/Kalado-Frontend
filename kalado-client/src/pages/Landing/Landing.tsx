@@ -21,7 +21,9 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userRole, setUserRole] = useState<string | null>('');
+    const [userEmail, setUserEmail] = useState<string>('');
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>('املاک');
 
     const handleOpenLogin = () => {
@@ -56,12 +58,8 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         setCodeVerificationVisible(false);
     };
 
-    const handleLoginSuccess = () => {
-        setIsLoggedIn(true);
-        handleCloseLogin();
-    };
-
     const handleOpenCodeVerification = (email: string) => {
+        setUserEmail(email);
         setCodeVerificationVisible(true);
         handleCloseSignup();
     };
@@ -75,13 +73,23 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         }
     };
 
-    const handleOpenProfilePage = () => {
-        navigate('/user-dashboard');
-    }
-
     const handleSelectCategory = (categoryTitle: string) => {
         setSelectedCategoryTitle(categoryTitle);
     };
+
+    const handleLoginSuccess = (role: string) => {
+        setUserRole(role);
+        handleCloseLogin();
+    };
+
+    const handleOpenProfilePage = () => {
+        if (userRole === 'ADMIN') {
+            navigate('/admin-dashboard');
+        } else if (userRole === 'USER') {
+            navigate('/user-dashboard');
+        }
+    };
+
 
     return (
         <Box>
@@ -127,7 +135,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
             )}
             {isCodeVerificationVisible && (
                 <Backdrop open={isCodeVerificationVisible} onClick={handleBackdropClick}>
-                    <CodeVerification email="" onClose={handleCloseCodeVerification} />
+                    <CodeVerification email={userEmail} onClose={handleCloseCodeVerification} />
                 </Backdrop>
             )}
         </Box>

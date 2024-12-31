@@ -39,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                 const response = await loginUser(email, password);
                 if (response.isSuccess) {
                     console.log('Login successful:', response);
-                    onLoginSuccess(email);
+                    onLoginSuccess(response.role);
                     setFormData({ email: '', password: '' });
                     onClose();
                 } else {

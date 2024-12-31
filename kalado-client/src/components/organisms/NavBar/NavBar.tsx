@@ -7,10 +7,10 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 interface NavBarProps {
-  onLoginClick: () => void;
+  onLoginClick?: () => void;
   onCreateAdClick: () => void;
   isLoggedIn: boolean;
-  onProfileClick: () => void;
+  onProfileClick?: () => void;
   toggleTheme: () => void;
   isDarkMode: boolean;
 }
@@ -41,6 +41,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
           onClick={toggleTheme}
           color="inherit"
           padding="5px 5px"
+          backgroundColor="transparent"
         />
 
         <Box sx={{ display: 'flex', gap: 1 }}>
