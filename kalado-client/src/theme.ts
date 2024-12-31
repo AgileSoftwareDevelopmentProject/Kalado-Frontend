@@ -71,7 +71,7 @@ export const darkTheme = createTheme({
         },
         background: {
             default: '#272C48', // Dark mode background color
-            paper: '#424242',
+            paper: '#272C48',  // Card, Item details
         },
         text: {
             primary: '#FFFFFF',  // White text for dark mode
