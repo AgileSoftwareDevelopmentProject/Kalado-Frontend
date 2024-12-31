@@ -3,24 +3,34 @@ import { useTranslation } from 'react-i18next';
 import { AppBar, Toolbar, Box } from '@mui/material';
 import { Logo, CustomButton } from '../../atoms';
 import { SearchBar } from '../../molecules';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 interface NavBarProps {
-  onLoginClick: () => void;
+  onLoginClick?: () => void;
   onCreateAdClick: () => void;
   isLoggedIn: boolean;
-  onProfileClick: () => void;
+  onProfileClick?: () => void;
+  toggleTheme: () => void;
+  isDarkMode: boolean;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick }) => {
-  const { t } = useTranslation();
+const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick, toggleTheme, isDarkMode }) => {
+  const { t, i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
   };
 
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'fa' : 'en';
+    i18n.changeLanguage(newLang);
+    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr';
+  };
+
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#272C48', width: '100%', boxShadow: 'none' }}>
+    <AppBar position="fixed" sx={{ width: '100%', backgroundColor: 'transparent', boxShadow: 'none' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, ml: 10, mr: 10 }}>
         <Logo />
 
@@ -31,6 +41,20 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
             onSearch={handleSearch}
           />
         </Box>
+
+        <CustomButton
+          text={i18n.language === 'en' ? "Fa" : "En"}
+          onClick={toggleLanguage}
+          backgroundColor="transparent"
+        />
+
+        <CustomButton
+          icon={isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+          onClick={toggleTheme}
+          color="inherit"
+          padding="5px 5px"
+          backgroundColor="transparent"
+        />
 
         <Box sx={{ display: 'flex', gap: 1 }}>
           {isLoggedIn ? (

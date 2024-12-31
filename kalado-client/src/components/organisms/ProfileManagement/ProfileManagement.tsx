@@ -33,11 +33,20 @@ const ProfileManagement = () => {
         try {
             setLoading(true);
             const response = await axios.get('/api/user-profile');
+            response.data = {
+                profileImage: "string",
+                firstName: "string",
+                lastName: "string",
+                email: "foroz.iraji@gmail.com",
+                phoneNumber: "09122890678",
+                residentialLocation: "string",
+                password: "Kalado1403@"
+            }
             setUserData(response.data);
-            setLoading(false);
         } catch (err) {
             console.error('Error fetching user data:', err);
             setError('Failed to load user data');
+        } finally {
             setLoading(false);
         }
     };
@@ -68,11 +77,11 @@ const ProfileManagement = () => {
         try {
             setLoading(true);
             await axios.put('/api/user-profile', userData);
-            setLoading(false);
             alert(t('profile.saveSuccess'));
         } catch (err) {
             console.error('Error saving user data:', err);
             setError('Failed to save changes');
+        } finally {
             setLoading(false);
         }
     };
@@ -129,19 +138,19 @@ const ProfileManagement = () => {
                         name="email"
                         value={userData.email}
                         onChange={handleInputChange}
-                    // disabled
+                    // disabled // Disable email input to prevent changes
                     />
                     <PhoneNumberInput
                         name="phoneNumber"
                         value={userData.phoneNumber}
                         onChange={handleInputChange}
                     />
-                    {/* <PasswordInput
+                    <PasswordInput
                         name="password"
                         value={userData.password}
+                        placeholder={t('dashboard.user.profile_management.new_password')}
                         onChange={handleInputChange}
-                    /> */}
-
+                    />
                     <NameInput
                         name="residentialLocation"
                         placeholder={t('dashboard.user.profile_management.location')}

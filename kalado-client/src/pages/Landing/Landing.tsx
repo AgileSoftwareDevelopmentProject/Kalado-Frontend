@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
+import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
@@ -9,14 +10,22 @@ import mockData from '../../mockData.json';
 
 const items = mockData.Items;
 
-const Landing = () => {
-    const navigate = useNavigate();
+interface LandingProps {
+    toggleTheme: () => void;
+    isDarkMode: boolean;
+}
 
+const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
+    const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>('املاک');
+    const [userRole, setUserRole] = useState<string | null>('USER');
+    const [userEmail, setUserEmail] = useState<string>('');
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));
 
     const handleOpenLogin = () => {
         setLoginVisible(true);
@@ -46,9 +55,14 @@ const Landing = () => {
         setCreateAdVisible(false);
     };
 
-    const handleLoginSuccess = () => {
-        setIsLoggedIn(true);
-        handleCloseLogin();
+    const handleCloseCodeVerification = () => {
+        setCodeVerificationVisible(false);
+    };
+
+    const handleOpenCodeVerification = (email: string) => {
+        setUserEmail(email);
+        setCodeVerificationVisible(true);
+        handleCloseSignup();
     };
 
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -60,17 +74,34 @@ const Landing = () => {
         }
     };
 
-    const handleOpenProfilePage = () => {
-        navigate('/user-dashboard');
-    }
-
     const handleSelectCategory = (categoryTitle: string) => {
         setSelectedCategoryTitle(categoryTitle);
     };
 
+    const handleLoginSuccess = (role: string) => {
+        setUserRole(role);
+        handleCloseLogin();
+    };
+
+    const handleOpenProfilePage = () => {
+        if (userRole === 'ADMIN') {
+            navigate('/admin-dashboard');
+        } else if (userRole === 'USER') {
+            navigate('/user-dashboard');
+        }
+    };
+
+
     return (
         <Box>
-            <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
+            <NavBar
+                onLoginClick={handleOpenLogin}
+                onCreateAdClick={handleOpenCreateAd}
+                isLoggedIn={isLoggedIn}
+                onProfileClick={handleOpenProfilePage}
+                toggleTheme={toggleTheme}
+                isDarkMode={isDarkMode}
+            />
 
             <SideBar>
                 <Category onSelectCategory={handleSelectCategory} />
@@ -91,12 +122,21 @@ const Landing = () => {
             )}
             {isSignupVisible && (
                 <Backdrop open={isSignupVisible} onClick={handleBackdropClick}>
-                    <SignupForm onClose={handleCloseSignup} onOpenLogin={handleOpenLogin} />
+                    <SignupForm
+                        onClose={handleCloseSignup}
+                        onOpenLogin={handleOpenLogin}
+                        onSignUpSuccess={handleOpenCodeVerification}
+                    />
                 </Backdrop>
             )}
             {isCreateAdVisible && (
                 <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
                     <CreateAdForm onClose={handleCloseCreateAd} />
+                </Backdrop>
+            )}
+            {isCodeVerificationVisible && (
+                <Backdrop open={isCodeVerificationVisible} onClick={handleBackdropClick}>
+                    <CodeVerification email={userEmail} onClose={handleCloseCodeVerification} />
                 </Backdrop>
             )}
         </Box>

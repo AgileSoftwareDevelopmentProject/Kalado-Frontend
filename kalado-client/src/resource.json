@@ -1,16 +1,29 @@
 {
     "en": {
+        "general_inputs": {
+            "email": "Email",
+            "password": "Password",
+            "password_repeat": "Password Repeat",
+            "phone_number": "Phone Number",
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "price": "Price",
+            "date": "Date",
+            "code": "Verification Code",
+            "add_image": "Add Image",
+            "description": "Description"
+        },
         "navbar": {
-            "create_ad": "Create Ad",
+            "create_ad": "Ad Submission",
             "login/signup": "Login/Signup",
-            "profile": "User Profile",
+            "profile": "Profile",
             "searchbar": "Search Item"
         },
         "category": {
             "title": "Categories",
-            "one": "Real estate",
+            "one": "Real Estate",
             "two": "Transportation",
-            "three": "House & Kitchen",
+            "three": "Home & Kitchen",
             "four": "Digital Stuff",
             "five": "Entertainment",
             "six": "Personal Stuff",
@@ -21,48 +34,114 @@
             "price": "Price",
             "min_price": "Minimum",
             "max_price": "Maximum",
-            "ad_date": "Ad's Date",
+            "ad_date": "Ad Date",
             "one_day": "One Day",
             "one_week": "One Week",
             "one_month": "One Month",
-            "apply": "Apply Filters"
+            "apply": "Apply Filter"
         },
-        "login": {},
-        "signup": {},
-        "code_verification": {},
         "create_ad": {
             "input": {
-                "title": "Ad Title",
+                "title": "Ad's Title",
                 "price": "Price",
                 "category": "Category",
-                "description": "Description",
-                "add_image": "Add Image"
+                "description": "Description"
             },
             "choose_image": "Choose Image",
             "create_ad_btn": "Submit Ad"
         },
+        "login_form": {
+            "login_btn": "Login",
+            "signup_link": "Create New Account"
+        },
+        "signup_form": {
+            "signup_btn": "Sihnup",
+            "login_link": "In case of Having Account, Click Here",
+            "is_admin": "I'm Admin",
+            "error": {
+                "password_mismatch": "Password Mismatch"
+            }
+        },
+        "code_verification": {
+            "verify_btn": "Verify",
+            "enter_code": "Please Enter the Verification Code Sent to your Email"
+        },
+        "item_details": {
+            "price": "Price",
+            "city": "City",
+            "date": "Issued Date",
+            "description": "Description",
+            "report_submission_btn": "Submit Report"
+        },
+        "report": {
+            "input": {
+                "category": "Report's Type"
+            },
+            "category": {
+                "one": "Abusiveness",
+                "two": "Inappropriate Content",
+                "three": "Inappropriate Price"
+            },
+            "choose_evidence": "Evidence/Documents"
+        },
+        "dashboard": {
+            "user": {
+                "menu": {
+                    "one": "Profile Management",
+                    "two": "Ads Management",
+                    "three": "Report History"
+                },
+                "profile_management": {
+                    "first_name": "First Name",
+                    "last_name": "Last Name",
+                    "email": "Email",
+                    "password": "Password",
+                    "phone_number": "Phone Number",
+                    "location": "Location",
+                    "save_changes_btn": "Save Changes"
+                }
+            },
+            "admin": {
+                "menu": {
+                    "one": "Profile Management",
+                    "two": "Users Management",
+                    "three": "Report History"
+                }
+            }
+        },
+        "error": {
+            "input": {
+                "invalid_email": "Eneter a Valid Email",
+                "invalid_password": {
+                    "min_length": "At least 8 Characters are Required",
+                    "has_number": "At least 1 Number is Required",
+                    "has_uppercase": "At least 1 Capital Letter is Required",
+                    "has_special_char": "At leat 1 Special Character is Required"
+                },
+                "invalid_phone_number": "Enter a Valid Phone Number",
+                "invalid_image": {
+                    "max_size": "Don't Choose Image with Size Bigger than 1 Mb"
+                }
+            }
+        },
         "ad_list": {
-            "heading": "Registered Ads History",
+            "heading": "Submitted Ads History",
             "create_ad": {
-              "input": {
-                "title": "Ad Title"
-              }
+                "input": {
+                    "title": "Ad's Title"
+                }
             },
             "ad_status": {
-              "label": "Status",
-              "active": "Active",
-              "reserved": "Reserved",
-              "sold": "Sold"
-            },
-            "buttons": {
-              "edit": "Edit",
-              "delete": "Delete"
+                "label": "Status",
+                "active": "Active",
+                "reserved": "Reserved",
+                "sold": "Sold"
             },
             "delete_confirmation": {
-                "title": "Are you sure you want to delete this ad?",
+                "title": "Are you Sure to Delete this Ad?",
                 "message": ""
-              }
-          }      
+            }
+        }
     },
     "fa": {
         "general_inputs": {
@@ -72,11 +151,11 @@
             "phone_number": "شماره تلفن",
             "first_name": "نام",
             "last_name": "نام‌خانوادگی",
-            "user_name": "نام کاربری",
             "price": "قیمت",
             "date": "تاریخ",
             "code": "کد تایید",
-            "add_image": "افزودن عکس"
+            "add_image": "افزودن عکس",
+            "description": "توضیحات"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -167,7 +246,13 @@
                     "save_changes_btn": "ذخیره تغییرات"
                 }
             },
-            "admin": {}
+            "admin": {
+                "menu": {
+                    "one": "مدیریت پروفایل",
+                    "two": "مدیریت کاربران",
+                    "three": "تاریخچه‌ی تخلفات"
+                }
+            }
         },
         "error": {
             "input": {
@@ -187,24 +272,20 @@
         "ad_list": {
             "heading": "تاریخچه‌ی آگهی‌های ثبت شده",
             "create_ad": {
-              "input": {
-                "title": "عنوان آگهی"
-              }
+                "input": {
+                    "title": "عنوان آگهی"
+                }
             },
             "ad_status": {
-              "label": "وضعیت",
-              "active": "فعال",
-              "reserved": "رزرو شده",
-              "sold": "فروخته شده"
-            },
-            "buttons": {
-              "edit": "ویرایش",
-              "delete": "حذف"
+                "label": "وضعیت",
+                "active": "فعال",
+                "reserved": "رزرو شده",
+                "sold": "فروخته شده"
             },
             "delete_confirmation": {
                 "title": "آیا از حذف این آگهی اطمینان دارید؟",
                 "message": ""
             }
-        }     
+        }
     }
 }

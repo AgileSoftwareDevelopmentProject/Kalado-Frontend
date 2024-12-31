@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
-import { EmailInput, PasswordInput, CustomButton, CustomLink } from '../../atoms';
+import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { LoginRequest, LoginResponse } from '../../../services/types';
 import { loginUser } from '../../../services/LoginService';
@@ -39,7 +38,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                 const response = await loginUser(email, password);
                 if (response.isSuccess) {
                     console.log('Login successful:', response);
-                    onLoginSuccess(email);
+                    onLoginSuccess(response.role);
                     setFormData({ email: '', password: '' });
                     onClose();
                 } else {
@@ -79,7 +78,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
                     onClick={(e) => { e.preventDefault(); onOpenSignup(); }}
                     text={t("login_form.signup_link")}
                 />
-                {error && <Typography color="error">{error}</Typography>}
+                <FormError message={error} />
             </form>
         </PopupBox>
     );
