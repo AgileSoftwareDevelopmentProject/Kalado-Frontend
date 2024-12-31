@@ -4,48 +4,54 @@ export const lightTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#D74101', // Button color
-            contrastText: '#FFFFFF', // Text color for buttons
+            main: '#1976d2', // Main color for buttons and active elements
+            light: '#63a4ff', // Lighter shade of primary
+            dark: '#115293', // Darker shade of primary
+            contrastText: '#ffffff', // Text color on primary backgrounds
         },
         secondary: {
-            main: '#D74101', // Secondary actions or accents
-            contrastText: '#FFFFFF',
+            main: '#ff4081', // Secondary color for accents
+            light: '#ff79b0', // Lighter shade of secondary
+            dark: '#c60055', // Darker shade of secondary
+            contrastText: '#ffffff', // Text color on secondary backgrounds
         },
         background: {
-            default: '#ffffff', // Light mode background color
-            paper: '#ffffff',
+            default: '#f5f5f5', // Default background color for the app
+            paper: '#ffffff', // Background color for paper elements (cards, etc.)
         },
         text: {
-            primary: '#000000', // Black text for light mode
-            secondary: '#333333', // Dark gray text for light mode
+            primary: '#000000', // Primary text color
+            secondary: '#555555', // Secondary text color for less important text
+        },
+    },
+    typography: {
+        fontFamily: 'Roboto, sans-serif',
+        h1: {
+            fontSize: '2rem',
+            fontWeight: 500,
+        },
+        h2: {
+            fontSize: '1.5rem',
+            fontWeight: 500,
+        },
+        body1: {
+            fontSize: '1rem',
+            lineHeight: 1.5,
         },
     },
     components: {
         MuiButton: {
             styleOverrides: {
                 root: {
-                    color: '#272C48', // Set button text color to black in light mode
+                    borderRadius: '8px', // Rounded corners for buttons
+                    textTransform: 'none', // Prevent uppercase transformation
                 },
             },
         },
-        MuiBox: {
+        MuiCard: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#272C48', // Set Box background color for both modes
-                    color: 'inherit', // Inherit text color, can be overridden by child components
-                },
-            },
-        },
-        MuiOutlinedInput: {
-            styleOverrides: {
-                input: {
-                    '&::placeholder': {
-                        color: 'gray', // Change this to your desired placeholder color for light mode
-                        opacity: 1, // Ensure opacity is set to 1 for visibility
-                    },
-                },
-                notchedOutline: {
-                    borderColor: 'gray', // Optional: Change border color if needed
+                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)', // Subtle shadow for cards
                 },
             },
         },

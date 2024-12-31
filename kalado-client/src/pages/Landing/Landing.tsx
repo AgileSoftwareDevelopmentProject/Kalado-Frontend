@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
+import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
+import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 
 
 const items = mockData.Items;
@@ -22,10 +23,20 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userRole, setUserRole] = useState<string | null>('USER');
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [userRole, setUserRole] = useState<string | null>('ADMIN');
     const [userEmail, setUserEmail] = useState<string>('');
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));
+
+    const categories = [
+        { title: t("category.one"), icon: <FaHome /> },
+        { title: t("category.two"), icon: <FaCar /> },
+        { title: t("category.three"), icon: <FaUtensils /> },
+        { title: t("category.four"), icon: <FaLaptop /> },
+        { title: t("category.five"), icon: <FaGamepad /> },
+        { title: t("category.six"), icon: <FaSuitcase /> },
+        { title: t("category.seven"), icon: <FaPlusCircle /> },
+    ];
 
     const handleOpenLogin = () => {
         setLoginVisible(true);
@@ -104,7 +115,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
             />
 
             <SideBar>
-                <Category onSelectCategory={handleSelectCategory} />
+                <SideBarMenu categories={categories} onSelectCategory={handleSelectCategory} title={t("category.title")} />
                 <Filter />
             </SideBar>
 
