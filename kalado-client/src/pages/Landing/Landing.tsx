@@ -119,8 +119,8 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
                 <Filter />
             </SideBar>
 
-            <Box sx={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'flex-end', paddingTop: '200px', paddingRight: '200px' }}>
-                <Typography variant="h4" sx={{ textAlign: 'center', mt: 4, color: "#FFFFFF", mb: 10, fontWeight: 'bold' }}>
+            <Box sx={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'flex-end', paddingTop: '200px', paddingRight: '300px' }}>
+                <Typography variant="h4" sx={{ textAlign: 'center', mt: 4, mb: 10, fontWeight: 'bold' }}>
                     {selectedCategoryTitle ? selectedCategoryTitle : "Select a Category"}
                 </Typography>
                 <ItemsHolder items={items} onItemSelect={(itemId) => navigate(`/item/${itemId}`)} />
