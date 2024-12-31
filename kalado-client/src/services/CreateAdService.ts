@@ -26,9 +26,9 @@ export async function createAd(
     description: string,
     priceAmount: number,
     category: string,
-    productionYear: number,
+    // productionYear: number,
     // brand: string,
-    sellerId: number
+    // sellerId: number
 ) {
 
     const payload = {
@@ -39,9 +39,9 @@ export async function createAd(
             unit: 'TOMAN',      
         },
         category,
-        productionYear,
+        productionYear: 2024,
         // brand,
-        sellerId,
+        sellerId: 1,
     };
 
     try {

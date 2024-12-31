@@ -4,11 +4,11 @@ import { PRODUCT } from '../urls';
 export async function updateAdStatus(
     id: number, // for the ad to update
     status: string, // new status for the ad
-    sellerId: number 
+    // sellerId: number 
 ) {
     const payload = {
         status,
-        sellerId,
+        sellerId: 1,
     };
 
     try {

@@ -10,8 +10,8 @@ export async function updateAd(
     description: string,
     // images: string[],
     // status: string
-    productionYear: number,
-    sellerId: number, 
+    // productionYear: number,
+    // sellerId: number, 
 ) {
 
     const payload = {
@@ -25,8 +25,8 @@ export async function updateAd(
         description,
         // images,
         // status,
-        productionYear,
-        sellerId,
+        productionYear: 2024,
+        sellerId: 1,
     };
 
     try {
