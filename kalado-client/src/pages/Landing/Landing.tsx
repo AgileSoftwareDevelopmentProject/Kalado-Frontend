@@ -7,7 +7,7 @@ import { SideBar } from '../../components/molecules';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
-
+import { toast } from 'react-toastify'; // Import toast
 
 const items = mockData.Items;
 
@@ -57,6 +57,10 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     };
 
     const handleOpenCreateAd = () => {
+        if (!isLoggedIn) {
+            toast.error(t("error.create_ad.disable_not_loggined"));
+            return;
+        }
         setCreateAdVisible(true);
         setSignupVisible(false);
         setLoginVisible(false);
@@ -91,6 +95,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
 
     const handleLoginSuccess = (role: string) => {
         setUserRole(role);
+        setIsLoggedIn(true); // Update login status
         handleCloseLogin();
     };
 
@@ -101,7 +106,6 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
             navigate('/user-dashboard');
         }
     };
-
 
     return (
         <Box>

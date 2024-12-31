@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-    Box, TextField, Button, Avatar, Typography, CircularProgress,
-    IconButton
-} from '@mui/material';
+import { Box, Avatar, Typography, CircularProgress, IconButton } from '@mui/material';
 import { CustomButton, NameInput, EmailInput, PhoneNumberInput, PasswordInput } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
@@ -95,7 +92,7 @@ const ProfileManagement = () => {
     }
 
     return (
-        <Box sx={{ maxWidth: 600, margin: 'auto', padding: 3 }}>
+        <Box sx={{ maxWidth: 600, margin: '90px auto', padding: 3 }}>
             {userData && (
                 <>
                     <Box sx={{ position: 'relative', width: 100, height: 100, margin: '20px auto' }}>
@@ -108,8 +105,6 @@ const ProfileManagement = () => {
                                 position: 'absolute',
                                 bottom: 0,
                                 right: 0,
-                                backgroundColor: 'white',
-                                '&:hover': { backgroundColor: 'lightgrey' },
                             }}
                             onClick={() => fileInputRef.current?.click()}
                         >
@@ -138,7 +133,7 @@ const ProfileManagement = () => {
                         name="email"
                         value={userData.email}
                         onChange={handleInputChange}
-                    // disabled // Disable email input to prevent changes
+                        disabled
                     />
                     <PhoneNumberInput
                         name="phoneNumber"

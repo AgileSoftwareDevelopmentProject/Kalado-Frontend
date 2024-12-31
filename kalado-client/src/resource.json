@@ -111,21 +111,6 @@
                 }
             }
         },
-        "error": {
-            "input": {
-                "invalid_email": "Eneter a Valid Email",
-                "invalid_password": {
-                    "min_length": "At least 8 Characters are Required",
-                    "has_number": "At least 1 Number is Required",
-                    "has_uppercase": "At least 1 Capital Letter is Required",
-                    "has_special_char": "At leat 1 Special Character is Required"
-                },
-                "invalid_phone_number": "Enter a Valid Phone Number",
-                "invalid_image": {
-                    "max_size": "Don't Choose Image with Size Bigger than 1 Mb"
-                }
-            }
-        },
         "ad_list": {
             "heading": "Submitted Ads History",
             "create_ad": {
@@ -142,6 +127,24 @@
             "delete_confirmation": {
                 "title": "Are you Sure to Delete this Ad?",
                 "message": ""
+            }
+        },
+        "error": {
+            "input": {
+                "invalid_email": "Eneter a Valid Email",
+                "invalid_password": {
+                    "min_length": "At least 8 Characters are Required",
+                    "has_number": "At least 1 Number is Required",
+                    "has_uppercase": "At least 1 Capital Letter is Required",
+                    "has_special_char": "At leat 1 Special Character is Required"
+                },
+                "invalid_phone_number": "Enter a Valid Phone Number",
+                "invalid_image": {
+                    "max_size": "Don't Choose Image with Size Bigger than 1 Mb"
+                }
+            },
+            "create_ad": {
+                "disable_not_loggined": "For Submitting an Ad, Login to your Account"
             }
         }
     },
@@ -258,21 +261,6 @@
                 }
             }
         },
-        "error": {
-            "input": {
-                "invalid_email": "لطفا یک ایمیل معتبر وارد کنید",
-                "invalid_password": {
-                    "min_length": "رمز عبور باید حداقل ۸ کاراکتر باشد",
-                    "has_number": "رمز عبور باید شامل حداقل یک عدد باشد",
-                    "has_uppercase": "رمز عبور باید شامل حداقل یک حرف بزرگ باشد",
-                    "has_special_char": "رمز عبور باید شامل حداقل یک کاراکتر ویژه باشد"
-                },
-                "invalid_phone_number": "لطفا یک شماره تلفن معتبر وارد کنید",
-                "invalid_image": {
-                    "max_size": "لطفا تصاویری با حجم بیشتر از 1 مگابایت انتخاب نکنید"
-                }
-            }
-        },
         "ad_list": {
             "heading": "تاریخچه‌ی آگهی‌های ثبت شده",
             "create_ad": {
@@ -289,6 +277,24 @@
             "delete_confirmation": {
                 "title": "آیا از حذف این آگهی اطمینان دارید؟",
                 "message": ""
+            }
+        },
+        "error": {
+            "input": {
+                "invalid_email": "لطفا یک ایمیل معتبر وارد کنید",
+                "invalid_password": {
+                    "min_length": "رمز عبور باید حداقل ۸ کاراکتر باشد",
+                    "has_number": "رمز عبور باید شامل حداقل یک عدد باشد",
+                    "has_uppercase": "رمز عبور باید شامل حداقل یک حرف بزرگ باشد",
+                    "has_special_char": "رمز عبور باید شامل حداقل یک کاراکتر ویژه باشد"
+                },
+                "invalid_phone_number": "لطفا یک شماره تلفن معتبر وارد کنید",
+                "invalid_image": {
+                    "max_size": "لطفا تصاویری با حجم بیشتر از 1 مگابایت انتخاب نکنید"
+                }
+            },
+            "create_ad": {
+                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید"
             }
         }
     }
