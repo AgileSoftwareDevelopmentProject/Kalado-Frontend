@@ -16,11 +16,17 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick, toggleTheme, isDarkMode }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
+  };
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'fa' : 'en';
+    i18n.changeLanguage(newLang);
+    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr';
   };
 
   return (
@@ -35,6 +41,12 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
             onSearch={handleSearch}
           />
         </Box>
+
+        <CustomButton
+          text={i18n.language === 'en' ? "Fa" : "En"}
+          onClick={toggleLanguage}
+          backgroundColor="transparent"
+        />
 
         <CustomButton
           icon={isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}

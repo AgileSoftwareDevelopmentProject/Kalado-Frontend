@@ -25,7 +25,7 @@ export const lightTheme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    color: '#000000', // Set button text color to black in light mode
+                    color: '#272C48', // Set button text color to black in light mode
                 },
             },
         },
