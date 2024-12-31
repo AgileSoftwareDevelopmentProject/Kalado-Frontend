@@ -21,7 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, onChange, onS
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'right', mr: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-start', mr: 3 }}>
             <TextField
                 variant="outlined"
                 placeholder={translatedPlaceholder}
@@ -35,14 +35,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, onChange, onS
                         borderRadius: 30,
                     }
                 }}
-                slotProps={{
-                    input: {
-                        endAdornment: (
-                            <IconButton onClick={onSearch} aria-label="search">
-                                <SearchIcon />
-                            </IconButton>
-                        ),
-                    },
+                InputProps={{
+                    endAdornment: (
+                        <IconButton onClick={onSearch} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                    ),
                 }}
             />
         </Box>

@@ -47,7 +47,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     };
 
     return (
-        <Box>
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+        >
             <MuiButton
                 style={buttonStyles}
                 onClick={onClick}

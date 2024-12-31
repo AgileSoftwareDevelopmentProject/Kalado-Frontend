@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Typography, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+
 
 interface IconListProps {
     items: { title: string; icon: React.ReactNode }[];
@@ -8,6 +10,7 @@ interface IconListProps {
 }
 
 const IconList: React.FC<IconListProps> = ({ items, onSelect, title }) => {
+    const { i18n } = useTranslation();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     const handleCategoryClick = (categoryTitle: string) => {
@@ -32,7 +35,7 @@ const IconList: React.FC<IconListProps> = ({ items, onSelect, title }) => {
                                 transform: 'translateX(-30px)',
                             },
                             cursor: 'pointer',
-                            textAlign: 'right',
+                            textAlign: i18n.language === 'fa' ? 'right' : 'left',
                             transition: 'transform 0.5s ease, color 0.5s ease',
                         }}
                     >

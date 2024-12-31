@@ -22,7 +22,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
     passwordRepeat: '',
     role: 'USER'
   });
-
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
