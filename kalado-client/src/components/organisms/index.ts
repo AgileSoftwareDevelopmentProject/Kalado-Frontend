@@ -1,10 +1,9 @@
 export { default as AdCard } from './AdCard/AdCard';
 export { default as AdList } from './AdList/AdList';
 export { default as AdManagement } from './AdManagement/AdManagement';
-export { default as Category } from './Category/Category';
+export { default as SideBarMenu } from './SideBarMenu/SideBarMenu';
 export { default as CodeVerification } from './CodeVerification/CodeVerification';
 export { default as CreateAdForm } from './CreateAd/CreateAdForm';
-export { default as DashboardMenu } from './DashboardMenu/DashboardMenu';
 export { default as Filter } from './Filter/Filter';
 export { default as ItemCard } from './ItemCard/ItemCard';
 export { default as ItemsHolder } from './ItemsHolder/ItemsHolder';

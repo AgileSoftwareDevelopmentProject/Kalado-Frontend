@@ -30,7 +30,6 @@ const Dropdown: React.FC<DropdownProps> = ({
         <FormControl variant="standard" sx={{ mb: 2, width: '70%' }}>
             <InputLabel
                 sx={{
-                    color: 'white',
                     textAlign: 'right',
                     width: '100%',
                     position: 'absolute',
@@ -43,23 +42,6 @@ const Dropdown: React.FC<DropdownProps> = ({
                 value={value ? value.value : ''}
                 onChange={handleChange}
                 displayEmpty
-                sx={{
-                    '& .MuiInputBase-root': {
-                        borderBottom: '2px solid rgba(255, 255, 255, 0.5)',
-                        '&:hover': {
-                            borderBottom: '2px solid #D74101',
-                            backgroundColor: '#D74101'
-                        },
-                        '&.Mui-focused': {
-                            borderBottom: '2px solid transparent',
-                        },
-                    },
-                    textAlign: 'right',
-                    '& .MuiSelect-select': {
-                        textAlign: 'right',
-                    },
-
-                }}
             >
                 {options.map(option => (
                     <MenuItem

@@ -17,7 +17,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
 
-        if (/^\d*$/.test(value) && value.length <= 5) {
+        if (/^\d*$/.test(value) && value.length <= 6) {
             setCode(value);
         }
     };
@@ -41,7 +41,7 @@ const CodeVerification: React.FC<CodeVerificationProps> = ({ email, onClose }) =
             <p>{t("code_verification.enter_code")}</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput value={code} onChange={handleChange} />
-                <CustomButton text={t("code_verification.verify_btn")} type="submit" disabled={code.length !== 5} />
+                <CustomButton text={t("code_verification.verify_btn")} type="submit" disabled={code.length !== 6} />
                 <FormError message={error} />
             </form>
         </PopupBox>

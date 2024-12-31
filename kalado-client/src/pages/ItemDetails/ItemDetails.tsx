@@ -10,6 +10,7 @@ import PriceIcon from '@mui/icons-material/AttachMoney';
 import CityIcon from '@mui/icons-material/LocationOn';
 import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 interface Item {
     title: string;
@@ -19,6 +20,7 @@ interface Item {
     date: string;
     description: string;
     itemId: string;
+    seller_phone: string;
 }
 
 const items: Item[] = mockData.Items;
@@ -44,6 +46,16 @@ const ItemDetails: React.FC = () => {
         return <Typography variant="h6">Item not found</Typography>;
     }
 
+    const copyToClipboard = (phoneNumber: string) => {
+        navigator.clipboard.writeText(phoneNumber)
+            .then(() => {
+                alert(`Phone number ${phoneNumber} copied to clipboard!`);
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    };
+
     return (
         <Box
             sx={{
@@ -51,7 +63,6 @@ const ItemDetails: React.FC = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 minHeight: '100vh',
-                bgcolor: 'transparent',
                 p: 2,
             }}
         >
@@ -59,31 +70,47 @@ const ItemDetails: React.FC = () => {
                 <Box sx={{ display: 'flex' }}>
                     <Box sx={{ flexGrow: 1 }}>
                         <CardContent>
-                            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
+                            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', mb: 3 }}>
                                 {item.title}
                             </Typography>
-                            <Box display="flex" alignItems="center">
-                                <PriceIcon />
-                                <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
-                                    {item.price.toLocaleString()} تومان
+                            <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                                <PriceIcon sx={{ ml: 2 }} />
+                                <Typography variant="h6">
+                                    {item.price.toLocaleString()} {t("currency")}
                                 </Typography>
                             </Box>
-                            <Box display="flex" alignItems="center">
-                                <CityIcon />
-                                <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
+                            <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                                <CityIcon sx={{ ml: 2 }} />
+                                <Typography variant="h6">
                                     {item.city}
                                 </Typography>
                             </Box>
-                            <Box display="flex" alignItems="center">
-                                <DateIcon />
-                                <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
+                            <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                                <DateIcon sx={{ ml: 2 }} />
+                                <Typography variant="h6">
                                     {item.date}
                                 </Typography>
                             </Box>
-                            <Box display="flex" alignItems="center">
-                                <DescriptionIcon />
-                                <Typography variant="body1" color="text.secondary" sx={{ ml: 1 }}>
+                            <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                                <DescriptionIcon sx={{ ml: 2 }} />
+                                <Typography variant="h6">
                                     {item.description}
+                                </Typography>
+                            </Box>
+
+                            <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                                <PhoneIcon sx={{ ml: 2 }} />
+                                <Typography
+                                    variant="h6"
+                                    onClick={() => copyToClipboard(item.seller_phone)}
+                                    sx={{
+                                        cursor: 'pointer',
+                                        '&:hover': {
+                                            color: 'primary.main',
+                                        },
+                                    }}
+                                >
+                                    {item.seller_phone}
                                 </Typography>
                             </Box>
                         </CardContent>
@@ -94,18 +121,18 @@ const ItemDetails: React.FC = () => {
                         alt={item.title}
                         sx={{ height: 400, width: 500, objectFit: 'cover' }}
                     />
-                </Box>
+                </Box >
                 <CustomButton
                     text={t("item_details.report_submission_btn")}
                     onClick={handleOpenReportSubmission}
                 />
-            </Card>
+            </Card >
             {isReportSubmissionVisible && (
                 <Backdrop open={isReportSubmissionVisible} onClick={handleBackdropClick}>
                     <ReportSubmissionForm onClose={handleCloseReportSubmission} />
                 </Backdrop>
             )}
-        </Box>
+        </Box >
     );
 };
 

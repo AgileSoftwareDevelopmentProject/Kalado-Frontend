@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppBar, Toolbar, Box } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton } from '@mui/material';
 import { Logo, CustomButton } from '../../atoms';
 import { SearchBar } from '../../molecules';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LanguageIcon from '@mui/icons-material/Language';
 
 interface NavBarProps {
   onLoginClick?: () => void;
@@ -42,25 +43,19 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
           />
         </Box>
 
-        <CustomButton
-          text={i18n.language === 'en' ? "Fa" : "En"}
-          onClick={toggleLanguage}
-          backgroundColor="transparent"
-        />
+        <IconButton onClick={toggleLanguage} color="secondary">
+          {i18n.language === 'en' ? "Fa" : "En"}
+        </IconButton>
 
-        <CustomButton
-          icon={isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
-          onClick={toggleTheme}
-          color="inherit"
-          padding="5px 5px"
-          backgroundColor="transparent"
-        />
+        <IconButton onClick={toggleTheme} color="secondary">
+          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+        </IconButton>
 
         <Box sx={{ display: 'flex', gap: 1 }}>
           {isLoggedIn ? (
-            <CustomButton text={t('navbar.profile')} backgroundColor="transparent" onClick={onProfileClick} />
+            <CustomButton text={t('navbar.profile')} onClick={onProfileClick} />
           ) : (
-            <CustomButton text={t('navbar.login/signup')} backgroundColor="transparent" onClick={onLoginClick} />
+            <CustomButton text={t('navbar.login/signup')} onClick={onLoginClick} />
           )}
           <CustomButton text={t('navbar.create_ad')} onClick={onCreateAdClick} />
         </Box>
