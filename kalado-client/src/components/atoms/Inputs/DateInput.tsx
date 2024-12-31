@@ -24,11 +24,15 @@ const DateInput: React.FC<DateInputProps> = ({ label, value, onChange, minDate, 
                     textField: (params) => (
                         <TextField
                             {...params}
-                            width="70%"
-                            variant="outlined"
+                            variant="standard"
                             label={label}
-                            InputLabelProps={{
-                                style: { textAlign: 'right', width: '100%' },
+                            sx={{
+                                width: '70%',
+                                padding: '10px 0',
+                                '& .MuiInputLabel-root': {
+                                    textAlign: 'right',
+                                    width: '100%',
+                                },
                             }}
                         />
                     ),

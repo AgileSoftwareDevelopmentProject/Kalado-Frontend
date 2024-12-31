@@ -9,7 +9,12 @@ import mockData from '../../mockData.json';
 
 const items = mockData.Items;
 
-const Landing = () => {
+interface LandingProps {
+    toggleTheme: () => void;
+    isDarkMode: boolean;
+}
+
+const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const navigate = useNavigate();
 
     const [isLoginVisible, setLoginVisible] = useState(false);
@@ -17,6 +22,8 @@ const Landing = () => {
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userRole, setUserRole] = useState<string | null>('');
+    const [userEmail, setUserEmail] = useState<string>('');
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>('املاک');
 
     const handleOpenLogin = () => {
@@ -47,15 +54,12 @@ const Landing = () => {
         setCreateAdVisible(false);
     };
 
-    const handleLoginSuccess = () => {
-        setIsLoggedIn(true);
-        handleCloseLogin();
+    const handleCloseCodeVerification = () => {
+        setCodeVerificationVisible(false);
     };
 
     const handleOpenCodeVerification = (email: string) => {
-        // Pass email to CodeVerification and open it
-        // You might want to store the email in state or context
-        // For now, we'll just open it without passing email
+        setUserEmail(email);
         setCodeVerificationVisible(true);
         handleCloseSignup();
     };
@@ -69,17 +73,34 @@ const Landing = () => {
         }
     };
 
-    const handleOpenProfilePage = () => {
-        navigate('/user-dashboard');
-    }
-
     const handleSelectCategory = (categoryTitle: string) => {
         setSelectedCategoryTitle(categoryTitle);
     };
 
+    const handleLoginSuccess = (role: string) => {
+        setUserRole(role);
+        handleCloseLogin();
+    };
+
+    const handleOpenProfilePage = () => {
+        if (userRole === 'ADMIN') {
+            navigate('/admin-dashboard');
+        } else if (userRole === 'USER') {
+            navigate('/user-dashboard');
+        }
+    };
+
+
     return (
         <Box>
-            <NavBar onLoginClick={handleOpenLogin} onCreateAdClick={handleOpenCreateAd} isLoggedIn={isLoggedIn} onProfileClick={handleOpenProfilePage} />
+            <NavBar
+                onLoginClick={handleOpenLogin}
+                onCreateAdClick={handleOpenCreateAd}
+                isLoggedIn={isLoggedIn}
+                onProfileClick={handleOpenProfilePage}
+                toggleTheme={toggleTheme}
+                isDarkMode={isDarkMode}
+            />
 
             <SideBar>
                 <Category onSelectCategory={handleSelectCategory} />
@@ -103,7 +124,7 @@ const Landing = () => {
                     <SignupForm
                         onClose={handleCloseSignup}
                         onOpenLogin={handleOpenLogin}
-                        onSignUpSuccess={handleOpenCodeVerification} // Pass the handler for success
+                        onSignUpSuccess={handleOpenCodeVerification}
                     />
                 </Backdrop>
             )}
@@ -114,7 +135,7 @@ const Landing = () => {
             )}
             {isCodeVerificationVisible && (
                 <Backdrop open={isCodeVerificationVisible} onClick={handleBackdropClick}>
-                    <CodeVerification email="user@example.com" onClose={() => setCodeVerificationVisible(false)} /> {/* Replace with actual email */}
+                    <CodeVerification email={userEmail} onClose={handleCloseCodeVerification} />
                 </Backdrop>
             )}
         </Box>

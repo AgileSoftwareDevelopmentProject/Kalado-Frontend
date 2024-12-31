@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Box, Typography, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
-import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
+import { Box, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 
 interface DashboardMenu {
     title: string;
@@ -9,18 +7,12 @@ interface DashboardMenu {
 }
 
 interface DashboardMenuProps {
+    categories: DashboardMenu[];
     onSelectMenu: (menuTitle: string) => void;
 }
 
-const DashboardMenu: React.FC<DashboardMenuProps> = ({ onSelectMenu }) => {
-    const { t } = useTranslation();
-    const [selectedCategory, setSelectedCategory] = useState<string | null>('Real Estate');
-
-    const categories: DashboardMenu[] = [
-        { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
-        { title: t("dashboard.user.menu.two"), icon: <FaAd /> },
-        { title: t("dashboard.user.menu.three"), icon: <FaHistory /> },
-    ];
+const DashboardMenu: React.FC<DashboardMenuProps> = ({ categories, onSelectMenu }) => {
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(categories[0]?.title || null);
 
     const handleDashboardMenuClick = (menuTitle: string) => {
         setSelectedCategory(menuTitle);
