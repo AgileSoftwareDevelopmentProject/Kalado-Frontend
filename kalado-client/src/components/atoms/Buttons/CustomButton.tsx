@@ -25,7 +25,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     backgroundColor = '#D74101',
     color = '#FFFFFF',
     padding = '5px 15px',
-    margin = '20px 0px',
+    margin = '20px 5px',
     type = 'button',
     onClick,
     disabled,

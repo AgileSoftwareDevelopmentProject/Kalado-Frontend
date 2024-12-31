@@ -1,6 +1,7 @@
 {
     "en": {
         "brand_name": "Kalado",
+        "currency": "Toman",
         "general_inputs": {
             "email": "Email",
             "password": "Password",
@@ -146,6 +147,7 @@
     },
     "fa": {
         "brand_name": "کالادو",
+        "currency": "تومان",
         "general_inputs": {
             "email": "ایمیل",
             "password": "رمز عبور",

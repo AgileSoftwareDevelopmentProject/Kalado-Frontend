@@ -4,13 +4,13 @@ export const lightTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#1976d2', // Main color for buttons and active elements
-            light: '#63a4ff', // Lighter shade of primary
+            main: '#D74101', // Main color for buttons and active elements
+            light: '#f77036', // Lighter shade of primary
             dark: '#115293', // Darker shade of primary
             contrastText: '#ffffff', // Text color on primary backgrounds
         },
         secondary: {
-            main: '#ff4081', // Secondary color for accents
+            main: '#D74101', // Secondary color for accents
             light: '#ff79b0', // Lighter shade of secondary
             dark: '#c60055', // Darker shade of secondary
             contrastText: '#ffffff', // Text color on secondary backgrounds
