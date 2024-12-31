@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton } from '../../atoms';
+import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../services/CreateAdService';
 
@@ -23,6 +23,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         description: '',
         images: [],
     });
+    const [error, setError] = useState<string | null>(null);
 
     const categoryOptions = [
         { value: 'Real estate', label: t("category.one") },
@@ -117,6 +118,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     type="submit"
                     padding="10px 40px"
                 />
+                <FormError message={error} />
             </form>
         </PopupBox>
     );
