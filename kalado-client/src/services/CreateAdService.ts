@@ -28,7 +28,6 @@ export async function createAd(
     category: string,
     // productionYear: number,
     // brand: string,
-    // sellerId: number
 ) {
 
     const payload = {
@@ -41,7 +40,6 @@ export async function createAd(
         category,
         productionYear: 2024,
         // brand,
-        sellerId: 1,
     };
 
     try {
