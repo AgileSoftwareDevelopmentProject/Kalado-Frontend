@@ -1,20 +1,21 @@
 import React from 'react';
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import { ImageUpload } from '../../atoms';
 
 interface ImageUploadBoxProps {
     onUpload: (files: File[]) => void;
     title: string;
+    numberOfImages?: number;
 }
 
-const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({ onUpload, title }) => {
+const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({ onUpload, title, numberOfImages = 3 }) => {
     return (
         <Box>
-            <p style={{ textAlign: 'right', marginBottom: '8px' }}>{title}</p>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <ImageUpload onUpload={onUpload} />
-                <ImageUpload onUpload={onUpload} />
-                <ImageUpload onUpload={onUpload} />
+            <Typography sx={{ marginBottom: "10px" }}>{title}</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1 }}>
+                {Array.from({ length: numberOfImages }, (_, index) => (
+                    <ImageUpload key={index} onUpload={onUpload} />
+                ))}
             </Box>
         </Box>
     );
