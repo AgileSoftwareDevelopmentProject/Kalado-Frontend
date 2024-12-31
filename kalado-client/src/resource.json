@@ -27,9 +27,6 @@
             "one_month": "One Month",
             "apply": "Apply Filters"
         },
-        "login": {},
-        "signup": {},
-        "code_verification": {},
         "create_ad": {
             "input": {
                 "title": "Ad Title",
@@ -40,6 +37,77 @@
             },
             "choose_image": "Choose Image",
             "create_ad_btn": "Submit Ad"
+        },
+        "login_form": {
+            "login_btn": "Login",
+            "signup_link": "Create New Account"
+        },
+        "signup_form": {
+            "signup_btn": "Singup",
+            "login_link": "In case of having Account, Click Here",
+            "is_admin": "I'm Admin"
+        },
+        "code_verification": {
+            "verify_btn": "Verify",
+            "enter_code": "Enter Verification Code Sent to your Email"
+        },
+        "item_details": {
+            "price": "Price",
+            "city": "City",
+            "date": "Submitted Date",
+            "description": "Description",
+            "report_submission_btn": "Submit Report"
+        },
+        "report": {
+            "input": {
+                "category": "Report's Type"
+            },
+            "category": {
+                "one": "Abusiveness",
+                "two": "Inappropriate Content",
+                "three": "Inappropriate Price"
+            },
+            "choose_evidence": "Evidence/Documents"
+        },
+        "dashboard": {
+            "user": {
+                "menu": {
+                    "one": "Profile Management",
+                    "two": "Ads Management",
+                    "three": "Report History"
+                },
+                "profile_management": {
+                    "first_name": "First Name",
+                    "last_name": "Last Name",
+                    "email": "Email",
+                    "password": "Password",
+                    "phone_number": "Phone Number",
+                    "location": "Location",
+                    "save_changes_btn": "Save Changes"
+                }
+            },
+            "admin": {
+                "menu": {
+                    "one": "Profile Management",
+                    "two": "Users Management",
+                    "three": "Report History"
+                }
+            }
+        },
+        "error": {
+            "input": {
+                "invalid_email": "Enter a Valid Email",
+                "invalid_password": {
+                    "min_length": "At least 8 Characters are Required",
+                    "has_number": "At least 1 Number is Required",
+                    "has_uppercase": "At least 1 Capital Character is Required",
+                    "has_special_char": "At least 1 Special Character is Required"
+                },
+                "invalid_phone_number": "Enter a Valid Phone Number",
+                "invalid_image": {
+                    "max_size": "Don't Choose Images with Size Bigger that 1 Mb"
+                }
+            }
         },
         "ad_list": {
             "heading": "Registered Ads History",
