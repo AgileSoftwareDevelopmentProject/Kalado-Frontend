@@ -28,6 +28,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     margin = '20px 0px',
     type = 'button',
     onClick,
+    disabled,
     ...props
 }) => {
 
@@ -38,16 +39,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         padding: padding,
         margin: margin,
         color: color,
-        transition: 'all 0.3s ease', // Smooth transition for hover effects
+        transition: 'all 0.3s ease',
         '&:active': {
             transform: 'scale(0.95)',
             transition: 'all 0.2s ease',
-        },
-        '&:hover': {
-            boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.3)',
-            fontWeight: 600,
-            backgroundColor: '#C85A01',
-        },
+        }
     };
 
     return (
@@ -56,6 +52,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
                 style={buttonStyles}
                 onClick={onClick}
                 type={type}
+                disabled={disabled}
                 {...props}
             >
                 {icon && <Box sx={{ mr: 1 }}>{icon}</Box>}

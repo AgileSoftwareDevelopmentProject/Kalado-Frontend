@@ -1,5 +1,6 @@
 {
     "en": {
+        "brand_name": "Kalado",
         "general_inputs": {
             "email": "Email",
             "password": "Password",
@@ -144,6 +145,7 @@
         }
     },
     "fa": {
+        "brand_name": "کالادو",
         "general_inputs": {
             "email": "ایمیل",
             "password": "رمز عبور",
