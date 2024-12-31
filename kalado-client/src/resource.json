@@ -14,7 +14,7 @@
             "description": "Description"
         },
         "navbar": {
-            "create_ad": "Ad Submission",
+            "create_ad": "Submit Ad",
             "login/signup": "Login/Signup",
             "profile": "Profile",
             "searchbar": "Search Item"
