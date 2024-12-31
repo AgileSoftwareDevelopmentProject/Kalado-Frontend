@@ -21,12 +21,6 @@ const NameInput: React.FC<NameInputProps> = ({
 }) => {
     const { t } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.first_name');
-    const style = {
-        width: '70%',
-        '& .MuiInputBase-root::after': {
-            borderBottom: '2px solid #D74101',
-        },
-    }
 
     return (
         <TextField
@@ -38,7 +32,9 @@ const NameInput: React.FC<NameInputProps> = ({
             required={isRequired}
             variant="standard"
             margin="normal"
-            sx={style}
+            sx={{
+                width: '70%'
+            }}
         />
     );
 };

@@ -1,4 +1,3 @@
-// theme.ts
 import { createTheme } from '@mui/material/styles';
 
 export const lightTheme = createTheme({
@@ -25,7 +24,7 @@ export const lightTheme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    color: '#000000', // Set button text color to black in light mode
+                    color: '#272C48', // Set button text color to black in light mode
                 },
             },
         },
@@ -34,6 +33,19 @@ export const lightTheme = createTheme({
                 root: {
                     backgroundColor: '#272C48', // Set Box background color for both modes
                     color: 'inherit', // Inherit text color, can be overridden by child components
+                },
+            },
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                input: {
+                    '&::placeholder': {
+                        color: 'gray', // Change this to your desired placeholder color for light mode
+                        opacity: 1, // Ensure opacity is set to 1 for visibility
+                    },
+                },
+                notchedOutline: {
+                    borderColor: 'gray', // Optional: Change border color if needed
                 },
             },
         },
@@ -73,6 +85,19 @@ export const darkTheme = createTheme({
                 root: {
                     backgroundColor: '#272C48', // Set Box background color for both modes
                     color: 'inherit', // Inherit text color, can be overridden by child components
+                },
+            },
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                input: {
+                    '&::placeholder': {
+                        color: 'lightgray', // Change this to your desired placeholder color for dark mode
+                        opacity: 1,
+                    },
+                },
+                notchedOutline: {
+                    borderColor: 'lightgray', // Optional for dark mode border styling
                 },
             },
         },
