@@ -6,7 +6,6 @@ interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
     text?: string;
     icon?: React.ReactNode;
     shape?: 'rounded' | 'square';
-    width?: string;
     borderRadius?: string;
     backgroundColor?: string;
     color?: OverridableStringUnion<'inherit' | 'primary' | 'secondary' | 'success' | 'error',
@@ -22,7 +21,6 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     text,
     icon,
     shape = 'rounded',
-    width = 'auto',
     borderRadius,
     backgroundColor = '#D74101',
     color = '#FFFFFF',
@@ -35,16 +33,19 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
     const buttonStyles = {
         borderRadius: borderRadius || (shape === 'square' ? '0px' : '30px'),
-        width: width,
+        width: 'auto',
         backgroundColor: backgroundColor,
         padding: padding,
         margin: margin,
         color: color,
+        transition: 'all 0.3s ease', // Smooth transition for hover effects
         '&:active': {
             transform: 'scale(0.95)',
             transition: 'all 0.2s ease',
         },
         '&:hover': {
+            boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.3)',
+            fontWeight: 600,
             backgroundColor: '#C85A01',
         },
     };
@@ -57,8 +58,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
                 type={type}
                 {...props}
             >
-                {icon && <Box sx={{ mr: 1 }}>{icon}</Box>} {/* Display icon if provided */}
-                {text || children} {/* Show text if provided */}
+                {icon && <Box sx={{ mr: 1 }}>{icon}</Box>}
+                {text || children}
             </MuiButton>
         </Box>
     );
