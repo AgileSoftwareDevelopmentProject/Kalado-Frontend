@@ -10,7 +10,8 @@
             "price": "Price",
             "date": "Date",
             "code": "Verification Code",
-            "add_image": "Add Image"
+            "add_image": "Add Image",
+            "description": "Description"
         },
         "navbar": {
             "create_ad": "Ad Submission",
@@ -153,7 +154,8 @@
             "price": "قیمت",
             "date": "تاریخ",
             "code": "کد تایید",
-            "add_image": "افزودن عکس"
+            "add_image": "افزودن عکس",
+            "description": "توضیحات"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",

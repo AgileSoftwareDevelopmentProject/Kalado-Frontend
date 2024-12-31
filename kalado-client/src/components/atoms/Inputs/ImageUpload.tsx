@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, IconButton } from '@mui/material';
 import { FaTrash } from 'react-icons/fa';
-
 
 interface ImageUploadProps {
     onUpload: (files: File[]) => void;
@@ -55,10 +54,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
         }
     };
 
-    // useEffect(() => {
-    //     onUpload(selectedImages); // Call onUpload with the current images
-    // }, [selectedImages, onUpload]);
-
     return (
         <Box>
             <input
@@ -73,20 +68,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
                 className="image-preview-square"
                 onClick={handleBrowseClick}
                 sx={{
-                    width: 100,
-                    height: 100,
-                    border: '2px dashed white',
-                    borderRadius: 2,
-                    display: 'flex',
+                    width: 80,
+                    height: 80,
                     justifyContent: 'center',
                     alignItems: 'center',
                     cursor: 'pointer',
-                    margin: 0,
-                    padding: 0,
                 }}
             >
                 {imagePreviews.length === 0 ? (
-                    <Button variant="outlined" sx={{ color: 'white' }}>{t("general_inputs.add_image")}</Button>
+                    <Button
+                        variant="outlined"
+                        sx={{
+                            color: 'white',
+                            border: '2px dashed white',
+                            borderRadius: 2
+                        }}>
+                        {t("general_inputs.add_image")}
+                    </Button>
                 ) : (
                     imagePreviews.map((preview, index) => (
                         <Box key={index} className="image-preview" sx={{ position: 'relative', width: '100%', height: '100%' }}>

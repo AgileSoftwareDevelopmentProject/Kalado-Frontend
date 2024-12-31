@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
@@ -15,16 +16,16 @@ interface LandingProps {
 }
 
 const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
-
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userRole, setUserRole] = useState<string | null>('');
+    const [userRole, setUserRole] = useState<string | null>('USER');
     const [userEmail, setUserEmail] = useState<string>('');
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>('املاک');
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));
 
     const handleOpenLogin = () => {
         setLoginVisible(true);

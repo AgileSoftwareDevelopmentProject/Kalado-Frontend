@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import { useTranslation } from 'react-i18next';
+import { Box, TextField } from '@mui/material';
 
 interface DescriptionInputProps {
     name: string;
@@ -15,11 +16,13 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
     name,
     value,
     onChange,
-    placeholder = "توضیحات",
+    placeholder,
     isRequired = false,
     isStarNeeded = false,
     maxLength = 500
 }) => {
+    const { t } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.description');
     const [charCount, setCharCount] = useState(value.length);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -29,12 +32,12 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
     };
 
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <Box style={{ marginBottom: '20px' }}>
             <TextField
                 name={name}
                 value={value}
                 onChange={handleChange}
-                placeholder={isStarNeeded ? `* ${placeholder}` : placeholder}
+                placeholder={isStarNeeded ? `* ${translatedPlaceholder}` : translatedPlaceholder}
                 required={isRequired}
                 multiline
                 rows={4}
@@ -42,17 +45,12 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
                 variant="outlined"
                 sx={{
                     width: '70%',
-                    '& .MuiOutlinedInput-root': {
-                        '&.Mui-focused fieldset': {
-                            borderColor: '#D74101',
-                        },
-                    }
                 }}
             />
-            <div style={{ color: 'white', textAlign: 'right', marginTop: '5px', marginRight: '100px' }}>
+            <div style={{ textAlign: 'right', marginTop: '5px', marginRight: '100px' }}>
                 {charCount}/{maxLength}
             </div>
-        </div>
+        </Box>
     );
 };
 
