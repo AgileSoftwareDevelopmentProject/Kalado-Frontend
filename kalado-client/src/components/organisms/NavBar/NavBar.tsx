@@ -5,7 +5,6 @@ import { Logo, CustomButton } from '../../atoms';
 import { SearchBar } from '../../molecules';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LanguageIcon from '@mui/icons-material/Language';
 
 interface NavBarProps {
   onLoginClick?: () => void;
@@ -16,7 +15,14 @@ interface NavBarProps {
   isDarkMode: boolean;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLoggedIn, onProfileClick, toggleTheme, isDarkMode }) => {
+const NavBar: React.FC<NavBarProps> = ({
+  onLoginClick,
+  onCreateAdClick,
+  isLoggedIn,
+  onProfileClick,
+  toggleTheme,
+  isDarkMode
+}) => {
   const { t, i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -27,7 +33,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'fa' : 'en';
     i18n.changeLanguage(newLang);
-    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr';
+    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr'; // Set document direction
   };
 
   return (
@@ -35,7 +41,8 @@ const NavBar: React.FC<NavBarProps> = ({ onLoginClick, onCreateAdClick, isLogged
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, ml: 10, mr: 10 }}>
         <Logo />
 
-        <Box sx={{ flexGrow: 1, mx: 2 }}>
+        {/* Adjust SearchBar alignment based on language */}
+        <Box sx={{ flexGrow: 1, mx: 2, textAlign: i18n.language === 'fa' ? 'right' : 'left' }}>
           <SearchBar
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

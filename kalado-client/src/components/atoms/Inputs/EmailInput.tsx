@@ -9,6 +9,7 @@ interface EmailInputProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
+    disabled?: boolean;
 }
 
 const EmailInput: React.FC<EmailInputProps> = ({
@@ -16,6 +17,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
     value,
     onChange,
     isRequired = true,
+    disabled = false,
 }) => {
     const { t } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.email');
@@ -36,6 +38,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             value={value}
             onChange={onChange}
             required={isRequired}
+            disabled={disabled}
             variant="standard"
             margin="normal"
             error={error}

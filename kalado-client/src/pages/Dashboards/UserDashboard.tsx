@@ -15,7 +15,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
     const { t } = useTranslation();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.user.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const userCategories = [
         { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
@@ -57,7 +56,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
         <Box>
             <NavBar
                 onCreateAdClick={handleOpenCreateAd}
-                isLoggedIn={isLoggedIn}
+                isLoggedIn={true}
                 toggleTheme={toggleTheme}
                 isDarkMode={isDarkMode}
             />

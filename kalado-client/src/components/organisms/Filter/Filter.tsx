@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, TextField } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { CustomButton, NumberInput } from '../../atoms';
 import { LabelList } from '../../molecules';
 import { fetchItems } from '../../../services/filterService';
@@ -76,7 +76,7 @@ const Filter: React.FC = () => {
       <CustomButton
         text={t('filter.apply')}
         onClick={handleApplyFilters}
-        margin="0px 0px"
+        margin="20px 0px"
       />
     </Box>
   );

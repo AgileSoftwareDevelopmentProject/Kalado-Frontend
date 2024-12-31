@@ -22,12 +22,12 @@ const LabelList: React.FC<LabelListProps> = ({ items, selectedValue, onSelect, t
                         sx={{
                             cursor: 'pointer',
                             backgroundColor: selectedValue === item.value ? '#D74101' : 'transparent',
-                            padding: '10px',
+                            padding: '5px 10px',
                             borderRadius: '15px',
                             border: '1px solid',
                             textAlign: 'center',
                             flexGrow: 1,
-                            marginRight: item.value !== items[items.length - 1].value ? '5px' : '0',
+                            marginRight: '5px',
                         }}
                     >
                         {item.title}
