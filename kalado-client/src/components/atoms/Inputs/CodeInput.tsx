@@ -15,7 +15,7 @@ const CodeInput: React.FC<CodeInputProps> = ({
     value,
     onChange,
     isRequired = true,
-    maxLength = 5
+    maxLength = 6
 }) => {
     const { t } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.code');
@@ -34,10 +34,7 @@ const CodeInput: React.FC<CodeInputProps> = ({
                 maxLength: maxLength
             }}
             sx={{
-                width: '80%',
-                '& .MuiInputBase-root::after': {
-                    borderBottom: '2px solid #D74101',
-                },
+                width: '70%',
             }}
         />
     );

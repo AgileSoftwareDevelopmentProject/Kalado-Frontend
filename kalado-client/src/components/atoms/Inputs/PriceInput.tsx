@@ -10,7 +10,6 @@ interface PriceInputProps {
     onChange: (value: number) => void;
     isRequired?: boolean;
     isStarNeeded?: boolean;
-    currency?: string;
 }
 
 const PriceInput: React.FC<PriceInputProps> = ({
@@ -19,7 +18,6 @@ const PriceInput: React.FC<PriceInputProps> = ({
     onChange,
     isRequired = false,
     isStarNeeded = false,
-    currency = "تومان",
 }) => {
     const { t } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.price');
@@ -50,18 +48,13 @@ const PriceInput: React.FC<PriceInputProps> = ({
                 input: {
                     endAdornment: (
                         <InputAdornment position="end">
-                            {currency}
+                            {t('currency')}
                         </InputAdornment>
                     ),
                     inputMode: 'numeric',
                 },
             }}
-            sx={{
-                width: '70%',
-                '& .MuiInputBase-root::after': {
-                    borderBottom: '2px solid #D74101',
-                },
-            }}
+            sx={{ width: '70%' }}
         />
     );
 };

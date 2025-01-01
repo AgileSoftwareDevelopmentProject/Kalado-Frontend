@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-import { NavBar, Category, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
+import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
 import { Backdrop } from '../../components/atoms';
 import mockData from '../../mockData.json';
-
+import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const items = mockData.Items;
 
@@ -27,6 +28,26 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [userEmail, setUserEmail] = useState<string>('');
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));
 
+    const categories = [
+        { titleKey: "category.one", icon: <FaHome /> },
+        { titleKey: "category.two", icon: <FaCar /> },
+        { titleKey: "category.three", icon: <FaUtensils /> },
+        { titleKey: "category.four", icon: <FaLaptop /> },
+        { titleKey: "category.five", icon: <FaGamepad /> },
+        { titleKey: "category.six", icon: <FaSuitcase /> },
+        { titleKey: "category.seven", icon: <FaPlusCircle /> },
+    ];
+
+    const handleSelectCategory = (categoryKey: string) => {
+        setSelectedCategoryTitle(t(categoryKey));
+    };
+
+    useEffect(() => {
+        if (categories.length > 0) {
+            setSelectedCategoryTitle(t(categories[0].titleKey));
+        }
+    }, [t]);
+
     const handleOpenLogin = () => {
         setLoginVisible(true);
         setSignupVisible(false);
@@ -46,6 +67,10 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     };
 
     const handleOpenCreateAd = () => {
+        if (!isLoggedIn) {
+            toast.error(t("error.create_ad.disable_not_loggined"));
+            return;
+        }
         setCreateAdVisible(true);
         setSignupVisible(false);
         setLoginVisible(false);
@@ -74,12 +99,9 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         }
     };
 
-    const handleSelectCategory = (categoryTitle: string) => {
-        setSelectedCategoryTitle(categoryTitle);
-    };
-
     const handleLoginSuccess = (role: string) => {
         setUserRole(role);
+        setIsLoggedIn(true);
         handleCloseLogin();
     };
 
@@ -91,9 +113,8 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         }
     };
 
-
     return (
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <NavBar
                 onLoginClick={handleOpenLogin}
                 onCreateAdClick={handleOpenCreateAd}
@@ -104,16 +125,18 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
             />
 
             <SideBar>
-                <Category onSelectCategory={handleSelectCategory} />
+                <SideBarMenu
+                    categories={categories.map(cat => ({
+                        title: t(cat.titleKey),
+                        icon: cat.icon
+                    }))}
+                    onSelectCategory={handleSelectCategory}
+                    title={t("category.title")}
+                />
                 <Filter />
             </SideBar>
 
-            <Box sx={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'flex-end', paddingTop: '200px', paddingRight: '200px' }}>
-                <Typography variant="h4" sx={{ textAlign: 'center', mt: 4, color: "#FFFFFF", mb: 10, fontWeight: 'bold' }}>
-                    {selectedCategoryTitle ? selectedCategoryTitle : "Select a Category"}
-                </Typography>
-                <ItemsHolder items={items} onItemSelect={(itemId) => navigate(`/item/${itemId}`)} />
-            </Box>
+            <ItemsHolder items={items} onItemSelect={(itemId) => navigate(`/item/${itemId}`)} selectedCategoryTitle={selectedCategoryTitle} />
 
             {isLoginVisible && (
                 <Backdrop open={isLoginVisible} onClick={handleBackdropClick}>

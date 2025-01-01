@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { Backdrop } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { DashboardMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdForm } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdForm } from '../../components/organisms';
 import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
 
 interface UserDashboardProps {
@@ -15,7 +15,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
     const { t } = useTranslation();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.user.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const userCategories = [
         { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
@@ -57,12 +56,12 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
         <Box>
             <NavBar
                 onCreateAdClick={handleOpenCreateAd}
-                isLoggedIn={isLoggedIn}
+                isLoggedIn={true}
                 toggleTheme={toggleTheme}
                 isDarkMode={isDarkMode}
             />
             <SideBar>
-                <DashboardMenu onSelectMenu={handleSelectMenu} categories={userCategories} />
+                <SideBarMenu categories={userCategories} onSelectCategory={handleSelectMenu} />
             </SideBar>
             <Box sx={{ flexGrow: 1, padding: 2 }}>
                 {renderContent()}

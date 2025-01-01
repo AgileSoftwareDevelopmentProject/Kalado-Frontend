@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Box from '@mui/material/Box';
-import { DateInput, Dropdown, DescriptionInput, ImageUpload, CustomButton } from '../../atoms';
+import { DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../services/product/CreateAdService';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -26,7 +25,9 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
         description: '',
         images: [],
     });
+    const [error, setError] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
 
     const reportOptions = [
         { value: 'Abuse', label: t("report.category.one") },
@@ -100,6 +101,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                     type="submit"
                     padding="10px 40px"
                 />
+                <FormError message={error} />
             </form>
         </PopupBox>
     );

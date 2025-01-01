@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { Backdrop } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { DashboardMenu, ProfileManagement, UserManagement, ReportHistory, NavBar, CreateAdForm } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, UserManagement, ReportHistory, NavBar, CreateAdForm } from '../../components/organisms';
 import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
 
 interface AdminDashboardProps {
@@ -63,7 +63,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ toggleTheme, isDarkMode
                 isDarkMode={isDarkMode}
             />
             <SideBar>
-                <DashboardMenu onSelectMenu={handleSelectMenu} categories={adminCategories} />
+                <SideBarMenu categories={adminCategories} onSelectCategory={handleSelectMenu} />
             </SideBar>
             <Box sx={{ flexGrow: 1, padding: 2 }}>
                 {renderContent()}

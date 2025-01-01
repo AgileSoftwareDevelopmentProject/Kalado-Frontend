@@ -17,7 +17,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     backgroundColor: '#272C48',
     borderRadius: 10,
-    border: '2px solid rgba(255, 255, 255, 1)',
+    border: '2px solid rgba(255, 255, 255, 0.5)',
 }
 
 const PopupBox: React.FC<PopupBoxProps> = ({ onClose, children }) => {

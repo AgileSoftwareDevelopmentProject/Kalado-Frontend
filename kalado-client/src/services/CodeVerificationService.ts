@@ -1,19 +1,35 @@
-import axios from 'axios';
+import { sendRequest } from '../axiosInstance';
+import { AUTH } from '../urls';
 
-interface VerificationResponse {
-    success: boolean;
-    message?: string;
+interface CodeVerificationDTO {
+    token: string;
 }
 
-export const verifyCode = async (email: string, code: string): Promise<VerificationResponse> => {
+interface CodeVerificationProps {
+    email: string;
+    onClose: () => void;
+}
+
+export async function verifyCode(token: string, props: CodeVerificationProps) {
+    const payload: CodeVerificationDTO = {
+        token: String(token),
+    };
+
     try {
-        const response = await axios.post('https://kaladoshop.com/v1/verify-code', {
-            email,
-            code,
-        });
-        return response.data;
+        const response = await sendRequest<typeof payload>(`${AUTH.VERIFY}/verify`, 'POST', payload);
+
+        if (response.isSuccess) {
+            console.log('Code verification successful!');
+            props.onClose(); // Call the onClose callback on success
+        } else if (response.status === 400) {
+            console.log('Invalid or expired token. Please try again.');
+        } else {
+            console.log(response.message || 'Code verification failed.');
+        }
+
+        return response;
     } catch (error) {
-        console.error('API call error:', error);
-        throw new Error('Verification failed. Please try again.');
+        console.log('An unexpected error occurred during code verification.');
+        return { isSuccess: false, message: 'An error occurred during code verification.' };
     }
-};
+}

@@ -5,6 +5,7 @@ import i18n from './i18n';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { lightTheme, darkTheme } from './theme';
+import { CustomToast } from './components/molecules';
 import { Landing, ItemDetails, UserDashboard, AdminDashboard } from './pages';
 import './index.css';
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
           </Routes>
         </Router>
+        <CustomToast />
       </ThemeProvider>
     </I18nextProvider>
   );

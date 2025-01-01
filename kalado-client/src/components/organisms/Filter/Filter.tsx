@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, TextField } from '@mui/material';
-import { CustomButton } from '../../atoms';
+import { Box, Typography } from '@mui/material';
+import { CustomButton, NumberInput } from '../../atoms';
+import { LabelList } from '../../molecules';
 import { fetchItems } from '../../../services/filterService';
 
 const Filter: React.FC = () => {
@@ -22,7 +23,7 @@ const Filter: React.FC = () => {
     }
   };
 
-  const handleFilterSelect = (filter: string) => {
+  const handleFilterSelect = (filter: string | null) => {
     setSelectedFilter(filter);
   };
 
@@ -35,113 +36,47 @@ const Filter: React.FC = () => {
     }
   };
 
+  const dateOptions = [
+    { title: t('filter.one_day'), value: 'oneDay' },
+    { title: t('filter.one_week'), value: 'oneWeek' },
+    { title: t('filter.one_month'), value: 'oneMonth' },
+  ];
+
   return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: '600px',
-        right: '30px',
-        width: '300px',
-        p: 2,
-      }}
-    >
-      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', color: '#FFFFFF', fontWeight: 'bold' }}>
+    <Box sx={{ p: 2 }}>
+      <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold' }}>
         {t("filter.title")}
       </Typography>
 
       <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ mb: 1, textAlign: 'right', color: '#FFFFFF' }}>
+        <Typography variant="body1" sx={{ mb: 1, textAlign: 'right' }}>
           {t("filter.price")}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <TextField
-            type="number"
+          <NumberInput
             name="minPrice"
             placeholder={t("filter.min_price")}
             onChange={handlePriceChange}
-            variant="outlined"
-            size="small"
-            sx={{ flexGrow: 1, mr: 1, bgcolor: 'transparent', '& input::placeholder': { color: '#bbb' } }}
           />
-          <TextField
-            type="number"
+          <NumberInput
             name="maxPrice"
             placeholder={t("filter.max_price")}
             onChange={handlePriceChange}
-            variant="outlined"
-            size="small"
-            sx={{ flexGrow: 1, bgcolor: 'transparent', '& input::placeholder': { color: '#bbb' } }}
           />
         </Box>
       </Box>
 
-      <Typography variant="body1" sx={{ mb: 1, textAlign: 'right', color: '#FFFFFF' }}>
-        {t("filter.ad_date")}
-      </Typography>
-
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          mb: 2,
-        }}
-      >
-        <Typography
-          onClick={() => handleFilterSelect('oneDay')}
-          sx={{
-            cursor: 'pointer',
-            backgroundColor: selectedFilter === 'oneDay' ? '#D74101' : 'transparent',
-            color: selectedFilter === 'oneDay' ? '#FFFFFF' : '#000000',
-            padding: '10px',
-            borderRadius: '10px',
-            border: '3px solid white',
-            textAlign: 'center',
-            flexGrow: 1,
-            marginRight: '5px',
-          }}
-        >
-          {t('filter.one_day')}
-        </Typography>
-
-        <Typography
-          onClick={() => handleFilterSelect('oneWeek')}
-          sx={{
-            cursor: 'pointer',
-            backgroundColor: selectedFilter === 'oneWeek' ? '#D74101' : 'transparent',
-            color: selectedFilter === 'oneWeek' ? '#FFFFFF' : '#000000',
-            padding: '10px',
-            borderRadius: '10px',
-            border: '3px solid white',
-            textAlign: 'center',
-            flexGrow: 1,
-            marginRight: '5px',
-          }}
-        >
-          {t('filter.one_week')}
-        </Typography>
-
-        <Typography
-          onClick={() => handleFilterSelect('oneMonth')}
-          sx={{
-            cursor: 'pointer',
-            backgroundColor: selectedFilter === 'oneMonth' ? '#D74101' : 'transparent',
-            color: selectedFilter === 'oneMonth' ? '#FFFFFF' : '#000000',
-            padding: '10px',
-            borderRadius: '10px',
-            border: '3px solid white',
-            textAlign: 'center',
-            flexGrow: 1,
-          }}
-        >
-          {t('filter.one_month')}
-        </Typography>
-
-      </Box>
+      <LabelList
+        items={dateOptions}
+        selectedValue={selectedFilter}
+        onSelect={handleFilterSelect}
+        title={t("filter.ad_date")}
+      />
 
       <CustomButton
         text={t('filter.apply')}
         onClick={handleApplyFilters}
-        margin="0px 0px"
+        margin="20px 0px"
       />
     </Box>
   );
