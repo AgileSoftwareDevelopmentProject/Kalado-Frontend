@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../services/CreateAdService';
+import { createAd } from '../../../services/product/CreateAdService';
 
 interface CreateAdFormProps {
     onClose: () => void;
