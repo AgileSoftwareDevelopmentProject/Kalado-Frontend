@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import { validatePhoneNumber } from '../../../validators/validatePhoneNumber';
 
 
 interface PhoneNumberInputProps {
-    name: string;
     placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,7 +12,6 @@ interface PhoneNumberInputProps {
 }
 
 const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
-    name,
     placeholder,
     value,
     onChange,
@@ -21,29 +19,27 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
 }) => {
     const { t } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.phone_number');
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<boolean>(false);
+    const [helperText, setHelperText] = useState<string>('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = e.target.value;
-
-        const validationResult = validatePhoneNumber(inputValue, t);
-        setError(validationResult.error);
-
-        onChange(e);
-    };
+    useEffect(() => {
+        const validationResult = validatePhoneNumber(value, t);
+        setError(!validationResult.valid);
+        setHelperText(validationResult.error);
+    }, [value, t]);
 
     return (
         <TextField
             type="tel"
-            name={name}
+            name="phoneNumber"
             placeholder={translatedPlaceholder}
             value={value}
-            onChange={handleChange}
+            onChange={onChange}
             required={isRequired}
             variant="standard"
             margin="normal"
             error={!!error}
-            helperText={error}
+            helperText={error ? helperText : ''}
             inputProps={{
                 inputMode: 'numeric',
                 pattern: '[0-9]*'

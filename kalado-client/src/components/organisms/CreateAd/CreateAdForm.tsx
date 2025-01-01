@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../services/CreateAdService';
+import { toast } from 'react-toastify';
 
 interface CreateAdFormProps {
     onClose: () => void;
@@ -13,13 +14,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     const [formData, setFormData] = useState<{
         title: string;
         price: number;
-        category: string | null;
+        category: string;
         description: string;
         images: File[];
     }>({
         title: '',
         price: 0,
-        category: null,
+        category: '',
         description: '',
         images: [],
     });
@@ -38,7 +39,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
         setFormData(prevData => ({
             ...prevData,
-            category: selectedOption ? selectedOption.value : null
+            category: selectedOption ? selectedOption.value : ''
         }));
     };
 
@@ -73,13 +74,17 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        try {
-            await createAd(formData);
-            console.log('Create Ad successfully');
-            onClose();
-        } catch (error) {
-            console.error(error);
+        if (formData.title && formData.price && formData.category) {
+            try {
+                await createAd(formData.title, formData.description, formData.price, formData.category);
+                setFormData({ title: '', price: 0, category: '', description: '', images: [] });
+                onClose();
+                toast(t("success.create_ad"));
+            } catch (error) {
+                setError('error');  // TODO
+            }
+        } else {
+            setError(t("error.create_ad.required_fields"));
         }
     };
 
@@ -95,7 +100,6 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     isStarNeeded={true}
                 />
                 <PriceInput
-                    name="price"
                     value={formData.price}
                     onChange={handlePriceChange}
                     isRequired={true}
@@ -108,7 +112,6 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     value={categoryOptions.find(option => option.value === formData.category) || null}
                 />
                 <DescriptionInput
-                    name="description"
                     value={formData.description}
                     onChange={handleDescriptionchange}
                 />
@@ -116,7 +119,6 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                 <CustomButton
                     text={t("create_ad.create_ad_btn")}
                     type="submit"
-                    padding="10px 40px"
                 />
                 <FormError message={error} />
             </form>

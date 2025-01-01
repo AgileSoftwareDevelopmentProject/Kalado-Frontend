@@ -130,13 +130,11 @@ const ProfileManagement = () => {
                         onChange={handleInputChange}
                     />
                     <EmailInput
-                        name="email"
                         value={userData.email}
                         onChange={handleInputChange}
                         disabled
                     />
                     <PhoneNumberInput
-                        name="phoneNumber"
                         value={userData.phoneNumber}
                         onChange={handleInputChange}
                     />
