@@ -149,6 +149,9 @@
             },
             "login": {
                 "not_verified": "For login, First Verify your Email"
+            },
+            "landing": {
+                "empty_product_list": "No Ad Submitted in the Selected Category"
             }
         },
         "success": {
@@ -309,6 +312,9 @@
             },
             "login": {
                 "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
+            },
+            "landing": {
+                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
             }
         },
         "success": {

@@ -25,7 +25,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userRole, setUserRole] = useState<string | null>('USER');
     const [userEmail, setUserEmail] = useState<string>('');
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
 
     const categories = [
         { titleKey: "category.one", icon: <FaHome /> },
@@ -126,7 +126,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
                 <Filter />
             </SideBar>
 
-            <ItemsHolder items={items} onItemSelect={(itemId) => navigate(`/item/${itemId}`)} selectedCategoryTitle={selectedCategoryTitle} />
+            <ItemsHolder onItemSelect={(itemId) => navigate(`/item/${itemId}`)} selectedCategoryTitle={selectedCategoryTitle} />
 
             <LoginModal
                 open={isLoginVisible}
