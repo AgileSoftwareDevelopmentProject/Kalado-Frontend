@@ -4,7 +4,7 @@ import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
 import { getProductsByCategory } from '../../../services/getProductsByCategoryService';
-import defaultImage from '../../assets/images/no-image.png';
+import defaultImage from '../../../assets/images/no-image.png';
 
 interface Item {
     title: string;

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../services/CreateAdService';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { toast } from 'react-toastify';
@@ -15,12 +14,12 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
     const { t } = useTranslation();
     const [formData, setFormData] = useState<{
         date: string;
-        type: string | null;
+        type: string;
         description: string;
         images: File[];
     }>({
         date: '',
-        type: null,
+        type: '',
         description: '',
         images: [],
     });
@@ -33,7 +32,6 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
         { value: 'Inproper Price', label: t("report.category.three") },
     ];
 
-    // Unified change handler
     const handleChange = (field: string, value: any) => {
         setFormData(prevData => ({
             ...prevData,
@@ -52,9 +50,9 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await createAd(formData.date, formData.type, formData.description, formData.images);
+        const response = await submitReport(formData.date, formData.type, formData.description, formData.images);
         if (response.isSuccess) {
-            setFormData({ date: '', type: null, description: '', images: [] });
+            setFormData({ date: '', type: '', description: '', images: [] });
             onClose();
             toast(t("success.report"));
         } else {
@@ -75,7 +73,12 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                     <DateInput
                         label={t("general_inputs.date")}
                         value={selectedDate}
-                        onChange={(newValue) => handleChange('date', newValue)}
+                        onChange={(newValue) => {
+                            setSelectedDate(newValue);
+                            if (newValue) {
+                                handleChange('date', newValue.toISOString());
+                            }
+                        }}
                     />
                 </LocalizationProvider>
                 <DescriptionInput

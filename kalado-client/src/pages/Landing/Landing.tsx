@@ -4,11 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, CodeVerificationModal, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
-import mockData from '../../mockData.json';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-
-const items = mockData.Items;
 
 interface LandingProps {
     toggleTheme: () => void;

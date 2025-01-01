@@ -154,7 +154,6 @@ const ProfileManagement = () => {
                         text={t('dashboard.user.profile_management.save_changes_btn')}
                         onClick={handleSaveChanges}
                         type="submit"
-                        padding="10px 40px"
                     />
                 </>
             )}
