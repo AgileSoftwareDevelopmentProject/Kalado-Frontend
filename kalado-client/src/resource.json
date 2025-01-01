@@ -145,17 +145,17 @@
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "For Submitting an Ad, Login to your Account",
-                "required_fields": "Please Fill out Necessary Fields"
+                "disable_not_loggined": "For Submitting an Ad, Login to your Account"
             },
             "login": {
-                "required_fields": "Both email and password are required",
                 "not_verified": "For login, First Verify your Email"
             }
         },
         "success": {
             "login": "Logined Successfully",
-            "create_ad": "Ad Created Successfully"
+            "create_ad": "Ad Created Successfully",
+            "signup": "Registered Successfully. Please Verify your Email.",
+            "report": "Report Submitted Successfully"
         }
     },
     "fa": {
@@ -290,10 +290,6 @@
             }
         },
         "error": {
-            "400": "error.login.bad_request",
-            "401": "error.login.unauthorized",
-            "404": "error.login.not_found",
-            "500": "error.login.server_error",
             "general": "خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید",
             "input": {
                 "invalid_email": "لطفا یک ایمیل معتبر وارد کنید",
@@ -309,17 +305,17 @@
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید",
-                "required_fields": "لطفا فیلدهای اجباری را پر کنید"
+                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید"
             },
             "login": {
-                "required_fields": "وارد کردن ایمیل و رمز عبور ضروری است",
                 "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
             }
         },
         "success": {
             "login": "با موفقیت وارد شدید",
-            "create_ad": "آگهی شما با موفقیت ثبت شد"
+            "create_ad": "آگهی شما با موفقیت ثبت شد",
+            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
+            "report": "گزارش تخلف شما با موفقیت ثبت شد"
         }
     }
 }

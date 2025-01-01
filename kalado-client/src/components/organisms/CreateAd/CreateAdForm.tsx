@@ -24,7 +24,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         description: '',
         images: [],
     });
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string>('');
 
     const categoryOptions = [
         { value: 'Real estate', label: t("category.one") },
@@ -74,17 +74,14 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (formData.title && formData.price && formData.category) {
-            try {
-                await createAd(formData.title, formData.description, formData.price, formData.category);
-                setFormData({ title: '', price: 0, category: '', description: '', images: [] });
-                onClose();
-                toast(t("success.create_ad"));
-            } catch (error) {
-                setError('error');  // TODO
-            }
+
+        const response = await createAd(formData.title, formData.description, formData.price, formData.category);
+        if (response.isSuccess) {
+            setFormData({ title: '', price: 0, category: '', description: '', images: [] });
+            onClose();
+            toast(t("success.create_ad"));
         } else {
-            setError(t("error.create_ad.required_fields"));
+            setError(response.message);
         }
     };
 

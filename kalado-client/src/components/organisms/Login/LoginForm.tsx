@@ -23,18 +23,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (formData.email && formData.password) {
-            const response = await loginUser(formData.email, formData.password);
-            if (response.isSuccess) {
-                onLoginSuccess(response.role);
-                setFormData({ email: '', password: '' });
-                onClose();
-                toast(t("success.login"));
-            } else {
-                setError(response.message);
-            }
+        const response = await loginUser(formData.email, formData.password);
+        if (response.isSuccess) {
+            onLoginSuccess(response.role);
+            setFormData({ email: '', password: '' });
+            onClose();
+            toast(t("success.login"));
         } else {
-            setError(t("error.login.required_fields"));
+            setError(response.message);
         }
     };
 

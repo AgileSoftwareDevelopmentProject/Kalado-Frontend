@@ -11,7 +11,7 @@ interface PopupBoxProps {
 const PopupBox: React.FC<PopupBoxProps> = ({ onClose, children }) => {
     return (
         <Box sx={{
-            width: "500px",
+            width: "25vw",
             padding: "50px 0px",
             position: 'fixed',
             top: '50%',

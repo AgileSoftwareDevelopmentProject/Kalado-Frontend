@@ -25,7 +25,7 @@ export const lightTheme = createTheme({
         },
     },
     typography: {
-        fontFamily: 'Roboto, sans-serif',
+        fontFamily: 'IranSans, Nazanin, Lotus, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
         h1: {
             fontSize: '2rem',
             fontWeight: 500,
@@ -55,6 +55,15 @@ export const lightTheme = createTheme({
                 },
             },
         },
+        MuiBox: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#fff99f', // Set Box background color for dark mode
+                    // color: 'inherit', // Inherit text color, can be overridden by child components
+                },
+            },
+        },
+
     },
 });
 
@@ -79,7 +88,7 @@ export const darkTheme = createTheme({
         },
     },
     typography: {
-        fontFamily: 'Roboto, sans-serif',
+        fontFamily: 'IranSans, Nazanin, Lotus, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
         h1: {
             fontSize: '2rem',
             fontWeight: 500,
@@ -105,8 +114,8 @@ export const darkTheme = createTheme({
         MuiBox: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#272C48', // Set Box background color for both modes
-                    color: 'inherit', // Inherit text color, can be overridden by child components
+                    backgroundColor: '#272C48', // Set Box background color for dark mode
+                    // color: 'inherit', // Inherit text color, can be overridden by child components
                 },
             },
         },
