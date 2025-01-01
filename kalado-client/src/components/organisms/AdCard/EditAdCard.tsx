@@ -6,14 +6,14 @@ import {
   Card,
   CardMedia,
   IconButton,
-  MenuItem,
-  Select,
+  // MenuItem,
+  // Select,
   Divider,
   Button,
   Tooltip,
 } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
-import { SelectChangeEvent } from '@mui/material';
+// import { SelectChangeEvent } from '@mui/material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
@@ -44,7 +44,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   const [editedCategory, setEditedCategory] = useState(category);
   const [editedDate, setEditedDate] = useState<Date | null>(new Date(date));
   const [editedDescription, setEditedDescription] = useState(description);
-  const [editedStatus, setEditedStatus] = useState(status);
   const [editedImages, setEditedImages] = useState<string[]>(images);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,10 +69,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
     setEditedDescription(e.target.value);
   };
 
-  const handleStatusChange = (e: SelectChangeEvent<string>) => {
-    setEditedStatus(e.target.value);
-  };
-
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newImages = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
@@ -92,7 +87,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
       category: editedCategory,
       date: editedDate ? editedDate.toISOString().split('T')[0] : '',
       description: editedDescription,
-      status: editedStatus,
       images: editedImages,
     };
     onEdit(editedData);
@@ -155,38 +149,20 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
               </Tooltip>
             )}
 
-            {/* Status */}
-            {isEditing ? (
-              <Select
-                value={editedStatus}
-                onChange={handleStatusChange}
-                displayEmpty
-                IconComponent={() => <></>}
-                sx={{
-                  fontSize: '1rem',
-                  backgroundColor: '#fff',
-                  borderRadius: '4px',
-                  width: '150px',
-                }}
-              >
-                <MenuItem value="فعال">فعال</MenuItem>
-                <MenuItem value="فروخته شده">فروخته شده</MenuItem>
-                <MenuItem value="رزرو شده">رزرو شده</MenuItem>
-              </Select>
-            ) : (
-              <Typography
-                sx={{
-                  fontSize: '1.1rem',
-                  color: '#555',
-                  backgroundColor: 'transparent',
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  border: '1px solid #ccc',
-                }}
-              >
-                {status}
-              </Typography>
-            )}
+            {/* Display Read-only Status */}
+            <Typography
+             variant="body1"
+              sx={{
+              fontSize: '1.1rem',
+              color: '#555',
+              backgroundColor: 'transparent',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+            }}
+            >
+            {status}
+            </Typography>
           </Box>
 
           {/* Edit and Delete Buttons */}
@@ -405,18 +381,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           </Box>
         )}
       </Card>
-
-      {/* Delete Dialog */}
-      {/* 
-      <DeleteAd
-        isOpen={isDeleteDialogOpen}
-        onClose={() => setIsDeleteDialogOpen(false)}
-        onConfirm={() => {
-          onDelete();
-          setIsDeleteDialogOpen(false);
-        }}
-      />
-      */}
     </>
   );
 };

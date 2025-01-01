@@ -18,6 +18,7 @@ import DeleteAd from './DeleteAd';
 type AdCardProps = {
   title: string;
   status: string;
+  onEdit: () => void;
   onStatusChange: (event: SelectChangeEvent<string>) => void;
   onDelete: () => void;
   onEditTitle: (newTitle: string) => void;
@@ -26,6 +27,7 @@ type AdCardProps = {
 const AdCard: React.FC<AdCardProps> = ({
   title,
   status,
+  onEdit,
   onStatusChange,
   onDelete,
   onEditTitle,
@@ -194,8 +196,9 @@ const AdCard: React.FC<AdCardProps> = ({
             justifyContent: 'flex-end',
           }}
         >
+          {/* Edit Button */}
           <IconButton
-            onClick={() => setIsEditing(true)}
+            onClick={onEdit} // call the onEdit function passed as a prop
             aria-label={t('ad_list.buttons.edit')}
             sx={{
               padding: '5px',
@@ -204,6 +207,8 @@ const AdCard: React.FC<AdCardProps> = ({
           >
             <EditIcon sx={{ color: '#000' }} />
           </IconButton>
+
+          {/* Delete Button */}
           <IconButton
             onClick={() => setIsDeleteDialogOpen(true)}
             aria-label={t('ad_list.buttons.delete')}

@@ -1,132 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Box } from '@mui/material';
 import AdCard from '../AdCard/AdCard';
-import { useTranslation } from 'react-i18next';
-import { SelectChangeEvent, Typography, Box } from '@mui/material';
 
-const AdList = () => {
-  const { t, i18n } = useTranslation();
+interface AdData {
+    id: number;
+    title: string;
+    price: string;
+    status: string;
+    category: string;
+    description: string;
+    date: string;
+    images: string[];
+}
 
-  const [ads, setAds] = useState([
-    { id: 1, title: '', status: 'active' },
-    { id: 2, title: '', status: 'reserved' },
-    { id: 3, title: '', status: 'active' },
-    { id: 4, title: '', status: 'reserved' },
-  ]);
+interface AdListProps {
+    ads: AdData[];
+    onEdit: (adData: AdData) => void;
+}
 
-  useEffect(() => {
-    setAds((prevAds) =>
-      prevAds.map((ad) => ({
-        ...ad,
-        title: `${t('ad_list.create_ad.input.title')} ${ad.id}`,
-      }))
+const AdList: React.FC<AdListProps> = ({ ads, onEdit }) => {
+    return (
+        <Box>
+            {ads.map((ad) => (
+                <AdCard
+                    key={ad.id}
+                    title={ad.title}
+                    status={ad.status}
+                    onEdit={() => onEdit(ad)}
+                    onDelete={() => console.log('Delete clicked')}
+                    onStatusChange={(event) => console.log(event.target.value)}
+                    onEditTitle={(newTitle) => console.log(newTitle)}
+                />
+            ))}
+        </Box>
     );
-  }, [t, i18n.language]);
-
-  const handleStatusChange = (id: number) => (event: SelectChangeEvent<string>) => {
-    setAds((prevAds) =>
-      prevAds.map((ad) =>
-        ad.id === id ? { ...ad, status: event.target.value } : ad
-      )
-    );
-  };
-
-  const handleDelete = (id: number) => {
-    setAds((prevAds) => prevAds.filter((ad) => ad.id !== id));
-  };
-
-  const handleEditTitle = (id: number) => (newTitle: string) => {
-    setAds((prevAds) =>
-      prevAds.map((ad) =>
-        ad.id === id ? { ...ad, title: newTitle } : ad
-      )
-    );
-  };
-
-  return (
-    <div style={{ padding: '20px', direction: 'rtl' }}>
-      {/* Heading for Ad List */}
-      <Box
-        sx={{
-          marginBottom: '50px',
-          textAlign: 'right',
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{fontWeight: 'bold', color: '#FFF', marginBottom: '15px' }}
-        >
-          {t('ad_list.heading')}
-        </Typography>
-      </Box>
-
-      {/* List of Ad Cards */}
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {ads.map((ad) => (
-          <AdCard
-            key={ad.id}
-            title={ad.title}
-            status={ad.status}
-            onStatusChange={handleStatusChange(ad.id)}
-            onDelete={() => handleDelete(ad.id)}
-            onEditTitle={handleEditTitle(ad.id)}
-          />
-        ))}
-      </Box>
-    </div>
-  );
 };
 
 export default AdList;
-
-// import React, { useState } from 'react';
-// import EditAdCard from '../AdCard/EditAdCard.tsx';
-
-// const AdList = () => {
-//   const [ads, setAds] = useState([
-//     {
-//       id: 1,
-//       title: 'فلان عنوان',
-//       price: '۹۰۰۰۰',
-//       category: 'لپتاپ',
-//       date: '۱۴۰۳/۱۲/۱۴',
-//       description: 'لپتاپ خوبی است.',
-//       images: [
-//         '/path/to/image1.jpg',
-//         '/path/to/image2.jpg',
-//         '/path/to/image3.jpg',
-//       ],
-//       status: 'فعال',
-//     },
-//   ]);
-
-//   const handleEdit = (id: number, updatedData: any) => {
-//     setAds((prevAds) =>
-//       prevAds.map((ad) => (ad.id === id ? { ...ad, ...updatedData } : ad))
-//     );
-//   };
-
-//   const handleDelete = (id: number) => {
-//     setAds((prevAds) => prevAds.filter((ad) => ad.id !== id));
-//   };
-
-//   return (
-//     <div style={{ padding: '20px' }}>
-//       {ads.map((ad) => (
-//         <EditAdCard
-//           key={ad.id}
-//           title={ad.title}
-//           price={ad.price}
-//           category={ad.category}
-//           date={ad.date}
-//           description={ad.description}
-//           images={ad.images}
-//           status={ad.status}
-//           onEdit={(updatedData) => handleEdit(ad.id, updatedData)}
-//           onDelete={() => handleDelete(ad.id)}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default AdList;
