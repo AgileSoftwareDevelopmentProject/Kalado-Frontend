@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
-import { Backdrop } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdForm } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdModal } from '../../components/organisms';
 import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface UserDashboardProps {
     toggleTheme: () => void;
@@ -13,6 +14,8 @@ interface UserDashboardProps {
 
 const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }) => {
     const { t } = useTranslation();
+    const { setToken } = useAuth();
+    const navigate = useNavigate();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.user.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
 
@@ -22,23 +25,13 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
         { title: t("dashboard.user.menu.three"), icon: <FaHistory /> },
     ];
 
-    const handleOpenCreateAd = () => {
-        setCreateAdVisible(true);
-    };
-
-    const handleCloseCreateAd = () => {
-        setCreateAdVisible(false);
-    };
-
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            handleCloseCreateAd();
-        }
-    };
-
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
+    };
+
+    const handleLogoutClick = () => {
+        setToken('');
+        navigate('/');
     };
 
     const renderContent = () => {
@@ -49,28 +42,37 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
                 return <AdManagement />;
             case t("dashboard.user.menu.three"):
                 return <ReportHistory />;
+            default:
+                return null;
         }
     };
 
     return (
         <Box>
             <NavBar
-                onCreateAdClick={handleOpenCreateAd}
-                isLoggedIn={true}
+                onCreateAdClick={() => setCreateAdVisible(true)}
                 toggleTheme={toggleTheme}
                 isDarkMode={isDarkMode}
+                isInProfile={true}
+                onLogoutClick={handleLogoutClick}
             />
+
             <SideBar>
-                <SideBarMenu categories={userCategories} onSelectCategory={handleSelectMenu} />
+                <SideBarMenu
+                    categories={userCategories}
+                    onSelectCategory={handleSelectMenu}
+                    initialSelect={t("dashboard.user.menu.one")}
+                />
             </SideBar>
+
             <Box sx={{ flexGrow: 1, padding: 2 }}>
                 {renderContent()}
             </Box>
-            {isCreateAdVisible && (
-                <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
-                    <CreateAdForm onClose={handleCloseCreateAd} />
-                </Backdrop>
-            )}
+
+            <CreateAdModal
+                open={isCreateAdVisible}
+                onClose={() => setCreateAdVisible(false)}
+            />
         </Box>
     );
 };

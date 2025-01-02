@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, CardMedia, CardContent, Card } from '@mui/material';
-import { CustomButton, Backdrop } from '../../components/atoms';
-import { ReportSubmissionForm } from '../../components/organisms';
+import { Box, Typography, CardMedia, CardContent, Card, Select, MenuItem } from '@mui/material';
+import { CustomButton } from '../../components/atoms';
+import { ReportSubmissionModal } from '../../components/organisms';
 import mockData from '../../mockData.json';
 import defaultImage from '../../assets/images/no-image.png';
 import PriceIcon from '@mui/icons-material/AttachMoney';
@@ -28,23 +28,9 @@ const items: Item[] = mockData.Items;
 const ItemDetails: React.FC = () => {
     const { t } = useTranslation();
     const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
-
-    const handleOpenReportSubmission = () => setReportSubmissionVisible(true);
-    const handleCloseReportSubmission = () => setReportSubmissionVisible(false);
-
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            handleCloseReportSubmission();
-        }
-    };
-
     const { itemId } = useParams<{ itemId: string }>();
     const item = items.find((item) => item.itemId === itemId);
 
-    if (!item) {
-        return <Typography variant="h6">Item not found</Typography>;
-    }
 
     const copyToClipboard = (phoneNumber: string) => {
         navigator.clipboard.writeText(phoneNumber)
@@ -55,6 +41,10 @@ const ItemDetails: React.FC = () => {
                 console.error('Failed to copy: ', err);
             });
     };
+
+    if (!item) {
+        return <Typography variant="h6">Item not found</Typography>;
+    }
 
     return (
         <Box
@@ -124,14 +114,14 @@ const ItemDetails: React.FC = () => {
                 </Box >
                 <CustomButton
                     text={t("item_details.report_submission_btn")}
-                    onClick={handleOpenReportSubmission}
+                    onClick={() => setReportSubmissionVisible(true)}
                 />
             </Card >
-            {isReportSubmissionVisible && (
-                <Backdrop open={isReportSubmissionVisible} onClick={handleBackdropClick}>
-                    <ReportSubmissionForm onClose={handleCloseReportSubmission} />
-                </Backdrop>
-            )}
+
+            <ReportSubmissionModal
+                open={isReportSubmissionVisible}
+                onClose={() => setReportSubmissionVisible(false)}
+            />
         </Box >
     );
 };

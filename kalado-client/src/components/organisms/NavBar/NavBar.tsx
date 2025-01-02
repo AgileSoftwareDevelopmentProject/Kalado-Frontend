@@ -1,4 +1,3 @@
-// NavBar.tsx
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppBar, Toolbar, Box, IconButton } from '@mui/material';
@@ -6,29 +5,32 @@ import { Logo, CustomButton } from '../../atoms';
 import { SearchBar } from '../../molecules';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { useAuth } from '../../../contexts/AuthContext';
 
 interface NavBarProps {
   onLoginClick?: () => void;
   onCreateAdClick: () => void;
-  isLoggedIn: boolean;
   onProfileClick?: () => void;
+  onLogoutClick?: () => void;
   toggleTheme: () => void;
   isDarkMode: boolean;
+  isInProfile?: boolean;
 }
 
 const NavBar: React.FC<NavBarProps> = ({
   onLoginClick,
   onCreateAdClick,
-  isLoggedIn,
   onProfileClick,
+  onLogoutClick,
   toggleTheme,
-  isDarkMode
+  isDarkMode,
+  isInProfile
 }) => {
   const { t, i18n } = useTranslation();
+  const { token } = useAuth();
 
-
-  // TODO Search API 
   const [searchQuery, setSearchQuery] = useState('');
+
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
   };
@@ -61,8 +63,12 @@ const NavBar: React.FC<NavBarProps> = ({
         </IconButton>
 
         <Box sx={{ display: 'flex', gap: 1 }}>
-          {isLoggedIn ? (
-            <CustomButton text={t('navbar.profile')} onClick={onProfileClick} />
+          {!!token ? (
+            isInProfile ? (
+              <CustomButton text={t('navbar.logout')} onClick={onLogoutClick} />
+            ) : (
+              <CustomButton text={t('navbar.profile')} onClick={onProfileClick} />
+            )
           ) : (
             <CustomButton text={t('navbar.login/signup')} onClick={onLoginClick} />
           )}

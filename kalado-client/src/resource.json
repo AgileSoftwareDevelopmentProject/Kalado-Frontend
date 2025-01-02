@@ -19,7 +19,8 @@
             "create_ad": "Submit Ad",
             "login/signup": "Login/Signup",
             "profile": "Profile",
-            "searchbar": "Search Item"
+            "searchbar": "Search Item",
+            "logout": "Logout"
         },
         "category": {
             "title": "Categories",
@@ -41,6 +42,12 @@
             "one_week": "One Week",
             "one_month": "One Month",
             "apply": "Apply Filter"
+        },
+        "sort": {
+            "newest": "Newest",
+            "oldest": "Oldest",
+            "most_expensive": "Most Expensive",
+            "cheapest": "Cheapest"
         },
         "create_ad": {
             "input": {
@@ -182,7 +189,8 @@
             "create_ad": "ثبت آگهی",
             "login/signup": "ورود/ثبت‌نام",
             "profile": "پروفایل کاربری",
-            "searchbar": "جستجوی کالا"
+            "searchbar": "جستجوی کالا",
+            "logout": "خروج"
         },
         "category": {
             "title": "دسته‌بندی‌ها",
@@ -204,6 +212,12 @@
             "one_week": "یک هفته",
             "one_month": "یک ماه",
             "apply": "اعمال فیلتر"
+        },
+        "sort": {
+            "newest": "جدیدترین",
+            "oldest": "قدیمی‌ترین",
+            "most_expensive": "گران‌ترین",
+            "cheapest": "ارزان‌ترین"
         },
         "create_ad": {
             "input": {

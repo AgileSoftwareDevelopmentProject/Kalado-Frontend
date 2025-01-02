@@ -9,3 +9,5 @@ export { default as CustomToast } from './CustomToast/CustomToast';
 
 export { default as IconList } from './Lists/IconList';
 export { default as LabelList } from './Lists/LabelList';
+
+export { default as ItemSort } from './Sort/ItemSort';

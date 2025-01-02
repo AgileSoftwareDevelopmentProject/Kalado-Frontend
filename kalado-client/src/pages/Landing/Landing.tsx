@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
@@ -38,12 +38,6 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         setSelectedCategoryTitle(t(categoryKey));
     };
 
-    useEffect(() => {
-        if (categories.length > 0) {
-            setSelectedCategoryTitle(t(categories[0].titleKey));
-        }
-    }, [t]);
-
     const handleOpenLogin = () => {
         setLoginVisible(true);
         setSignupVisible(false);
@@ -60,7 +54,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     };
 
     const handleOpenCreateAd = () => {
-        if (!!!token) {
+        if (!token) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
         }
@@ -86,7 +80,6 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
             <NavBar
                 onLoginClick={() => setLoginVisible(true)}
                 onCreateAdClick={handleOpenCreateAd}
-                isLoggedIn={!!token}
                 onProfileClick={handleOpenProfilePage}
                 toggleTheme={toggleTheme}
                 isDarkMode={isDarkMode}
@@ -100,11 +93,15 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
                     }))}
                     onSelectCategory={handleSelectCategory}
                     title={t("category.title")}
+                    initialSelect={t("category.one")}
                 />
                 <Filter />
             </SideBar>
 
-            <ItemsHolder onItemSelect={(itemId) => navigate(`/item/${itemId}`)} selectedCategoryTitle={selectedCategoryTitle} />
+            <ItemsHolder
+                onItemSelect={(itemId) => navigate(`/item/${itemId}`)}
+                selectedCategoryTitle={selectedCategoryTitle}
+            />
 
             <LoginModal
                 open={isLoginVisible}

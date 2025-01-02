@@ -141,7 +141,7 @@ const ProfileManagement = () => {
                     <PasswordInput
                         name="password"
                         value={userData.password}
-                        placeholder={t('dashboard.user.profile_management.new_password')}
+                        placeholder={t('dashboard.user.profile_management.password')}
                         onChange={handleInputChange}
                     />
                     <NameInput

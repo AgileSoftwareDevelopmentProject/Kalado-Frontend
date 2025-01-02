@@ -21,5 +21,6 @@ export { default as CodeVerificationModal } from './CodeVerification/CodeVerific
 export { default as CreateAdForm } from './CreateAd/CreateAdForm';
 export { default as CreateAdModal } from './CreateAd/CreateAdModal';
 export { default as ReportSubmissionForm } from './Report/ReportSubmissionForm';
+export { default as ReportSubmissionModal } from './Report/ReportSubmissionModal';
 
 

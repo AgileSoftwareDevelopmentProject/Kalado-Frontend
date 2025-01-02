@@ -28,12 +28,19 @@ function App() {
               element={
                 <AuthProvider>
                   <Landing toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
-                </AuthProvider>
-              }
+                </AuthProvider>}
             />
             <Route path="/item/:itemId" element={<ItemDetails />} />
-            <Route path="/user-dashboard" element={<UserDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
+            <Route path="/user-dashboard" element={
+              <AuthProvider>
+                <UserDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+              </AuthProvider>}
+            />
+            <Route path="/admin-dashboard" element={
+              <AuthProvider>
+                <AdminDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+              </AuthProvider>}
+            />
           </Routes>
         </Router>
         <CustomToast />
