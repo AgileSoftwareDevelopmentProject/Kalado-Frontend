@@ -89,18 +89,17 @@ export async function loginUser(
     try {
         const response = await sendRequest<typeof payload>(AUTH.LOGIN, 'POST', payload);
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
-            // toast.success('Signup successful!');
             console.log('Login successful!');
         } else {
-            // toast.error(response.message || 'Signup failed.');
             console.log(response.message || 'Signup failed.');
         }
 
         return response;
     } catch (error) {
-        // toast.error('An unexpected error occurred during signup.');
-        console.log('An unexpected error occurred during signup.');
+        console.log('An unexpected error occurred during signup.', error);
         return { isSuccess: false, message: 'An error occurred during signup.' };
     }
 }

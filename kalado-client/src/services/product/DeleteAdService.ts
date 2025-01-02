@@ -1,11 +1,13 @@
-import { sendRequest } from '../axiosInstance';
-import { PRODUCT } from '../urls';
+import { sendRequest } from '../../axiosInstance';
+import { PRODUCT } from '../../urls';
 
 export async function deleteAd(
     id: number // for the ad to delete
 ) {
     try {
         const response = await sendRequest(`${PRODUCT.DELETE}/${id}`, 'DELETE');
+
+        console.log('Response:', response); 
 
         if (response.isSuccess) {
             console.log('Ad deleted successfully!');

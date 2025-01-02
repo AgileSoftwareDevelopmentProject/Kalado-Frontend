@@ -1,21 +1,3 @@
-// import axios from 'axios';
-
-// export const signupUser = async (formData: {
-//     firstName: string;
-//     lastName: string;
-//     username: string;
-//     email: string;
-//     phoneNumber: string;
-//     password: string;
-// }) => {
-//     try {
-//         const response = await axios.post('https://kaladoshop.com/v1/auth/register', formData);
-//         return response.data;
-//     } catch (error) {
-//         throw error;
-//     }
-// };
-
 import { sendRequest } from '../axiosInstance';
 import { AUTH } from '../urls';
 
@@ -37,6 +19,8 @@ export async function signupUser(
 
     try {
         const response = await sendRequest<typeof payload>(AUTH.REGISTER, 'POST', payload);
+
+        console.log('Response:', response); 
 
         if (response.isSuccess) {
             // toast.success('Signup successful!');

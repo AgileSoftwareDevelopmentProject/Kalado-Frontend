@@ -1,5 +1,5 @@
-import { sendRequest } from '../axiosInstance';
-import { PRODUCT } from '../urls';
+import { sendRequest } from '../../axiosInstance';
+import { PRODUCT } from '../../urls';
 
 export async function updateAdStatus(
     id: number, // for the ad to update
@@ -11,6 +11,8 @@ export async function updateAdStatus(
 
     try {
         const response = await sendRequest<typeof payload>(`${PRODUCT.UPDATE_STATUS}/${id}`, 'PATCH', payload);
+
+        console.log('Response:', response); 
 
         if (response.isSuccess) {
             console.log('Ad status updated successfully!');

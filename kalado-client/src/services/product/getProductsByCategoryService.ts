@@ -1,5 +1,5 @@
-import { sendRequest } from '../axiosInstance';
-import { PRODUCT } from '../urls';
+import { sendRequest } from '../../axiosInstance';
+import { PRODUCT } from '../../urls';
 
 export async function getProductsByCategory(category: string, token: string) {
     try {
@@ -8,6 +8,8 @@ export async function getProductsByCategory(category: string, token: string) {
             'GET',
             {Authorization: `Bearer ${token}`}
         );
+
+        console.log('Response:', response); 
 
         if (response.isSuccess) {
             console.log('Products by category retrieved successfully!');
