@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
-import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
+import { Box } from '@mui/material';
+import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, CodeVerificationModal, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
-import { Backdrop } from '../../components/atoms';
-import mockData from '../../mockData.json';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-
-const items = mockData.Items;
 
 interface LandingProps {
     toggleTheme: () => void;
@@ -26,7 +22,7 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userRole, setUserRole] = useState<string | null>('USER');
     const [userEmail, setUserEmail] = useState<string>('');
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
 
     const categories = [
         { titleKey: "category.one", icon: <FaHome /> },
@@ -90,15 +86,6 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         handleCloseSignup();
     };
 
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            handleCloseLogin();
-            handleCloseSignup();
-            handleCloseCreateAd();
-        }
-    };
-
     const handleLoginSuccess = (role: string) => {
         setUserRole(role);
         setIsLoggedIn(true);
@@ -136,32 +123,29 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
                 <Filter />
             </SideBar>
 
-            <ItemsHolder items={items} onItemSelect={(itemId) => navigate(`/item/${itemId}`)} selectedCategoryTitle={selectedCategoryTitle} />
+            <ItemsHolder onItemSelect={(itemId) => navigate(`/item/${itemId}`)} selectedCategoryTitle={selectedCategoryTitle} />
 
-            {isLoginVisible && (
-                <Backdrop open={isLoginVisible} onClick={handleBackdropClick}>
-                    <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
-                </Backdrop>
-            )}
-            {isSignupVisible && (
-                <Backdrop open={isSignupVisible} onClick={handleBackdropClick}>
-                    <SignupForm
-                        onClose={handleCloseSignup}
-                        onOpenLogin={handleOpenLogin}
-                        onSignUpSuccess={handleOpenCodeVerification}
-                    />
-                </Backdrop>
-            )}
-            {isCreateAdVisible && (
-                <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
-                    <CreateAdForm onClose={handleCloseCreateAd} />
-                </Backdrop>
-            )}
-            {isCodeVerificationVisible && (
-                <Backdrop open={isCodeVerificationVisible} onClick={handleBackdropClick}>
-                    <CodeVerification email={userEmail} onClose={handleCloseCodeVerification} />
-                </Backdrop>
-            )}
+            <LoginModal
+                open={isLoginVisible}
+                onClose={handleCloseLogin}
+                onOpenSignup={handleOpenSignup}
+                onLoginSuccess={handleLoginSuccess}
+            />
+            <SignupModal
+                open={isSignupVisible}
+                onClose={handleCloseSignup}
+                onOpenLogin={handleOpenLogin}
+                onSignUpSuccess={handleOpenCodeVerification}
+            />
+            <CreateAdModal
+                open={isCreateAdVisible}
+                onClose={handleCloseCreateAd}
+            />
+            <CodeVerificationModal
+                open={isCodeVerificationVisible}
+                email={userEmail}
+                onClose={handleCloseCodeVerification}
+            />
         </Box>
     );
 };

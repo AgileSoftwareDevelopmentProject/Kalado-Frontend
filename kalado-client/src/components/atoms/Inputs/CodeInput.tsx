@@ -19,6 +19,7 @@ const CodeInput: React.FC<CodeInputProps> = ({
 }) => {
     const { t } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.code');
+
     return (
         <TextField
             type="text"

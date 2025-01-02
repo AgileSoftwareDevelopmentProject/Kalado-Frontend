@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, TextField } from '@mui/material';
 
 interface DescriptionInputProps {
-    name: string;
+    name?: string;
     value: string;
     onChange: (value: string) => void;
     placeholder?: string;
@@ -13,7 +13,6 @@ interface DescriptionInputProps {
 }
 
 const DescriptionInput: React.FC<DescriptionInputProps> = ({
-    name,
     value,
     onChange,
     placeholder,
@@ -21,7 +20,7 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
     isStarNeeded = false,
     maxLength = 500
 }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.description');
     const [charCount, setCharCount] = useState(value.length);
 
@@ -34,7 +33,7 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
     return (
         <Box style={{ marginBottom: '20px' }}>
             <TextField
-                name={name}
+                name="description"
                 value={value}
                 onChange={handleChange}
                 placeholder={isStarNeeded ? `* ${translatedPlaceholder}` : translatedPlaceholder}
@@ -47,7 +46,11 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
                     width: '70%',
                 }}
             />
-            <div style={{ textAlign: 'right', marginTop: '5px', marginRight: '100px' }}>
+            <div style={{
+                textAlign: i18n.language === 'fa' ? 'right' : 'left',
+                marginRight: i18n.language === 'fa' ? '90px' : '0px',
+                marginLeft: i18n.language === 'fa' ? '0px' : '90px',
+            }}>
                 {charCount}/{maxLength}
             </div>
         </Box>

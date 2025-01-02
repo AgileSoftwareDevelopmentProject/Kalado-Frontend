@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../services/CreateAdService';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { toast } from 'react-toastify';
 
 interface ReportSubmissionFormProps {
     onClose: () => void;
@@ -13,21 +13,18 @@ interface ReportSubmissionFormProps {
 const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState<{
-        title: string;
-        price: number;
-        category: string | null;
+        date: string;
+        type: string;
         description: string;
         images: File[];
     }>({
-        title: '',
-        price: 0,
-        category: null,
+        date: '',
+        type: '',
         description: '',
         images: [],
     });
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string>('');
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
 
     const reportOptions = [
         { value: 'Abuse', label: t("report.category.one") },
@@ -35,42 +32,31 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
         { value: 'Inproper Price', label: t("report.category.three") },
     ];
 
-    const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
+    const handleChange = (field: string, value: any) => {
         setFormData(prevData => ({
             ...prevData,
-            category: selectedOption ? selectedOption.value : null
+            [field]: value,
         }));
     };
 
-    const handleDescriptionChange = (description: string) => {
-        setFormData(prevData => ({
-            ...prevData,
-            description,
-        }));
+    const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
+        handleChange('type', selectedOption ? selectedOption.value : null);
     };
 
     const handleImageUpload = (files: File[]) => {
-        setFormData(prevData => ({
-            ...prevData,
-            images: files
-        }));
+        handleChange('images', files);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const submissionData = {
-            ...formData,
-            date: selectedDate,
-            price: formData.price
-        };
-
-        try {
-            await createAd(submissionData);
-            console.log('Create Ad successfully');
+        const response = await submitReport(formData.date, formData.type, formData.description, formData.images);
+        if (response.isSuccess) {
+            setFormData({ date: '', type: '', description: '', images: [] });
             onClose();
-        } catch (error) {
-            console.error(error);
+            toast(t("success.report"));
+        } else {
+            setError(response.message);
         }
     };
 
@@ -81,25 +67,29 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                     options={reportOptions}
                     placeholder={t("report.input.category")}
                     onChange={handleCategoryChange}
-                    value={reportOptions.find(option => option.value === formData.category) || null}
+                    value={reportOptions.find(option => option.value === formData.type) || null}
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateInput
                         label={t("general_inputs.date")}
                         value={selectedDate}
-                        onChange={(newValue) => setSelectedDate(newValue)}
+                        onChange={(newValue) => {
+                            setSelectedDate(newValue);
+                            if (newValue) {
+                                handleChange('date', newValue.toISOString());
+                            }
+                        }}
                     />
                 </LocalizationProvider>
                 <DescriptionInput
                     name="description"
                     value={formData.description}
-                    onChange={handleDescriptionChange}
+                    onChange={(description) => handleChange('description', description)}
                 />
                 <ImageUploadBox onUpload={handleImageUpload} title={t("report.choose_evidence")} />
                 <CustomButton
                     text={t("create_ad.create_ad_btn")}
                     type="submit"
-                    padding="10px 40px"
                 />
                 <FormError message={error} />
             </form>

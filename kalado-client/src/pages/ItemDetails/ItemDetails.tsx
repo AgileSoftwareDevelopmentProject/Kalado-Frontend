@@ -5,7 +5,7 @@ import { Box, Typography, CardMedia, CardContent, Card } from '@mui/material';
 import { CustomButton, Backdrop } from '../../components/atoms';
 import { ReportSubmissionForm } from '../../components/organisms';
 import mockData from '../../mockData.json';
-import defaultImage from '../../assets/images/default-image-url.jpg';
+import defaultImage from '../../assets/images/no-image.png';
 import PriceIcon from '@mui/icons-material/AttachMoney';
 import CityIcon from '@mui/icons-material/LocationOn';
 import DateIcon from '@mui/icons-material/CalendarToday';

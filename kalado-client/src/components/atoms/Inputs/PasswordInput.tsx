@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { validatePassword } from '../../../validators/validatePassword';
 
 interface PasswordInputProps {
-    name: string;
+    name?: string;
     placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -21,7 +21,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
     onChange,
     isRequired = true
 }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.password');
     const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
@@ -40,7 +40,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
     return (
         <TextField
             type={isVisible ? 'text' : 'password'}
-            name={name}
+            name={name ? name : 'password'}
             placeholder={translatedPlaceholder}
             value={value}
             onChange={onChange}
@@ -51,12 +51,8 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
             helperText={error ? helperText : ''}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root::after': {
-                    borderBottom: '2px solid #D74101',
-                },
                 '& .MuiFormHelperText-root': {
-                    textAlign: 'right',
-                    direction: 'rtl',
+                    textAlign: i18n.language === 'fa' ? 'right' : 'left',
                 }
             }}
             InputProps={{
@@ -65,7 +61,6 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
                         <IconButton
                             onClick={handleToggleVisibility}
                             edge="end"
-                            sx={{ color: 'white' }}
                         >
                             {isVisible ? <FaEyeSlash /> : <FaEye />}
                         </IconButton>

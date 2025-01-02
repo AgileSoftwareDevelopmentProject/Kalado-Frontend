@@ -11,7 +11,7 @@ const FormError: React.FC<FormErrorProps> = ({ message }) => {
     return (
         <Typography
             style={{ color: 'red', marginTop: '20px' }}
-            variant="body2"
+            variant="h6"
         >
             {message}
         </Typography>

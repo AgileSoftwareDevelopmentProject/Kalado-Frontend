@@ -32,7 +32,7 @@ const IconList: React.FC<IconListProps> = ({ items, onSelect, title }) => {
                             backgroundColor: selectedCategory === item.title ? '#D74101' : 'transparent',
                             '&:hover': {
                                 backgroundColor: '#D74101',
-                                transform: 'translateX(-30px)',
+                                transform: i18n.language === 'fa' ? 'translateX(-30px)' : 'translateX(30px)',
                             },
                             cursor: 'pointer',
                             textAlign: i18n.language === 'fa' ? 'right' : 'left',

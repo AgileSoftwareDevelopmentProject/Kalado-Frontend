@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { LoginRequest, LoginResponse } from '../../../services/types';
+import { LoginRequest } from '../../../services/types';
 import { loginUser } from '../../../services/LoginService';
+import { toast } from 'react-toastify';
 
 interface LoginFormProps {
     onClose: () => void;
     onOpenSignup: () => void;
-    onLoginSuccess: (email: string) => void;
+    onLoginSuccess: (role?: string) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
@@ -17,32 +18,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
         email: '',
         password: '',
     });
-    const [error, setError] = useState<string | null>(null);
-
+    const [error, setError] = useState<string>('');
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const { email, password } = formData;
-
-        if (email && password) {
-            try {
-                const response = await loginUser(email, password);
-                if (response.isSuccess) {
-                    console.log('Login successful:', response);
-                    onLoginSuccess(response.role);
-                    setFormData({ email: '', password: '' });
-                    onClose();
-                } else {
-
-                    setError(response.message || 'Login failed. Please try again.');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                setError('An error occurred during login. Please try again later.');
-            }
+        const response = await loginUser(formData.email, formData.password);
+        if (response.isSuccess) {
+            onLoginSuccess(response.role);
+            setFormData({ email: '', password: '' });
+            onClose();
+            toast(t("success.login"));
         } else {
-            setError('Both email and password are required.');
+            setError(response.message);
         }
     };
 
@@ -50,20 +38,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuc
         <PopupBox onClose={onClose}>
             <form onSubmit={handleSubmit}>
                 <EmailInput
-                    name="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
                 <PasswordInput
-                    name="password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
                 <CustomButton
                     text={t("login_form.login_btn")}
                     type="submit"
-                    padding="10px 40px"
-                    margin="30px 0px 0px 0px"
                 />
                 <CustomLink
                     to="/#"

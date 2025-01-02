@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 
 interface PriceInputProps {
-    name: string;
+    name?: string;
     placeholder?: string;
     value: number;
     onChange: (value: number) => void;
