@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
+import { ProductListBox } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
-import defaultImage from '../../../assets/images/default-image-url.jpg';
+import { getProductsByCategory } from '../../../services/getProductsByCategoryService';
+import defaultImage from '../../../assets/images/no-image.png';
 
 interface Item {
     title: string;
@@ -14,26 +16,54 @@ interface Item {
 }
 
 interface ItemsHolderProps {
-    items: Item[];
     onItemSelect: (itemId: string) => void;
-    selectedCategoryTitle: string | null;
+    selectedCategoryTitle: string;
 }
 
-const ItemsHolder: React.FC<ItemsHolderProps> = ({ items, onItemSelect, selectedCategoryTitle }) => {
+const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategoryTitle }) => {
     const { t, i18n } = useTranslation();
+    const [items, setItems] = useState<Item[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const loadItems = async () => {
+            try {
+                const fetchedData = await getProductsByCategory(selectedCategoryTitle, '');
+                const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
+                setItems(fetchedItems as Item[]);
+            } catch (error) {
+                setError(t("error.general"));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadItems();
+    }, [selectedCategoryTitle])
+
+    if (loading) {
+        return (
+            <ProductListBox>
+                <CircularProgress />
+            </ProductListBox>
+        );
+    }
+
+    if (items.length === 0) {
+        return (
+            <ProductListBox>
+                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+                    {error ? error : t("error.landing.empty_product_list")}
+                </Typography>
+            </ProductListBox>
+        );
+    }
 
     return (
-        <Box
-            sx={{
-                justifyContent: 'flex-start',
-                alignItems: 'flex-end',
-                paddingTop: '200px',
-                paddingRight: i18n.language === 'en' ? '0px' : '150px',
-                paddingLeft: i18n.language === 'en' ? '150px' : '0px',
-            }}
-        >
-            <Typography variant="h4" sx={{ textAlign: 'center', mt: 4, mb: 10, fontWeight: 'bold' }}>
-                {selectedCategoryTitle ? selectedCategoryTitle : t("category.select")}
+        <ProductListBox>
+            <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+                {selectedCategoryTitle}
             </Typography>
             <Box
                 sx={{
@@ -63,7 +93,7 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ items, onItemSelect, selected
                     </Box>
                 ))}
             </Box>
-        </Box>
+        </ProductListBox>
     );
 };
 

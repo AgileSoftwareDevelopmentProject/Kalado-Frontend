@@ -8,21 +8,19 @@ interface PopupBoxProps {
     children: React.ReactNode;
 }
 
-const style = {
-    width: "500px",
-    padding: "50px 0px",
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: '#272C48',
-    borderRadius: 10,
-    border: '2px solid rgba(255, 255, 255, 0.5)',
-}
-
 const PopupBox: React.FC<PopupBoxProps> = ({ onClose, children }) => {
     return (
-        <Box sx={style}>
+        <Box sx={{
+            width: "25vw",
+            padding: "50px 0px",
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: '#272C48',
+            borderRadius: 10,
+            border: '2px solid rgba(255, 255, 255, 0.5)',
+        }}>
             <Logo />
             <CloseButton onClose={onClose} />
             {children}

@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import { validateEmail } from '../../../validators/validateEmail';
 
 interface EmailInputProps {
-    name: string;
     placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,7 +18,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
     isRequired = true,
     disabled = false,
 }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.email');
     const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
@@ -45,12 +44,8 @@ const EmailInput: React.FC<EmailInputProps> = ({
             helperText={error ? helperText : ''}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root::after': {
-                    borderBottom: '2px solid #D74101',
-                },
                 '& .MuiFormHelperText-root': {
-                    textAlign: 'right',
-                    direction: 'rtl',
+                    textAlign: i18n.language === 'fa' ? 'right' : 'left',
                 }
             }}
         />

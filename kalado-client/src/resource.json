@@ -130,6 +130,7 @@
             }
         },
         "error": {
+            "general": "A system error occurred, Please try again later",
             "input": {
                 "invalid_email": "Eneter a Valid Email",
                 "invalid_password": {
@@ -145,7 +146,19 @@
             },
             "create_ad": {
                 "disable_not_loggined": "For Submitting an Ad, Login to your Account"
+            },
+            "login": {
+                "not_verified": "For login, First Verify your Email"
+            },
+            "landing": {
+                "empty_product_list": "No Ad Submitted in the Selected Category"
             }
+        },
+        "success": {
+            "login": "Logined Successfully",
+            "create_ad": "Ad Created Successfully",
+            "signup": "Registered Successfully. Please Verify your Email.",
+            "report": "Report Submitted Successfully"
         }
     },
     "fa": {
@@ -280,6 +293,7 @@
             }
         },
         "error": {
+            "general": "خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید",
             "input": {
                 "invalid_email": "لطفا یک ایمیل معتبر وارد کنید",
                 "invalid_password": {
@@ -295,7 +309,19 @@
             },
             "create_ad": {
                 "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید"
+            },
+            "login": {
+                "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
+            },
+            "landing": {
+                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
             }
+        },
+        "success": {
+            "login": "با موفقیت وارد شدید",
+            "create_ad": "آگهی شما با موفقیت ثبت شد",
+            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
+            "report": "گزارش تخلف شما با موفقیت ثبت شد"
         }
     }
 }

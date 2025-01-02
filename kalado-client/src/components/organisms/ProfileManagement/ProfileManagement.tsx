@@ -130,13 +130,11 @@ const ProfileManagement = () => {
                         onChange={handleInputChange}
                     />
                     <EmailInput
-                        name="email"
                         value={userData.email}
                         onChange={handleInputChange}
                         disabled
                     />
                     <PhoneNumberInput
-                        name="phoneNumber"
                         value={userData.phoneNumber}
                         onChange={handleInputChange}
                     />
@@ -156,7 +154,6 @@ const ProfileManagement = () => {
                         text={t('dashboard.user.profile_management.save_changes_btn')}
                         onClick={handleSaveChanges}
                         type="submit"
-                        padding="10px 40px"
                     />
                 </>
             )}
