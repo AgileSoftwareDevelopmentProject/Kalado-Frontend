@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import CreateAdForm from './CreateAdForm';
-import { createAd } from '../../../services/CreateAdService';
+import { createAd } from '../../../services/product/CreateAdService';
 import { toast } from 'react-toastify';
 
 // Mocking the createAd service
-jest.mock('../../../services/CreateAdService', () => ({
+jest.mock('../../../services/product/CreateAdService', () => ({
     createAd: jest.fn(),
 }));
 
