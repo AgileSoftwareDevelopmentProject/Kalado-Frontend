@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, CodeVerificationModal, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
-import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
+import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaUtensils } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -31,7 +31,6 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         { titleKey: "category.four", icon: <FaLaptop /> },
         { titleKey: "category.five", icon: <FaGamepad /> },
         { titleKey: "category.six", icon: <FaSuitcase /> },
-        { titleKey: "category.seven", icon: <FaPlusCircle /> },
     ];
 
     const handleSelectCategory = (categoryKey: string) => {

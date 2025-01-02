@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
+import { CustomButton } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdModal } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdModal, ReportSubmissionModal } from '../../components/organisms';
 import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +19,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
     const navigate = useNavigate();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.user.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
+    const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
 
     const userCategories = [
         { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
@@ -63,6 +65,11 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
                     onSelectCategory={handleSelectMenu}
                     initialSelect={t("dashboard.user.menu.one")}
                 />
+                <CustomButton
+                    text={t("item_details.report_submission_btn")}
+                    onClick={() => setReportSubmissionVisible(true)}
+                    sx={{ marginTop: 'auto' }}
+                />
             </SideBar>
 
             <Box sx={{ flexGrow: 1, padding: 2 }}>
@@ -72,6 +79,10 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
             <CreateAdModal
                 open={isCreateAdVisible}
                 onClose={() => setCreateAdVisible(false)}
+            />
+            <ReportSubmissionModal
+                open={isReportSubmissionVisible}
+                onClose={() => setReportSubmissionVisible(false)}
             />
         </Box>
     );

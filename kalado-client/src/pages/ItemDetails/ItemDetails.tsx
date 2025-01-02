@@ -54,7 +54,7 @@ const ItemDetails: React.FC = () => {
                 p: 2,
             }}
         >
-            <Typography variant="h6">Item not found</Typography>;
+            <Typography variant="h6">{t("item_details.not_found")}</Typography>;
         </Box >)
     }
 

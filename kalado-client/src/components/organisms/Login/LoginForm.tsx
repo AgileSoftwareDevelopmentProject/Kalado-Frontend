@@ -20,7 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        setToken('1234');
         const response = await loginUser(formData.email, formData.password);
         if (response.isSuccess) {
             setToken(response.token);

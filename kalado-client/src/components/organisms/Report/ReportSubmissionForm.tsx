@@ -88,7 +88,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                 />
                 <ImageUploadBox onUpload={handleImageUpload} title={t("report.choose_evidence")} />
                 <CustomButton
-                    text={t("create_ad.create_ad_btn")}
+                    text={t("item_details.report_submission_btn")}
                     type="submit"
                 />
                 <FormError message={error} />

@@ -159,6 +159,12 @@
             },
             "landing": {
                 "empty_product_list": "No Ad Submitted in the Selected Category"
+            },
+            "item_details": {
+                "not_found": "Item not found"
+            },
+            "profile_management": {
+                "save_failed": "Error Ocurred during Saving your Changes"
             }
         },
         "success": {
@@ -166,7 +172,8 @@
             "code_verification": "Your Email Verified Successfully",
             "login": "Logined Successfully",
             "create_ad": "Ad Created Successfully",
-            "report": "Report Submitted Successfully"
+            "report": "Report Submitted Successfully",
+            "profile_management": "Changes Saved Successfully"
         }
     },
     "fa": {
@@ -330,6 +337,12 @@
             },
             "landing": {
                 "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
+            },
+            "item_details": {
+                "not_found": "کالای مورد نظر پیدا نشد"
+            },
+            "profile_management": {
+                "save_failed": "خطایی در ذخیره‌ی تغییرات اطلاعات رخ داد"
             }
         },
         "success": {
@@ -337,7 +350,8 @@
             "code_verification": "ایمیل شما با موفقیت تایید شد",
             "login": "با موفقیت وارد شدید",
             "create_ad": "آگهی شما با موفقیت ثبت شد",
-            "report": "گزارش تخلف شما با موفقیت ثبت شد"
+            "report": "گزارش تخلف شما با موفقیت ثبت شد",
+            "profile_management": "تغییرات شما با موفقیت ذخیره شد"
         }
     }
 }
