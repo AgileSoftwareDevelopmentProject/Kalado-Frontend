@@ -30,6 +30,8 @@ export async function updateAd(
     try {
         const response = await sendRequest<typeof payload>(`${PRODUCT.UPDATE}/${id}`, 'PUT', payload);
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Ad updated successfully!');
         } else if (response.status === 400) {

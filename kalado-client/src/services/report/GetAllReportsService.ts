@@ -11,6 +11,8 @@ export async function getAllReports(token: string) {
             { Authorization: `Bearer ${token}` ,'Content-Type': 'application/json'}
         );
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('All reports retrieved successfully!');
             return response.data;

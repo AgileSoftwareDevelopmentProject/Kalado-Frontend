@@ -18,6 +18,8 @@ export async function verifyCode(token: string, props: CodeVerificationProps) {
     try {
         const response = await sendRequest<typeof payload>(`${AUTH.VERIFY}/verify`, 'POST', payload);
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Code verification successful!');
             props.onClose(); // Call the onClose callback on success

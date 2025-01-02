@@ -46,6 +46,8 @@ export async function createAd(
     try {
         const response = await sendRequest<typeof payload>(PRODUCT.CREATE, 'POST', payload);
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Ad created successfully!');
         } else if (response.status === 400) {

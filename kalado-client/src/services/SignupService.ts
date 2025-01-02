@@ -20,6 +20,8 @@ export async function signupUser(
     try {
         const response = await sendRequest<typeof payload>(AUTH.REGISTER, 'POST', payload);
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             // toast.success('Signup successful!');
             console.log('Signup successful!');

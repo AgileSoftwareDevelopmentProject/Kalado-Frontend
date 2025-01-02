@@ -9,6 +9,8 @@ export async function getSingleProduct(productId: number, token: string) {
             { Authorization: `Bearer ${token}` }
         );
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Single product retrieved successfully!');
             return response.data;

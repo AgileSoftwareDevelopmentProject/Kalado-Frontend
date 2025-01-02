@@ -17,6 +17,8 @@ export async function createReport(
     try {
         const response = await sendRequest<typeof payload>(REPORT.CREATE, 'POST', payload);
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Violation reported successfully!');
         } else if (response.status === 400) {

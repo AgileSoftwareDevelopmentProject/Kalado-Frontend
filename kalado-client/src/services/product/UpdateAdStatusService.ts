@@ -12,6 +12,8 @@ export async function updateAdStatus(
     try {
         const response = await sendRequest<typeof payload>(`${PRODUCT.UPDATE_STATUS}/${id}`, 'PATCH', payload);
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Ad status updated successfully!');
         } else if (response.status === 400) {

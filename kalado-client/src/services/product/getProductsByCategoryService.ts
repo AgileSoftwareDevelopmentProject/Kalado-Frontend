@@ -9,6 +9,8 @@ export async function getProductsByCategory(category: string, token: string) {
             {Authorization: `Bearer ${token}`}
         );
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Products by category retrieved successfully!');
             return response.data;

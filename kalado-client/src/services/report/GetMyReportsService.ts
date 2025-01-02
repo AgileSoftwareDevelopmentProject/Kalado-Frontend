@@ -10,6 +10,8 @@ export async function getMyReports(token: string) {
             {Authorization: `Bearer ${token}`}
         );
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Violations retrieved successfully!');
             return response.data;

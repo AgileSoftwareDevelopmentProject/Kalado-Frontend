@@ -7,6 +7,8 @@ export async function deleteAd(
     try {
         const response = await sendRequest(`${PRODUCT.DELETE}/${id}`, 'DELETE');
 
+        console.log('Response:', response); 
+
         if (response.isSuccess) {
             console.log('Ad deleted successfully!');
         } else if (response.status === 400) {
