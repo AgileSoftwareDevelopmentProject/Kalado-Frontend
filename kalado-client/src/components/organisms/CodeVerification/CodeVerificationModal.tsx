@@ -1,14 +1,13 @@
 import React from 'react';
 import { Backdrop } from '../../../components/atoms';
-import CodeVerification from './CodeVerification';
+import CodeVerificationForm from './CodeVerificationForm';
 
 interface CodeVerificationModalProps {
     open: boolean;
-    email: string;
     onClose: () => void;
 }
 
-const CodeVerificationModal: React.FC<CodeVerificationModalProps> = ({ open, email, onClose }) => {
+const CodeVerificationModal: React.FC<CodeVerificationModalProps> = ({ open, onClose }) => {
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
         if (target.classList.contains('backdrop')) {
@@ -18,7 +17,7 @@ const CodeVerificationModal: React.FC<CodeVerificationModalProps> = ({ open, ema
 
     return (
         <Backdrop open={open} onClick={handleBackdropClick}>
-            <CodeVerification email={email} onClose={onClose} />
+            <CodeVerificationForm onClose={onClose} />
         </Backdrop>
     );
 };

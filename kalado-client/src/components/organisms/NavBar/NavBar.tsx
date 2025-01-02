@@ -1,3 +1,4 @@
+// NavBar.tsx
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppBar, Toolbar, Box, IconButton } from '@mui/material';
@@ -24,8 +25,10 @@ const NavBar: React.FC<NavBarProps> = ({
   isDarkMode
 }) => {
   const { t, i18n } = useTranslation();
-  const [searchQuery, setSearchQuery] = useState('');
 
+
+  // TODO Search API 
+  const [searchQuery, setSearchQuery] = useState('');
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
   };
@@ -33,7 +36,7 @@ const NavBar: React.FC<NavBarProps> = ({
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'fa' : 'en';
     i18n.changeLanguage(newLang);
-    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr'; // Set document direction
+    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr';
   };
 
   return (
@@ -41,7 +44,6 @@ const NavBar: React.FC<NavBarProps> = ({
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, ml: 10, mr: 10 }}>
         <Logo />
 
-        {/* Adjust SearchBar alignment based on language */}
         <Box sx={{ flexGrow: 1, mx: 2, textAlign: i18n.language === 'fa' ? 'right' : 'left' }}>
           <SearchBar
             value={searchQuery}

@@ -155,9 +155,10 @@
             }
         },
         "success": {
+            "signup": "Registered Successfully. Please Verify your Email.",
+            "code_verification": "Your Email Verified Successfully",
             "login": "Logined Successfully",
             "create_ad": "Ad Created Successfully",
-            "signup": "Registered Successfully. Please Verify your Email.",
             "report": "Report Submitted Successfully"
         }
     },
@@ -318,9 +319,10 @@
             }
         },
         "success": {
+            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
+            "code_verification": "ایمیل شما با موفقیت تایید شد",
             "login": "با موفقیت وارد شدید",
             "create_ad": "آگهی شما با موفقیت ثبت شد",
-            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
             "report": "گزارش تخلف شما با موفقیت ثبت شد"
         }
     }

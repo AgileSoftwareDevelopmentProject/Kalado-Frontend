@@ -5,11 +5,10 @@ interface VerificationResponse {
     message?: string;
 }
 
-export const verifyCode = async (email: string, code: string): Promise<VerificationResponse> => {
+export const verifyCode = async (code: string): Promise<VerificationResponse> => {
     try {
         const response = await axios.post('https://kaladoshop.com/v1/verify-code', {
-            email,
-            code,
+            code
         });
         return response.data;
     } catch (error) {

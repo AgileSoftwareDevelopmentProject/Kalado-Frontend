@@ -6,6 +6,7 @@ import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, Co
 import { SideBar } from '../../components/molecules';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface LandingProps {
     toggleTheme: () => void;
@@ -19,10 +20,9 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userRole, setUserRole] = useState<string | null>('USER');
-    const [userEmail, setUserEmail] = useState<string>('');
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
+
+    const { token, userRole } = useAuth();
 
     const categories = [
         { titleKey: "category.one", icon: <FaHome /> },
@@ -47,49 +47,30 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const handleOpenLogin = () => {
         setLoginVisible(true);
         setSignupVisible(false);
-        setCreateAdVisible(false);
     };
-
-    const handleCloseLogin = () => setLoginVisible(false);
 
     const handleOpenSignup = () => {
         setLoginVisible(false);
         setSignupVisible(true);
-        setCreateAdVisible(false);
     };
 
-    const handleCloseSignup = () => {
-        setSignupVisible(false);
+    const handleOpenCodeVerification = () => {
+        handleClosePopups();
+        setCodeVerificationVisible(true);
     };
 
     const handleOpenCreateAd = () => {
-        if (!isLoggedIn) {
+        if (!!!token) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
         }
         setCreateAdVisible(true);
-        setSignupVisible(false);
+    };
+
+    const handleClosePopups = () => {
         setLoginVisible(false);
-    };
-
-    const handleCloseCreateAd = () => {
+        setSignupVisible(false);
         setCreateAdVisible(false);
-    };
-
-    const handleCloseCodeVerification = () => {
-        setCodeVerificationVisible(false);
-    };
-
-    const handleOpenCodeVerification = (email: string) => {
-        setUserEmail(email);
-        setCodeVerificationVisible(true);
-        handleCloseSignup();
-    };
-
-    const handleLoginSuccess = (role: string) => {
-        setUserRole(role);
-        setIsLoggedIn(true);
-        handleCloseLogin();
     };
 
     const handleOpenProfilePage = () => {
@@ -103,9 +84,9 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <NavBar
-                onLoginClick={handleOpenLogin}
+                onLoginClick={() => setLoginVisible(true)}
                 onCreateAdClick={handleOpenCreateAd}
-                isLoggedIn={isLoggedIn}
+                isLoggedIn={!!token}
                 onProfileClick={handleOpenProfilePage}
                 toggleTheme={toggleTheme}
                 isDarkMode={isDarkMode}
@@ -127,24 +108,22 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
 
             <LoginModal
                 open={isLoginVisible}
-                onClose={handleCloseLogin}
+                onClose={handleClosePopups}
                 onOpenSignup={handleOpenSignup}
-                onLoginSuccess={handleLoginSuccess}
             />
             <SignupModal
                 open={isSignupVisible}
-                onClose={handleCloseSignup}
+                onClose={handleClosePopups}
                 onOpenLogin={handleOpenLogin}
                 onSignUpSuccess={handleOpenCodeVerification}
             />
             <CreateAdModal
                 open={isCreateAdVisible}
-                onClose={handleCloseCreateAd}
+                onClose={handleClosePopups}
             />
             <CodeVerificationModal
                 open={isCodeVerificationVisible}
-                email={userEmail}
-                onClose={handleCloseCodeVerification}
+                onClose={handleClosePopups}
             />
         </Box>
     );

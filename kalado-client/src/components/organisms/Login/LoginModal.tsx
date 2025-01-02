@@ -6,10 +6,9 @@ interface LoginModalProps {
     open: boolean;
     onClose: () => void;
     onOpenSignup: () => void;
-    onLoginSuccess: (role: string) => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ open, onClose, onOpenSignup, onLoginSuccess }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ open, onClose, onOpenSignup }) => {
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
         if (target.classList.contains('backdrop')) {
@@ -22,7 +21,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose, onOpenSignup, on
             <LoginForm
                 onClose={onClose}
                 onOpenSignup={onOpenSignup}
-                onLoginSuccess={onLoginSuccess}
             />
         </Backdrop>
     );

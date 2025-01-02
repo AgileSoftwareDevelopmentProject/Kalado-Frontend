@@ -1,94 +1,109 @@
-// LoginForm.test.tsx
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import LoginForm from './LoginForm';
+import { useAuth } from '../../../contexts/AuthContext';
 import { loginUser } from '../../../services/LoginService';
+import { toast } from 'react-toastify';
 
-// Mock the loginUser function
+// Mocking the AuthContext
+jest.mock('../../../contexts/AuthContext', () => ({
+  useAuth: jest.fn(),
+}));
+
+// Mocking the loginUser service
 jest.mock('../../../services/LoginService', () => ({
   loginUser: jest.fn(),
 }));
 
-describe('LoginForm Component', () => {
+// Mocking toast
+jest.mock('react-toastify', () => ({
+  toast: jest.fn(),
+}));
+
+describe('LoginForm', () => {
   const mockOnClose = jest.fn();
   const mockOnOpenSignup = jest.fn();
-  const mockOnLoginSuccess = jest.fn();
+  const mockSetToken = jest.fn();
+  const mockSetUserRole = jest.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('renders correctly with initial state', () => {
-    const { getByText, getByPlaceholderText } = render(
-      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} onLoginSuccess={mockOnLoginSuccess} />
-    );
-
-    expect(getByText('ورود')).toBeInTheDocument();
-    expect(getByText('ایجاد حساب جدید')).toBeInTheDocument();
-    expect(getByPlaceholderText('Email')).toBeInTheDocument(); // Adjust placeholder if necessary
-    expect(getByPlaceholderText('Password')).toBeInTheDocument(); // Adjust placeholder if necessary
-  });
-
-  it('updates email and password state on input change', () => {
-    const { getByPlaceholderText } = render(
-      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} onLoginSuccess={mockOnLoginSuccess} />
-    );
-
-    const emailInput = getByPlaceholderText('Email'); // Adjust placeholder if necessary
-    const passwordInput = getByPlaceholderText('Password'); // Adjust placeholder if necessary
-
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-
-    expect(emailInput.value).toBe('test@example.com');
-    expect(passwordInput.value).toBe('password123');
-  });
-
-  it('calls loginUser and handles successful login', async () => {
-    (loginUser as jest.Mock).mockResolvedValueOnce({ success: true });
-
-    const { getByPlaceholderText, getByText } = render(
-      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} onLoginSuccess={mockOnLoginSuccess} />
-    );
-
-    fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByPlaceholderText('Password'), { target: { value: 'password123' } });
-
-    fireEvent.click(getByText('ورود'));
-
-    await waitFor(() => {
-      expect(loginUser).toHaveBeenCalledWith({ email: 'test@example.com', password: 'password123' });
-      expect(mockOnLoginSuccess).toHaveBeenCalledWith('test@example.com');
-      expect(mockOnClose).toHaveBeenCalled();
+    (useAuth as jest.Mock).mockReturnValue({
+      setToken: mockSetToken,
+      setUserRole: mockSetUserRole,
     });
   });
 
-  it('handles login error', async () => {
-    (loginUser as jest.Mock).mockRejectedValueOnce(new Error('Invalid credentials'));
-
-    const { getByPlaceholderText, getByText } = render(
-      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} onLoginSuccess={mockOnLoginSuccess} />
-    );
-
-    fireEvent.change(getByPlaceholderText('Email'), { target: { value: 'test@example.com' } });
-    fireEvent.change(getByPlaceholderText('Password'), { target: { value: 'wrongpassword' } });
-
-    fireEvent.click(getByText('ورود'));
-
-    await waitFor(() => {
-      expect(loginUser).toHaveBeenCalled();
-      expect(getByText('Invalid email or password')).toBeInTheDocument();
-      expect(mockOnClose).not.toHaveBeenCalled(); // Ensure onClose is not called on error
-    });
+  afterEach(() => {
+    jest.clearAllMocks(); // Clear mock calls after each test
   });
 
-  it('opens signup form when link is clicked', () => {
+  test('renders correctly', () => {
     const { getByText } = render(
-      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} onLoginSuccess={mockOnLoginSuccess} />
+      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} />
     );
 
-    fireEvent.click(getByText('ایجاد حساب جدید'));
+    expect(getByText(/login_form.login_btn/i)).toBeInTheDocument();
+    expect(getByText(/login_form.signup_link/i)).toBeInTheDocument();
+  });
 
-    expect(mockOnOpenSignup).toHaveBeenCalled();
+  test('handles successful login', async () => {
+    (loginUser as jest.Mock).mockResolvedValueOnce({
+      isSuccess: true,
+      token: 'fake-token',
+      role: 'USER',
+    });
+
+    const { getByLabelText, getByText } = render(
+      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} />
+    );
+
+    // Fill in email and password
+    fireEvent.change(getByLabelText(/email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(getByLabelText(/password/i), { target: { value: 'password123' } });
+
+    // Submit the form
+    fireEvent.click(getByText(/login_form.login_btn/i));
+
+    await waitFor(() => {
+      expect(mockSetToken).toHaveBeenCalledWith('fake-token');
+      expect(mockSetUserRole).toHaveBeenCalledWith('USER');
+      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      expect(toast).toHaveBeenCalledWith(expect.stringContaining("success.login"));
+    });
+  });
+
+  test('handles failed login', async () => {
+    (loginUser as jest.Mock).mockResolvedValueOnce({
+      isSuccess: false,
+      message: 'Invalid credentials',
+    });
+
+    const { getByLabelText, getByText, getByTestId } = render(
+      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} />
+    );
+
+    // Fill in email and password
+    fireEvent.change(getByLabelText(/email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(getByLabelText(/password/i), { target: { value: 'wrongpassword' } });
+
+    // Submit the form
+    fireEvent.click(getByText(/login_form.login_btn/i));
+
+    await waitFor(() => {
+      expect(getByTestId('form-error')).toHaveTextContent('Invalid credentials');
+      expect(mockSetToken).not.toHaveBeenCalled();
+      expect(mockSetUserRole).not.toHaveBeenCalled();
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+  });
+
+  test('calls onOpenSignup when signup link is clicked', () => {
+    const { getByText } = render(
+      <LoginForm onClose={mockOnClose} onOpenSignup={mockOnOpenSignup} />
+    );
+
+    fireEvent.click(getByText(/login_form.signup_link/i));
+
+    expect(mockOnOpenSignup).toHaveBeenCalledTimes(1);
   });
 });
