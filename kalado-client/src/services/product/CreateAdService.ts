@@ -18,18 +18,18 @@
 //     }
 // };
 
-import { sendRequest } from '../axiosInstance';
-import { AUTH, PRODUCT } from '../urls';
+import { sendRequest } from '../../axiosInstance';
+import { PRODUCT } from '../../urls';
 
 export async function createAd(
     title: string,
     description: string,
     priceAmount: number,
     category: string,
-    // productionYear: number,
-    // brand: string,
+    productionYear: number,
+    brand: string,
+    sellerId: number
 ) {
-
     const payload = {
         title,
         description,
@@ -38,13 +38,15 @@ export async function createAd(
             unit: 'TOMAN',      
         },
         category,
-        productionYear: 2024,
-        // brand,
+        productionYear,
+        brand,
+        sellerId,
     };
 
     try {
-
         const response = await sendRequest<typeof payload>(PRODUCT.CREATE, 'POST', payload);
+
+        console.log('Response:', response); 
 
         if (response.isSuccess) {
             console.log('Ad created successfully!');

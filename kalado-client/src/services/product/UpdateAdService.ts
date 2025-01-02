@@ -1,5 +1,5 @@
-import { sendRequest } from '../axiosInstance';
-import { PRODUCT } from '../urls';
+import { sendRequest } from '../../axiosInstance';
+import { PRODUCT } from '../../urls';
 
 export async function updateAd(
     id: number, // for the ad to update
@@ -29,6 +29,8 @@ export async function updateAd(
 
     try {
         const response = await sendRequest<typeof payload>(`${PRODUCT.UPDATE}/${id}`, 'PUT', payload);
+
+        console.log('Response:', response); 
 
         if (response.isSuccess) {
             console.log('Ad updated successfully!');
