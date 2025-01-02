@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
+import { getProductsByCategory } from '../../../services/product/getProductsByCategoryService';
 import defaultImage from '../../../assets/images/no-image.png';
 import mockData from '../../../mockData.json';
 
@@ -30,8 +31,7 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
     useEffect(() => {
         const loadItems = async () => {
             try {
-                // Simulating fetching data
-                const fetchedData = mockData.Items; // Mock data for testing
+                const fetchedData = getProductsByCategory(selectedCategoryTitle);
                 const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
                 setItems(fetchedItems as Item[]);
             } catch (error) {
