@@ -8,6 +8,7 @@ import { lightTheme, darkTheme } from './theme';
 import { CustomToast } from './components/molecules';
 import { Landing, ItemDetails, UserDashboard, AdminDashboard } from './pages';
 import './index.css';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -22,10 +23,24 @@ function App() {
         <CssBaseline />
         <Router>
           <Routes>
-            <Route path="/" element={<Landing toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
+            <Route
+              path="/"
+              element={
+                <AuthProvider>
+                  <Landing toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+                </AuthProvider>}
+            />
             <Route path="/item/:itemId" element={<ItemDetails />} />
-            <Route path="/user-dashboard" element={<UserDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
+            <Route path="/user-dashboard" element={
+              <AuthProvider>
+                <UserDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+              </AuthProvider>}
+            />
+            <Route path="/admin-dashboard" element={
+              <AuthProvider>
+                <AdminDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+              </AuthProvider>}
+            />
           </Routes>
         </Router>
         <CustomToast />

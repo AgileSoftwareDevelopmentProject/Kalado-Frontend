@@ -11,7 +11,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, onChange, onSearch }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('navbar.searchbar');
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -21,7 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, onChange, onS
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'flex-start', mr: 3 }}>
+        <Box sx={{ flexGrow: 1, mx: 2, textAlign: i18n.language === 'fa' ? 'right' : 'left' }}>
             <TextField
                 variant="outlined"
                 placeholder={translatedPlaceholder}

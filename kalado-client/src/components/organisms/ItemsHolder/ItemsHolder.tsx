@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography, CircularProgress } from '@mui/material';
-import { ProductListBox } from '../../molecules';
+import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
 import { getProductsByCategory } from '../../../services/product/getProductsByCategoryService';
 import defaultImage from '../../../assets/images/no-image.png';
+import mockData from '../../../mockData.json';
 
 interface Item {
     title: string;
@@ -21,15 +22,16 @@ interface ItemsHolderProps {
 }
 
 const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategoryTitle }) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string>('');
+    const [sortOption, setSortOption] = useState<string>('newest');
 
     useEffect(() => {
         const loadItems = async () => {
             try {
-                const fetchedData = await getProductsByCategory(selectedCategoryTitle, '');
+                const fetchedData = getProductsByCategory(selectedCategoryTitle);
                 const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
                 setItems(fetchedItems as Item[]);
             } catch (error) {
@@ -40,7 +42,7 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
         };
 
         loadItems();
-    }, [selectedCategoryTitle])
+    }, []);
 
     if (loading) {
         return (
@@ -53,18 +55,43 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
     if (items.length === 0) {
         return (
             <ProductListBox>
-                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
                     {error ? error : t("error.landing.empty_product_list")}
                 </Typography>
             </ProductListBox>
         );
     }
 
+    const sortedItems = () => {
+        return [...items].sort((a, b) => {
+            switch (sortOption) {
+                case 'most_expensive':
+                    return b.price - a.price;
+                case 'most_cheap':
+                    return a.price - b.price;
+                case 'oldest':
+                    return new Date(a.date).getTime() - new Date(b.date).getTime();
+                case 'newest':
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                default:
+                    return 0;
+            }
+        });
+    };
+
+    const displayedItems = sortedItems();
+
     return (
         <ProductListBox>
-            <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+            <ItemSort
+                sortOption={sortOption}
+                setSortOption={(e) => setSortOption(e.target.value as string)}
+            />
+
+            <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
                 {selectedCategoryTitle}
             </Typography>
+
             <Box
                 sx={{
                     display: 'flex',
@@ -74,7 +101,7 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
                     flexGrow: 1,
                 }}
             >
-                {items.map(item => (
+                {displayedItems.map(item => (
                     <Box
                         key={item.itemId}
                         sx={{

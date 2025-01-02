@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
-import { Backdrop } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, UserManagement, ReportHistory, NavBar, CreateAdForm } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, UserManagement, ReportHistory, NavBar, CreateAdModal } from '../../components/organisms';
 import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface AdminDashboardProps {
     toggleTheme: () => void;
@@ -13,9 +14,10 @@ interface AdminDashboardProps {
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ toggleTheme, isDarkMode }) => {
     const { t } = useTranslation();
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.admin.menu.one"));
+    const { setToken } = useAuth();
+    const navigate = useNavigate();
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.admin.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const adminCategories = [
         { title: t("dashboard.admin.menu.one"), icon: <FaUser /> },
@@ -23,24 +25,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ toggleTheme, isDarkMode
         { title: t("dashboard.admin.menu.three"), icon: <FaHistory /> },
     ];
 
-
-    const handleOpenCreateAd = () => {
-        setCreateAdVisible(true);
-    };
-
-    const handleCloseCreateAd = () => {
-        setCreateAdVisible(false);
-    };
-
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            handleCloseCreateAd();
-        }
-    };
-
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
+    };
+
+    const handleLogoutClick = () => {
+        setToken('');
+        navigate('/');
     };
 
     const renderContent = () => {
@@ -57,22 +48,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ toggleTheme, isDarkMode
     return (
         <Box>
             <NavBar
-                onCreateAdClick={handleOpenCreateAd}
-                isLoggedIn={isLoggedIn}
+                onCreateAdClick={() => setCreateAdVisible(true)}
                 toggleTheme={toggleTheme}
                 isDarkMode={isDarkMode}
+                isInProfile={true}
+                onLogoutClick={handleLogoutClick}
             />
+
             <SideBar>
-                <SideBarMenu categories={adminCategories} onSelectCategory={handleSelectMenu} />
+                <SideBarMenu categories={adminCategories} onSelectCategory={handleSelectMenu} initialSelect={t("dashboard.admin.menu.one")} />
             </SideBar>
+
             <Box sx={{ flexGrow: 1, padding: 2 }}>
                 {renderContent()}
             </Box>
-            {isCreateAdVisible && (
-                <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
-                    <CreateAdForm onClose={handleCloseCreateAd} />
-                </Backdrop>
-            )}
+
+            <CreateAdModal
+                open={isCreateAdVisible}
+                onClose={() => setCreateAdVisible(false)}
+            />
         </Box>
     );
 };

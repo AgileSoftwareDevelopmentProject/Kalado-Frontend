@@ -1,14 +1,13 @@
 import React from 'react';
 import { Backdrop } from '../../../components/atoms';
-import LoginForm from './LoginForm';
+import ReportSubmissionForm from './ReportSubmissionForm';
 
-interface LoginModalProps {
+interface ReportSubmissionModalProps {
     open: boolean;
     onClose: () => void;
-    onOpenSignup: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ open, onClose, onOpenSignup }) => {
+const ReportSubmissionModal: React.FC<ReportSubmissionModalProps> = ({ open, onClose }) => {
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
         if (target.classList.contains('backdrop')) {
@@ -18,12 +17,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose, onOpenSignup }) 
 
     return (
         <Backdrop open={open} onClick={handleBackdropClick}>
-            <LoginForm
-                onClose={onClose}
-                onOpenSignup={onOpenSignup}
-            />
+            <ReportSubmissionForm onClose={onClose} />
         </Backdrop>
     );
 };
 
-export default LoginModal;
+export default ReportSubmissionModal;

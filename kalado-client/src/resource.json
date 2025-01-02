@@ -19,7 +19,8 @@
             "create_ad": "Submit Ad",
             "login/signup": "Login/Signup",
             "profile": "Profile",
-            "searchbar": "Search Item"
+            "searchbar": "Search Item",
+            "logout": "Logout"
         },
         "category": {
             "title": "Categories",
@@ -41,6 +42,12 @@
             "one_week": "One Week",
             "one_month": "One Month",
             "apply": "Apply Filter"
+        },
+        "sort": {
+            "newest": "Newest",
+            "oldest": "Oldest",
+            "most_expensive": "Most Expensive",
+            "cheapest": "Cheapest"
         },
         "create_ad": {
             "input": {
@@ -152,13 +159,21 @@
             },
             "landing": {
                 "empty_product_list": "No Ad Submitted in the Selected Category"
+            },
+            "item_details": {
+                "not_found": "Item not found"
+            },
+            "profile_management": {
+                "save_failed": "Error Ocurred during Saving your Changes"
             }
         },
         "success": {
+            "signup": "Registered Successfully. Please Verify your Email.",
+            "code_verification": "Your Email Verified Successfully",
             "login": "Logined Successfully",
             "create_ad": "Ad Created Successfully",
-            "signup": "Registered Successfully. Please Verify your Email.",
-            "report": "Report Submitted Successfully"
+            "report": "Report Submitted Successfully",
+            "profile_management": "Changes Saved Successfully"
         }
     },
     "fa": {
@@ -181,7 +196,8 @@
             "create_ad": "ثبت آگهی",
             "login/signup": "ورود/ثبت‌نام",
             "profile": "پروفایل کاربری",
-            "searchbar": "جستجوی کالا"
+            "searchbar": "جستجوی کالا",
+            "logout": "خروج"
         },
         "category": {
             "title": "دسته‌بندی‌ها",
@@ -203,6 +219,12 @@
             "one_week": "یک هفته",
             "one_month": "یک ماه",
             "apply": "اعمال فیلتر"
+        },
+        "sort": {
+            "newest": "جدیدترین",
+            "oldest": "قدیمی‌ترین",
+            "most_expensive": "گران‌ترین",
+            "cheapest": "ارزان‌ترین"
         },
         "create_ad": {
             "input": {
@@ -315,13 +337,21 @@
             },
             "landing": {
                 "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
+            },
+            "item_details": {
+                "not_found": "کالای مورد نظر پیدا نشد"
+            },
+            "profile_management": {
+                "save_failed": "خطایی در ذخیره‌ی تغییرات اطلاعات رخ داد"
             }
         },
         "success": {
+            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
+            "code_verification": "ایمیل شما با موفقیت تایید شد",
             "login": "با موفقیت وارد شدید",
             "create_ad": "آگهی شما با موفقیت ثبت شد",
-            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
-            "report": "گزارش تخلف شما با موفقیت ثبت شد"
+            "report": "گزارش تخلف شما با موفقیت ثبت شد",
+            "profile_management": "تغییرات شما با موفقیت ذخیره شد"
         }
     }
 }

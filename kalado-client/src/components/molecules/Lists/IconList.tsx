@@ -7,11 +7,12 @@ interface IconListProps {
     items: { title: string; icon: React.ReactNode }[];
     onSelect: (title: string) => void;
     title?: string;
+    initialSelect: string
 }
 
-const IconList: React.FC<IconListProps> = ({ items, onSelect, title }) => {
+const IconList: React.FC<IconListProps> = ({ items, onSelect, title, initialSelect }) => {
     const { i18n } = useTranslation();
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string>(initialSelect);
 
     const handleCategoryClick = (categoryTitle: string) => {
         setSelectedCategory(categoryTitle);

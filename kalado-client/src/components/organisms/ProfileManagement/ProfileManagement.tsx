@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Avatar, Typography, CircularProgress, IconButton } from '@mui/material';
 import { CustomButton, NameInput, EmailInput, PhoneNumberInput, PasswordInput } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
-import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface UserData {
     profileImage: string;
@@ -29,7 +29,7 @@ const ProfileManagement = () => {
     const fetchUserData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('/api/user-profile');
+            const response = getUserByToken('/api/user-profile');
             response.data = {
                 profileImage: "string",
                 firstName: "string",
@@ -73,11 +73,10 @@ const ProfileManagement = () => {
     const handleSaveChanges = async () => {
         try {
             setLoading(true);
-            await axios.put('/api/user-profile', userData);
-            alert(t('profile.saveSuccess'));
+            await UpdateProfile(userData);
+            toast(t('success.profile_management'));
         } catch (err) {
-            console.error('Error saving user data:', err);
-            setError('Failed to save changes');
+            toast(t("profile_management.save_failed"));
         } finally {
             setLoading(false);
         }
@@ -85,10 +84,6 @@ const ProfileManagement = () => {
 
     if (loading) {
         return <CircularProgress />;
-    }
-
-    if (error) {
-        return <Typography color="error">{error}</Typography>;
     }
 
     return (
@@ -141,7 +136,7 @@ const ProfileManagement = () => {
                     <PasswordInput
                         name="password"
                         value={userData.password}
-                        placeholder={t('dashboard.user.profile_management.new_password')}
+                        placeholder={t('dashboard.user.profile_management.password')}
                         onChange={handleInputChange}
                     />
                     <NameInput
