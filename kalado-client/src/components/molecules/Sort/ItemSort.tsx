@@ -12,7 +12,7 @@ const ItemSort: React.FC<ItemSortProps> = ({ sortOption, setSortOption }) => {
     const { t } = useTranslation();
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2, position: 'relative' }}>
             <Select
                 value={sortOption}
                 onChange={setSortOption}

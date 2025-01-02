@@ -5,6 +5,7 @@ export { default as SideBarMenu } from './SideBarMenu/SideBarMenu';
 export { default as Filter } from './Filter/Filter';
 
 export { default as ItemCard } from './ItemCard/ItemCard';
+export { default as ItemDetailsCard } from './ItemCard/ItemDetailsCard';
 export { default as ItemsHolder } from './ItemsHolder/ItemsHolder';
 
 export { default as ProfileManagement } from './ProfileManagement/ProfileManagement';

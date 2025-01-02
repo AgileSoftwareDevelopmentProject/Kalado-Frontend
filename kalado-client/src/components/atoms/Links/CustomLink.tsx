@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link as MuiLink, LinkProps as MuiLinkProps } from '@mui/material';
+import { Link as MuiLink, LinkProps as MuiLinkProps, useTheme } from '@mui/material';
 
 interface CustomLinkProps extends MuiLinkProps {
     to: string;
@@ -9,6 +9,8 @@ interface CustomLinkProps extends MuiLinkProps {
 }
 
 const CustomLink: React.FC<CustomLinkProps> = ({ to, onClick, children, text, ...props }) => {
+    const theme = useTheme();
+
     return (
         <p>
             <MuiLink
@@ -16,12 +18,12 @@ const CustomLink: React.FC<CustomLinkProps> = ({ to, onClick, children, text, ..
                 to={to}
                 onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                     if (onClick) {
-                        e.preventDefault(); // Prevent default link behavior
-                        onClick(e); // Call the provided onClick handler
+                        e.preventDefault();
+                        onClick(e);
                     }
                 }}
                 sx={{
-                    color: '#FFFFFF',
+                    color: theme.palette.text.primary,
                     textDecoration: 'none',
                     '&:hover': {
                         color: '#D74101',
