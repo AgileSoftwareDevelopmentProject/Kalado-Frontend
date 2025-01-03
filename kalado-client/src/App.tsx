@@ -1,36 +1,48 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { lightTheme, darkTheme } from './theme';
-import { CustomToast } from './components/molecules';
-import { Landing, ItemDetails, UserDashboard, AdminDashboard } from './pages';
+// import './App.css';
 import './index.css';
+import { Landing, ItemDetails } from './pages';
+import AdList from './components/organisms/AdList/AdList';
+import React from 'react';
+import EditAdCard from './components/organisms/AdCard/EditAdCard';
+import pishi1 from './assets/images/pishi1.jpg';
+import pishi2 from './assets/images/pishi2.jpg';
+import pishi3 from './assets/images/pishi3.jpg';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const handleEdit = (data: any) => {
+    console.log('Edited Data:', data);
+  };
 
-  const toggleTheme = () => {
-    setIsDarkMode((prev) => !prev);
+  const handleDelete = () => {
+    console.log('Ad Deleted');
   };
 
   return (
     <I18nextProvider i18n={i18n}>
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-        <CssBaseline />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Landing toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
-            <Route path="/item/:itemId" element={<ItemDetails />} />
-            <Route path="/user-dashboard" element={<UserDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard toggleTheme={toggleTheme} isDarkMode={isDarkMode} />} />
-          </Routes>
-        </Router>
-        <CustomToast />
-      </ThemeProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<AdList />} />
+        {/* <Route path="/item/:itemId" element={<ItemDetails />} /> */}
+      </Routes>
+    </Router>
     </I18nextProvider>
+    // <div>
+    //   {/* <EditAdCard
+    //     title="گربه"
+    //     price="۹۰۰۰۰۰۰"
+    //     category="حیوان"
+    //     date="۱۴۰۳/۱۲/۱۴"
+    //     description=" توضیحات گربه"
+    //     images={[pishi1, pishi2, pishi3]}
+    //     status="فعال"
+    //     onEdit={handleEdit}
+    //     // onDelete={handleDelete}
+    //   /> */}
+    //   {/* <AdList /> */}
+    // </div>
   );
 }
 

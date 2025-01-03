@@ -47,7 +47,8 @@
                 "title": "Ad's Title",
                 "price": "Price",
                 "category": "Category",
-                "description": "Description"
+                "description": "Description",
+                "add_image": "Add Image"
             },
             "choose_image": "Choose Image",
             "create_ad_btn": "Submit Ad"
@@ -57,7 +58,7 @@
             "signup_link": "Create New Account"
         },
         "signup_form": {
-            "signup_btn": "Sihnup",
+            "signup_btn": "Signup",
             "login_link": "In case of Having Account, Click Here",
             "is_admin": "I'm Admin",
             "error": {
@@ -127,16 +128,19 @@
             "delete_confirmation": {
                 "title": "Are you Sure to Delete this Ad?",
                 "message": ""
+            },
+            "buttons": {
+                "back_to_list": "Back to List"
             }
         },
         "error": {
             "input": {
-                "invalid_email": "Eneter a Valid Email",
+                "invalid_email": "Enter a Valid Email",
                 "invalid_password": {
                     "min_length": "At least 8 Characters are Required",
                     "has_number": "At least 1 Number is Required",
                     "has_uppercase": "At least 1 Capital Letter is Required",
-                    "has_special_char": "At leat 1 Special Character is Required"
+                    "has_special_char": "At least 1 Special Character is Required"
                 },
                 "invalid_phone_number": "Enter a Valid Phone Number",
                 "invalid_image": {
@@ -157,10 +161,10 @@
             "password_repeat": "تکرار رمز عبور",
             "phone_number": "شماره تلفن",
             "first_name": "نام",
-            "last_name": "نام‌خانوادگی",
+            "last_name": "نام خانوادگی",
             "price": "قیمت",
             "date": "تاریخ",
-            "code": "کد تایید",
+            "code": "کد تأیید",
             "add_image": "افزودن عکس",
             "description": "توضیحات"
         },
@@ -208,15 +212,15 @@
         },
         "signup_form": {
             "signup_btn": "ثبت‌نام",
-            "login_link": "در صورت داشتن حساب کاربری اینجا را کلیک کنید",
+            "login_link": "در صورت داشتن حساب کاربری، کلیک کنید",
             "is_admin": "مدیر هستم",
             "error": {
-                "password_mismatch": "رمز عبورهای واردشده یکسان نیستند"
+                "password_mismatch": "رمز عبور‌ها با هم مطابقت ندارند"
             }
         },
         "code_verification": {
             "verify_btn": "بررسی",
-            "enter_code": "لطفا کد تایید ارسال‌شده به ایمیل‌تان را وارد کنید"
+            "enter_code": "کد تأیید ارسال شده به ایمیل خود را وارد کنید"
         },
         "item_details": {
             "price": "قیمت",
@@ -232,7 +236,7 @@
             "category": {
                 "one": "فحاشی",
                 "two": "محتوای نامناسب",
-                "three": "قیمت نامتناسب با بازار"
+                "three": "قیمت غیرمنصفانه"
             },
             "choose_evidence": "شواهد/مدارک"
         },
@@ -241,11 +245,11 @@
                 "menu": {
                     "one": "مدیریت پروفایل",
                     "two": "مدیریت آگهی‌ها",
-                    "three": "تاریخچه‌ی تخلفات"
+                    "three": "تاریخچه تخلفات"
                 },
                 "profile_management": {
                     "first_name": "نام",
-                    "last_name": "نام‌خانوادگی",
+                    "last_name": "نام خانوادگی",
                     "email": "ایمیل",
                     "password": "رمز عبور",
                     "phone_number": "شماره تلفن",
@@ -257,12 +261,12 @@
                 "menu": {
                     "one": "مدیریت پروفایل",
                     "two": "مدیریت کاربران",
-                    "three": "تاریخچه‌ی تخلفات"
+                    "three": "تاریخچه تخلفات"
                 }
             }
         },
         "ad_list": {
-            "heading": "تاریخچه‌ی آگهی‌های ثبت شده",
+            "heading": "تاریخچه آگهی‌های ثبت‌شده",
             "create_ad": {
                 "input": {
                     "title": "عنوان آگهی"
@@ -277,24 +281,27 @@
             "delete_confirmation": {
                 "title": "آیا از حذف این آگهی اطمینان دارید؟",
                 "message": ""
+            },
+            "buttons": {
+                "back_to_list": "بازگشت به لیست"
             }
         },
         "error": {
             "input": {
-                "invalid_email": "لطفا یک ایمیل معتبر وارد کنید",
+                "invalid_email": "لطفاً یک ایمیل معتبر وارد کنید",
                 "invalid_password": {
-                    "min_length": "رمز عبور باید حداقل ۸ کاراکتر باشد",
-                    "has_number": "رمز عبور باید شامل حداقل یک عدد باشد",
-                    "has_uppercase": "رمز عبور باید شامل حداقل یک حرف بزرگ باشد",
-                    "has_special_char": "رمز عبور باید شامل حداقل یک کاراکتر ویژه باشد"
+                    "min_length": "رمز عبور باید حداقل ۸ کاراکتر داشته باشد",
+                    "has_number": "رمز عبور باید حداقل یک عدد داشته باشد",
+                    "has_uppercase": "رمز عبور باید حداقل یک حرف بزرگ داشته باشد",
+                    "has_special_char": "رمز عبور باید حداقل یک کاراکتر ویژه داشته باشد"
                 },
-                "invalid_phone_number": "لطفا یک شماره تلفن معتبر وارد کنید",
+                "invalid_phone_number": "لطفاً یک شماره تلفن معتبر وارد کنید",
                 "invalid_image": {
-                    "max_size": "لطفا تصاویری با حجم بیشتر از 1 مگابایت انتخاب نکنید"
+                    "max_size": "لطفاً تصویری با حجم کمتر از ۱ مگابایت انتخاب کنید"
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید"
+                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری شوید"
             }
         }
     }

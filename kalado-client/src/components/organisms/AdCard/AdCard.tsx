@@ -8,29 +8,32 @@ import {
   Box,
   TextField,
   Tooltip,
+  Dialog,
+  DialogContent,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material';
-import DeleteAd from './DeleteAd';
 
 type AdCardProps = {
   title: string;
   status: string;
-  onEdit: () => void;
   onStatusChange: (event: SelectChangeEvent<string>) => void;
   onDelete: () => void;
   onEditTitle: (newTitle: string) => void;
+  onEdit: () => void;
 };
 
 const AdCard: React.FC<AdCardProps> = ({
   title,
   status,
-  onEdit,
   onStatusChange,
   onDelete,
   onEditTitle,
+  onEdit,
 }) => {
   const { t, i18n } = useTranslation();
 
@@ -39,7 +42,7 @@ const AdCard: React.FC<AdCardProps> = ({
   const [newTitle, setNewTitle] = useState(title);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-  const MAX_TITLE_LENGTH = 50; // maximum length for the title
+  const MAX_TITLE_LENGTH = 10;
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length <= MAX_TITLE_LENGTH) {
@@ -58,6 +61,11 @@ const AdCard: React.FC<AdCardProps> = ({
     setIsEditing(false);
   };
 
+  const handleDeleteConfirm = () => {
+    onDelete();
+    setIsDeleteDialogOpen(false);
+  };
+
   return (
     <>
       <Card
@@ -67,12 +75,12 @@ const AdCard: React.FC<AdCardProps> = ({
           alignItems: 'center',
           padding: '10px 40px',
           marginBottom: '40px',
-          borderRadius: '45px',
+          borderRadius: '15px',
           boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-          direction: isRtl ? 'rtl' : 'ltr', // set direction based on the language
+          direction: isRtl ? 'rtl' : 'ltr',
         }}
       >
-       {/* Ad title */}
+        {/* Ad Title */}
         <Box
           sx={{
             flex: 1,
@@ -93,14 +101,8 @@ const AdCard: React.FC<AdCardProps> = ({
               }}
               InputProps={{
                 sx: {
-                  '&:before': {
-                    borderBottom: '1px solid #000',
-                  },
-                  '&:after': {
-                    borderBottom: '2px solid #000',
-                    width: '50%',
-                    transition: 'width 0.2s ease-out',
-                  },
+                  '&:before': { borderBottom: '1px solid #000' },
+                  '&:after': { borderBottom: '2px solid #000', transition: 'width 0.2s ease-out' },
                 },
               }}
             />
@@ -109,7 +111,6 @@ const AdCard: React.FC<AdCardProps> = ({
               <Typography
                 variant="h6"
                 sx={{
-                  color: '#000',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
@@ -123,72 +124,43 @@ const AdCard: React.FC<AdCardProps> = ({
           )}
         </Box>
 
-        {/* Status and Dropdown */}
+        {/* Status Dropdown */}
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: '85px',
-            marginRight: isRtl ? 0 : '20px',
-            marginLeft: isRtl ? '300px' : 0,
+            justifyContent: 'center',
+            flex: 1,
           }}
         >
-          {/* Status Label */}
-          <Box
+          <Typography
+            variant="subtitle1"
+            sx={{ marginRight: '10px', color: '#000', fontSize: '1rem' }}
+          >
+            {t('ad_list.ad_status.label')}:
+          </Typography>
+          <Select
+            value={status}
+            onChange={onStatusChange}
+            displayEmpty
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
+              minWidth: '150px',
+              maxWidth: '200px',
+              fontSize: '1rem',
+              '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+              '& .MuiSvgIcon-root': { color: '#000' },
+            }}
+            inputProps={{
+              'aria-label': t('ad_list.ad_status.dropdown'),
             }}
           >
-            <Typography
-              variant="subtitle1"
-              sx={{ color: '#000', fontSize: '1.25rem' }}
-            >
-              {t('ad_list.ad_status.label')}:
-            </Typography>
-            <Select
-              value={status}
-              onChange={onStatusChange}
-              displayEmpty
-              sx={{
-                border: 'none',
-                boxShadow: 'none',
-                backgroundColor: 'transparent',
-                fontWeight: 'bold',
-                fontSize: '1.25rem',
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
-                },
-                '& .MuiSvgIcon-root': {
-                  color: '#000',
-                },
-                minWidth: '250px',
-                maxWidth: '300px',
-                textAlign: 'center',
-              }}
-              inputProps={{
-                'aria-label': t('ad_list.ad_status.dropdown'),
-                style: { padding: 0 },
-              }}
-            >
-              <MenuItem value="active" sx={{ fontWeight: 'bold' }}>
-                {t('ad_list.ad_status.active')}
-              </MenuItem>
-              <MenuItem value="reserved" sx={{ fontWeight: 'bold' }}>
-                {t('ad_list.ad_status.reserved')}
-              </MenuItem>
-              <MenuItem value="sold" sx={{ fontWeight: 'bold' }}>
-                {t('ad_list.ad_status.sold')}
-              </MenuItem>
-            </Select>
-          </Box>
+            <MenuItem value="active">{t('ad_list.ad_status.active')}</MenuItem>
+            <MenuItem value="reserved">{t('ad_list.ad_status.reserved')}</MenuItem>
+            <MenuItem value="sold">{t('ad_list.ad_status.sold')}</MenuItem>
+          </Select>
         </Box>
 
-        {/* Edit and Delete Buttons */}
+        {/* Action Buttons */}
         <Box
           sx={{
             display: 'flex',
@@ -196,41 +168,77 @@ const AdCard: React.FC<AdCardProps> = ({
             justifyContent: 'flex-end',
           }}
         >
-          {/* Edit Button */}
           <IconButton
-            onClick={onEdit} // call the onEdit function passed as a prop
+            onClick={onEdit}
             aria-label={t('ad_list.buttons.edit')}
-            sx={{
-              padding: '5px',
-              backgroundColor: 'transparent',
-            }}
           >
-            <EditIcon sx={{ color: '#000' }} />
+            <EditIcon/>
           </IconButton>
-
-          {/* Delete Button */}
           <IconButton
             onClick={() => setIsDeleteDialogOpen(true)}
             aria-label={t('ad_list.buttons.delete')}
-            sx={{
-              padding: '5px',
-              backgroundColor: 'transparent',
-            }}
           >
-            <DeleteIcon sx={{ color: '#000' }} />
+            <DeleteIcon />
           </IconButton>
         </Box>
       </Card>
 
       {/* Delete Confirmation Dialog */}
-      <DeleteAd
-        isOpen={isDeleteDialogOpen}
+      <Dialog
+        open={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
-        onConfirm={() => {
-          onDelete();
-          setIsDeleteDialogOpen(false);
+        PaperProps={{
+          sx: {
+            borderRadius: '20px',
+            padding: '20px',
+          },
         }}
-      />
+      >
+        <DialogContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '20px',
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ textAlign: 'center' }}
+          >
+            {t('ad_list.delete_confirmation.title')}
+          </Typography>
+          <Box sx={{ display: 'flex', gap: '30px' }}>
+          <IconButton
+              onClick={handleDeleteConfirm}
+              sx={{
+                backgroundColor: 'green',
+                color: '#fff',
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                '&:hover': { backgroundColor: '#66bb66' },
+              }}
+            >
+              <CheckIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => setIsDeleteDialogOpen(false)}
+              sx={{
+                backgroundColor: 'red',
+                color: '#fff',
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                '&:hover': { backgroundColor: '#ff4d4d' },
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
