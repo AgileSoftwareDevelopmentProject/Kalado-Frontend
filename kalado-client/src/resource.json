@@ -92,7 +92,20 @@
                 "two": "Inappropriate Content",
                 "three": "Inappropriate Price"
             },
-            "choose_evidence": "Evidence/Documents"
+            "choose_evidence": "Evidence/Documents",
+            "user_management": {
+                "title": "User Management",
+                "user_info": "User Information",
+                "email": "Email Address",
+                "status": "Status",
+                "allowed": "Allowed",
+                "blocked": "Blocked",
+                "confirmation_title": "Change User Status",
+                "confirmation_message": "Are you sure you want to change the status of {{email}} to {{status}}?",
+                "confirm": "Confirm",
+                "cancel": "Cancel"
+            }     
+                   
         },
         "dashboard": {
             "user": {
@@ -279,7 +292,20 @@
                 "two": "محتوای نامناسب",
                 "three": "قیمت نامتناسب با بازار"
             },
-            "choose_evidence": "شواهد/مدارک"
+            "choose_evidence": "شواهد/مدارک",
+            "user_management": {
+                "title": "مدیریت کاربران",
+                "user_info": "اطلاعات کاربر",
+                "email": "آدرس ایمیل",
+                "status": "وضعیت",
+                "allowed": "مجاز",
+                "blocked": "مسدود",
+                "confirmation_title": "تغییر وضعیت کاربر",
+                "confirmation_message": "آیا مطمئن هستید که می‌خواهید وضعیت {{email}} را به {{status}} تغییر دهید؟",
+                "confirm": "تأیید",
+                "cancel": "لغو"
+            }            
+            
         },
         "dashboard": {
             "user": {
