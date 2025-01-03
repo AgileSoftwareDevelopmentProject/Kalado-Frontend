@@ -1,37 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import AdCard from '../AdCard/AdCard';
-import { useTranslation } from 'react-i18next';
-import { SelectChangeEvent, Typography, Box } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import AdCard from "../AdCard/AdCard";
+import EditAdCard from "../AdCard/EditAdCard";
+import { useTranslation } from "react-i18next";
+import { Typography, Box } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
 
 const AdList = () => {
   const { t, i18n } = useTranslation();
-
   const [ads, setAds] = useState([
-    { id: 1, title: '', status: 'active' },
-    { id: 2, title: '', status: 'reserved' },
-    { id: 3, title: '', status: 'active' },
-    { id: 4, title: '', status: 'reserved' },
+    { id: 1, title: "", status: "active" },
+    { id: 2, title: "", status: "reserved" },
+    { id: 3, title: "", status: "active" },
+    { id: 4, title: "", status: "reserved" },
   ]);
+  const [editingAdId, setEditingAdId] = useState<number | null>(null);
+  const [previousAdState, setPreviousAdState] = useState<any | null>(null);
+
+  const language = i18n.language as "en" | "fa";
+  const isRtl = language === "fa";
 
   useEffect(() => {
     setAds((prevAds) =>
       prevAds.map((ad) => ({
         ...ad,
-        title: `${t('ad_list.create_ad.input.title')} ${ad.id}`,
+        title: `${t("ad_list.create_ad.input.title")} ${ad.id}`,
       }))
     );
   }, [t, i18n.language]);
 
-  const handleStatusChange = (id: number) => (event: SelectChangeEvent<string>) => {
-    setAds((prevAds) =>
-      prevAds.map((ad) =>
-        ad.id === id ? { ...ad, status: event.target.value } : ad
-      )
-    );
-  };
+  const handleStatusChange =
+    (id: number) => (event: SelectChangeEvent<string>) => {
+      setAds((prevAds) =>
+        prevAds.map((ad) =>
+          ad.id === id ? { ...ad, status: event.target.value } : ad
+        )
+      );
+    };
 
   const handleDelete = (id: number) => {
     setAds((prevAds) => prevAds.filter((ad) => ad.id !== id));
+    if (editingAdId === id) setEditingAdId(null);
   };
 
   const handleEditTitle = (id: number) => (newTitle: string) => {
@@ -42,91 +50,85 @@ const AdList = () => {
     );
   };
 
-  return (
-    <div style={{ padding: '20px', direction: 'rtl' }}>
-      {/* Heading for Ad List */}
-      <Box
-        sx={{
-          marginBottom: '50px',
-          textAlign: 'right',
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{fontWeight: 'bold', color: '#FFF', marginBottom: '15px' }}
-        >
-          {t('ad_list.heading')}
-        </Typography>
-      </Box>
+  const handleEdit = (id: number) => {
+    const editingAd = ads.find((ad) => ad.id === id);
+    if (editingAd) {
+      setEditingAdId(id);
+      setPreviousAdState(editingAd); // save previous state for restoration if canceled
+    }
+  };
 
-      {/* List of Ad Cards */}
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {ads.map((ad) => (
-          <AdCard
-            key={ad.id}
-            title={ad.title}
-            status={ad.status}
-            onStatusChange={handleStatusChange(ad.id)}
-            onDelete={() => handleDelete(ad.id)}
-            onEditTitle={handleEditTitle(ad.id)}
+  const handleEditAdCardClose = () => {
+    setEditingAdId(null);
+  };
+
+  const handleCancelEdit = () => {
+    if (previousAdState) {
+      setAds((prevAds) =>
+        prevAds.map((ad) =>
+          ad.id === previousAdState.id ? previousAdState : ad
+        )
+      );
+    }
+    handleEditAdCardClose();
+  };
+
+  const editingAd = ads.find((ad) => ad.id === editingAdId);
+
+  return (
+    <div style={{ padding: "20px", direction: isRtl ? "rtl" : "ltr" }}>
+      {editingAd ? (
+        <>
+          <EditAdCard
+            title={editingAd.title}
+            price="1000"
+            category="electronics"
+            date="2023-01-01"
+            description="Sample description"
+            images={[]}
+            status={editingAd.status}
+            onEdit={(updatedData) => {
+              handleEditTitle(editingAd.id)(updatedData.title);
+            }}
+            onCancel={handleCancelEdit}
           />
-        ))}
-      </Box>
+        </>
+      ) : (
+        <>
+          <Box
+            sx={{
+              marginBottom: "50px",
+              textAlign: isRtl ? "right" : "left",
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: "15px",
+              }}
+            >
+              {t("ad_list.heading")}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            {ads.map((ad) => (
+              <AdCard
+                key={ad.id}
+                title={ad.title}
+                status={ad.status}
+                onStatusChange={handleStatusChange(ad.id)}
+                onDelete={() => handleDelete(ad.id)}
+                onEdit={() => handleEdit(ad.id)}
+                onEditTitle={handleEditTitle(ad.id)}
+                language={i18n.language as "en" | "fa"}
+              />
+            ))}
+          </Box>
+        </>
+      )}
     </div>
   );
 };
 
 export default AdList;
-
-// import React, { useState } from 'react';
-// import EditAdCard from '../AdCard/EditAdCard.tsx';
-
-// const AdList = () => {
-//   const [ads, setAds] = useState([
-//     {
-//       id: 1,
-//       title: 'فلان عنوان',
-//       price: '۹۰۰۰۰',
-//       category: 'لپتاپ',
-//       date: '۱۴۰۳/۱۲/۱۴',
-//       description: 'لپتاپ خوبی است.',
-//       images: [
-//         '/path/to/image1.jpg',
-//         '/path/to/image2.jpg',
-//         '/path/to/image3.jpg',
-//       ],
-//       status: 'فعال',
-//     },
-//   ]);
-
-//   const handleEdit = (id: number, updatedData: any) => {
-//     setAds((prevAds) =>
-//       prevAds.map((ad) => (ad.id === id ? { ...ad, ...updatedData } : ad))
-//     );
-//   };
-
-//   const handleDelete = (id: number) => {
-//     setAds((prevAds) => prevAds.filter((ad) => ad.id !== id));
-//   };
-
-//   return (
-//     <div style={{ padding: '20px' }}>
-//       {ads.map((ad) => (
-//         <EditAdCard
-//           key={ad.id}
-//           title={ad.title}
-//           price={ad.price}
-//           category={ad.category}
-//           date={ad.date}
-//           description={ad.description}
-//           images={ad.images}
-//           status={ad.status}
-//           onEdit={(updatedData) => handleEdit(ad.id, updatedData)}
-//           onDelete={() => handleDelete(ad.id)}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default AdList;
