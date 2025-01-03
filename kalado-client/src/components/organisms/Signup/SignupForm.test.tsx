@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignupForm from './SignupForm';
-import { signupUser } from '../../../services/SignupService';
+import { signupUser } from '../../../api/services/SignupService';
 import { toast } from 'react-toastify';
 
 // Mocking the signupUser service

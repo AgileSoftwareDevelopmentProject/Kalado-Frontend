@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomCheckBox, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { signupUser } from '../../../services/SignupService';
+import { signupUser } from '../../../api/services/SignupService';
 import { toast } from 'react-toastify';
 import { validatePassword, validatePhoneNumber } from '../../../validators';
 
