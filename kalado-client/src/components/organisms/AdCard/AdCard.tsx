@@ -135,7 +135,7 @@ const AdCard: React.FC<AdCardProps> = ({
         >
           <Typography
             variant="subtitle1"
-            sx={{ marginRight: '10px', color: '#000', fontSize: '1rem' }}
+            sx={{ marginRight: '10px', fontSize: '1rem' }}
           >
             {t('ad_list.ad_status.label')}:
           </Typography>
@@ -148,7 +148,7 @@ const AdCard: React.FC<AdCardProps> = ({
               maxWidth: '200px',
               fontSize: '1rem',
               '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-              '& .MuiSvgIcon-root': { color: '#000' },
+              '& .MuiSvgIcon-root': {},
             }}
             inputProps={{
               'aria-label': t('ad_list.ad_status.dropdown'),
@@ -214,7 +214,6 @@ const AdCard: React.FC<AdCardProps> = ({
               onClick={handleDeleteConfirm}
               sx={{
                 backgroundColor: 'green',
-                color: '#fff',
                 width: '50px',
                 height: '50px',
                 borderRadius: '50%',
@@ -227,7 +226,6 @@ const AdCard: React.FC<AdCardProps> = ({
               onClick={() => setIsDeleteDialogOpen(false)}
               sx={{
                 backgroundColor: 'red',
-                color: '#fff',
                 width: '50px',
                 height: '50px',
                 borderRadius: '50%',

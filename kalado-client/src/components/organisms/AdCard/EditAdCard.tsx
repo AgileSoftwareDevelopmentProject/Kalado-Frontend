@@ -130,7 +130,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
               position: "absolute",
               top: "-8px",
               right: "-8px",
-              backgroundColor: "#fff",
               border: "1px solid #ccc",
             }}
           >
@@ -155,7 +154,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   return (
     <Card
       sx={{
-        backgroundColor: "#f9f9f9",
         padding: "30px",
         borderRadius: "20px",
         boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.15)",
@@ -177,7 +175,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           )}
           <Typography
             variant="subtitle1"
-            sx={{ color: "#555", marginTop: "5px" }}
+            sx={{ marginTop: "5px" }}
           >
             {resources[language]?.ad_list?.ad_status?.[formData.status] || formData.status}
           </Typography>
