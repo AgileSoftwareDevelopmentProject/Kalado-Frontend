@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ReportSubmissionModal, ItemDetailsCard } from '../../components/organisms';
-import { getSingleProduct } from '../../services/getSingleProductService';
+import { getSingleProduct } from '../../services/product/getSingleProductService';
 
 interface Item {
     title: string;
