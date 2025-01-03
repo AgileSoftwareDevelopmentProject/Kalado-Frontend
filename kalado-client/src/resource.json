@@ -161,7 +161,8 @@
                 "empty_product_list": "No Ad Submitted in the Selected Category"
             },
             "item_details": {
-                "not_found": "Item not found"
+                "not_found": "Item not found",
+                "disable_report_submiision": "For Submitting a Report, Login to your Account"
             },
             "profile_management": {
                 "save_failed": "Error Ocurred during Saving your Changes"
@@ -339,7 +340,8 @@
                 "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
             },
             "item_details": {
-                "not_found": "کالای مورد نظر پیدا نشد"
+                "not_found": "کالای مورد نظر پیدا نشد",
+                "disable_report_submiision": "برای ثبت تخلف ابتدا وارد حساب کاربری خود شوید"
             },
             "profile_management": {
                 "save_failed": "خطایی در ذخیره‌ی تغییرات اطلاعات رخ داد"

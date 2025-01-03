@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ReportSubmissionModal, ItemDetailsCard } from '../../components/organisms';
-import { getSingleProduct } from '../../services/getSingleProductService';
+import { getSingleProduct } from '../../services/product/getSingleProductService';
+import { useAuth } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 interface Item {
     title: string;
@@ -24,6 +26,8 @@ const ItemDetails: React.FC = () => {
     const [error, setError] = useState<string>('');
     const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
 
+    const { token } = useAuth();
+
     useEffect(() => {
         const fetchItem = async () => {
             try {
@@ -39,6 +43,14 @@ const ItemDetails: React.FC = () => {
 
         fetchItem();
     }, [itemId, t]);
+
+    const handleOpenReportSubmission = () => {
+        if (!token) {
+            toast.error(t("error.item_details.disable_report_submiision"));
+            return;
+        }
+        setReportSubmissionVisible(true);
+    };
 
     if (loading) {
         return <CircularProgress />;
@@ -71,7 +83,7 @@ const ItemDetails: React.FC = () => {
 
             <ItemDetailsCard
                 item={item}
-                setReportSubmissionVisible={setReportSubmissionVisible}
+                onReportSubmissionClick={handleOpenReportSubmission}
             />
 
             <ReportSubmissionModal

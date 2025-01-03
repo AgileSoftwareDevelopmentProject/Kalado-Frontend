@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { CustomButton } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdModal, ReportSubmissionModal } from '../../components/organisms';
-import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
+import { SideBarMenu, ProfileManagement, AdManagement, NavBar, CreateAdModal, ReportSubmissionModal } from '../../components/organisms';
+import { FaUser, FaAd } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,7 +24,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
     const userCategories = [
         { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
         { title: t("dashboard.user.menu.two"), icon: <FaAd /> },
-        { title: t("dashboard.user.menu.three"), icon: <FaHistory /> },
     ];
 
     const handleSelectMenu = (menuTitle: string) => {
@@ -42,10 +41,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
                 return <ProfileManagement />;
             case t("dashboard.user.menu.two"):
                 return <AdManagement />;
-            case t("dashboard.user.menu.three"):
-                return <ReportHistory />;
-            default:
-                return null;
         }
     };
 

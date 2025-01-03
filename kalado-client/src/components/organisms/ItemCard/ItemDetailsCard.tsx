@@ -22,10 +22,10 @@ interface Item {
 
 interface ItemDetailsCardProps {
     item: Item;
-    setReportSubmissionVisible: any;
+    onReportSubmissionClick: () => void;
 }
 
-const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, setReportSubmissionVisible }) => {
+const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmissionClick }) => {
     const { t } = useTranslation();
 
     const copyToClipboard = (phoneNumber: string) => {
@@ -97,7 +97,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, setReportSubmis
             </Box >
             <CustomButton
                 text={t("item_details.report_submission_btn")}
-                onClick={() => setReportSubmissionVisible(true)}
+                onClick={onReportSubmissionClick}
             />
         </Card >
     );
