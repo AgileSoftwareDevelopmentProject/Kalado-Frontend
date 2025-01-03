@@ -9,6 +9,7 @@ interface EmailInputProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
     disabled?: boolean;
+    isValidatorActive?: boolean;
 }
 
 const EmailInput: React.FC<EmailInputProps> = ({
@@ -17,17 +18,18 @@ const EmailInput: React.FC<EmailInputProps> = ({
     onChange,
     isRequired = true,
     disabled = false,
+    isValidatorActive = false,
 }) => {
     const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.email');
-    const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
 
     useEffect(() => {
-        const validationResult = validateEmail(value, t);
-        setError(!validationResult.valid);
-        setHelperText(validationResult.error);
-    }, [value, t]);
+        if (isValidatorActive) {
+            const validationResult = validateEmail(value, t);
+            setHelperText(validationResult.error);
+        }
+    }, [value, t, isValidatorActive]);
 
     return (
         <TextField
@@ -40,8 +42,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             disabled={disabled}
             variant="standard"
             margin="normal"
-            error={error}
-            helperText={error ? helperText : ''}
+            helperText={helperText}
             sx={{
                 width: '70%',
                 '& .MuiFormHelperText-root': {

@@ -32,6 +32,7 @@ const ItemDetails: React.FC = () => {
         const fetchItem = async () => {
             try {
                 setLoading(true);
+                // getSingleProduct API call
                 const fetchedItem = await getSingleProduct(itemId!);
                 setItem(fetchedItem);
             } catch (err) {
@@ -52,24 +53,6 @@ const ItemDetails: React.FC = () => {
         setReportSubmissionVisible(true);
     };
 
-    if (loading) {
-        return <CircularProgress />;
-    }
-
-    if (!item || error) {
-        return (<Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '100vh',
-                p: 2,
-            }}
-        >
-            <Typography variant="h6">{t("item_details.not_found")}</Typography>;
-        </Box >)
-    }
-
     return (
         <Box
             sx={{
@@ -80,16 +63,27 @@ const ItemDetails: React.FC = () => {
                 p: 2,
             }}
         >
+            {
+                (loading) && (<CircularProgress />)
+            }
 
-            <ItemDetailsCard
-                item={item}
-                onReportSubmissionClick={handleOpenReportSubmission}
-            />
+            {
+                (!item || error) &&
+                (<Typography variant="h6">{t("item_details.not_found")}</Typography>)
+            }
+            {
+                <>
+                    <ItemDetailsCard
+                        item={item}
+                        onReportSubmissionClick={handleOpenReportSubmission}
+                    />
 
-            <ReportSubmissionModal
-                open={isReportSubmissionVisible}
-                onClose={() => setReportSubmissionVisible(false)}
-            />
+                    <ReportSubmissionModal
+                        open={isReportSubmissionVisible}
+                        onClose={() => setReportSubmissionVisible(false)}
+                    />
+                </>
+            }
         </Box >
     );
 };

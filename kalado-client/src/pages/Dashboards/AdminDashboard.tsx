@@ -7,15 +7,11 @@ import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-interface AdminDashboardProps {
-    toggleTheme: () => void;
-    isDarkMode: boolean;
-}
 
-const AdminDashboard: React.FC<AdminDashboardProps> = ({ toggleTheme, isDarkMode }) => {
+const AdminDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const { setToken } = useAuth();
     const navigate = useNavigate();
+    const { setToken } = useAuth();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.admin.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
 
@@ -49,8 +45,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ toggleTheme, isDarkMode
         <Box>
             <NavBar
                 onCreateAdClick={() => setCreateAdVisible(true)}
-                toggleTheme={toggleTheme}
-                isDarkMode={isDarkMode}
                 isInProfile={true}
                 onLogoutClick={handleLogoutClick}
             />

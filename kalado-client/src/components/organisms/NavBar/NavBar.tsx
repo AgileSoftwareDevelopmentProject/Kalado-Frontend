@@ -6,14 +6,13 @@ import { SearchBar } from '../../molecules';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useAuth } from '../../../contexts/AuthContext';
+import { useThemeContext } from '../../../contexts/ThemeContext';
 
 interface NavBarProps {
   onLoginClick?: () => void;
   onCreateAdClick: () => void;
   onProfileClick?: () => void;
   onLogoutClick?: () => void;
-  toggleTheme: () => void;
-  isDarkMode: boolean;
   isInProfile?: boolean;
 }
 
@@ -22,12 +21,11 @@ const NavBar: React.FC<NavBarProps> = ({
   onCreateAdClick,
   onProfileClick,
   onLogoutClick,
-  toggleTheme,
-  isDarkMode,
   isInProfile
 }) => {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
+  const { isDarkMode, toggleTheme } = useThemeContext();
   const { token } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -47,7 +45,7 @@ const NavBar: React.FC<NavBarProps> = ({
       position="fixed"
       sx={{
         width: '100%',
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: theme.palette.background.paper,
         boxShadow: 'none'
       }}
     >

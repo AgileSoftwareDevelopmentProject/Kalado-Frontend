@@ -12,6 +12,7 @@ interface PasswordInputProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
+    isValidatorActive?: boolean;
 }
 
 const PasswordInput: React.FC<PasswordInputProps> = ({
@@ -19,20 +20,22 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
     placeholder,
     value,
     onChange,
-    isRequired = true
+    isRequired = true,
+    isValidatorActive = false,
 }) => {
     const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.password');
-    const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
+    const [isVisible, setIsVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        const validationResult = validatePassword(value, t);
-        setError(!validationResult.valid);
-        setHelperText(validationResult.error);
-    }, [value, t]);
+        if (isValidatorActive) {
+            const validationResult = validatePassword(value, t);
+            setHelperText(validationResult.error);
+        }
+    }, [value, t, isValidatorActive]);
 
-    const [isVisible, setIsVisible] = useState<boolean>(false);
+
     const handleToggleVisibility = () => {
         setIsVisible(prev => !prev);
     };
@@ -47,8 +50,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
             required={isRequired}
             variant="standard"
             margin="normal"
-            error={error}
-            helperText={error ? helperText : ''}
+            helperText={helperText}
             sx={{
                 width: '70%',
                 '& .MuiFormHelperText-root': {

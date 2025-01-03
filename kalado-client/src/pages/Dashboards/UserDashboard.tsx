@@ -8,16 +8,12 @@ import { FaUser, FaAd } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-interface UserDashboardProps {
-    toggleTheme: () => void;
-    isDarkMode: boolean;
-}
 
-const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }) => {
+const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const { setToken } = useAuth();
     const navigate = useNavigate();
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.user.menu.one"));
+    const { setToken } = useAuth();
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
 
@@ -48,8 +44,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
         <Box>
             <NavBar
                 onCreateAdClick={() => setCreateAdVisible(true)}
-                toggleTheme={toggleTheme}
-                isDarkMode={isDarkMode}
                 isInProfile={true}
                 onLogoutClick={handleLogoutClick}
             />
@@ -63,7 +57,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
                 <CustomButton
                     text={t("item_details.report_submission_btn")}
                     onClick={() => setReportSubmissionVisible(true)}
-                    sx={{ marginTop: 'auto' }}
                 />
             </SideBar>
 

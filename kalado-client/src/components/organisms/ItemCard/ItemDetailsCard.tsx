@@ -8,6 +8,7 @@ import CityIcon from '@mui/icons-material/LocationOn';
 import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
+import { toast } from 'react-toastify';
 
 interface Item {
     title: string;
@@ -21,7 +22,7 @@ interface Item {
 }
 
 interface ItemDetailsCardProps {
-    item: Item;
+    item: Item | null;
     onReportSubmissionClick: () => void;
 }
 
@@ -31,10 +32,10 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmiss
     const copyToClipboard = (phoneNumber: string) => {
         navigator.clipboard.writeText(phoneNumber)
             .then(() => {
-                alert(`Phone number ${phoneNumber} copied to clipboard!`);
+                toast(t("success.copy_phone_number"));
             })
             .catch(err => {
-                console.error('Failed to copy: ', err);
+                toast(t('error.item_details.copy_phone_number_failed'));
             });
     };
 
