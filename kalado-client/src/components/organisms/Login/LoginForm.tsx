@@ -34,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setToken('1234');
+
         if (validateUserInputs()) {
             // Login API call
             const response = await loginUser(formData.email, formData.password);
