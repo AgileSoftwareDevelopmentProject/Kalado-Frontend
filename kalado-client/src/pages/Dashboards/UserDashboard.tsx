@@ -25,7 +25,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
   const userCategories = [
     { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
     { title: t("dashboard.user.menu.two"), icon: <FaAd /> },
-    { title: t("dashboard.user.menu.thre"), icon: <FaHistory /> },
+    // { title: t("dashboard.user.menu.thre"), icon: <FaHistory /> },
   ];
 
   const handleOpenCreateAd = () => setCreateAdVisible(true);
