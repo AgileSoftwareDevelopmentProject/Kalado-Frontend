@@ -144,7 +144,8 @@
                 },
                 "invalid_phone_number": "Enter a Valid Phone Number",
                 "invalid_image": {
-                    "max_size": "Don't Choose Image with Size Bigger than 1 Mb"
+                    "max_size": "The file size should not exceed 1 MB",
+                    "invalid_type": "Only Image Files are Allowed"
                 }
             },
             "create_ad": {
@@ -297,7 +298,8 @@
                 },
                 "invalid_phone_number": "لطفاً یک شماره تلفن معتبر وارد کنید",
                 "invalid_image": {
-                    "max_size": "لطفاً تصویری با حجم کمتر از ۱ مگابایت انتخاب کنید"
+                    "max_size": "حجم فایل نباید بیشتر از 1 مگابایت باشد",
+                    "invalid_type": "فقط فایل‌های تصویری مجاز هستند"
                 }
             },
             "create_ad": {

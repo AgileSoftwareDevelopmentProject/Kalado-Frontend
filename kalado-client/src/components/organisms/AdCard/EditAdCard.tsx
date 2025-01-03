@@ -13,6 +13,8 @@ import {
 import { Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
 
 type EditAdCardProps = {
@@ -59,10 +61,29 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newImages = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      handleChange("images", [...formData.images, ...newImages]);
+        const validImages: string[] = [];
+
+        Array.from(e.target.files).forEach((file) => {
+            if (!file.type.startsWith("image/")) {
+                toast.error(
+                    resources[language]?.error?.input?.invalid_image?.invalid_type || "Only image files are allowed."
+                );
+                return;
+            }
+
+            if (file.size > 1024 * 1024) {
+                toast.error(
+                    resources[language]?.error?.input?.invalid_image?.max_size || "File size must not exceed 1 MB."
+                );
+                return;
+            }
+
+            validImages.push(URL.createObjectURL(file));
+        });
+
+        if (validImages.length > 0) {
+            handleChange("images", [...formData.images, ...validImages]);
+        }
     }
   };
 
@@ -86,6 +107,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
       images,
     });
     setIsEditing(false);
+    toast.success(resources[language]?.ad_list?.save_success || "Changes saved successfully.");
   };
 
   const renderImages = () =>
