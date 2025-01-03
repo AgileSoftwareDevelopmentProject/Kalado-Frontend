@@ -149,7 +149,7 @@ const UserManagement: React.FC = () => {
                       handleStatusChange(user.id, event.target.value as "Allowed" | "Blocked")
                     }
                     sx={{
-                      minWidth: 120,
+                      minWidth: 150,
                       borderRadius: 2,
                     }}
                   >

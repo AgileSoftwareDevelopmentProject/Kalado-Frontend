@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import ReportCard from "./ReportCard";
+import ReportCard from "./UserCard";
 
 type Report = {
   id: number;
