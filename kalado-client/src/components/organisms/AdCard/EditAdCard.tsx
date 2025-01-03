@@ -9,6 +9,7 @@ import {
   MenuItem,
   Select,
   Divider,
+  InputAdornment, 
 } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -16,6 +17,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
+import { useTranslation } from "react-i18next";
 
 type EditAdCardProps = {
   title: string;
@@ -50,7 +52,9 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
     status,
     images,
   });
-  const [language] = useState<"en" | "fa">("fa");
+  const { i18n } = useTranslation();
+  const language = i18n.language as "en" | "fa"; 
+  const isRtl = language === "fa";
 
   const handleChange = (
     field: string,
@@ -159,9 +163,17 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
         boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.15)",
         maxWidth: "900px",
         margin: "20px auto",
+        direction: isRtl ? "rtl" : "ltr",
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          textAlign: isRtl ? "right" : "left",
+        }}
+      >
         <Box>
           {isEditing ? (
             <TextField
@@ -169,14 +181,12 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
               onChange={(e) => handleChange("title", e.target.value)}
               variant="outlined"
               size="small"
+              sx={{ textAlign: isRtl ? "right" : "left" }}
             />
           ) : (
             <Typography variant="h5">{formData.title}</Typography>
           )}
-          <Typography
-            variant="subtitle1"
-            sx={{ marginTop: "5px" }}
-          >
+          <Typography variant="subtitle1" sx={{ marginTop: "5px" }}>
             {resources[language]?.ad_list?.ad_status?.[formData.status] || formData.status}
           </Typography>
         </Box>
@@ -193,96 +203,71 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
       <Divider sx={{ marginY: "20px" }} />
 
       <Box sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "15px" }}>
-        <Typography>{resources[language]?.general_inputs.price}:</Typography>
-        {isEditing ? (
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <TextField
-              value={formData.price}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (/^\d*$/.test(value)) {
-                  handleChange("price", value);
-                }
-              }}
-              fullWidth
-              variant="outlined"
-              size="small"
-              inputProps={{
-                inputMode: "numeric",
-                pattern: "[0-9]*",
-              }}
-            />
-            <Typography sx={{ marginLeft: "10px" }}>{resources[language]?.currency || "Toman"}</Typography>
-          </Box>
-        ) : (
-          <Typography>{formData.price} {resources[language]?.currency || "Toman"}</Typography>
-        )}
+        <Typography>{resources[language]?.general_inputs.price}</Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <TextField
+          value={formData.price}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (/^\d*$/.test(value)) {
+              handleChange("price", value);
+            }
+          }}
+          fullWidth
+          variant="outlined"
+          size="small"
+          inputProps={{
+            inputMode: "numeric",
+            pattern: "[0-9]*",
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                {resources[language]?.currency || (language === "fa" ? "تومان" : "Toman")}
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+        <Typography>{resources[language]?.create_ad.input.category}</Typography>
+        <Select
+          value={formData.category}
+          onChange={(e) => handleChange("category", e.target.value)}
+          fullWidth
+          displayEmpty
+          sx={{ direction: isRtl ? "rtl" : "ltr" }}
+        >
+          {Object.keys(categories || {}).filter((key) => key !== "title").map((key) => (
+            <MenuItem key={key} value={key}>
+              {categories[key as keyof typeof categories]}
+            </MenuItem>
+          ))}
+        </Select>
 
-        <Typography>{resources[language]?.create_ad.input.category}:</Typography>
-        {isEditing ? (
-          <Select
-            value={formData.category}
-            onChange={(e) => handleChange("category", e.target.value)}
-            fullWidth
-            displayEmpty
-            sx={{
-              "& .MuiSelect-select": {
-                paddingRight: "0px",
-              },
-              "& .MuiSvgIcon-root": {
-                right: "0px",
-              },
-            }}
-          >
-            {Object.keys(categories || {})
-              .filter((key) => key !== "title")
-              .map((key) => (
-                <MenuItem key={key} value={key}>
-                  {categories[key as keyof typeof categories]}
-                </MenuItem>
-              ))}
-          </Select>
-        ) : (
-          <Typography>
-            {categories?.[formData.category as keyof typeof categories]}
-          </Typography>
-        )}
-
-        <Typography>{resources[language]?.general_inputs.date}:</Typography>
-        {isEditing ? (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-              value={formData.date}
-              onChange={(newDate) => handleChange("date", newDate)}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
-        ) : (
-          <Typography>{(formData.date as Date).toLocaleDateString()}</Typography>
-        )}
-
-        <Typography>{resources[language]?.general_inputs.description}:</Typography>
-        {isEditing ? (
-          <TextField
-            value={formData.description}
-            onChange={(e) => {
-              if (e.target.value.length <= 500) {
-                handleChange("description", e.target.value);
-              }
-            }}
-            fullWidth
-            multiline
-            rows={3}
-            helperText={`${formData.description.length}/500`}
+        <Typography>{resources[language]?.general_inputs.date}</Typography>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            value={formData.date}
+            onChange={(newDate) => handleChange("date", newDate)}
+            renderInput={(params) => <TextField {...params} />}
           />
-        ) : (
-          <Typography>{formData.description}</Typography>
-        )}
+        </LocalizationProvider>
+
+        <Typography>{resources[language]?.general_inputs.description}</Typography>
+        <TextField
+          value={formData.description}
+          onChange={(e) => handleChange("description", e.target.value)}
+          fullWidth
+          multiline
+          rows={3}
+          helperText={`${formData.description.length}/500`}
+          sx={{ textAlign: isRtl ? "right" : "left" }}
+        />
       </Box>
 
       <Divider sx={{ marginY: "20px" }} />
 
-      <Typography>{resources[language]?.general_inputs.add_image}:</Typography>
+      <Typography>{resources[language]?.general_inputs.add_image}</Typography>
       <Box
         sx={{
           display: "flex",

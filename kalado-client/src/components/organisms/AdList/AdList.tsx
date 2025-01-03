@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import AdCard from "../AdCard/AdCard";
 import EditAdCard from "../AdCard/EditAdCard";
 import { useTranslation } from "react-i18next";
-import { Typography, Box, Button } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Typography, Box } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material";
 
 const AdList = () => {
@@ -16,6 +15,9 @@ const AdList = () => {
   ]);
   const [editingAdId, setEditingAdId] = useState<number | null>(null);
   const [previousAdState, setPreviousAdState] = useState<any | null>(null);
+
+  const language = i18n.language as "en" | "fa";
+  const isRtl = language === "fa";
 
   useEffect(() => {
     setAds((prevAds) =>
@@ -74,7 +76,7 @@ const AdList = () => {
   const editingAd = ads.find((ad) => ad.id === editingAdId);
 
   return (
-    <div style={{ padding: "20px", direction: "rtl" }}>
+    <div style={{ padding: "20px", direction: isRtl ? "rtl" : "ltr" }}>
       {editingAd ? (
         <>
           <EditAdCard
@@ -93,21 +95,22 @@ const AdList = () => {
         </>
       ) : (
         <>
-          {/* Heading for Ad List */}
-          <Box sx={{ marginBottom: "50px", textAlign: "right" }}>
+          <Box
+            sx={{
+              marginBottom: "50px",
+              textAlign: isRtl ? "right" : "left",
+            }}
+          >
             <Typography
               variant="h5"
               sx={{
                 fontWeight: "bold",
-                color: "#FFF",
                 marginBottom: "15px",
               }}
             >
               {t("ad_list.heading")}
             </Typography>
           </Box>
-
-          {/* List of Ad Cards */}
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             {ads.map((ad) => (
               <AdCard
@@ -118,6 +121,7 @@ const AdList = () => {
                 onDelete={() => handleDelete(ad.id)}
                 onEdit={() => handleEdit(ad.id)}
                 onEditTitle={handleEditTitle(ad.id)}
+                language={i18n.language as "en" | "fa"}
               />
             ))}
           </Box>

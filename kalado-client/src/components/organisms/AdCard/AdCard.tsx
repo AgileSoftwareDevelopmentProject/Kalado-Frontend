@@ -25,6 +25,7 @@ type AdCardProps = {
   onDelete: () => void;
   onEditTitle: (newTitle: string) => void;
   onEdit: () => void;
+  language: "en" | "fa";
 };
 
 const AdCard: React.FC<AdCardProps> = ({
@@ -205,7 +206,7 @@ const AdCard: React.FC<AdCardProps> = ({
         >
           <Typography
             variant="h6"
-            sx={{ textAlign: 'center' }}
+            sx={{ textAlign: 'center', fontWeight: 'bold' }}
           >
             {t('ad_list.delete_confirmation.title')}
           </Typography>
@@ -219,6 +220,7 @@ const AdCard: React.FC<AdCardProps> = ({
                 borderRadius: '50%',
                 '&:hover': { backgroundColor: '#66bb66' },
               }}
+              aria-label={t('ad_list.buttons.confirm')}
             >
               <CheckIcon />
             </IconButton>
@@ -231,6 +233,7 @@ const AdCard: React.FC<AdCardProps> = ({
                 borderRadius: '50%',
                 '&:hover': { backgroundColor: '#ff4d4d' },
               }}
+              aria-label={t('ad_list.buttons.cancel')}
             >
               <CloseIcon />
             </IconButton>
