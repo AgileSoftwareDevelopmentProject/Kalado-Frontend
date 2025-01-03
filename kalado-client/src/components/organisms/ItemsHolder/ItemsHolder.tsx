@@ -5,7 +5,7 @@ import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
 import { getProductsByCategory } from '../../../services/product/getProductsByCategoryService';
 import defaultImage from '../../../assets/images/no-image.png';
-import mockData from '../../../mockData.json';
+import { tr } from 'date-fns/locale';
 
 interface Item {
     title: string;
@@ -31,6 +31,8 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
     useEffect(() => {
         const loadItems = async () => {
             try {
+                setLoading(true);
+                // getProductByCategory API call
                 const fetchedData = getProductsByCategory(selectedCategoryTitle);
                 const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
                 setItems(fetchedItems as Item[]);
@@ -43,24 +45,6 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
 
         loadItems();
     }, []);
-
-    if (loading) {
-        return (
-            <ProductListBox>
-                <CircularProgress />
-            </ProductListBox>
-        );
-    }
-
-    if (items.length === 0) {
-        return (
-            <ProductListBox>
-                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                    {error ? error : t("error.landing.empty_product_list")}
-                </Typography>
-            </ProductListBox>
-        );
-    }
 
     const sortedItems = () => {
         return [...items].sort((a, b) => {
@@ -83,43 +67,59 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
 
     return (
         <ProductListBox>
-            <ItemSort
-                sortOption={sortOption}
-                setSortOption={(e) => setSortOption(e.target.value as string)}
-            />
+            {
+                (loading) && (<CircularProgress />)
+            }
 
-            <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                {selectedCategoryTitle}
-            </Typography>
+            {
+                (items.length === 0) &&
+                (<Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+                    {error ? error : t("error.landing.empty_product_list")}
+                </Typography>)
+            }
 
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    gap: 2,
-                    flexGrow: 1,
-                }}
-            >
-                {displayedItems.map(item => (
+            {
+                (items.length !== 0) && (!!error) &&
+                <>
+                    <ItemSort
+                        sortOption={sortOption}
+                        setSortOption={(e) => setSortOption(e.target.value as string)}
+                    />
+
+                    <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+                        {selectedCategoryTitle}
+                    </Typography>
+
                     <Box
-                        key={item.itemId}
                         sx={{
-                            flexBasis: { xs: '100%', sm: '48%', md: '30%' },
-                            mb: 2,
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            justifyContent: 'space-between',
+                            gap: 2,
+                            flexGrow: 1,
                         }}
                     >
-                        <ItemCard
-                            title={item.title}
-                            price={`${item.price.toLocaleString()} ${t("currency")} `}
-                            city={item.city}
-                            date={item.date}
-                            image={item.imageUrl || defaultImage}
-                            onClick={() => onItemSelect(item.itemId)}
-                        />
+                        {displayedItems.map(item => (
+                            <Box
+                                key={item.itemId}
+                                sx={{
+                                    flexBasis: { xs: '100%', sm: '48%', md: '30%' },
+                                    mb: 2,
+                                }}
+                            >
+                                <ItemCard
+                                    title={item.title}
+                                    price={`${item.price.toLocaleString()} ${t("currency")} `}
+                                    city={item.city}
+                                    date={item.date}
+                                    image={item.imageUrl || defaultImage}
+                                    onClick={() => onItemSelect(item.itemId)}
+                                />
+                            </Box>
+                        ))}
                     </Box>
-                ))}
-            </Box>
+                </>
+            }
         </ProductListBox>
     );
 };

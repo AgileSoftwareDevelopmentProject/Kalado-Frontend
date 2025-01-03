@@ -161,10 +161,13 @@
                 "empty_product_list": "No Ad Submitted in the Selected Category"
             },
             "item_details": {
-                "not_found": "Item not found"
+                "not_found": "Item not found",
+                "disable_report_submiision": "For Submitting a Report, Login to your Account",
+                "copy_phone_number_failed": "Failed to Copy Seller's Phone Number"
             },
             "profile_management": {
-                "save_failed": "Error Ocurred during Saving your Changes"
+                "save_failed": "Error Ocurred during Saving your Changes",
+                "retrive_failed": "Error Ocurred during Retrive you Profile Information"
             }
         },
         "success": {
@@ -173,7 +176,8 @@
             "login": "Logined Successfully",
             "create_ad": "Ad Created Successfully",
             "report": "Report Submitted Successfully",
-            "profile_management": "Changes Saved Successfully"
+            "profile_management": "Changes Saved Successfully",
+            "copy_phone_number": "Seller's Phone Number Copied Successfully"
         }
     },
     "fa": {
@@ -339,10 +343,13 @@
                 "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
             },
             "item_details": {
-                "not_found": "کالای مورد نظر پیدا نشد"
+                "not_found": "کالای مورد نظر پیدا نشد",
+                "disable_report_submiision": "برای ثبت تخلف ابتدا وارد حساب کاربری خود شوید",
+                "copy_phone_number_failed": "خطایی در کپی کردن شماره تلفن خریدار رخ داد"
             },
             "profile_management": {
-                "save_failed": "خطایی در ذخیره‌ی تغییرات اطلاعات رخ داد"
+                "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد",
+                "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد"
             }
         },
         "success": {
@@ -351,7 +358,8 @@
             "login": "با موفقیت وارد شدید",
             "create_ad": "آگهی شما با موفقیت ثبت شد",
             "report": "گزارش تخلف شما با موفقیت ثبت شد",
-            "profile_management": "تغییرات شما با موفقیت ذخیره شد"
+            "profile_management": "تغییرات شما با موفقیت ذخیره شد",
+            "copy_phone_number": "شماره تلفن خریدار با موفقیت کپی شد"
         }
     }
 }

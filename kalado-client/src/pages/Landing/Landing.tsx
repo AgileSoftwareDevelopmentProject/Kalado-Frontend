@@ -8,12 +8,7 @@ import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaUtensils } from 'reac
 import { toast } from 'react-toastify';
 import { useAuth } from '../../contexts/AuthContext';
 
-interface LandingProps {
-    toggleTheme: () => void;
-    isDarkMode: boolean;
-}
-
-const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
+const Landing: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [isLoginVisible, setLoginVisible] = useState(false);
@@ -21,7 +16,6 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
-
     const { token, userRole } = useAuth();
 
     const categories = [
@@ -80,8 +74,6 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
                 onLoginClick={() => setLoginVisible(true)}
                 onCreateAdClick={handleOpenCreateAd}
                 onProfileClick={handleOpenProfilePage}
-                toggleTheme={toggleTheme}
-                isDarkMode={isDarkMode}
             />
 
             <SideBar>

@@ -3,28 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { CustomButton } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, ReportHistory, NavBar, CreateAdModal, ReportSubmissionModal } from '../../components/organisms';
-import { FaUser, FaAd, FaHistory } from 'react-icons/fa';
+import { SideBarMenu, ProfileManagement, AdManagement, NavBar, CreateAdModal, ReportSubmissionModal } from '../../components/organisms';
+import { FaUser, FaAd } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-interface UserDashboardProps {
-    toggleTheme: () => void;
-    isDarkMode: boolean;
-}
 
-const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }) => {
+const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const { setToken } = useAuth();
     const navigate = useNavigate();
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string | null>(t("dashboard.user.menu.one"));
+    const { setToken } = useAuth();
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
 
     const userCategories = [
         { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
         { title: t("dashboard.user.menu.two"), icon: <FaAd /> },
-        { title: t("dashboard.user.menu.three"), icon: <FaHistory /> },
     ];
 
     const handleSelectMenu = (menuTitle: string) => {
@@ -42,10 +37,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
                 return <ProfileManagement />;
             case t("dashboard.user.menu.two"):
                 return <AdManagement />;
-            case t("dashboard.user.menu.three"):
-                return <ReportHistory />;
-            default:
-                return null;
         }
     };
 
@@ -53,8 +44,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
         <Box>
             <NavBar
                 onCreateAdClick={() => setCreateAdVisible(true)}
-                toggleTheme={toggleTheme}
-                isDarkMode={isDarkMode}
                 isInProfile={true}
                 onLogoutClick={handleLogoutClick}
             />
@@ -68,7 +57,6 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ toggleTheme, isDarkMode }
                 <CustomButton
                     text={t("item_details.report_submission_btn")}
                     onClick={() => setReportSubmissionVisible(true)}
-                    sx={{ marginTop: 'auto' }}
                 />
             </SideBar>
 

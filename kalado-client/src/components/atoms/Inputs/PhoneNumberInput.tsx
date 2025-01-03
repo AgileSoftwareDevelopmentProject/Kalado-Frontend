@@ -18,12 +18,10 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
 }) => {
     const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.phone_number');
-    const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
 
     useEffect(() => {
         const validationResult = validatePhoneNumber(value, t);
-        setError(!validationResult.valid);
         setHelperText(validationResult.error);
     }, [value, t]);
 
@@ -37,8 +35,7 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             required={isRequired}
             variant="standard"
             margin="normal"
-            error={error}
-            helperText={error ? helperText : ''}
+            helperText={helperText}
             sx={{
                 width: '70%',
                 '& .MuiFormHelperText-root': {

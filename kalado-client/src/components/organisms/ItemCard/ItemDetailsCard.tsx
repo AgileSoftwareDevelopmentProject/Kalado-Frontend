@@ -8,6 +8,7 @@ import CityIcon from '@mui/icons-material/LocationOn';
 import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
+import { toast } from 'react-toastify';
 
 interface Item {
     title: string;
@@ -22,19 +23,19 @@ interface Item {
 
 interface ItemDetailsCardProps {
     item: Item;
-    setReportSubmissionVisible: any;
+    onReportSubmissionClick: () => void;
 }
 
-const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, setReportSubmissionVisible }) => {
+const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmissionClick }) => {
     const { t } = useTranslation();
 
     const copyToClipboard = (phoneNumber: string) => {
         navigator.clipboard.writeText(phoneNumber)
             .then(() => {
-                alert(`Phone number ${phoneNumber} copied to clipboard!`);
+                toast(t("success.copy_phone_number"));
             })
             .catch(err => {
-                console.error('Failed to copy: ', err);
+                toast(t('error.item_details.copy_phone_number_failed'));
             });
     };
 
@@ -97,7 +98,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, setReportSubmis
             </Box >
             <CustomButton
                 text={t("item_details.report_submission_btn")}
-                onClick={() => setReportSubmissionVisible(true)}
+                onClick={onReportSubmissionClick}
             />
         </Card >
     );
