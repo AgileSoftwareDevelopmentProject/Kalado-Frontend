@@ -22,7 +22,7 @@ interface Item {
 }
 
 interface ItemDetailsCardProps {
-    item: Item | null;
+    item: Item;
     onReportSubmissionClick: () => void;
 }
 
