@@ -107,7 +107,8 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
       images,
     });
     setIsEditing(false);
-    toast.success(resources[language]?.ad_list?.save_success || "Changes saved successfully.");
+    const successMessage = resources[language]?.ad_list?.save_success || (language === "fa" ? "تغییرات با موفقیت ذخیره شد." : "Changes saved successfully.");
+    toast.success(successMessage);
   };
 
   const renderImages = () =>
@@ -196,24 +197,27 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
       <Box sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "15px" }}>
         <Typography>{resources[language]?.general_inputs.price}:</Typography>
         {isEditing ? (
-          <TextField
-            value={formData.price}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^\d*$/.test(value)) {
-                handleChange("price", value);
-              }
-            }}
-            fullWidth
-            variant="outlined"
-            size="small"
-            inputProps={{
-              inputMode: "numeric",
-              pattern: "[0-9]*",
-            }}
-          />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <TextField
+              value={formData.price}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) {
+                  handleChange("price", value);
+                }
+              }}
+              fullWidth
+              variant="outlined"
+              size="small"
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+              }}
+            />
+            <Typography sx={{ marginLeft: "10px" }}>{resources[language]?.currency || "Toman"}</Typography>
+          </Box>
         ) : (
-          <Typography>{formData.price}</Typography>
+          <Typography>{formData.price} {resources[language]?.currency || "Toman"}</Typography>
         )}
 
         <Typography>{resources[language]?.create_ad.input.category}:</Typography>
@@ -263,10 +267,15 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
         {isEditing ? (
           <TextField
             value={formData.description}
-            onChange={(e) => handleChange("description", e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length <= 500) {
+                handleChange("description", e.target.value);
+              }
+            }}
             fullWidth
             multiline
             rows={3}
+            helperText={`${formData.description.length}/500`}
           />
         ) : (
           <Typography>{formData.description}</Typography>

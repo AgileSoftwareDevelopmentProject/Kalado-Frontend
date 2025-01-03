@@ -114,6 +114,7 @@
         },
         "ad_list": {
             "heading": "Submitted Ads History",
+            "save_success": "Changes saved successfully.",
             "create_ad": {
                 "input": {
                     "title": "Ad's Title"
@@ -268,6 +269,7 @@
         },
         "ad_list": {
             "heading": "تاریخچه آگهی‌های ثبت‌شده",
+            "save_success": "تغییرات با موفقیت ذخیره شد.",
             "create_ad": {
                 "input": {
                     "title": "عنوان آگهی"
