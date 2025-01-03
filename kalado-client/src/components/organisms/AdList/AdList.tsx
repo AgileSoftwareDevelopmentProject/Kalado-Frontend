@@ -77,22 +77,6 @@ const AdList = () => {
     <div style={{ padding: "20px", direction: "rtl" }}>
       {editingAd ? (
         <>
-          <Button
-            onClick={handleEditAdCardClose}
-            variant="contained"
-            color="primary"
-            startIcon={<ArrowBackIcon />}
-            sx={{
-              marginBottom: "20px",
-              backgroundColor: "#1976d2",
-              color: "#fff",
-              "&:hover": { backgroundColor: "#1565c0" },
-              borderRadius: "8px",
-              padding: "10px 20px",
-            }}
-          >
-            {t("ad_list.buttons.back_to_list")}
-          </Button>
           <EditAdCard
             title={editingAd.title}
             price="1000"

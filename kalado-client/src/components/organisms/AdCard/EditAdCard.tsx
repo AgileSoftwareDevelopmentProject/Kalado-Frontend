@@ -9,7 +9,6 @@ import {
   MenuItem,
   Select,
   Divider,
-  Button,
 } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -37,6 +36,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   images,
   status,
   onEdit,
+  onCancel,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -159,9 +159,14 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             {resources[language]?.ad_list?.ad_status?.[formData.status] || formData.status}
           </Typography>
         </Box>
-        <IconButton onClick={() => setIsEditing(!isEditing)}>
-          {isEditing ? <SaveIcon onClick={handleSave} /> : <EditIcon />}
-        </IconButton>
+        <Box>
+          <IconButton onClick={onCancel}>
+            <CloseIcon />
+          </IconButton>
+          <IconButton onClick={() => setIsEditing(!isEditing)}>
+            {isEditing ? <SaveIcon onClick={handleSave} /> : <EditIcon />}
+          </IconButton>
+        </Box>
       </Box>
 
       <Divider sx={{ marginY: "20px" }} />
