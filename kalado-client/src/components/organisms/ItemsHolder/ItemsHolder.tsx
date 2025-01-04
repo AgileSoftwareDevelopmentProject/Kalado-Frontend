@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
-import { getProductsByCategory } from '../../../services/product/getProductsByCategoryService';
+import { getProductsByCategory } from '../../../api/services/product/getProductsByCategoryService';
 import defaultImage from '../../../assets/images/no-image.png';
 import { tr } from 'date-fns/locale';
 

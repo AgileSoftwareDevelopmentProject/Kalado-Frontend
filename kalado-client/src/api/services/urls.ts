@@ -5,7 +5,7 @@ export const AUTH = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
-    VERIFY: '/auth',
+    VERIFY: '/auth/verify',
 };
 
 // PRODUCT
@@ -28,4 +28,10 @@ export const REPORT = {
     GET_ALL_REPORTS: `/reports/admin/all`,
     GET_REPORT_STATISTICS: (startDate: string, endDate: string) => 
         `/reports/admin/statistics?startDate=${startDate}&endDate=${endDate}`,
+};
+
+// USER
+export const USER = {
+    GET: '/user',
+    PUT: '/user',
 };

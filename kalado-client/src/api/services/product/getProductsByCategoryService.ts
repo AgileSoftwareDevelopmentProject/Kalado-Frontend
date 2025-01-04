@@ -1,5 +1,5 @@
-import { sendRequest } from '../../axiosInstance';
-import { PRODUCT } from '../../urls';
+import { sendRequest } from '../axiosInstance';
+import { PRODUCT } from '../urls';
 
 export async function getProductsByCategory(category: string, token: string) {
     try {

@@ -74,8 +74,8 @@
 //     }
 // };
 
-import { sendRequest } from '../axiosInstance';
-import { AUTH } from '../urls';
+import { sendRequest } from './axiosInstance';
+import { AUTH } from './urls';
 
 export async function loginUser(
     email: string,

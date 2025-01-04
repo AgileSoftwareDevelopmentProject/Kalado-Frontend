@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { BASE_URL as baseURL } from './urls';
 import { toast } from 'sonner';
-import errorTranslations from './errorTranslations';
+import errorTranslations from '../../errorTranslations';
 
 const axiosInstance = axios.create({ baseURL });
 

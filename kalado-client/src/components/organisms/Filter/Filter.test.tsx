@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import Filter from './Filter';
-import { fetchItems } from '../../../services/filterService';
+import { fetchItems } from '../../../api/services/filterService';
 
 jest.mock('../../../services/filterService', () => ({
   fetchItems: jest.fn(),

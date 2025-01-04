@@ -1,6 +1,6 @@
 
-import { sendRequest } from '../../axiosInstance';
-import { REPORT } from '../../urls';
+import { sendRequest } from '../axiosInstance';
+import { REPORT } from '../urls';
 
 export async function getMyReports(token: string) {
     try {

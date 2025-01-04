@@ -1,5 +1,5 @@
-import { sendRequest } from '../../axiosInstance';
-import { REPORT } from '../../urls';
+import { sendRequest } from '../axiosInstance';
+import { REPORT } from '../urls';
 
 export async function createReport(
     violationType: string,

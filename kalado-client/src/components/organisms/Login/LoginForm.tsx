@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { loginUser } from '../../../services/LoginService';
+import { loginUser } from '../../../api/services/LoginService';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts/AuthContext';
 import { validateEmail } from '../../../validators';
@@ -34,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setToken('1234');
+
         if (validateUserInputs()) {
             // Login API call
             const response = await loginUser(formData.email, formData.password);

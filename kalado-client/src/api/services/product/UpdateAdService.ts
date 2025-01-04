@@ -1,5 +1,5 @@
-import { sendRequest } from '../../axiosInstance';
-import { PRODUCT } from '../../urls';
+import { sendRequest } from '../axiosInstance';
+import { PRODUCT } from '../urls';
 
 export async function updateAd(
     id: number, // for the ad to update

@@ -1,25 +1,5 @@
-// import axios from 'axios';
-
-// interface AdData {
-//     title: string;
-//     price: number;
-//     category: string | null;
-//     description: string;
-//     images: string;
-// }
-
-// export const createAd = async (adData: AdData): Promise<any> => {
-//     try {
-//         const response = await axios.post('https://kaladoshop.com/v1/create-ad', adData);
-//         return response.data;
-//     } catch (error) {
-//         console.error('Create Ad error:', error);
-//         throw new Error('Failed to create ad. Please try again.');
-//     }
-// };
-
-import { sendRequest } from '../../axiosInstance';
-import { PRODUCT } from '../../urls';
+import { sendRequest } from '../axiosInstance';
+import { PRODUCT } from '../urls';
 
 export async function createAd(
     title: string,
@@ -28,14 +8,15 @@ export async function createAd(
     category: string,
     productionYear: number,
     brand: string,
-    sellerId: number
+    sellerId: number,
+    token: string // Add token parameter
 ) {
     const payload = {
         title,
         description,
         price: {
-            amount: priceAmount, 
-            unit: 'TOMAN',      
+            amount: priceAmount,
+            unit: 'TOMAN', // Example unit
         },
         category,
         productionYear,
@@ -44,9 +25,13 @@ export async function createAd(
     };
 
     try {
-        const response = await sendRequest<typeof payload>(PRODUCT.CREATE, 'POST', payload);
+        const headers = {
+            Authorization: `Bearer ${token}`, 
+        };
 
-        console.log('Response:', response); 
+        const response = await sendRequest<typeof payload>(PRODUCT.CREATE, 'POST', payload, headers);
+
+        console.log('Response:', response);
 
         if (response.isSuccess) {
             console.log('Ad created successfully!');
