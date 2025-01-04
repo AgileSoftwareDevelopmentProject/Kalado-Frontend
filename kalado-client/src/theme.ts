@@ -17,7 +17,7 @@ export const lightTheme = createTheme({
         },
         background: {
             default: '#f5f5f5', // Default background color for the app
-            paper: '#ffffff', // Background color for paper elements (cards, etc.)
+            paper: '#fcd7c7', // Background color for paper elements (cards, etc.)
         },
         text: {
             primary: '#000000', // Primary text color
@@ -25,7 +25,7 @@ export const lightTheme = createTheme({
         },
     },
     typography: {
-        fontFamily: 'Roboto, sans-serif',
+        fontFamily: 'IranSans, Nazanin, Lotus, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
         h1: {
             fontSize: '2rem',
             fontWeight: 500,
@@ -55,6 +55,15 @@ export const lightTheme = createTheme({
                 },
             },
         },
+        MuiBox: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#fff99f', // Set Box background color for dark mode
+                    // color: 'inherit', // Inherit text color, can be overridden by child components
+                },
+            },
+        },
+
     },
 });
 
@@ -78,19 +87,35 @@ export const darkTheme = createTheme({
             secondary: '#e0e0e0', // Light gray text for dark mode
         },
     },
+    typography: {
+        fontFamily: 'IranSans, Nazanin, Lotus, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
+        h1: {
+            fontSize: '2rem',
+            fontWeight: 500,
+        },
+        h2: {
+            fontSize: '1.5rem',
+            fontWeight: 500,
+        },
+        body1: {
+            fontSize: '1rem',
+            lineHeight: 1.5,
+        },
+    },
     components: {
         MuiButton: {
             styleOverrides: {
                 root: {
                     color: '#FFFFFF', // Default text color for buttons in dark mode
+                    textTransform: 'none', // Prevent uppercase transformation
                 },
             },
         },
         MuiBox: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#272C48', // Set Box background color for both modes
-                    color: 'inherit', // Inherit text color, can be overridden by child components
+                    backgroundColor: '#272C48', // Set Box background color for dark mode
+                    // color: 'inherit', // Inherit text color, can be overridden by child components
                 },
             },
         },

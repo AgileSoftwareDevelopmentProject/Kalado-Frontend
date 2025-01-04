@@ -7,11 +7,12 @@ interface IconListProps {
     items: { title: string; icon: React.ReactNode }[];
     onSelect: (title: string) => void;
     title?: string;
+    initialSelect: string
 }
 
-const IconList: React.FC<IconListProps> = ({ items, onSelect, title }) => {
+const IconList: React.FC<IconListProps> = ({ items, onSelect, title, initialSelect }) => {
     const { i18n } = useTranslation();
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string>(initialSelect);
 
     const handleCategoryClick = (categoryTitle: string) => {
         setSelectedCategory(categoryTitle);
@@ -32,7 +33,7 @@ const IconList: React.FC<IconListProps> = ({ items, onSelect, title }) => {
                             backgroundColor: selectedCategory === item.title ? '#D74101' : 'transparent',
                             '&:hover': {
                                 backgroundColor: '#D74101',
-                                transform: 'translateX(-30px)',
+                                transform: i18n.language === 'fa' ? 'translateX(-30px)' : 'translateX(30px)',
                             },
                             cursor: 'pointer',
                             textAlign: i18n.language === 'fa' ? 'right' : 'left',

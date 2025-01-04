@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 import { CustomButton, NumberInput } from '../../atoms';
 import { LabelList } from '../../molecules';
-import { fetchItems } from '../../../services/filterService';
+import { fetchItems } from '../../../api/services/filterService';
 
 const Filter: React.FC = () => {
   const { t } = useTranslation();

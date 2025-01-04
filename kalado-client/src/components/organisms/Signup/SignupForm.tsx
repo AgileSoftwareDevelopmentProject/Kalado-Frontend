@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
+import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomCheckBox, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { signupUser } from '../../../services/SignupService';
-import { Box, FormControlLabel, Checkbox } from '@mui/material';
+import { signupUser } from '../../../api/services/SignupService';
+import { toast } from 'react-toastify';
+import { validatePassword, validatePhoneNumber } from '../../../validators';
+
 
 interface SignupFormProps {
   onClose: () => void;
@@ -13,7 +15,7 @@ interface SignupFormProps {
 
 const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpSuccess }) => {
   const { t } = useTranslation();
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     firstName: '',
     lastName: '',
     email: '',
@@ -21,8 +23,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
     password: '',
     passwordRepeat: '',
     role: 'USER'
-  });
-  const [error, setError] = useState<string | null>(null);
+  };
+  const [formData, setFormData] = useState(initialFormData);
+  const [error, setError] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -40,29 +43,51 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const validateUserInputs = () => {
+    const phoneValidationResult = validatePhoneNumber(formData.phoneNumber, t);
+    if (!phoneValidationResult.valid) {
+      setError(phoneValidationResult.error);
+      return false;
+    }
+
+    const passwordValidationResult = validatePassword(formData.password, t);
+    if (!passwordValidationResult.valid) {
+      setError(passwordValidationResult.error);
+      return false;
+    }
 
     if (formData.password !== formData.passwordRepeat) {
       setError(t("signup_form.error.password_mismatch"));
-      return;
+      return false;
     }
 
-    try {
-      const response = await signupUser(formData.firstName, formData.lastName, formData.email,
-        formData.phoneNumber, formData.password);
-      console.log('Signup successful:', response);
+    return true;
+  }
 
-      onSignUpSuccess(formData.email);
-      onClose();
-    } catch (error) {
-      console.error('Signup error:', error);
-      setError('Failed to sign up. Please check your details and try again.');
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (validateUserInputs()) {
+      // Signup API call
+      const response = await signupUser(formData.firstName, formData.lastName, formData.email, formData.phoneNumber, formData.password);
+      if (response.isSuccess) {
+        onSignUpSuccess(formData.email);
+        handleClose();
+        toast(t("success.signup"));
+      } else {
+        setError(response.message);
+      }
     }
   };
 
+  const handleClose = () => {
+    setFormData(initialFormData);
+    setError('');
+    onClose();
+  };
+
   return (
-    <PopupBox onClose={onClose}>
+    <PopupBox onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <NameInput
           name="firstName"
@@ -79,12 +104,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
           isRequired={true}
         />
         <EmailInput
-          name="email"
           value={formData.email}
           onChange={handleChange}
+          isValidatorActive={true}
         />
         <PhoneNumberInput
-          name="phoneNumber"
           value={formData.phoneNumber}
           onChange={handleChange}
         />
@@ -92,6 +116,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
           name="password"
           value={formData.password}
           onChange={handleChange}
+          isValidatorActive={true}
         />
         <PasswordInput
           name="passwordRepeat"
@@ -99,29 +124,20 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
           value={formData.passwordRepeat}
           onChange={handleChange}
         />
-        <Box>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formData.role === 'ADMIN'}
-                onChange={handleChange}
-                name="isAdmin"
-                color="primary"
-              />
-            }
-            label={t("signup_form.is_admin")}
-          />
-        </Box>
+        <CustomCheckBox
+          label={t("signup_form.is_admin")}
+          checked={formData.role === 'ADMIN'}
+          onChange={handleChange}
+          name="isAdmin"
+          id="isAdminCheckbox"
+        />
         <CustomButton
           text={t("signup_form.signup_btn")}
           type="submit"
-          padding="10px 40px"
-          margin="30px 0px 0px 0px"
         />
         <CustomLink
           to="/#"
           onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
-          color="primary"
           text={t("signup_form.login_link")}
         />
         <FormError message={error} />

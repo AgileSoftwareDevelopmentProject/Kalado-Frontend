@@ -19,7 +19,8 @@
             "create_ad": "Submit Ad",
             "login/signup": "Login/Signup",
             "profile": "Profile",
-            "searchbar": "Search Item"
+            "searchbar": "Search Item",
+            "logout": "Logout"
         },
         "category": {
             "title": "Categories",
@@ -41,6 +42,12 @@
             "one_week": "One Week",
             "one_month": "One Month",
             "apply": "Apply Filter"
+        },
+        "sort": {
+            "newest": "Newest",
+            "oldest": "Oldest",
+            "most_expensive": "Most Expensive",
+            "cheapest": "Cheapest"
         },
         "create_ad": {
             "input": {
@@ -135,6 +142,7 @@
             }
         },
         "error": {
+            "general": "A system error occurred, Please try again later",
             "input": {
                 "invalid_email": "Enter a Valid Email",
                 "invalid_password": {
@@ -151,7 +159,31 @@
             },
             "create_ad": {
                 "disable_not_loggined": "For Submitting an Ad, Login to your Account"
+            },
+            "login": {
+                "not_verified": "For login, First Verify your Email"
+            },
+            "landing": {
+                "empty_product_list": "No Ad Submitted in the Selected Category"
+            },
+            "item_details": {
+                "not_found": "Item not found",
+                "disable_report_submiision": "For Submitting a Report, Login to your Account",
+                "copy_phone_number_failed": "Failed to Copy Seller's Phone Number"
+            },
+            "profile_management": {
+                "save_failed": "Error Ocurred during Saving your Changes",
+                "retrive_failed": "Error Ocurred during Retrive you Profile Information"
             }
+        },
+        "success": {
+            "signup": "Registered Successfully. Please Verify your Email.",
+            "code_verification": "Your Email Verified Successfully",
+            "login": "Logined Successfully",
+            "create_ad": "Ad Created Successfully",
+            "report": "Report Submitted Successfully",
+            "profile_management": "Changes Saved Successfully",
+            "copy_phone_number": "Seller's Phone Number Copied Successfully"
         }
     },
     "fa": {
@@ -174,7 +206,8 @@
             "create_ad": "ثبت آگهی",
             "login/signup": "ورود/ثبت‌نام",
             "profile": "پروفایل کاربری",
-            "searchbar": "جستجوی کالا"
+            "searchbar": "جستجوی کالا",
+            "logout": "خروج"
         },
         "category": {
             "title": "دسته‌بندی‌ها",
@@ -196,6 +229,12 @@
             "one_week": "یک هفته",
             "one_month": "یک ماه",
             "apply": "اعمال فیلتر"
+        },
+        "sort": {
+            "newest": "جدیدترین",
+            "oldest": "قدیمی‌ترین",
+            "most_expensive": "گران‌ترین",
+            "cheapest": "ارزان‌ترین"
         },
         "create_ad": {
             "input": {
@@ -238,7 +277,7 @@
             "category": {
                 "one": "فحاشی",
                 "two": "محتوای نامناسب",
-                "three": "قیمت غیرمنصفانه"
+                "three": "قیمت نامتناسب با بازار"
             },
             "choose_evidence": "شواهد/مدارک"
         },
@@ -247,7 +286,7 @@
                 "menu": {
                     "one": "مدیریت پروفایل",
                     "two": "مدیریت آگهی‌ها",
-                    "three": "تاریخچه تخلفات"
+                    "three": "تاریخچه‌ی تخلفات"
                 },
                 "profile_management": {
                     "first_name": "نام",
@@ -263,7 +302,7 @@
                 "menu": {
                     "one": "مدیریت پروفایل",
                     "two": "مدیریت کاربران",
-                    "three": "تاریخچه تخلفات"
+                    "three": "تاریخچه‌ی تخلفات"
                 }
             }
         },
@@ -290,6 +329,7 @@
             }
         },
         "error": {
+            "general": "خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید",
             "input": {
                 "invalid_email": "لطفاً یک ایمیل معتبر وارد کنید",
                 "invalid_password": {
@@ -305,8 +345,32 @@
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری شوید"
+                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید"
+            },
+            "login": {
+                "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
+            },
+            "landing": {
+                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
+            },
+            "item_details": {
+                "not_found": "کالای مورد نظر پیدا نشد",
+                "disable_report_submiision": "برای ثبت تخلف ابتدا وارد حساب کاربری خود شوید",
+                "copy_phone_number_failed": "خطایی در کپی کردن شماره تلفن خریدار رخ داد"
+            },
+            "profile_management": {
+                "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد",
+                "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد"
             }
+        },
+        "success": {
+            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
+            "code_verification": "ایمیل شما با موفقیت تایید شد",
+            "login": "با موفقیت وارد شدید",
+            "create_ad": "آگهی شما با موفقیت ثبت شد",
+            "report": "گزارش تخلف شما با موفقیت ثبت شد",
+            "profile_management": "تغییرات شما با موفقیت ذخیره شد",
+            "copy_phone_number": "شماره تلفن خریدار با موفقیت کپی شد"
         }
     }
 }

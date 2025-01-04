@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 
@@ -20,6 +21,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     onChange,
     value
 }) => {
+    const { i18n } = useTranslation();
     const handleChange = (event: SelectChangeEvent<string>) => {
         const selectedValue = event.target.value;
         const selectedOption = options.find(option => option.value === selectedValue) || null;
@@ -30,7 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         <FormControl variant="standard" sx={{ mb: 2, width: '70%' }}>
             <InputLabel
                 sx={{
-                    textAlign: 'right',
+                    textAlign: i18n.language === 'fa' ? 'right' : 'left',
                     width: '100%',
                     position: 'absolute',
                     right: 30

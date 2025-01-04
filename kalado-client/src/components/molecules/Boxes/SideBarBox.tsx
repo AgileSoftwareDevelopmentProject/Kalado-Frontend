@@ -13,7 +13,6 @@ const SideBarBox: React.FC<SideBarBoxProps> = ({ children }) => {
         <Box
             sx={{
                 width: i18n.language === 'en' ? '400px' : '350px',
-                bgcolor: 'transparent',
                 padding: 2,
                 height: '100vh',
                 position: 'fixed',

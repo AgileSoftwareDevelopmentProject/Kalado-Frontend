@@ -4,12 +4,12 @@ import TextField from '@mui/material/TextField';
 import { validateEmail } from '../../../validators/validateEmail';
 
 interface EmailInputProps {
-    name: string;
     placeholder?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
     disabled?: boolean;
+    isValidatorActive?: boolean;
 }
 
 const EmailInput: React.FC<EmailInputProps> = ({
@@ -18,17 +18,18 @@ const EmailInput: React.FC<EmailInputProps> = ({
     onChange,
     isRequired = true,
     disabled = false,
+    isValidatorActive = false,
 }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.email');
-    const [error, setError] = useState<boolean>(false);
     const [helperText, setHelperText] = useState<string>('');
 
     useEffect(() => {
-        const validationResult = validateEmail(value, t);
-        setError(!validationResult.valid);
-        setHelperText(validationResult.error);
-    }, [value, t]);
+        if (isValidatorActive) {
+            const validationResult = validateEmail(value, t);
+            setHelperText(validationResult.error);
+        }
+    }, [value, t, isValidatorActive]);
 
     return (
         <TextField
@@ -41,16 +42,11 @@ const EmailInput: React.FC<EmailInputProps> = ({
             disabled={disabled}
             variant="standard"
             margin="normal"
-            error={error}
-            helperText={error ? helperText : ''}
+            helperText={helperText}
             sx={{
                 width: '70%',
-                '& .MuiInputBase-root::after': {
-                    borderBottom: '2px solid #D74101',
-                },
                 '& .MuiFormHelperText-root': {
-                    textAlign: 'right',
-                    direction: 'rtl',
+                    textAlign: i18n.language === 'fa' ? 'right' : 'left',
                 }
             }}
         />

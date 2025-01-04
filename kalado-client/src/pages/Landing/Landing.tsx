@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
-import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CreateAdForm, CodeVerification, ItemsHolder } from '../../components/organisms';
+import { Box } from '@mui/material';
+import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, CodeVerificationModal, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
-import { Backdrop } from '../../components/atoms';
-import mockData from '../../mockData.json';
-import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaPlusCircle, FaUtensils } from 'react-icons/fa';
+import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaUtensils } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../contexts/AuthContext';
 
-const items = mockData.Items;
-
-interface LandingProps {
-    toggleTheme: () => void;
-    isDarkMode: boolean;
-}
-
-const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
+const Landing: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const [userRole, setUserRole] = useState<string | null>('USER');
-    const [userEmail, setUserEmail] = useState<string>('');
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string | null>(t("category.one"));
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
+    const { token, userRole } = useAuth();
 
     const categories = [
         { titleKey: "category.one", icon: <FaHome /> },
@@ -35,74 +25,39 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
         { titleKey: "category.four", icon: <FaLaptop /> },
         { titleKey: "category.five", icon: <FaGamepad /> },
         { titleKey: "category.six", icon: <FaSuitcase /> },
-        { titleKey: "category.seven", icon: <FaPlusCircle /> },
     ];
 
     const handleSelectCategory = (categoryKey: string) => {
         setSelectedCategoryTitle(t(categoryKey));
     };
 
-    useEffect(() => {
-        if (categories.length > 0) {
-            setSelectedCategoryTitle(t(categories[0].titleKey));
-        }
-    }, [t]);
-
     const handleOpenLogin = () => {
         setLoginVisible(true);
         setSignupVisible(false);
-        setCreateAdVisible(false);
     };
-
-    const handleCloseLogin = () => setLoginVisible(false);
 
     const handleOpenSignup = () => {
         setLoginVisible(false);
         setSignupVisible(true);
-        setCreateAdVisible(false);
     };
 
-    const handleCloseSignup = () => {
-        setSignupVisible(false);
+    const handleOpenCodeVerification = () => {
+        handleClosePopups();
+        setCodeVerificationVisible(true);
     };
 
     const handleOpenCreateAd = () => {
-        if (!isLoggedIn) {
+        if (!token) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
         }
         setCreateAdVisible(true);
-        setSignupVisible(false);
+    };
+
+    const handleClosePopups = () => {
         setLoginVisible(false);
-    };
-
-    const handleCloseCreateAd = () => {
+        setSignupVisible(false);
         setCreateAdVisible(false);
-    };
-
-    const handleCloseCodeVerification = () => {
-        setCodeVerificationVisible(false);
-    };
-
-    const handleOpenCodeVerification = (email: string) => {
-        setUserEmail(email);
-        setCodeVerificationVisible(true);
-        handleCloseSignup();
-    };
-
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            handleCloseLogin();
-            handleCloseSignup();
-            handleCloseCreateAd();
-        }
-    };
-
-    const handleLoginSuccess = (role: string) => {
-        setUserRole(role);
-        setIsLoggedIn(true);
-        handleCloseLogin();
     };
 
     const handleOpenProfilePage = () => {
@@ -116,12 +71,9 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <NavBar
-                onLoginClick={handleOpenLogin}
+                onLoginClick={() => setLoginVisible(true)}
                 onCreateAdClick={handleOpenCreateAd}
-                isLoggedIn={isLoggedIn}
                 onProfileClick={handleOpenProfilePage}
-                toggleTheme={toggleTheme}
-                isDarkMode={isDarkMode}
             />
 
             <SideBar>
@@ -132,36 +84,35 @@ const Landing: React.FC<LandingProps> = ({ toggleTheme, isDarkMode }) => {
                     }))}
                     onSelectCategory={handleSelectCategory}
                     title={t("category.title")}
+                    initialSelect={t("category.one")}
                 />
                 <Filter />
             </SideBar>
 
-            <ItemsHolder items={items} onItemSelect={(itemId) => navigate(`/item/${itemId}`)} selectedCategoryTitle={selectedCategoryTitle} />
+            <ItemsHolder
+                onItemSelect={(itemId) => navigate(`/item/${itemId}`)}
+                selectedCategoryTitle={selectedCategoryTitle}
+            />
 
-            {isLoginVisible && (
-                <Backdrop open={isLoginVisible} onClick={handleBackdropClick}>
-                    <LoginForm onClose={handleCloseLogin} onOpenSignup={handleOpenSignup} onLoginSuccess={handleLoginSuccess} />
-                </Backdrop>
-            )}
-            {isSignupVisible && (
-                <Backdrop open={isSignupVisible} onClick={handleBackdropClick}>
-                    <SignupForm
-                        onClose={handleCloseSignup}
-                        onOpenLogin={handleOpenLogin}
-                        onSignUpSuccess={handleOpenCodeVerification}
-                    />
-                </Backdrop>
-            )}
-            {isCreateAdVisible && (
-                <Backdrop open={isCreateAdVisible} onClick={handleBackdropClick}>
-                    <CreateAdForm onClose={handleCloseCreateAd} />
-                </Backdrop>
-            )}
-            {isCodeVerificationVisible && (
-                <Backdrop open={isCodeVerificationVisible} onClick={handleBackdropClick}>
-                    <CodeVerification email={userEmail} onClose={handleCloseCodeVerification} />
-                </Backdrop>
-            )}
+            <LoginModal
+                open={isLoginVisible}
+                onClose={handleClosePopups}
+                onOpenSignup={handleOpenSignup}
+            />
+            <SignupModal
+                open={isSignupVisible}
+                onClose={handleClosePopups}
+                onOpenLogin={handleOpenLogin}
+                onSignUpSuccess={handleOpenCodeVerification}
+            />
+            <CreateAdModal
+                open={isCreateAdVisible}
+                onClose={handleClosePopups}
+            />
+            <CodeVerificationModal
+                open={isCodeVerificationVisible}
+                onClose={handleClosePopups}
+            />
         </Box>
     );
 };

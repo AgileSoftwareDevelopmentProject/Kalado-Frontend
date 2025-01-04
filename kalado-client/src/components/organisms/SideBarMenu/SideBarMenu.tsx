@@ -11,11 +11,12 @@ interface SideBarMenuProps {
     categories: SideBarMenu[];
     onSelectCategory: (categoryTitle: string) => void;
     title?: string;
+    initialSelect: string;
 }
 
-const SideBarMenu: React.FC<SideBarMenuProps> = ({ categories, onSelectCategory, title }) => {
+const SideBarMenu: React.FC<SideBarMenuProps> = ({ categories, onSelectCategory, title, initialSelect }) => {
     return (
-        <IconList items={categories} onSelect={onSelectCategory} title={title} />
+        <IconList items={categories} onSelect={onSelectCategory} title={title} initialSelect={initialSelect} />
     );
 };
 

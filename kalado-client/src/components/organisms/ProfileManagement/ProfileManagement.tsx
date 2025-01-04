@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Avatar, Typography, CircularProgress, IconButton } from '@mui/material';
-import { CustomButton, NameInput, EmailInput, PhoneNumberInput, PasswordInput } from '../../atoms';
+import { Box, Avatar, CircularProgress, IconButton } from '@mui/material';
+import { CustomButton, NameInput, EmailInput, PhoneNumberInput, PasswordInput, FormError } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
-import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useAuth } from '../../../contexts/AuthContext';
+import defaultImage from '../../../assets/images/no-image.png';
 
 interface UserData {
-    profileImage: string;
     firstName: string;
     lastName: string;
     email: string;
     password: string;
     phoneNumber: string;
     residentialLocation: string;
+    profileImage: File | null;
 }
 
 const ProfileManagement = () => {
@@ -21,6 +23,7 @@ const ProfileManagement = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const { token } = useAuth();
 
     useEffect(() => {
         fetchUserData();
@@ -29,20 +32,11 @@ const ProfileManagement = () => {
     const fetchUserData = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('/api/user-profile');
-            response.data = {
-                profileImage: "string",
-                firstName: "string",
-                lastName: "string",
-                email: "foroz.iraji@gmail.com",
-                phoneNumber: "09122890678",
-                residentialLocation: "string",
-                password: "Kalado1403@"
-            }
+            // GetUserByToken API call
+            const response = await getUserByToken(token);
             setUserData(response.data);
         } catch (err) {
-            console.error('Error fetching user data:', err);
-            setError('Failed to load user data');
+            setError(t("error.profile_management.retrive_failed"));
         } finally {
             setLoading(false);
         }
@@ -52,52 +46,57 @@ const ProfileManagement = () => {
         const { name, value } = e.target;
         setUserData(prevData => ({
             ...prevData!,
-            [name]: value
+            [name]: value,
         }));
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setUserData(prevData => ({
-                    ...prevData!,
-                    profileImage: e.target?.result as string
-                }));
-            };
-            reader.readAsDataURL(file);
+            setUserData(prevData => ({
+                ...prevData!,
+                profileImage: file
+            }));
         }
     };
 
     const handleSaveChanges = async () => {
-        try {
-            setLoading(true);
-            await axios.put('/api/user-profile', userData);
-            alert(t('profile.saveSuccess'));
-        } catch (err) {
-            console.error('Error saving user data:', err);
-            setError('Failed to save changes');
-        } finally {
-            setLoading(false);
+        const formData = new FormData();
+        formData.append('firstName', userData!.firstName);
+        formData.append('lastName', userData!.lastName);
+        formData.append('email', userData!.email);
+        formData.append('phoneNumber', userData!.phoneNumber);
+        formData.append('password', userData!.password);
+        formData.append('residentialLocation', userData!.residentialLocation);
+
+        if (userData!.profileImage) {
+            formData.append('profileImage', userData!.profileImage);
+        }
+
+        // Update Profile API call
+        const response = await UpdateProfile(formData);
+        if (response.isSuccess) {
+            toast(t('success.profile_management'));
+        } else {
+            toast(t("error.profile_management.save_failed"));
         }
     };
 
-    if (loading) {
-        return <CircularProgress />;
-    }
-
-    if (error) {
-        return <Typography color="error">{error}</Typography>;
-    }
-
     return (
         <Box sx={{ maxWidth: 600, margin: '90px auto', padding: 3 }}>
+            {
+                (loading) && (<CircularProgress />)
+            }
+
+            {error && (
+                <FormError message={error} />
+            )}
+
             {userData && (
                 <>
                     <Box sx={{ position: 'relative', width: 100, height: 100, margin: '20px auto' }}>
                         <Avatar
-                            src={userData.profileImage}
+                            src={userData.profileImage ? URL.createObjectURL(userData.profileImage) : defaultImage}
                             sx={{ width: 100, height: 100 }}
                         />
                         <IconButton
@@ -130,20 +129,18 @@ const ProfileManagement = () => {
                         onChange={handleInputChange}
                     />
                     <EmailInput
-                        name="email"
                         value={userData.email}
                         onChange={handleInputChange}
                         disabled
                     />
                     <PhoneNumberInput
-                        name="phoneNumber"
                         value={userData.phoneNumber}
                         onChange={handleInputChange}
                     />
                     <PasswordInput
                         name="password"
                         value={userData.password}
-                        placeholder={t('dashboard.user.profile_management.new_password')}
+                        placeholder={t('dashboard.user.profile_management.password')}
                         onChange={handleInputChange}
                     />
                     <NameInput
@@ -156,7 +153,6 @@ const ProfileManagement = () => {
                         text={t('dashboard.user.profile_management.save_changes_btn')}
                         onClick={handleSaveChanges}
                         type="submit"
-                        padding="10px 40px"
                     />
                 </>
             )}

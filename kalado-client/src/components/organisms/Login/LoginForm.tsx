@@ -2,68 +2,74 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { LoginRequest, LoginResponse } from '../../../services/types';
-import { loginUser } from '../../../services/LoginService';
+import { loginUser } from '../../../api/services/LoginService';
+import { toast } from 'react-toastify';
+import { useAuth } from '../../../contexts/AuthContext';
+import { validateEmail } from '../../../validators';
 
 interface LoginFormProps {
     onClose: () => void;
     onOpenSignup: () => void;
-    onLoginSuccess: (email: string) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup, onLoginSuccess }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState<LoginRequest>({
+    const initialFormData = {
         email: '',
         password: '',
-    });
-    const [error, setError] = useState<string | null>(null);
+    };
+    const [formData, setFormData] = useState(initialFormData);
+    const [error, setError] = useState<string>('');
+    const { setToken, setUserRole } = useAuth();
 
+
+    const validateUserInputs = () => {
+        const emailValidationResult = validateEmail(formData.email, t);
+        if (!emailValidationResult.valid) {
+            setError(emailValidationResult.error);
+            return false;
+        }
+        return true;
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const { email, password } = formData;
-
-        if (email && password) {
-            try {
-                const response = await loginUser(email, password);
-                if (response.isSuccess) {
-                    console.log('Login successful:', response);
-                    onLoginSuccess(response.role);
-                    setFormData({ email: '', password: '' });
-                    onClose();
-                } else {
-
-                    setError(response.message || 'Login failed. Please try again.');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                setError('An error occurred during login. Please try again later.');
+        if (validateUserInputs()) {
+            // Login API call
+            const response = await loginUser(formData.email, formData.password);
+            if (response.isSuccess) {
+                setToken(response.token);
+                setUserRole(response.role);
+                handleClose();
+                toast(t("success.login"));
+            } else {
+                setError(response.message);
             }
-        } else {
-            setError('Both email and password are required.');
         }
     };
 
+    const handleClose = () => {
+        setFormData(initialFormData);
+        setError('');
+        onClose();
+    };
+
     return (
-        <PopupBox onClose={onClose}>
+        <PopupBox onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 <EmailInput
-                    name="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    isValidatorActive={true}
                 />
                 <PasswordInput
-                    name="password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
                 <CustomButton
                     text={t("login_form.login_btn")}
                     type="submit"
-                    padding="10px 40px"
-                    margin="30px 0px 0px 0px"
                 />
                 <CustomLink
                     to="/#"

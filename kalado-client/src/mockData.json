@@ -2,7 +2,6 @@
     "Items": [
         {
             "title": "Samsung A54",
-            "imageUrl": "/assets/images/default-image-url.jpg",
             "price": 15000000,
             "city": "تهران",
             "date": "دقایقی پیش",
@@ -12,7 +11,6 @@
         },
         {
             "title": "Iphone 15",
-            "imageUrl": "/assets/images/default-image-url.jpg",
             "price": 60000000,
             "city": "شیراز",
             "date": "یک ساعت پیش",
@@ -22,7 +20,7 @@
         },
         {
             "title": "Xiaomi Redmi Note 11",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 8000000,
             "city": "اصفهان",
             "date": "دو ساعت پیش",
@@ -32,7 +30,7 @@
         },
         {
             "title": "OnePlus Nord CE 5G",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 12000000,
             "city": "مشهد",
             "date": "سه ساعت پیش",
@@ -42,7 +40,7 @@
         },
         {
             "title": "Google Pixel 6a",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 9000000,
             "city": "تبریز",
             "date": "چهار ساعت پیش",
@@ -52,7 +50,7 @@
         },
         {
             "title": "Oppo Reno8 Pro",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 11000000,
             "city": "شیراز",
             "date": "پنج ساعت پیش",
@@ -62,62 +60,62 @@
         },
         {
             "title": "Samsung A54",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 15000000,
             "city": "تهران",
             "date": "دقایقی پیش",
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
-            "itemId": "1",
+            "itemId": "7",
             "seller_phone": "09123498076"
         },
         {
             "title": "Iphone 15",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 60000000,
             "city": "شیراز",
             "date": "یک ساعت پیش",
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
-            "itemId": "2",
+            "itemId": "8",
             "seller_phone": "09123498076"
         },
         {
             "title": "Xiaomi Redmi Note 11",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 8000000,
             "city": "اصفهان",
             "date": "دو ساعت پیش",
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
-            "itemId": "3",
+            "itemId": "9",
             "seller_phone": "09123498076"
         },
         {
             "title": "OnePlus Nord CE 5G",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 12000000,
             "city": "مشهد",
             "date": "سه ساعت پیش",
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
-            "itemId": "4",
+            "itemId": "10",
             "seller_phone": "09123498076"
         },
         {
             "title": "Google Pixel 6a",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 9000000,
             "city": "تبریز",
             "date": "چهار ساعت پیش",
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
-            "itemId": "5",
+            "itemId": "11",
             "seller_phone": "09123498076"
         },
         {
             "title": "Oppo Reno8 Pro",
-            "imageUrl": "/assets/images/default-image-url.jpg",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 11000000,
             "city": "شیراز",
             "date": "پنج ساعت پیش",
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
-            "itemId": "6",
+            "itemId": "12",
             "seller_phone": "09123498076"
         }
     ]
