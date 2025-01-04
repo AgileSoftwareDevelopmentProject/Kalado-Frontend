@@ -92,7 +92,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
         </Typography>
 
         <Grid container sx={{ flex: 1 }}>
-        <Grid
+          <Grid
             item
             xs={12}
             md={6}
