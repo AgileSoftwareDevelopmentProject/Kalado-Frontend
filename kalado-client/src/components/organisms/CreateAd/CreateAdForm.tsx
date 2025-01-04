@@ -6,6 +6,7 @@ import { createAd } from '../../../api/services/product/CreateAdService';
 
 
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../contexts/AuthContext';
 
 
 interface CreateAdFormProps {
@@ -78,7 +79,31 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await createAd(formData.title, formData.description, formData.price, formData.category);
+        //     title: string,
+//     description: string,
+//     priceAmount: number,
+//     category: string,
+//     productionYear: number,
+//     brand: string,
+//     sellerId: number,
+        const { token } = useAuth();
+        // title: string;
+        // price: number;
+        // category: string;
+        // description: string;
+        // images: File[];
+        const response = await createAd(token, {
+            title: formData.title,
+            description: formData.description,
+            price: {
+                amount: formData.price,
+                unit: 'TOMAN',
+            },
+            category: formData.category,
+            productionYear: 2023,   // TODO
+            brand: 'Brand'     // TODO
+            // sellerId: 1,
+        });
         if (response.isSuccess) {
             setFormData({ title: '', price: 0, category: '', description: '', images: [] });
             onClose();
