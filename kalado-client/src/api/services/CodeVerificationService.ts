@@ -58,7 +58,7 @@ import { AUTH } from './urls';
 //     return response.json(); // Or handle the response as needed
 // }
 
-export async function verifyAuthToken(token: string) {
+export async function verifyCode(token: string) {
     return sendRequest(
         AUTH.VERIFY,
         'POST',
