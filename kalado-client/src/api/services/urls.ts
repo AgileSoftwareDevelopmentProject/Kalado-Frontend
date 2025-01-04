@@ -34,4 +34,6 @@ export const REPORT = {
 export const USER = {
     GET: '/user',
     PUT: '/user',
+    GET_PROFILE: '/user/getProfile',
+    MODIFY_PROFILE: '/user/modifyProfile',
 };

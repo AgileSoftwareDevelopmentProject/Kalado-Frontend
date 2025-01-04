@@ -72,7 +72,11 @@ export interface ReportStatusUpdateData {
 }
 
 
-
-
-
+// User
+export interface ProfileData {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    address: string;
+}
 
