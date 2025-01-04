@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Grid, Card, Button } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useTranslation } from 'react-i18next';
 import ReportDetails from './ReportDetails';
 
@@ -10,10 +11,6 @@ const mockedReports = Array.from({ length: 20 }, (_, index) => ({
   reportUserId: `user_${index + 1}`,
   reportedContentId: `content_${index + 1}`,
   submissionDate: new Date().toLocaleDateString(),
-  evidenceImages: [
-    `https://via.placeholder.com/300?text=Image+${index + 1}`,
-    `https://via.placeholder.com/300?text=Image+${index + 2}`,
-  ],
 }));
 
 const ReportHistory: React.FC = () => {
@@ -30,7 +27,7 @@ const ReportHistory: React.FC = () => {
   };
 
   const handleBlockContent = (contentId: string) => {
-    alert(`${t('report.report_card.actions.block')} ${contentId}`);
+    console.log(`${t('report.report_card.actions.block')} ${contentId}`);
   };
 
   return (
@@ -82,10 +79,14 @@ const ReportHistory: React.FC = () => {
                     variant="text"
                     onClick={() => handleShowDetails(report)}
                     sx={{
+                      display: 'flex',
+                      alignItems: 'center',
                       marginTop: 2,
                       textTransform: 'none',
+                      justifyContent: isRtl ? 'flex-end' : 'flex-start',
                     }}
                   >
+                    <InfoOutlinedIcon sx={{ marginRight: isRtl ? 0 : 1, marginLeft: isRtl ? 1 : 0 }} />
                     {t('report.report_card.actions.show_details')}
                   </Button>
                 </Card>

@@ -108,7 +108,6 @@ const ReportList: React.FC = () => {
     <Grid container spacing={2}>
       {mockReports.map((report, index) => (
         <Grid item xs={12} sm={6} key={index}>
-          {/* تغییر به دو ستون */}
           <ReportCard
             violationType={report.violationType}
             description={report.description}

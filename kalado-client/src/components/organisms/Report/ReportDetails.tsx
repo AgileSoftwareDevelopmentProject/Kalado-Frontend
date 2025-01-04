@@ -7,26 +7,39 @@ import {
   Dialog,
   DialogContent,
   IconButton,
-  useTheme,
+  Card,
 } from '@mui/material';
 import { Download as DownloadIcon, Check as CheckIcon, Close as CloseIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
-// وارد کردن تصاویر
+import 'react-toastify/dist/ReactToastify.css';
+import CustomToast from '../../molecules/CustomToast/CustomToast';
+
 import pishi1 from '../../../assets/images/pishi1.jpg';
 import pishi4 from '../../../assets/images/pishi4.jpg';
 
-const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
+type Report = {
+  violationType: string;
+  description: string;
+  reportedContentId: string;
+};
+
+type ReportDetailsProps = {
+  report: Report;
+  onBackToList: () => void;
+  onBlockContent: (contentId: string) => void;
+};
+
+const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onBlockContent }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === 'fa';
-  const theme = useTheme();
-  const [openImage, setOpenImage] = useState(null);
-  const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false); // مدیریت دیالوگ تایید مسدود کردن
+  const [openImage, setOpenImage] = useState<string | null>(null);
+  const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false);
 
-  // اضافه کردن تصاویر به لیست داده‌ها
   const evidenceImages = [pishi1, pishi4];
 
-  const handleOpenImage = (image) => {
+  const handleOpenImage = (image: string) => {
     setOpenImage(image);
   };
 
@@ -35,25 +48,37 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
   };
 
   const handleBlockConfirm = () => {
-    onBlockContent(report.reportedContentId);
+    if (report) {
+      onBlockContent(report.reportedContentId);
+
+      // Display success toast
+      toast.success(t('report.report_card.block_success_message'), {
+        position: isRtl ? 'bottom-right' : 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
     setIsBlockDialogOpen(false);
   };
 
   return (
     <>
-      <Box
+      <CustomToast />
+      <Card
         sx={{
           width: '40vw',
-          height: '40vh',
+          height: 'auto',
           margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
           padding: 4,
-          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-          borderRadius: '15px',
+          boxShadow: 2,
+          borderRadius: 2,
           direction: isRtl ? 'rtl' : 'ltr',
-          textAlign: 'center',
         }}
       >
         <Typography
@@ -67,7 +92,7 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
         </Typography>
 
         <Grid container sx={{ flex: 1 }}>
-          <Grid
+        <Grid
             item
             xs={12}
             md={6}
@@ -80,20 +105,10 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
               justifyContent: 'flex-start',
             }}
           >
-            <Typography
-              variant="h6"
-              sx={{
-                marginBottom: 2,
-              }}
-            >
+            <Typography variant="h6" sx={{ marginBottom: 2 }}>
               {t('report.report_card.description')}:
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                textAlign: 'justify',
-              }}
-            >
+            <Typography variant="body1" sx={{ textAlign: 'justify' }}>
               {report.description}
             </Typography>
           </Grid>
@@ -103,8 +118,8 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
             xs={12}
             md={6}
             sx={{
-              borderLeft: isRtl ? 'none' : `1px solid ${theme.palette.divider}`,
-              borderRight: isRtl ? `1px solid ${theme.palette.divider}` : 'none',
+              borderLeft: isRtl ? 'none' : `1px solid`,
+              borderRight: isRtl ? `1px solid` : 'none',
               paddingRight: isRtl ? 2 : 0,
               paddingLeft: isRtl ? 0 : 2,
               display: 'flex',
@@ -140,8 +155,8 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
                       width: '150px',
                       height: '150px',
                       objectFit: 'cover',
-                      borderRadius: '8px',
-                      border: `1px solid ${theme.palette.divider}`,
+                      borderRadius: 8,
+                      border: `1px solid`,
                       cursor: 'pointer',
                     }}
                     onClick={() => handleOpenImage(image)}
@@ -149,9 +164,8 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
                   <IconButton
                     sx={{
                       position: 'absolute',
-                      bottom: '8px',
-                      right: '8px',
-                      boxShadow: '0px 2px 5px rgba(0,0,0,0.2)',
+                      bottom: 8,
+                      right: 8,
                     }}
                     onClick={() => window.open(image, '_blank')}
                   >
@@ -174,7 +188,7 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
         >
           <Button
             variant="contained"
-            onClick={() => setIsBlockDialogOpen(true)} // باز کردن دیالوگ تایید
+            onClick={() => setIsBlockDialogOpen(true)}
             sx={{
               textTransform: 'none',
             }}
@@ -204,16 +218,15 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
             }}
           />
         </Dialog>
-      </Box>
+      </Card>
 
-      {/* دیالوگ تایید مسدود کردن */}
       <Dialog
         open={isBlockDialogOpen}
         onClose={() => setIsBlockDialogOpen(false)}
         PaperProps={{
           sx: {
-            borderRadius: '20px',
-            padding: '20px',
+            borderRadius: 2,
+            padding: 2,
           },
         }}
       >
@@ -223,22 +236,19 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '20px',
+            gap: 2,
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{ textAlign: 'center', fontWeight: 'bold' }}
-          >
+          <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
             {t('report.report_card.block_confirmation.title')}
           </Typography>
-          <Box sx={{ display: 'flex', gap: '30px' }}>
+          <Box sx={{ display: 'flex', gap: 3 }}>
             <IconButton
               onClick={handleBlockConfirm}
               sx={{
                 backgroundColor: 'green',
-                width: '50px',
-                height: '50px',
+                width: 48,
+                height: 48,
                 borderRadius: '50%',
                 '&:hover': { backgroundColor: '#66bb66' },
               }}
@@ -250,8 +260,8 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
               onClick={() => setIsBlockDialogOpen(false)}
               sx={{
                 backgroundColor: 'red',
-                width: '50px',
-                height: '50px',
+                width: 48,
+                height: 48,
                 borderRadius: '50%',
                 '&:hover': { backgroundColor: '#ff4d4d' },
               }}
