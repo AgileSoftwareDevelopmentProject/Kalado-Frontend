@@ -1,10 +1,10 @@
-import { ProductData } from '../../utils/apiTypes';
+import { ProductData, TProductResponseType } from '../../utils/apiTypes';
 import { sendRequest } from './axiosInstance';
 import { PRODUCT } from './urls';
 
 
 export async function createAd(token: string, productData: ProductData) {
-    return sendRequest(
+    return sendRequest<TProductResponseType>(
         PRODUCT.CREATE,
         'POST',
         productData, 
@@ -29,7 +29,7 @@ export async function deleteAd(token: string, adId: number) {
 }
 
 export async function updateAd(token: string, productId: number, productData: ProductData) {
-    return sendRequest(
+    return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE(productId),
         'PUT', 
         productData, 
@@ -42,7 +42,7 @@ export async function updateAd(token: string, productId: number, productData: Pr
 }
 
 export async function updateAdStatus(token: string, productId: number, status: string) {
-    return sendRequest(
+    return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE_STATUS(productId), 
         'PUT', 
         { status }, 
@@ -56,7 +56,7 @@ export async function updateAdStatus(token: string, productId: number, status: s
 
 
 export async function getSingleProduct(token: string, adId: number) {
-    return sendRequest(
+    return sendRequest<TProductResponseType>(
         PRODUCT.GET_SINGLE(adId),
         'GET',
         undefined, 
@@ -67,6 +67,9 @@ export async function getSingleProduct(token: string, adId: number) {
     );
 }
 
+// Use it like the following:
+// const res = response.data as TProductResponseType[]
+// setProducts(res)
 export async function getProductsByCategory(category: string) {
     return sendRequest(
         PRODUCT.GET_BY_CATEGORY(category), 
@@ -76,7 +79,9 @@ export async function getProductsByCategory(category: string) {
     );
 }
 
-
+// Use it like the following:
+// const res = response.data as TProductResponseType[]
+// setProducts(res)
 export async function getSellersProducts(token: string) {
     return sendRequest(
         PRODUCT.GET_BY_SELLER,

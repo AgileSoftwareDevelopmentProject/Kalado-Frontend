@@ -7,10 +7,9 @@ export interface LoginRequest {
     password: string;
 }
 
-export interface LoginResponse {
-    success: boolean;
-    token: string;
-    role: string
+export type TLoginResponseType = {
+    token: string
+    role: UserType
 }
 
 // Register
@@ -54,6 +53,22 @@ export interface ProductData {
     // sellerId: number;
 }
 
+export type TProductResponseType = {
+    id: number;
+    title: string;
+    description: string;
+    price: {
+        amount: number;
+        unit: string;
+    };
+    category: string;
+    productionYear: number;
+    brand: string;
+    status: string;
+    createdAt: number; // Timestamp in milliseconds
+    sellerId: number;
+};
+
 
 
 // Report
@@ -80,3 +95,44 @@ export interface ProfileData {
     address: string;
 }
 
+export type TUserProfileResponse = {
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+    address: string | null;
+    phoneNumber: string;
+};
+
+
+
+// Search
+
+export type PageableResponseType<T> = {
+    content: T[];
+    pageable: {
+        sort: {
+            empty: boolean;
+            sorted: boolean;
+            unsorted: boolean;
+        };
+        offset: number;
+        pageNumber: number;
+        pageSize: number;
+        unpaged: boolean;
+        paged: boolean;
+    };
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    size: number;
+    number: number;
+    sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+    };
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+};
