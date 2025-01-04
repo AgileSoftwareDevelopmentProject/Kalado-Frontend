@@ -9,7 +9,6 @@ import {
   IconButton,
   useTheme,
 } from '@mui/material';
-import { toast } from 'react-toastify';
 import { Download as DownloadIcon, Check as CheckIcon, Close as CloseIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
@@ -22,7 +21,7 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
   const isRtl = i18n.language === 'fa';
   const theme = useTheme();
   const [openImage, setOpenImage] = useState(null);
-  const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false);
+  const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false); // مدیریت دیالوگ تایید مسدود کردن
 
   // اضافه کردن تصاویر به لیست داده‌ها
   const evidenceImages = [pishi1, pishi4];
@@ -38,7 +37,6 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
   const handleBlockConfirm = () => {
     onBlockContent(report.reportedContentId);
     setIsBlockDialogOpen(false);
-    toast.success(t('report.block_success_message')); // پیام تایید مسدود کردن
   };
 
   return (
@@ -56,14 +54,12 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
           borderRadius: '15px',
           direction: isRtl ? 'rtl' : 'ltr',
           textAlign: 'center',
-          backgroundColor: theme.palette.background.paper,
         }}
       >
         <Typography
           variant="h5"
           sx={{
             marginBottom: 4,
-            color: theme.palette.text.primary,
             fontWeight: 'bold',
           }}
         >
@@ -88,7 +84,6 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
               variant="h6"
               sx={{
                 marginBottom: 2,
-                color: theme.palette.text.primary,
               }}
             >
               {t('report.report_card.description')}:
@@ -96,7 +91,6 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
             <Typography
               variant="body1"
               sx={{
-                color: theme.palette.text.secondary,
                 textAlign: 'justify',
               }}
             >
@@ -123,7 +117,6 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
               variant="h6"
               sx={{
                 marginBottom: 2,
-                color: theme.palette.text.primary,
                 textAlign: 'right',
                 width: '100%',
               }}
@@ -158,7 +151,6 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
                       position: 'absolute',
                       bottom: '8px',
                       right: '8px',
-                      backgroundColor: theme.palette.background.default,
                       boxShadow: '0px 2px 5px rgba(0,0,0,0.2)',
                     }}
                     onClick={() => window.open(image, '_blank')}
@@ -182,8 +174,7 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
         >
           <Button
             variant="contained"
-            color="error"
-            onClick={() => setIsBlockDialogOpen(true)}
+            onClick={() => setIsBlockDialogOpen(true)} // باز کردن دیالوگ تایید
             sx={{
               textTransform: 'none',
             }}
@@ -239,7 +230,7 @@ const ReportDetails = ({ report, onBackToList, onBlockContent }) => {
             variant="h6"
             sx={{ textAlign: 'center', fontWeight: 'bold' }}
           >
-            {t('report.block_confirmation.title')}
+            {t('report.report_card.block_confirmation.title')}
           </Typography>
           <Box sx={{ display: 'flex', gap: '30px' }}>
             <IconButton

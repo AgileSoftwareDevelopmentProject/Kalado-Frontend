@@ -79,10 +79,9 @@ const UserManagement: React.FC = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "flex-start",
-        minHeight: "100vh",
+        maxWidth: '100vw',
+        margin: '0 auto',
         padding: 20,
-        backgroundColor: "background.default",
         direction: isRtl ? "rtl" : "ltr",
         overflow: "auto",
       }}
@@ -99,7 +98,6 @@ const UserManagement: React.FC = () => {
             fontWeight: "bold",
             marginBottom: 4,
             textAlign: "center",
-            color: "primary.main",
           }}
         >
           {t("report.user_management.title")}

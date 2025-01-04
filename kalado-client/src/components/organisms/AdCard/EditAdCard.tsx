@@ -171,7 +171,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          textAlign: isRtl ? "right" : "left",
+          textAlign: isRtl ? "right" : "left", // Dynamic alignment
         }}
       >
         <Box>
