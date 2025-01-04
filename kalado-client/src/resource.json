@@ -92,7 +92,38 @@
                 "two": "Inappropriate Content",
                 "three": "Inappropriate Price"
             },
-            "choose_evidence": "Evidence/Documents"
+            "choose_evidence": "Evidence/Documents",
+            "user_management": {
+                "title": "User Management",
+                "user_info": "User Information",
+                "email": "Email Address",
+                "status": "Status",
+                "allowed": "Allowed",
+                "blocked": "Blocked",
+                "confirmation_title": "Change User Status",
+                "confirmation_message": "Are you sure you want to change the status of {{email}} to {{status}}?",
+                "confirm": "Confirm",
+                "cancel": "Cancel"
+            },
+            "report_card": {
+                "history_title": "Violation History",
+                "violation_type": "Violation Type",
+                "reporter_id": "Reporter User ID",
+                "content_id": "Reported Content ID",
+                "description": "Description",
+                "submission_date": "Submission Date",
+                "evidence": "Evidence",
+                "actions": {
+                    "show_details": "Show Details",
+                    "block": "Block",
+                    "back_to_list": "Back to List"
+                },
+                "block_confirmation": {
+                    "title": "Are you Sure to Block this User?"
+              },
+              "block_success_message": "The user has been successfully blocked."
+     
+        }
         },
         "dashboard": {
             "user": {
@@ -279,7 +310,37 @@
                 "two": "محتوای نامناسب",
                 "three": "قیمت نامتناسب با بازار"
             },
-            "choose_evidence": "شواهد/مدارک"
+            "choose_evidence": "شواهد/مدارک",
+            "user_management": {
+                "title": "مدیریت کاربران",
+                "user_info": "اطلاعات کاربر",
+                "email": "آدرس ایمیل",
+                "status": "وضعیت",
+                "allowed": "مجاز",
+                "blocked": "مسدود",
+                "confirmation_title": "تغییر وضعیت کاربر",
+                "confirmation_message": "آیا مطمئن هستید که می‌خواهید وضعیت {{email}} را به {{status}} تغییر دهید؟",
+                "confirm": "تأیید",
+                "cancel": "لغو"
+            },
+            "report_card": {
+                "history_title": "تاریخچه تخلفات",
+                "violation_type": "نوع تخلف",
+                "reporter_id": "شناسه گزارش دهنده",
+                "content_id": "شناسه محتوای گزارش شده",
+                "description": "توضیحات",
+                "submission_date": "زمان ثبت گزارش",
+                "evidence": "شواهد",
+                "actions": {
+                    "show_details": "جزئیات بیشتر",
+                    "block": "مسدود کردن",
+                    "back_to_list": "بازگشت به لیست"
+                },
+                "block_confirmation": {
+                    "title": "آیا از مسدود کردن این کاربر اطمینان دارید؟"
+                },
+                "block_success_message": "کاربر با موفقیت مسدود شد."    
+            }           
         },
         "dashboard": {
             "user": {
