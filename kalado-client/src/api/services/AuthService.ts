@@ -38,3 +38,14 @@ export async function signupUser(userData: UserData) {
         }
     );
 }
+
+
+export async function verifyCode(token: string) {
+    return sendRequest(
+        AUTH.VERIFY,
+        'POST',
+        new URLSearchParams({ token }).toString(),
+        undefined,
+        { 'Content-Type': 'application/x-www-form-urlencoded' } 
+    );
+}
