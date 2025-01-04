@@ -42,7 +42,7 @@ export interface CodeVerifyResponse {
 
 
 // Product
-export interface ProductRequest {
+export interface ProductData {
     title: string;
     description: string;
     price: {

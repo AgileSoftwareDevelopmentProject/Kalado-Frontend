@@ -11,10 +11,10 @@ export const AUTH = {
 // PRODUCT
 export const PRODUCT = {
     CREATE: '/product',
-    UPDATE: (adId: string) => `/product/${adId}`,
-    DELETE: (adId: string) => `/product/delete/${adId}`,
-    UPDATE_STATUS: (adId: string) => `/product/status/${adId}`,
-    GET_BY_SELLER: (sellerId: number) => `/product/seller/${sellerId}`, 
+    UPDATE: (productId: number) => `/product/${productId}`,
+    DELETE: (productId: number) => `/product/delete/${productId}`,
+    UPDATE_STATUS: (productId: number) => `/product/status/${productId}`,
+    GET_BY_SELLER: '/product/seller', 
     GET_BY_CATEGORY: (category: string) => `/product/category/${category}`, 
     GET_SINGLE: (productId: number) => `/product/${productId}`, 
 };
