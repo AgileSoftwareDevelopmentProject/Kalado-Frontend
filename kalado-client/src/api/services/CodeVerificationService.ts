@@ -36,6 +36,34 @@ import { AUTH } from './urls';
 //     }
 // }
 
-export async function verifyCode(code: string) {
-    return sendRequest(AUTH.VERIFY, 'POST', { token: code })
+// export async function verifyCode(code: string) {
+//     return sendRequest(AUTH.VERIFY, 'POST', { token: code })
+// }
+
+// export async function verifyAuthToken(token: string) {
+//     return sendRequest(
+//         AUTH.VERIFY,
+//         'POST',
+//         new URLSearchParams({ token }).toString(),
+//         { 'Content-Type': 'application/x-www-form-urlencoded' }
+//     );
+// }
+
+// export async function verifyAuthToken(token: string) {
+//     const response = await fetch('http://kaladoshop.com:8083/v1/auth/verify/', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+//         body: new URLSearchParams({ token }).toString(),
+//     });
+//     return response.json(); // Or handle the response as needed
+// }
+
+export async function verifyAuthToken(token: string) {
+    return sendRequest(
+        AUTH.VERIFY,
+        'POST',
+        new URLSearchParams({ token }).toString(),
+        undefined,
+        { 'Content-Type': 'application/x-www-form-urlencoded' } 
+    );
 }
