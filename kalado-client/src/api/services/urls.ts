@@ -5,7 +5,7 @@ export const AUTH = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
-    VERIFY: '/auth',
+    VERIFY: '/auth/verify',
 };
 
 // PRODUCT
