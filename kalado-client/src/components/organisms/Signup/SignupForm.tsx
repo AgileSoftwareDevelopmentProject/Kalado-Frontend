@@ -22,7 +22,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
     phoneNumber: '',
     password: '',
     passwordRepeat: '',
-    role: 'USER'
+    role: 'ADMIN'
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
