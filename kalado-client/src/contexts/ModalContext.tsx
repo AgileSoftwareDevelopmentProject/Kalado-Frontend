@@ -10,11 +10,13 @@ interface ModalContextType {
     isCodeVerificationVisible: boolean;
     isCreateAdVisible: boolean;
     isReportSubmissionVisible: boolean;
+    isInProfile: boolean;
     setLoginVisible: (visible: boolean) => void;
     setSignupVisible: (visible: boolean) => void;
     setCodeVerificationVisible: (visible: boolean) => void;
     setCreateAdVisible: (visible: boolean) => void;
     setReportSubmissionVisible: (visible: boolean) => void;
+    setIsInProfile: (visible: boolean) => void;
     handleOpenLogin: () => void;
     handleOpenSignup: () => void;
     handleOpenCodeVerification: () => void;
@@ -36,6 +38,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
     const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
+    const [isInProfile, setIsInProfile] = useState(false);
 
     const handleClosePopups = () => {
         setLoginVisible(false);
@@ -77,6 +80,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenProfilePage = () => {
+        setIsInProfile(true);
         if (userRole === 'ADMIN') {
             navigate('/admin-dashboard');
         } else if (userRole === 'USER') {
@@ -96,11 +100,13 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             isCodeVerificationVisible,
             isCreateAdVisible,
             isReportSubmissionVisible,
+            isInProfile,
             setLoginVisible,
             setSignupVisible,
             setCodeVerificationVisible,
             setCreateAdVisible,
             setReportSubmissionVisible,
+            setIsInProfile,
             handleOpenLogin,
             handleOpenSignup,
             handleOpenCodeVerification,

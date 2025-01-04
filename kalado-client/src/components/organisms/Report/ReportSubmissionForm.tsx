@@ -84,7 +84,6 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                     />
                 </LocalizationProvider>
                 <DescriptionInput
-                    name="description"
                     value={formData.description}
                     onChange={(description) => handleChange('description', description)}
                 />

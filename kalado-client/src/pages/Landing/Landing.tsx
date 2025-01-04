@@ -6,6 +6,7 @@ import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, Co
 import { SideBar } from '../../components/molecules';
 import { OptionsComponent } from '../../constants/options';
 
+
 const Landing: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();

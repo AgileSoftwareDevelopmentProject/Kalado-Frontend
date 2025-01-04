@@ -13,7 +13,7 @@ const UserDashboard: React.FC = () => {
     const { user_dashboard_menu } = OptionsComponent();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
     const {
-        handleOpenReportSubmission,
+        handleOpenReportSubmission
     } = useModalContext();
 
     const handleSelectMenu = (menuTitle: string) => {
@@ -31,9 +31,7 @@ const UserDashboard: React.FC = () => {
 
     return (
         <Box>
-            <NavBar
-                isInProfile={true}
-            />
+            <NavBar />
 
             <SideBar>
                 <SideBarMenu

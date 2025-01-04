@@ -28,9 +28,7 @@ const AdminDashboard: React.FC = () => {
 
     return (
         <Box>
-            <NavBar
-                isInProfile={true}
-            />
+            <NavBar />
 
             <SideBar>
                 <SideBarMenu
