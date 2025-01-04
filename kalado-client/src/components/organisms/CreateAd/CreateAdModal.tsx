@@ -1,23 +1,18 @@
 import React from 'react';
 import { Backdrop } from '../../../components/atoms';
 import CreateAdForm from './CreateAdForm';
+import { useModalContext } from '../../../contexts';
 
-interface CreateAdModalProps {
-    open: boolean;
-    onClose: () => void;
-}
+const CreateAdModal: React.FC = () => {
 
-const CreateAdModal: React.FC<CreateAdModalProps> = ({ open, onClose }) => {
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            onClose();
-        }
-    };
+    const {
+        isCreateAdVisible,
+        handleClosePopups
+    } = useModalContext();
 
     return (
-        <Backdrop open={open} onClick={handleBackdropClick}>
-            <CreateAdForm onClose={onClose} />
+        <Backdrop open={isCreateAdVisible} onClose={handleClosePopups}>
+            <CreateAdForm onClose={handleClosePopups} />
         </Backdrop>
     );
 };

@@ -6,17 +6,22 @@ import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, Co
 import { SideBar } from '../../components/molecules';
 import { FaHome, FaCar, FaLaptop, FaGamepad, FaSuitcase, FaUtensils } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth, useModalContext } from '../../contexts';
+
 
 const Landing: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [isLoginVisible, setLoginVisible] = useState(false);
-    const [isSignupVisible, setSignupVisible] = useState(false);
-    const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
-    const [isCreateAdVisible, setCreateAdVisible] = useState(false);
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
+
+    const {
+        setLoginVisible,
+        setCreateAdVisible,
+    } = useModalContext();
+
     const { token, userRole } = useAuth();
+
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
+
 
     const categories = [
         { titleKey: "category.one", icon: <FaHome /> },
@@ -31,33 +36,12 @@ const Landing: React.FC = () => {
         setSelectedCategoryTitle(t(categoryKey));
     };
 
-    const handleOpenLogin = () => {
-        setLoginVisible(true);
-        setSignupVisible(false);
-    };
-
-    const handleOpenSignup = () => {
-        setLoginVisible(false);
-        setSignupVisible(true);
-    };
-
-    const handleOpenCodeVerification = () => {
-        handleClosePopups();
-        setCodeVerificationVisible(true);
-    };
-
     const handleOpenCreateAd = () => {
         if (!token) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
         }
         setCreateAdVisible(true);
-    };
-
-    const handleClosePopups = () => {
-        setLoginVisible(false);
-        setSignupVisible(false);
-        setCreateAdVisible(false);
     };
 
     const handleOpenProfilePage = () => {
@@ -94,25 +78,10 @@ const Landing: React.FC = () => {
                 selectedCategoryTitle={selectedCategoryTitle}
             />
 
-            <LoginModal
-                open={isLoginVisible}
-                onClose={handleClosePopups}
-                onOpenSignup={handleOpenSignup}
-            />
-            <SignupModal
-                open={isSignupVisible}
-                onClose={handleClosePopups}
-                onOpenLogin={handleOpenLogin}
-                onSignUpSuccess={handleOpenCodeVerification}
-            />
-            <CreateAdModal
-                open={isCreateAdVisible}
-                onClose={handleClosePopups}
-            />
-            <CodeVerificationModal
-                open={isCodeVerificationVisible}
-                onClose={handleClosePopups}
-            />
+            <LoginModal />
+            <SignupModal />
+            <CreateAdModal />
+            <CodeVerificationModal />
         </Box>
     );
 };

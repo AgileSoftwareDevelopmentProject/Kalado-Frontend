@@ -1,26 +1,21 @@
 import React from 'react';
 import { Backdrop } from '../../../components/atoms';
 import LoginForm from './LoginForm';
+import { useModalContext } from '../../../contexts';
 
-interface LoginModalProps {
-    open: boolean;
-    onClose: () => void;
-    onOpenSignup: () => void;
-}
+const LoginModal: React.FC = () => {
 
-const LoginModal: React.FC<LoginModalProps> = ({ open, onClose, onOpenSignup }) => {
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            onClose();
-        }
-    };
+    const {
+        isLoginVisible,
+        handleClosePopups,
+        handleOpenSignup
+    } = useModalContext();
 
     return (
-        <Backdrop open={open} onClick={handleBackdropClick}>
+        <Backdrop open={isLoginVisible} onClose={handleClosePopups}>
             <LoginForm
-                onClose={onClose}
-                onOpenSignup={onOpenSignup}
+                onClose={handleClosePopups}
+                onOpenSignup={handleOpenSignup}
             />
         </Backdrop>
     );

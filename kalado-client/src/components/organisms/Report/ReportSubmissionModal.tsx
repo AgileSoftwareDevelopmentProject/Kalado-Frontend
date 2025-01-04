@@ -1,23 +1,18 @@
 import React from 'react';
 import { Backdrop } from '../../../components/atoms';
 import ReportSubmissionForm from './ReportSubmissionForm';
+import { useModalContext } from '../../../contexts';
 
-interface ReportSubmissionModalProps {
-    open: boolean;
-    onClose: () => void;
-}
+const ReportSubmissionModal: React.FC = () => {
 
-const ReportSubmissionModal: React.FC<ReportSubmissionModalProps> = ({ open, onClose }) => {
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            onClose();
-        }
-    };
+    const {
+        isReportSubmissionVisible,
+        handleClosePopups,
+    } = useModalContext();
 
     return (
-        <Backdrop open={open} onClick={handleBackdropClick}>
-            <ReportSubmissionForm onClose={onClose} />
+        <Backdrop open={isReportSubmissionVisible} onClose={handleClosePopups}>
+            <ReportSubmissionForm onClose={handleClosePopups} />
         </Backdrop>
     );
 };

@@ -1,28 +1,24 @@
 import React from 'react';
 import { Backdrop } from '../../../components/atoms';
 import SignupForm from './SignupForm';
+import { useModalContext } from '../../../contexts';
 
-interface SignupModalProps {
-    open: boolean;
-    onClose: () => void;
-    onOpenLogin: () => void;
-    onSignUpSuccess: (email: string) => void;
-}
 
-const SignupModal: React.FC<SignupModalProps> = ({ open, onClose, onOpenLogin, onSignUpSuccess }) => {
-    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('backdrop')) {
-            onClose();
-        }
-    };
+const SignupModal: React.FC = () => {
+
+    const {
+        isSignupVisible,
+        handleClosePopups,
+        handleOpenLogin,
+        handleOpenCodeVerification
+    } = useModalContext();
 
     return (
-        <Backdrop open={open} onClick={handleBackdropClick}>
+        <Backdrop open={isSignupVisible} onClose={handleClosePopups}>
             <SignupForm
-                onClose={onClose}
-                onOpenLogin={onOpenLogin}
-                onSignUpSuccess={onSignUpSuccess}
+                onClose={handleClosePopups}
+                onOpenLogin={handleOpenLogin}
+                onSignUpSuccess={handleOpenCodeVerification}
             />
         </Backdrop>
     );

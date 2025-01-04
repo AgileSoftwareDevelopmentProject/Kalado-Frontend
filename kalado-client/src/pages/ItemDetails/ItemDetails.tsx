@@ -24,7 +24,6 @@ const ItemDetails: React.FC = () => {
     const [item, setItem] = useState<Item | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
-    const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
 
     const { token } = useAuth();
 
@@ -78,10 +77,7 @@ const ItemDetails: React.FC = () => {
                         onReportSubmissionClick={handleOpenReportSubmission}
                     />
 
-                    <ReportSubmissionModal
-                        open={isReportSubmissionVisible}
-                        onClose={() => setReportSubmissionVisible(false)}
-                    />
+                    <ReportSubmissionModal />
                 </>
             }
         </Box >

@@ -64,14 +64,8 @@ const UserDashboard: React.FC = () => {
                 {renderContent()}
             </Box>
 
-            <CreateAdModal
-                open={isCreateAdVisible}
-                onClose={() => setCreateAdVisible(false)}
-            />
-            <ReportSubmissionModal
-                open={isReportSubmissionVisible}
-                onClose={() => setReportSubmissionVisible(false)}
-            />
+            <CreateAdModal />
+            <ReportSubmissionModal />
         </Box>
     );
 };
