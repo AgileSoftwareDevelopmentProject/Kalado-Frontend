@@ -5,7 +5,7 @@ import { Box, Typography, CircularProgress } from '@mui/material';
 import { ReportSubmissionModal, ItemDetailsCard } from '../../components/organisms';
 import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
-import { getSingleProduct } from '../../api/services/product/getSingleProductService';
+import { getSingleProduct } from '../../api/services/ProductService';
 
 interface Item {
     title: string;

@@ -5,7 +5,7 @@ import { createAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 
 // Mocking the createAd service
-jest.mock('../../../services/product/CreateAdService', () => ({
+jest.mock('../../../services/ProductService', () => ({
     createAd: jest.fn(),
 }));
 
