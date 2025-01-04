@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ReportSubmissionModal, ItemDetailsCard } from '../../components/organisms';
-import { useAuth } from '../../contexts/AuthContext';
-import { toast } from 'react-toastify';
 import { getSingleProduct } from '../../api/services/product/getSingleProductService';
 
 interface Item {
@@ -25,8 +23,6 @@ const ItemDetails: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
 
-    const { token } = useAuth();
-
     useEffect(() => {
         const fetchItem = async () => {
             try {
@@ -43,14 +39,6 @@ const ItemDetails: React.FC = () => {
 
         fetchItem();
     }, [itemId, t]);
-
-    const handleOpenReportSubmission = () => {
-        if (!token) {
-            toast.error(t("error.item_details.disable_report_submiision"));
-            return;
-        }
-        setReportSubmissionVisible(true);
-    };
 
     return (
         <Box
@@ -74,7 +62,6 @@ const ItemDetails: React.FC = () => {
                 <>
                     <ItemDetailsCard
                         item={item}
-                        onReportSubmissionClick={handleOpenReportSubmission}
                     />
 
                     <ReportSubmissionModal />

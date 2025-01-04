@@ -1,4 +1,8 @@
 import React, { createContext, useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useAuth } from '../contexts';
 
 interface ModalContextType {
     isLoginVisible: boolean;
@@ -11,15 +15,22 @@ interface ModalContextType {
     setCodeVerificationVisible: (visible: boolean) => void;
     setCreateAdVisible: (visible: boolean) => void;
     setReportSubmissionVisible: (visible: boolean) => void;
-    handleClosePopups: () => void;
     handleOpenLogin: () => void;
     handleOpenSignup: () => void;
     handleOpenCodeVerification: () => void;
+    handleOpenCreateAd: () => void;
+    handleOpenReportSubmission: () => void;
+    handleOpenProfilePage: () => void;
+    handleClosePopups: () => void;
+    handleLogoutClick: () => void;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    const { token, setToken, userRole } = useAuth();
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
@@ -49,6 +60,35 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setCodeVerificationVisible(true);
     };
 
+    const handleOpenCreateAd = () => {
+        if (!token) {
+            toast.error(t("error.create_ad.disable_not_loggined"));
+            return;
+        }
+        setCreateAdVisible(true);
+    };
+
+    const handleOpenReportSubmission = () => {
+        if (!token) {
+            toast.error(t("error.item_details.disable_report_submiision"));
+            return;
+        }
+        setReportSubmissionVisible(true);
+    };
+
+    const handleOpenProfilePage = () => {
+        if (userRole === 'ADMIN') {
+            navigate('/admin-dashboard');
+        } else if (userRole === 'USER') {
+            navigate('/user-dashboard');
+        }
+    };
+
+    const handleLogoutClick = () => {
+        setToken('');
+        navigate('/');
+    };
+
     return (
         <ModalContext.Provider value={{
             isLoginVisible,
@@ -60,11 +100,15 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             setSignupVisible,
             setCodeVerificationVisible,
             setCreateAdVisible,
-            handleClosePopups,
+            setReportSubmissionVisible,
             handleOpenLogin,
             handleOpenSignup,
             handleOpenCodeVerification,
-            setReportSubmissionVisible,
+            handleOpenCreateAd,
+            handleOpenReportSubmission,
+            handleOpenProfilePage,
+            handleClosePopups,
+            handleLogoutClick,
         }}>
             {children}
         </ModalContext.Provider>
