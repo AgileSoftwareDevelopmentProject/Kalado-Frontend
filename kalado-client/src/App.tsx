@@ -1,11 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { I18nextProvider } from "react-i18next";
-import i18n from "./i18n";
-import CssBaseline from "@mui/material/CssBaseline";
-import { CustomToast } from "./components/molecules";
-import AdminDashboard from "./pages/Dashboards/AdminDashboard"; // Import AdminDashboard
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { AuthProvider } from "./contexts/AuthContext";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
+import CssBaseline from '@mui/material/CssBaseline';
+import { CustomToast } from './components/molecules';
+import { Landing, ItemDetails, UserDashboard, AdminDashboard } from './pages';
+import './index.css';
+import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   return (
@@ -13,11 +14,26 @@ function App() {
       <ThemeProvider>
         <CssBaseline />
         <Router>
-          <AuthProvider>
-            <Routes>
-              <Route path="/" element={<AdminDashboard />} /> {/* Show AdminDashboard */}
-            </Routes>
-          </AuthProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <AuthProvider>
+                  <Landing />
+                </AuthProvider>}
+            />
+            <Route path="/item/:itemId" element={<ItemDetails />} />
+            <Route path="/user-dashboard" element={
+              <AuthProvider>
+                <UserDashboard />
+              </AuthProvider>}
+            />
+            <Route path="/admin-dashboard" element={
+              <AuthProvider>
+                <AdminDashboard />
+              </AuthProvider>}
+            />
+          </Routes>
         </Router>
         <CustomToast />
       </ThemeProvider>
