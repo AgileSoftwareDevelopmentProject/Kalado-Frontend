@@ -1,3 +1,5 @@
+import { SortOrder } from "../../utils/types";
+
 export const BASE_URL = 'http://kaladoshop.com:8083/v1';
 
 // AUTH
@@ -36,4 +38,21 @@ export const USER = {
     PUT: '/user',
     GET_PROFILE: '/user/getProfile',
     MODIFY_PROFILE: '/user/modifyProfile',
+};
+
+// SEARCH
+export const SEARCH = {
+    BY_KEYWORD: (keyword: string) => `/search/products?keyword=${encodeURIComponent(keyword)}`,
+    BY_PRICE_RANGE: (minPrice: number, maxPrice: number) =>
+        `/search/products?minPrice=${minPrice}&maxPrice=${maxPrice}`,
+    BY_KEYWORD_SORTED: (keyword: string, sortBy: string, sortOrder: SortOrder) =>
+        `/search/products?keyword=${encodeURIComponent(keyword)}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+    FILTERED: (
+        keyword: string,
+        minPrice: number,
+        maxPrice: number,
+        timeFilter: string
+    ) =>
+        `/search/products?keyword=${encodeURIComponent(keyword)}&minPrice=${minPrice}&maxPrice=${maxPrice}&timeFilter=${timeFilter}`,
+    PAGINATED: (page: number, size: number) => `/search/products?page=${page}&size=${size}`,
 };
