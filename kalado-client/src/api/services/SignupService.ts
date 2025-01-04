@@ -14,7 +14,7 @@ export async function signupUser(
         email: String(email),
         phoneNumber: String(phoneNumber),
         password: String(password),
-        role: 'USER',
+        role: 'ADMIN',
     };
 
     try {
