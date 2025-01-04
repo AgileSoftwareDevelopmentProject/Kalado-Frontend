@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../api/services/product/CreateAdService';
+import { createAd } from '../../../api/services/ProductService';
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';

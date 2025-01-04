@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import CreateAdForm from './CreateAdForm';
-import { createAd } from '../../../api/services/product/CreateAdService';
+import { createAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 
 // Mocking the createAd service
