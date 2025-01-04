@@ -58,7 +58,7 @@ export async function updateAdStatus(token: string, productId: number, status: s
 export async function getSingleProduct(token: string, adId: number) {
     return sendRequest(
         PRODUCT.GET_SINGLE(adId),
-        'PUT',
+        'GET',
         undefined, 
         undefined, 
         {
@@ -80,7 +80,7 @@ export async function getProductsByCategory(category: string) {
 export async function getSellersProducts(token: string) {
     return sendRequest(
         PRODUCT.GET_BY_SELLER,
-        'PUT',
+        'GET',
         undefined, 
         undefined, 
         {

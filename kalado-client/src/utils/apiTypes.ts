@@ -56,3 +56,23 @@ export interface ProductData {
 
 
 
+// Report
+export interface ReportData {
+    violationType: string;
+    description: string;
+    reportedUserId: number;
+    reportedContentId: number;
+}
+
+export interface ReportStatusUpdateData {
+    status: string;
+    adminNotes: string;
+    blockUser: boolean;
+    blockReason: string | null;
+}
+
+
+
+
+
+

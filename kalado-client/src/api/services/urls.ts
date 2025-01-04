@@ -23,7 +23,7 @@ export const PRODUCT = {
 // REPORT
 export const REPORT = {
     CREATE: '/reports',
-    UPDATE_STATUS: (reportId: string) => `/reports/admin/status${reportId}`,
+    UPDATE_STATUS: (reportId: number) => `/reports/admin/status${reportId}`,
     GET_MY_REPORTS: `/reports/my-reports`, 
     GET_ALL_REPORTS: `/reports/admin/all`,
     GET_REPORT_STATISTICS: (startDate: string, endDate: string) => 
