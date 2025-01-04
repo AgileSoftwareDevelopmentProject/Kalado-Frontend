@@ -14,13 +14,12 @@ export interface LoginResponse {
 }
 
 // Register
-export interface RegisterRequest {
+export interface UserData {
     firstName: string;
     lastName: string;
     email: string;
     phoneNumber: string;
     password: string;
-    passwordRepeat: string;
     role: string;
 }
 
