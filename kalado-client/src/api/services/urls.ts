@@ -1,3 +1,5 @@
+import { SortOrder } from "../../utils/types";
+
 export const BASE_URL = 'http://kaladoshop.com:8083/v1';
 
 // AUTH
@@ -5,16 +7,16 @@ export const AUTH = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
-    VERIFY: '/auth',
+    VERIFY: '/auth/verify',
 };
 
 // PRODUCT
 export const PRODUCT = {
     CREATE: '/product',
-    UPDATE: (adId: string) => `/product/${adId}`,
-    DELETE: (adId: string) => `/product/delete/${adId}`,
-    UPDATE_STATUS: (adId: string) => `/product/status/${adId}`,
-    GET_BY_SELLER: (sellerId: number) => `/product/seller/${sellerId}`, 
+    UPDATE: (productId: number) => `/product/${productId}`,
+    DELETE: (productId: number) => `/product/delete/${productId}`,
+    UPDATE_STATUS: (productId: number) => `/product/status/${productId}`,
+    GET_BY_SELLER: '/product/seller', 
     GET_BY_CATEGORY: (category: string) => `/product/category/${category}`, 
     GET_SINGLE: (productId: number) => `/product/${productId}`, 
 };
@@ -23,7 +25,7 @@ export const PRODUCT = {
 // REPORT
 export const REPORT = {
     CREATE: '/reports',
-    UPDATE_STATUS: (reportId: string) => `/reports/admin/status${reportId}`,
+    UPDATE_STATUS: (reportId: number) => `/reports/admin/status${reportId}`,
     GET_MY_REPORTS: `/reports/my-reports`, 
     GET_ALL_REPORTS: `/reports/admin/all`,
     GET_REPORT_STATISTICS: (startDate: string, endDate: string) => 
@@ -34,4 +36,23 @@ export const REPORT = {
 export const USER = {
     GET: '/user',
     PUT: '/user',
+    GET_PROFILE: '/user/getProfile',
+    MODIFY_PROFILE: '/user/modifyProfile',
+};
+
+// SEARCH
+export const SEARCH = {
+    BY_KEYWORD: (keyword: string) => `/search/products?keyword=${encodeURIComponent(keyword)}`,
+    BY_PRICE_RANGE: (minPrice: number, maxPrice: number) =>
+        `/search/products?minPrice=${minPrice}&maxPrice=${maxPrice}`,
+    BY_KEYWORD_SORTED: (keyword: string, sortBy: string, sortOrder: SortOrder) =>
+        `/search/products?keyword=${encodeURIComponent(keyword)}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+    FILTERED: (
+        keyword: string,
+        minPrice: number,
+        maxPrice: number,
+        timeFilter: string
+    ) =>
+        `/search/products?keyword=${encodeURIComponent(keyword)}&minPrice=${minPrice}&maxPrice=${maxPrice}&timeFilter=${timeFilter}`,
+    PAGINATED: (page: number, size: number) => `/search/products?page=${page}&size=${size}`,
 };

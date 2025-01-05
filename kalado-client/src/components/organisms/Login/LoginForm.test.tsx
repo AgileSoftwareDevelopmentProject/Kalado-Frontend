@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import LoginForm from './LoginForm';
 import { useAuth } from '../../../contexts/AuthContext';
-import { loginUser } from '../../../api/services/LoginService';
+import { loginUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 
 // Mocking the AuthContext

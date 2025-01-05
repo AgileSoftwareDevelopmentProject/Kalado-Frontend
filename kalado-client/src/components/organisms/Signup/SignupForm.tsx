@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomCheckBox, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { signupUser } from '../../../api/services/SignupService';
+import { signupUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 import { validatePassword, validatePhoneNumber } from '../../../validators';
 import { useModalContext } from '../../../contexts';
@@ -17,7 +17,7 @@ const SignupForm: React.FC = () => {
     phoneNumber: '',
     password: '',
     passwordRepeat: '',
-    role: 'USER'
+    role: 'ADMIN'
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
@@ -69,7 +69,16 @@ const SignupForm: React.FC = () => {
 
     if (validateUserInputs()) {
       // Signup API call
-      const response = await signupUser(formData.firstName, formData.lastName, formData.email, formData.phoneNumber, formData.password);
+      // const response = await signupUser(formData.firstName, formData.lastName, formData.email, formData.phoneNumber, formData.password, formData.role);
+      const response = await signupUser({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        password: formData.password,
+        role: formData.role
+      });
+  
       if (response.isSuccess) {
         onSignUpSuccess(formData.email);
         handleClose();

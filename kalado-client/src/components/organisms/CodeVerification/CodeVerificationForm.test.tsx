@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import CodeVerificationForm from './CodeVerificationForm';
-import { verifyCode } from '../../../api/services/CodeVerificationService';
+import { verifyCode } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 
 // Mocking the verifyCode service

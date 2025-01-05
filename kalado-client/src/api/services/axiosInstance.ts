@@ -72,23 +72,60 @@ axiosInstance.interceptors.response.use(
 );
 
 // Request Wrapper Function
+// export async function sendRequest<T>(
+//     url: string,
+//     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+//     requestData?: any,
+//     signal?: AbortSignal
+// ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
+//     try {
+//         console.log('-----------------------------------');
+//         console.log(`[Request Wrapper] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
+//         const response = await axiosInstance.request({
+//             method,
+//             url,
+//             data: requestData,
+//             signal,
+//         });
+
+//         console.log('[Request Wrapper] Success:', response.data);
+//         return {
+//             isSuccess: true,
+//             data: response.data as T,
+//             status: response.status,
+//         };
+//     } catch (error) {
+//         const axiosError = error as AxiosError<ErrorResponseData>;
+//         console.error('[Request Wrapper] Error:', axiosError);
+
+//         // Accessing message from error.response?.data
+//         const message = axiosError.response?.data?.message || 'An unknown error occurred.';
+
+//         return {
+//             isSuccess: false,
+//             data: null,
+//             status: axiosError.response?.status || 500,
+//             message,
+//         };
+//     }
+// }
+
 export async function sendRequest<T>(
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     requestData?: any,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    headers: Record<string, string> = {} 
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
-        console.log('-----------------------------------');
-        console.log(`[Request Wrapper] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
         const response = await axiosInstance.request({
             method,
             url,
             data: requestData,
             signal,
+            headers, 
         });
 
-        console.log('[Request Wrapper] Success:', response.data);
         return {
             isSuccess: true,
             data: response.data as T,
@@ -96,11 +133,7 @@ export async function sendRequest<T>(
         };
     } catch (error) {
         const axiosError = error as AxiosError<ErrorResponseData>;
-        console.error('[Request Wrapper] Error:', axiosError);
-
-        // Accessing message from error.response?.data
         const message = axiosError.response?.data?.message || 'An unknown error occurred.';
-
         return {
             isSuccess: false,
             data: null,

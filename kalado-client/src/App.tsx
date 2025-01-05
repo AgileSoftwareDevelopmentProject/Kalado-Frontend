@@ -7,7 +7,6 @@ import { Landing, ItemDetails, UserDashboard, AdminDashboard } from './pages';
 import './index.css';
 import { AuthProvider, ThemeProvider, ModalProvider, LanguageProvider } from './contexts';
 
-
 function App() {
   return (
     <I18nextProvider i18n={i18n}>

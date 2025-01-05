@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CodeInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { verifyCode } from '../../../api/services/CodeVerificationService';
+import { verifyCode } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 
