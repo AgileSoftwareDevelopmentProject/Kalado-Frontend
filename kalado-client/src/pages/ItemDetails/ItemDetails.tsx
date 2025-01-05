@@ -18,17 +18,22 @@ interface Item {
 
 const ItemDetails: React.FC = () => {
     const { t } = useTranslation();
-    const { itemId } = useParams<{ itemId: number }>();
+    const { itemId } = useParams<{ itemId: string }>();
     const [item, setItem] = useState<Item | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
         const fetchItem = async () => {
+            if (!itemId) {
+                setError(t("error.general"));
+                setLoading(false);
+                return;
+            }
+
             try {
                 setLoading(true);
-                // getSingleProduct API call
-                const fetchedItem = await getSingleProduct(itemId);
+                const fetchedItem = await getSingleProduct(Number(itemId));
                 setItem(fetchedItem);
             } catch (err) {
                 setError(t("error.general"));
@@ -50,24 +55,17 @@ const ItemDetails: React.FC = () => {
                 p: 2,
             }}
         >
-            {
-                (loading) && (<CircularProgress />)
-            }
-
-            {
-                (!item || error) &&
-                (<Typography variant="h6">{t("item_details.not_found")}</Typography>)
-            }
-            {
+            {loading && <CircularProgress />}
+            {!loading && (error || !item) && (
+                <Typography variant="h6">{t("error.item_details.not_found")}</Typography>
+            )}
+            {!loading && item && (
                 <>
-                    <ItemDetailsCard
-                        item={item}
-                    />
-
+                    <ItemDetailsCard item={item} />
                     <ReportSubmissionForm />
                 </>
-            }
-        </Box >
+            )}
+        </Box>
     );
 };
 

@@ -1,31 +1,26 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, PriceInput, DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
+import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
-
+import { ProductData } from '../../../utils/apiTypes';
 
 const CreateAdForm: React.FC = () => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState<{
-        title: string;
-        price: number;
-        category: string;
-        description: string;
-        images: File[];
-        date: string;
-        brand: string;
-    }>({
+    const [formData, setFormData] = useState<ProductData>({
         title: '',
-        price: 0,
+        price: {
+            amount: 0,
+            unit: 'Toman',
+        },
         category: '',
         description: '',
         images: [],
-        date: '',
-        brand: '',
+        productionYear: null,
+        brand: null,
     });
     const [error, setError] = useState<string>('');
     const { create_ad_options } = OptionsComponent();
@@ -35,7 +30,7 @@ const CreateAdForm: React.FC = () => {
         handleClosePopups,
     } = useModalContext();
 
-    const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
+    const handleCategoryChange = (selectedOption: Option | null) => {
         setFormData(prevData => ({
             ...prevData,
             category: selectedOption ? selectedOption.value : ''
@@ -50,7 +45,7 @@ const CreateAdForm: React.FC = () => {
         }));
     };
 
-    const handlePriceChange = (price: number) => {
+    const handlePriceChange = (price: { amount: number; unit: string }) => {
         setFormData((prevData) => ({
             ...prevData,
             price,
@@ -71,13 +66,29 @@ const CreateAdForm: React.FC = () => {
         }));
     };
 
+    const handleClose = () => {
+        setFormData({
+            title: '',
+            price: {
+                amount: 0,
+                unit: 'Toman',
+            },
+            category: '',
+            description: '',
+            images: [],
+            productionYear: null,
+            brand: null,
+        });
+        setError('');
+        handleClosePopups();
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await createAd(formData.title, formData.description, formData.price, formData.category);
+        const response = await createAd(formData);
         if (response.isSuccess) {
-            // setFormData({ title: '', price: 0, category: '', description: '', images: [] });
-            handleClosePopups();
+            handleClose();
             toast(t("success.create_ad"));
         } else {
             setError(response.message);
@@ -107,19 +118,11 @@ const CreateAdForm: React.FC = () => {
                     onChange={handleCategoryChange}
                     value={create_ad_options.find(option => option.value === formData.category) || null}
                 />
-                <DateInput
-                    label={t("create_ad.input.production_year")}
-                    value={formData.date ? new Date(formData.date) : null}
-                    onChange={(newValue) => {
-                        if (newValue) {
-                            handleChange('date', newValue.toISOString());
-                        }
-                    }}
-                />
+                <YearInput />
                 <NameInput
                     name="brand"
                     placeholder={t("create_ad.input.brand")}
-                    value={formData.brand}
+                    value={formData.brand || ''}
                     onChange={handleChange}
                 />
                 <DescriptionInput

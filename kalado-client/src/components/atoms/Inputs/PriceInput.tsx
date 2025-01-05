@@ -3,11 +3,16 @@ import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 
+interface Price {
+    amount: number;
+    unit: string;
+}
+
 interface PriceInputProps {
     name?: string;
     placeholder?: string;
-    value: number;
-    onChange: (value: number) => void;
+    value: Price;
+    onChange: (value: Price) => void;
     isRequired?: boolean;
     isStarNeeded?: boolean;
 }
@@ -24,17 +29,22 @@ const PriceInput: React.FC<PriceInputProps> = ({
     const [inputValue, setInputValue] = useState<string>('');
 
     useEffect(() => {
-        setInputValue(value ? value.toString() : '');
+        setInputValue(value.amount ? value.amount.toString() : '');
     }, [value]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const rawValue = e.target.value.replace(/[^\d]/g, '');
         setInputValue(rawValue);
         const numericValue = parseInt(rawValue, 10);
-        onChange(isNaN(numericValue) ? 0 : numericValue);
+        onChange({ amount: isNaN(numericValue) ? 0 : numericValue, unit: value.unit });
+    };
+
+    const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        onChange({ amount: value.amount, unit: e.target.value });
     };
 
     return (
+
         <TextField
             type="text"
             name="price"
@@ -49,13 +59,20 @@ const PriceInput: React.FC<PriceInputProps> = ({
                     endAdornment: (
                         <InputAdornment position="end">
                             {t('currency')}
-                        </InputAdornment>
+                        </InputAdornment >
+                        // <InputAdornment position="end">
+                        //     <select value={value.unit} onChange={handleUnitChange}>
+                        //         <option value="Toman">Toman</option>
+                        //         <option value="Dollar">Dollar</option>
+                        //     </select>
+                        // </InputAdornment>
                     ),
                     inputMode: 'numeric',
                 },
             }}
             sx={{ width: '70%' }}
         />
+
     );
 };
 

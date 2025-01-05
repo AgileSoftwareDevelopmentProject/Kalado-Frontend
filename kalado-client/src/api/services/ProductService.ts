@@ -2,6 +2,7 @@ import { ProductData, TProductResponseType } from '../../utils/apiTypes';
 import { sendRequest } from './axiosInstance';
 import { PRODUCT } from './urls';
 import { useAuth } from '../../contexts/AuthContext';
+import mockData from '../../mockData.json';  // use for mocking APIs
 
 
 export async function createAd(productData: ProductData) {
@@ -59,31 +60,53 @@ export async function updateAdStatus(productId: number, status: string) {
     );
 }
 
+// export async function getSingleProduct(adId: number) {
+//     const { token } = useAuth();
+//     return sendRequest<TProductResponseType>(
+//         PRODUCT.GET_SINGLE(adId),
+//         'GET',
+//         undefined,
+//         undefined,
+//         {
+//             Authorization: `Bearer ${token}`,
+//         }
+//     );
+// }
 
-export async function getSingleProduct(adId: number) {
-    const { token } = useAuth();
-    return sendRequest<TProductResponseType>(
-        PRODUCT.GET_SINGLE(adId),
-        'GET',
-        undefined,
-        undefined,
-        {
-            Authorization: `Bearer ${token}`,
+// Mock Function
+export const getSingleProduct = async (itemId: number) => {
+    return new Promise((resolve, reject) => {
+        const item = mockData.items.find(product => product.itemId === String(itemId));
+        if (item) {
+            resolve(item);
+        } else {
+            reject(new Error('Item not found'));
         }
-    );
-}
+    });
+};
 
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
 // setProducts(res)
-export async function getProductsByCategory(category: string) {
-    return sendRequest(
-        PRODUCT.GET_BY_CATEGORY(category),
-        'GET',
-        undefined,
-        undefined
-    );
-}
+// export async function getProductsByCategory(category: string) {
+//     return sendRequest(
+//         PRODUCT.GET_BY_CATEGORY(category),
+//         'GET',
+//         undefined,
+//         undefined
+//     );
+// }
+
+// Mock Function
+export const getProductsByCategory = async (category) => {
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(mockData.items);
+        }, 1000);
+    });
+};
+
 
 // Use it like the following:
 // const res = response.data as TProductResponseType[]

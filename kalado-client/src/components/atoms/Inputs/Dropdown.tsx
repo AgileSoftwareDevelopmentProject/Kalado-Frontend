@@ -1,65 +1,55 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
+import { Autocomplete } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 interface Option {
-    value: string;
     label: string;
+    value: string;
 }
 
 interface DropdownProps {
     options: Option[];
-    placeholder?: string;
-    onChange: (selectedOption: Option | null) => void;
-    value?: Option | null;
+    placeholder: string;
+    onChange: (value: Option | null) => void;
+    value: Option | null;
+    isRequired?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
-    options,
-    placeholder,
-    onChange,
-    value
-}) => {
-    const { i18n } = useTranslation();
-    const handleChange = (event: SelectChangeEvent<string>) => {
-        const selectedValue = event.target.value;
-        const selectedOption = options.find(option => option.value === selectedValue) || null;
-        onChange(selectedOption);
-    };
+const Dropdown: React.FC<DropdownProps> = ({ options, placeholder, onChange, value, isRequired = true }) => {
+    const { t, i18n } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.category');
 
     return (
-        <FormControl variant="standard" sx={{ mb: 2, width: '70%' }}>
-            <InputLabel
-                sx={{
-                    textAlign: i18n.language === 'fa' ? 'right' : 'left',
-                    width: '100%',
-                    position: 'absolute',
-                    right: 30
-                }}
-            >
-                {placeholder}
-            </InputLabel>
-            <Select
-                value={value ? value.value : ''}
-                onChange={handleChange}
-                displayEmpty
-            >
-                {options.map(option => (
-                    <MenuItem
-                        key={option.value}
-                        value={option.value}
-                        sx={{
-                            '&:hover': {
-                                backgroundColor: '#D74101',
-                            }
-                        }}
-                    >
-                        {option.label}
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        <Autocomplete
+            disablePortal
+            options={options}
+            includeInputInList
+            autoComplete
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={translatedPlaceholder}
+                    variant="standard"
+                    margin="normal"
+                    required={isRequired}
+                    sx={{
+                        width: '70%',
+                        '& .MuiInputLabel-root': {
+                            textAlign: i18n.language === 'fa' ? 'right' : 'left',
+                            width: '90%',
+                        },
+                    }}
+                />
+            )}
+            getOptionLabel={(option) => option.label}
+            isOptionEqualToValue={(option, value) => option.value === value.value}
+            noOptionsText={t("general_inputs.no_option")}
+            onChange={(event, newValue) => {
+                onChange(newValue);
+            }}
+            value={value}
+        />
     );
 };
 
