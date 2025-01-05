@@ -8,6 +8,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useAuth, useThemeContext, useModalContext, useLanguageContext } from '../../../contexts';
 import { toast } from 'react-toastify';
 import { OptionsComponent } from '../../../constants/options';
+import { getSearchByKeyword } from '../../../api/services/SearchService';
 
 
 const NavBar: React.FC = () => {
@@ -30,7 +31,7 @@ const NavBar: React.FC = () => {
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await searchByKeyword(searchQuery);
+    const response = await getSearchByKeyword(searchQuery);
     if (response.isSuccess) {
 
     } else {

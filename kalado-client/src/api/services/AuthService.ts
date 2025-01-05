@@ -6,10 +6,10 @@ import { TLoginResponseType, UserData } from '../../utils/apiTypes';
 export async function loginUser(email: string, password: string) {
     return sendRequest<TLoginResponseType>(
         AUTH.LOGIN,
-        'POST', 
-        { email, password }, 
-        undefined, 
-        { 'Content-Type': 'application/json' } 
+        'POST',
+        { email, password },
+        undefined,
+        { 'Content-Type': 'application/json' }
     );
 }
 
@@ -18,21 +18,21 @@ export async function signupUser(userData: UserData) {
     return sendRequest(
         AUTH.REGISTER,
         'POST',
-        userData, 
-        undefined, 
+        userData,
+        undefined,
         {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
         }
     );
 }
 
 
-export async function verifyCode(token: string) {
+export async function verifyCode(code: string) {
     return sendRequest(
         AUTH.VERIFY,
         'POST',
-        new URLSearchParams({ token }).toString(),
+        new URLSearchParams({ code }).toString(),
         undefined,
-        { 'Content-Type': 'application/x-www-form-urlencoded' } 
+        { 'Content-Type': 'application/x-www-form-urlencoded' }
     );
 }

@@ -12,13 +12,13 @@ interface Item {
     city: string;
     date: string;
     description: string;
-    itemId: string;
+    itemId: number;
     seller_phone: string;
 }
 
 const ItemDetails: React.FC = () => {
     const { t } = useTranslation();
-    const { itemId } = useParams<{ itemId: string }>();
+    const { itemId } = useParams<{ itemId: number }>();
     const [item, setItem] = useState<Item | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
@@ -28,7 +28,7 @@ const ItemDetails: React.FC = () => {
             try {
                 setLoading(true);
                 // getSingleProduct API call
-                const fetchedItem = await getSingleProduct(itemId!);
+                const fetchedItem = await getSingleProduct(itemId);
                 setItem(fetchedItem);
             } catch (err) {
                 setError(t("error.general"));

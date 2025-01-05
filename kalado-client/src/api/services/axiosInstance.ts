@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { BASE_URL as baseURL } from './urls';
 import { toast } from 'sonner';
-import errorTranslations from '../../errorTranslations';
 
 const axiosInstance = axios.create({ baseURL });
 
@@ -64,7 +63,7 @@ axiosInstance.interceptors.response.use(
         toast.error(
             statusCode === 409
                 ? 'This email is already registered.'
-                : errorTranslations[message] || message.replace(/_/g, ' ')
+                : message || message.replace(/_/g, ' ')
         );
 
         return Promise.reject(error);
@@ -115,7 +114,7 @@ export async function sendRequest<T>(
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     requestData?: any,
     signal?: AbortSignal,
-    headers: Record<string, string> = {} 
+    headers: Record<string, string> = {}
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
         const response = await axiosInstance.request({
@@ -123,7 +122,7 @@ export async function sendRequest<T>(
             url,
             data: requestData,
             signal,
-            headers, 
+            headers,
         });
 
         return {
