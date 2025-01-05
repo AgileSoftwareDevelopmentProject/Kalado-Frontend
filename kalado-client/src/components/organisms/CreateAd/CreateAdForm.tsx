@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../api/services/ProductService';
+import { createAd, createProductWithImages } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
@@ -18,10 +18,12 @@ const CreateAdForm: React.FC = () => {
         },
         category: '',
         description: '',
-        images: [],
+        // images: [],
         productionYear: null,
         brand: null,
     });
+
+    const [images, setImages] = useState<File[]>([]); 
     const [error, setError] = useState<string>('');
     const { create_ad_options } = OptionsComponent();
 
@@ -71,14 +73,15 @@ const CreateAdForm: React.FC = () => {
             title: '',
             price: {
                 amount: 0,
-                unit: 'Toman',
+                unit: 'TOMAN',
             },
             category: '',
             description: '',
-            images: [],
+            // images: [],
             productionYear: null,
             brand: null,
         });
+        setImages([]);
         setError('');
         handleClosePopups();
     };
@@ -86,12 +89,17 @@ const CreateAdForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await createAd(formData);
-        if (response.isSuccess) {
-            handleClose();
-            toast(t("success.create_ad"));
-        } else {
-            setError(response.message);
+        try {
+            const response = await createProductWithImages(formData, images);
+
+            if (response.isSuccess) {
+                handleClose();
+                toast(t("success.create_ad"));
+            } else {
+                setError(response.message);
+            }
+        } catch (error) {
+            setError('An error occurred while creating the product');
         }
     };
 

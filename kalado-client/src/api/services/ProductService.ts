@@ -20,15 +20,18 @@ export async function createAd(productData: ProductData) {
 }
 
 
-export async function createAdWithImage(productData: ProductData, imageFile: File) {
+export async function createProductWithImages(productData: ProductData, imageFiles: File[]) {
     const { token } = useAuth();
 
     const formData = new FormData();
     formData.append('product', JSON.stringify(productData));
-    formData.append('images', imageFile);
+
+    imageFiles.forEach((file, index) => {
+        formData.append(`images[${index}]`, file);
+    });
 
     return sendRequest<TProductResponseType>(
-        PRODUCT.CREATE,
+        '/v1/product',
         'POST',
         formData,
         undefined,
