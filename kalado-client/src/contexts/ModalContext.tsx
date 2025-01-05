@@ -64,7 +64,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenCreateAd = () => {
-        if (!token) {
+        if (!!token) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
         }
@@ -72,7 +72,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenReportSubmission = () => {
-        if (!token) {
+        if (!!token) {
             toast.error(t("error.item_details.disable_report_submiision"));
             return;
         }
@@ -90,7 +90,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const handleLogoutClick = () => {
         setIsInProfile(false);
-        setToken('');
+        setToken(null);
         navigate('/');
     };
 

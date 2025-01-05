@@ -11,20 +11,17 @@ import { useModalContext } from '../../../contexts';
 
 const LoginForm: React.FC = () => {
     const { t } = useTranslation();
-    const initialFormData = {
+    const [formData, setFormData] = useState({
         email: '',
         password: '',
-    };
-    const [formData, setFormData] = useState(initialFormData);
+    });
     const [error, setError] = useState<string>('');
     const { setToken, setUserRole } = useAuth();
-
     const {
         isLoginVisible,
         handleOpenSignup,
         handleClosePopups,
     } = useModalContext();
-
 
     const validateUserInputs = () => {
         const emailValidationResult = validateEmail(formData.email, t);
@@ -33,7 +30,7 @@ const LoginForm: React.FC = () => {
             return false;
         }
         return true;
-    }
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -44,18 +41,13 @@ const LoginForm: React.FC = () => {
             if (response.isSuccess) {
                 setToken(response.token);
                 setUserRole(response.role);
-                handleClose();
+                setFormData({ email: '', password: '' });
+                handleClosePopups();
                 toast(t("success.login"));
             } else {
                 setError(response.message);
             }
         }
-    };
-
-    const handleClose = () => {
-        setFormData(initialFormData);
-        setError('');
-        handleClosePopups();
     };
 
     return (
