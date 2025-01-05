@@ -7,6 +7,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useAuth, useThemeContext, useModalContext, useLanguageContext } from '../../../contexts';
 import { toast } from 'react-toastify';
+import { OptionsComponent } from '../../../constants/options';
 
 
 const NavBar: React.FC = () => {
@@ -16,6 +17,7 @@ const NavBar: React.FC = () => {
   const { isDarkMode, toggleTheme } = useThemeContext();
   const { currentLanguage, toggleLanguage } = useLanguageContext();
   const [searchQuery, setSearchQuery] = useState('');
+  const { search_options } = OptionsComponent();
   const {
     handleOpenLogin,
     handleOpenCreateAd,
@@ -23,6 +25,8 @@ const NavBar: React.FC = () => {
     handleLogoutClick,
     isInProfile,
   } = useModalContext();
+
+
 
   // TODO Seacrch API
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,6 +53,7 @@ const NavBar: React.FC = () => {
 
         <SearchBar
           value={searchQuery}
+          options={search_options}
           onChange={(e) => setSearchQuery(e.target.value)}
           onSearch={handleSearch}
         />
@@ -58,7 +63,7 @@ const NavBar: React.FC = () => {
         </IconButton>
 
         <IconButton onClick={toggleTheme} color="secondary">
-          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon sx={{ color: '#363e6b' }} />}
         </IconButton>
 
         <Box sx={{ display: 'flex' }}>

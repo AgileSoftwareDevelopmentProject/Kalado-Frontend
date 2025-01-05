@@ -2,6 +2,7 @@
     "items": [
         {
             "title": "Samsung A54",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 15000000,
             "city": "تهران",
             "date": "دقایقی پیش",
@@ -11,6 +12,7 @@
         },
         {
             "title": "Iphone 15",
+            "imageUrl": "/assets/images/no-image.png",
             "price": 60000000,
             "city": "شیراز",
             "date": "یک ساعت پیش",

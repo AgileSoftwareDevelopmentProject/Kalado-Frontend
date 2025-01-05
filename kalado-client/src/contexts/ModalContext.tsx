@@ -54,8 +54,8 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenSignup = () => {
-        setLoginVisible(false);
         setSignupVisible(true);
+        setLoginVisible(false);
     };
 
     const handleOpenCodeVerification = () => {

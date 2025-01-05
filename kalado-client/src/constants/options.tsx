@@ -24,5 +24,34 @@ export const OptionsComponent = () => {
         { title: t("dashboard.admin.menu.three"), icon: <FaHistory /> },
     ];
 
-    return { product_categories, user_dashboard_menu, admin_dashboard_menu };
+    const report_options = [
+        { value: 'Abuse', label: t("report.category.one") },
+        { value: 'Inproper Content', label: t("report.category.two") },
+        { value: 'Inproper Price', label: t("report.category.three") },
+    ];
+
+    const create_ad_options = [
+        { value: 'Real estate', label: t("category.one") },
+        { value: 'Transportation', label: t("category.two") },
+        { value: 'House and Kitchen', label: t("category.three") },
+        { value: 'Digital Stuff', label: t("category.four") },
+        { value: 'Entertainment', label: t("category.five") },
+        { value: 'Personal Stuff', label: t("category.six") },
+        { value: 'Others', label: t("category.seven") },
+    ];
+
+    const search_options = [
+        t("search.option1"),
+        t("search.option2"),
+        t("search.option3"),
+        t("search.option4"),
+        t("search.option5"),
+        t("search.option6"),
+        t("search.option7"),
+        t("search.option8"),
+        t("search.option9"),
+        t("search.option10"),
+    ];
+
+    return { product_categories, user_dashboard_menu, admin_dashboard_menu, report_options, create_ad_options, search_options };
 };

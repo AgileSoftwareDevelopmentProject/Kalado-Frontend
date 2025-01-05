@@ -64,7 +64,7 @@ const ItemDetails: React.FC = () => {
                         item={item}
                     />
 
-                    <ReportSubmissionModal />
+                    {/* <ReportSubmissionModal /> */}
                 </>
             }
         </Box >

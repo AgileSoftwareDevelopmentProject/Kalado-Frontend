@@ -1,5 +1,3 @@
-export { default as Backdrop } from './Backdrop/Backdrop';
-
 export { default as CustomButton } from './Buttons/CustomButton';
 export { default as CloseButton } from './Buttons/CloseButton';
 

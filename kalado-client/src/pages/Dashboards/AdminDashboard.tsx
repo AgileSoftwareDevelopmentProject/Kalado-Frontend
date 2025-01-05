@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, UserManagement, ReportHistory, NavBar, CreateAdModal } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, UserManagement, ReportHistory, NavBar } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 
 
@@ -42,7 +42,7 @@ const AdminDashboard: React.FC = () => {
                 {renderContent()}
             </Box>
 
-            <CreateAdModal />
+            {/* <CreateAdModal /> */}
         </Box>
     );
 };

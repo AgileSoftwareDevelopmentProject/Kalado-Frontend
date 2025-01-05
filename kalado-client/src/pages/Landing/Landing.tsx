@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { NavBar, SideBarMenu, Filter, LoginModal, SignupModal, CreateAdModal, CodeVerificationModal, ItemsHolder } from '../../components/organisms';
 import { SideBar } from '../../components/molecules';
+import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CodeVerificationForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 
 
 const Landing: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
     const { product_categories } = OptionsComponent();
+    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
 
     const handleSelectCategory = (categoryKey: string) => {
         setSelectedCategoryTitle(t(categoryKey));
@@ -36,10 +36,11 @@ const Landing: React.FC = () => {
                 selectedCategoryTitle={selectedCategoryTitle}
             />
 
-            <LoginModal />
-            <SignupModal />
-            <CreateAdModal />
-            <CodeVerificationModal />
+
+            <LoginForm />
+            <SignupForm />
+            <CodeVerificationForm />
+            <CreateAdForm />
         </Box>
     );
 };

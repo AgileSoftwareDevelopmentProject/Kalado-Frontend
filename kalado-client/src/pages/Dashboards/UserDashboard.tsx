@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { CustomButton } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, NavBar, CreateAdModal, ReportSubmissionModal } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, AdManagement, NavBar } from '../../components/organisms';
 import { useModalContext } from '../../contexts';
 import { OptionsComponent } from '../../constants/options';
 
@@ -49,8 +49,8 @@ const UserDashboard: React.FC = () => {
                 {renderContent()}
             </Box>
 
-            <CreateAdModal />
-            <ReportSubmissionModal />
+            {/* <CreateAdModal /> */}
+            {/* <ReportSubmissionModal /> */}
         </Box>
     );
 };

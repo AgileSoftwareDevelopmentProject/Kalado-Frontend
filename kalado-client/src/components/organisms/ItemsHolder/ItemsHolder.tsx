@@ -7,6 +7,7 @@ import { getProductsByCategory } from '../../../api/services/product/getProducts
 import defaultImage from '../../../assets/images/no-image.png';
 import mockData from '../../../mockData.json';
 
+
 interface Item {
     title: string;
     imageUrl: string;
@@ -36,11 +37,11 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
 
                 // const fetchedData = getProductsByCategory(selectedCategoryTitle);
                 const fetchedData = mockData.items;
-                console.log("QQQQQQQQQQQQQQQ");
                 // console.log(fetchedData);
                 const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
                 console.log(fetchedItems);
-                setItems(fetchedItems as Item[]);
+                setItems(fetchedItems);
+                console.log(items);
             } catch (error) {
                 setError(t("error.landing.error_get_product"));
             } finally {
