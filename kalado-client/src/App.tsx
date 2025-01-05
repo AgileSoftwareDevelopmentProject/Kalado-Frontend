@@ -10,50 +10,24 @@ import { AuthProvider, ThemeProvider, ModalProvider, LanguageProvider } from './
 function App() {
   return (
     <I18nextProvider i18n={i18n}>
-      <ThemeProvider>
-        <CssBaseline />
-        <Router>
-          <Routes>
-            <Route path="/" element={
-              <AuthProvider>
-                <LanguageProvider>
-                  <ModalProvider>
-                    <Landing />
-                  </ModalProvider>
-                </LanguageProvider>
-              </AuthProvider>}
-            />
-            <Route path="/item/:itemId" element={
-              <AuthProvider>
-                <LanguageProvider>
-                  <ModalProvider>
-                    <ItemDetails />
-                  </ModalProvider>
-                </LanguageProvider>
-              </AuthProvider>
-            } />
-            <Route path="/user-dashboard" element={
-              <AuthProvider>
-                <LanguageProvider>
-                  <ModalProvider>
-                    <UserDashboard />
-                  </ModalProvider>
-                </LanguageProvider>
-              </AuthProvider>}
-            />
-            <Route path="/admin-dashboard" element={
-              <AuthProvider>
-                <LanguageProvider>
-                  <ModalProvider>
-                    <AdminDashboard />
-                  </ModalProvider>
-                </LanguageProvider>
-              </AuthProvider>}
-            />
-          </Routes>
-        </Router>
-        <CustomToast />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <CssBaseline />
+            <Router>
+              <ModalProvider>
+                <Routes>
+                  <Route path="/" element={<Landing />} />
+                  <Route path="/item/:itemId" element={<ItemDetails />} />
+                  <Route path="/user-dashboard" element={<UserDashboard />} />
+                  <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                </Routes>
+              </ModalProvider>
+            </Router>
+            <CustomToast />
+          </LanguageProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </I18nextProvider>
   );
 }
