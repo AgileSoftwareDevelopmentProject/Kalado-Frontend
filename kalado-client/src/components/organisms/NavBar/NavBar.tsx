@@ -66,7 +66,7 @@ const NavBar: React.FC = () => {
         </IconButton>
 
         <Box sx={{ display: 'flex' }}>
-          {!!token ? (
+          {(token !== null) ? (
             isInProfile ? (
               <CustomButton text={t('navbar.logout')} onClick={handleLogoutClick} />
             ) : (
