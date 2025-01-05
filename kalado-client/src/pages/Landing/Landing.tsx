@@ -36,7 +36,6 @@ const Landing: React.FC = () => {
                 selectedCategoryTitle={selectedCategoryTitle}
             />
 
-
             <LoginForm />
             <SignupForm />
             <CodeVerificationForm />

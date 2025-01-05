@@ -1,31 +1,33 @@
 import { sendRequest } from './axiosInstance';
 import { USER } from './urls';
-import { ProfileData, TUserProfileResponse  } from '../../utils/apiTypes';
+import { ProfileData, TUserProfileResponse } from '../../utils/apiTypes';
+import { useAuth } from '../../contexts/AuthContext';
 
 
-
-export async function getProfile(token: string) {
+export async function getProfile() {
+    const { token } = useAuth();
     return sendRequest<TUserProfileResponse>(
         USER.GET_PROFILE,
         'GET',
-        undefined, 
-        undefined, 
+        undefined,
+        undefined,
         {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
         }
     );
 }
 
 
-export async function modifyProfile(token: string, profileData: ProfileData) {
+export async function modifyProfile(profileData: ProfileData) {
+    const { token } = useAuth();
     return sendRequest(
         USER.MODIFY_PROFILE,
-        'PUT', 
-        profileData, 
+        'PUT',
+        profileData,
         undefined,
         {
-            'Content-Type': 'application/json', 
-            Authorization: `Bearer ${token}`, 
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         }
     );
 }

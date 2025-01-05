@@ -1,67 +1,72 @@
 import { sendRequest } from './axiosInstance';
 import { REPORT } from './urls';
 import { ReportData, ReportStatusUpdateData } from '../../utils/apiTypes';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 export async function createReport(reportData: ReportData) {
     return sendRequest(
         REPORT.CREATE,
         'POST',
-        reportData, 
-        undefined, 
+        reportData,
+        undefined,
         {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
         }
     );
 }
 
-export async function updateReportStatus(token: string, reportId: number, reportStatusData: ReportStatusUpdateData) {
+export async function updateReportStatus(reportId: number, reportStatusData: ReportStatusUpdateData) {
+    const { token } = useAuth();
     return sendRequest(
         REPORT.UPDATE_STATUS(reportId),
         'POST',
-        reportStatusData, 
-        undefined, 
+        reportStatusData,
+        undefined,
         {
-            'Content-Type': 'application/json', 
-            Authorization: `Bearer ${token}`, 
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         }
     );
 }
 
-export async function getAllReports(token: string) {
+export async function getAllReports() {
+    const { token } = useAuth();
     return sendRequest(
         REPORT.GET_ALL_REPORTS,
         'GET',
-        undefined, 
-        undefined, 
+        undefined,
+        undefined,
         {
-            'Content-Type': 'application/json', 
-            Authorization: `Bearer ${token}`, 
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         }
     );
 }
 
-export async function getMyReports(token: string) {
+export async function getMyReports() {
+    const { token } = useAuth();
     return sendRequest(
         REPORT.GET_MY_REPORTS,
         'GET',
-        undefined, 
-        undefined, 
+        undefined,
+        undefined,
         {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
         }
     );
 }
 
-export async function getReportStatistics(token: string, startDate: string, endData: string) {
+export async function getReportStatistics(startDate: string, endData: string) {
+    const { token } = useAuth();
     return sendRequest(
         REPORT.GET_REPORT_STATISTICS(startDate, endData),
         'GET',
-        undefined, 
-        undefined, 
+        undefined,
+        undefined,
         {
-            'Content-Type': 'application/json', 
-            Authorization: `Bearer ${token}`, 
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         }
     );
 }

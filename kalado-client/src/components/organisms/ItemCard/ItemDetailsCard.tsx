@@ -18,7 +18,7 @@ interface Item {
     city: string;
     date: string;
     description: string;
-    itemId: string;
+    itemId: number;
     seller_phone: string;
 }
 
