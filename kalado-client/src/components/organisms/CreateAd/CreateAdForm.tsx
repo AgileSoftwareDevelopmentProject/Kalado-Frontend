@@ -14,7 +14,7 @@ const CreateAdForm: React.FC = () => {
         title: '',
         price: {
             amount: 0,
-            unit: 'Toman',
+            unit: 'TOMAN',
         },
         category: '',
         description: '',

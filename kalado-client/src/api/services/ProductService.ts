@@ -19,6 +19,26 @@ export async function createAd(productData: ProductData) {
     );
 }
 
+
+export async function createAdWithImage(productData: ProductData, imageFile: File) {
+    const { token } = useAuth();
+
+    const formData = new FormData();
+    formData.append('product', JSON.stringify(productData));
+    formData.append('images', imageFile);
+
+    return sendRequest<TProductResponseType>(
+        PRODUCT.CREATE,
+        'POST',
+        formData,
+        undefined,
+        {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+        }
+    );
+}
+
 export async function deleteAd(adId: number) {
     const { token } = useAuth();
     return sendRequest(
