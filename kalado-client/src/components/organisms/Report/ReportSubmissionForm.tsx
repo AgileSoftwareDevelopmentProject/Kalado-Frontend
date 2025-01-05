@@ -2,17 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../api/services/ProductService';
-
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { toast } from 'react-toastify';
+import { useModalContext } from '../../../contexts';
+import { OptionsComponent } from '../../../constants/options';
 
-interface ReportSubmissionFormProps {
-    onClose: () => void;
-}
 
-const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) => {
+const ReportSubmissionForm: React.FC = () => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState<{
         date: string;
@@ -27,12 +24,12 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
     });
     const [error, setError] = useState<string>('');
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const { report_options } = OptionsComponent();
+    const {
+        isReportSubmissionVisible,
+    } = useModalContext();
 
-    const reportOptions = [
-        { value: 'Abuse', label: t("report.category.one") },
-        { value: 'Inproper Content', label: t("report.category.two") },
-        { value: 'Inproper Price', label: t("report.category.three") },
-    ];
+
 
     const handleChange = (field: string, value: any) => {
         setFormData(prevData => ({
@@ -55,7 +52,6 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
         const response = await submitReport(formData.date, formData.type, formData.description, formData.images);
         if (response.isSuccess) {
             setFormData({ date: '', type: '', description: '', images: [] });
-            onClose();
             toast(t("success.report"));
         } else {
             setError(response.message);
@@ -63,13 +59,13 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
     };
 
     return (
-        <PopupBox onClose={onClose}>
+        <PopupBox open={isReportSubmissionVisible}>
             <form onSubmit={handleSubmit}>
                 <Dropdown
-                    options={reportOptions}
+                    options={report_options}
                     placeholder={t("report.input.category")}
                     onChange={handleCategoryChange}
-                    value={reportOptions.find(option => option.value === formData.type) || null}
+                    value={report_options.find(option => option.value === formData.type) || null}
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateInput
@@ -84,7 +80,6 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) 
                     />
                 </LocalizationProvider>
                 <DescriptionInput
-                    name="description"
                     value={formData.description}
                     onChange={(description) => handleChange('description', description)}
                 />

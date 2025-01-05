@@ -5,15 +5,10 @@ import { PopupBox } from '../../molecules';
 import { signupUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 import { validatePassword, validatePhoneNumber } from '../../../validators';
+import { useModalContext } from '../../../contexts';
 
 
-interface SignupFormProps {
-  onClose: () => void;
-  onOpenLogin: () => void;
-  onSignUpSuccess: (email: string) => void;
-}
-
-const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpSuccess }) => {
+const SignupForm: React.FC = () => {
   const { t } = useTranslation();
   const initialFormData = {
     firstName: '',
@@ -26,6 +21,12 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
+
+  const {
+    isSignupVisible,
+    handleOpenLogin,
+    handleOpenCodeVerification,
+  } = useModalContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -69,7 +70,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
 
     if (validateUserInputs()) {
       // Signup API call
-      // const response = await signupUser(formData.firstName, formData.lastName, formData.email, formData.phoneNumber, formData.password, formData.role);
       const response = await signupUser({
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -78,9 +78,8 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
         password: formData.password,
         role: formData.role
       });
-  
+
       if (response.isSuccess) {
-        onSignUpSuccess(formData.email);
         handleClose();
         toast(t("success.signup"));
       } else {
@@ -92,11 +91,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
   const handleClose = () => {
     setFormData(initialFormData);
     setError('');
-    onClose();
+    handleOpenCodeVerification();
   };
 
   return (
-    <PopupBox onClose={handleClose}>
+    <PopupBox open={isSignupVisible}>
       <form onSubmit={handleSubmit}>
         <NameInput
           name="firstName"
@@ -146,7 +145,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onClose, onOpenLogin, onSignUpS
         />
         <CustomLink
           to="/#"
-          onClick={(e) => { e.preventDefault(); onOpenLogin(); }}
+          onClick={(e) => { e.preventDefault(); handleOpenLogin(); }}
           text={t("signup_form.login_link")}
         />
         <FormError message={error} />

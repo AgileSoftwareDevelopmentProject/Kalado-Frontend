@@ -5,7 +5,8 @@ import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
 import { getProductsByCategory } from '../../../api/services/ProductService';
 import defaultImage from '../../../assets/images/no-image.png';
-import { tr } from 'date-fns/locale';
+import mockData from '../../../mockData.json';
+
 
 interface Item {
     title: string;
@@ -33,11 +34,16 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
             try {
                 setLoading(true);
                 // getProductByCategory API call
-                const fetchedData = getProductsByCategory(selectedCategoryTitle);
+
+                // const fetchedData = getProductsByCategory(selectedCategoryTitle);
+                const fetchedData = mockData.items;
+                // console.log(fetchedData);
                 const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
-                setItems(fetchedItems as Item[]);
+                console.log(fetchedItems);
+                setItems(fetchedItems);
+                console.log(items);
             } catch (error) {
-                setError(t("error.general"));
+                setError(t("error.landing.error_get_product"));
             } finally {
                 setLoading(false);
             }

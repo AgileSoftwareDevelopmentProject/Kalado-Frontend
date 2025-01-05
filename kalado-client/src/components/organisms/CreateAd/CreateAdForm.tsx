@@ -3,17 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../api/services/ProductService';
-
-
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useModalContext } from '../../../contexts';
+import { OptionsComponent } from '../../../constants/options';
 
 
-interface CreateAdFormProps {
-    onClose: () => void;
-}
-
-const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
+const CreateAdForm: React.FC = () => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState<{
         title: string;
@@ -29,16 +24,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         images: [],
     });
     const [error, setError] = useState<string>('');
+    const { create_ad_options } = OptionsComponent();
 
-    const categoryOptions = [
-        { value: 'Real estate', label: t("category.one") },
-        { value: 'Transportation', label: t("category.two") },
-        { value: 'House and Kitchen', label: t("category.three") },
-        { value: 'Digital Stuff', label: t("category.four") },
-        { value: 'Entertainment', label: t("category.five") },
-        { value: 'Personal Stuff', label: t("category.six") },
-        { value: 'Others', label: t("category.seven") },
-    ];
+    const {
+        isCreateAdVisible,
+    } = useModalContext();
+
+
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
         setFormData(prevData => ({
@@ -79,31 +71,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        //     title: string,
-//     description: string,
-//     priceAmount: number,
-//     category: string,
-//     productionYear: number,
-//     brand: string,
-//     sellerId: number,
-        const { token } = useAuth();
-        // title: string;
-        // price: number;
-        // category: string;
-        // description: string;
-        // images: File[];
-        const response = await createAd(token, {
-            title: formData.title,
-            description: formData.description,
-            price: {
-                amount: formData.price,
-                unit: 'TOMAN',
-            },
-            category: formData.category,
-            productionYear: 2023,   // TODO
-            brand: 'Brand'     // TODO
-            // sellerId: 1,
-        });
+        const response = await createAd(formData.title, formData.description, formData.price, formData.category);
         if (response.isSuccess) {
             setFormData({ title: '', price: 0, category: '', description: '', images: [] });
             onClose();
@@ -114,7 +82,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
     };
 
     return (
-        <PopupBox onClose={onClose}>
+        <PopupBox open={isCreateAdVisible}>
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
@@ -131,10 +99,10 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     isStarNeeded={true}
                 />
                 <Dropdown
-                    options={categoryOptions}
+                    options={create_ad_options}
                     placeholder={t("create_ad.input.category")}
                     onChange={handleCategoryChange}
-                    value={categoryOptions.find(option => option.value === formData.category) || null}
+                    value={create_ad_options.find(option => option.value === formData.category) || null}
                 />
                 <DescriptionInput
                     value={formData.description}

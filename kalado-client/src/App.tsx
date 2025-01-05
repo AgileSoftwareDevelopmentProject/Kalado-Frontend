@@ -5,8 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CustomToast } from './components/molecules';
 import { Landing, ItemDetails, UserDashboard, AdminDashboard } from './pages';
 import './index.css';
-import { AuthProvider } from './contexts/AuthContext';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider, ThemeProvider, ModalProvider, LanguageProvider } from './contexts';
 
 function App() {
   return (
@@ -15,22 +14,40 @@ function App() {
         <CssBaseline />
         <Router>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <AuthProvider>
-                  <Landing />
-                </AuthProvider>}
+            <Route path="/" element={
+              <AuthProvider>
+                <LanguageProvider>
+                  <ModalProvider>
+                    <Landing />
+                  </ModalProvider>
+                </LanguageProvider>
+              </AuthProvider>}
             />
-            <Route path="/item/:itemId" element={<ItemDetails />} />
+            <Route path="/item/:itemId" element={
+              <AuthProvider>
+                <LanguageProvider>
+                  <ModalProvider>
+                    <ItemDetails />
+                  </ModalProvider>
+                </LanguageProvider>
+              </AuthProvider>
+            } />
             <Route path="/user-dashboard" element={
               <AuthProvider>
-                <UserDashboard />
+                <LanguageProvider>
+                  <ModalProvider>
+                    <UserDashboard />
+                  </ModalProvider>
+                </LanguageProvider>
               </AuthProvider>}
             />
             <Route path="/admin-dashboard" element={
               <AuthProvider>
-                <AdminDashboard />
+                <LanguageProvider>
+                  <ModalProvider>
+                    <AdminDashboard />
+                  </ModalProvider>
+                </LanguageProvider>
               </AuthProvider>}
             />
           </Routes>

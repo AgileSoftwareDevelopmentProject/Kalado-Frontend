@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
-import { ReportSubmissionModal, ItemDetailsCard } from '../../components/organisms';
-import { useAuth } from '../../contexts/AuthContext';
-import { toast } from 'react-toastify';
+import { ReportSubmissionForm, ItemDetailsCard } from '../../components/organisms';
 import { getSingleProduct } from '../../api/services/ProductService';
 
 interface Item {
@@ -24,9 +22,6 @@ const ItemDetails: React.FC = () => {
     const [item, setItem] = useState<Item | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
-    const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
-
-    const { token } = useAuth();
 
     useEffect(() => {
         const fetchItem = async () => {
@@ -44,14 +39,6 @@ const ItemDetails: React.FC = () => {
 
         fetchItem();
     }, [itemId, t]);
-
-    const handleOpenReportSubmission = () => {
-        if (!token) {
-            toast.error(t("error.item_details.disable_report_submiision"));
-            return;
-        }
-        setReportSubmissionVisible(true);
-    };
 
     return (
         <Box
@@ -75,13 +62,9 @@ const ItemDetails: React.FC = () => {
                 <>
                     <ItemDetailsCard
                         item={item}
-                        onReportSubmissionClick={handleOpenReportSubmission}
                     />
 
-                    <ReportSubmissionModal
-                        open={isReportSubmissionVisible}
-                        onClose={() => setReportSubmissionVisible(false)}
-                    />
+                    <ReportSubmissionForm />
                 </>
             }
         </Box >

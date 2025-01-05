@@ -9,6 +9,7 @@ import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { toast } from 'react-toastify';
+import { useModalContext } from '../../../contexts';
 
 interface Item {
     title: string;
@@ -23,11 +24,14 @@ interface Item {
 
 interface ItemDetailsCardProps {
     item: Item;
-    onReportSubmissionClick: () => void;
 }
 
-const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmissionClick }) => {
+const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
     const { t } = useTranslation();
+
+    const {
+        handleOpenReportSubmission,
+    } = useModalContext();
 
     const copyToClipboard = (phoneNumber: string) => {
         navigator.clipboard.writeText(phoneNumber)
@@ -98,7 +102,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmiss
             </Box >
             <CustomButton
                 text={t("item_details.report_submission_btn")}
-                onClick={onReportSubmissionClick}
+                onClick={handleOpenReportSubmission}
             />
         </Card >
     );

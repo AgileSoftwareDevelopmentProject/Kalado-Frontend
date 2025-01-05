@@ -6,13 +6,10 @@ import { loginUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts/AuthContext';
 import { validateEmail } from '../../../validators';
+import { useModalContext } from '../../../contexts';
 
-interface LoginFormProps {
-    onClose: () => void;
-    onOpenSignup: () => void;
-}
 
-const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
+const LoginForm: React.FC = () => {
     const { t } = useTranslation();
     const initialFormData = {
         email: '',
@@ -21,6 +18,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState<string>('');
     const { setToken, setUserRole } = useAuth();
+
+    const {
+        isLoginVisible,
+        handleOpenSignup,
+        handleClosePopups,
+    } = useModalContext();
 
 
     const validateUserInputs = () => {
@@ -37,6 +40,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
 
         if (validateUserInputs()) {
             // Login API call
+            setToken('1111');
+            setUserRole('USER');
             const response = await loginUser(formData.email, formData.password);
             if (response.isSuccess) {
                 setToken(response.token);
@@ -52,11 +57,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
     const handleClose = () => {
         setFormData(initialFormData);
         setError('');
-        onClose();
+        handleClosePopups();
     };
 
     return (
-        <PopupBox onClose={handleClose}>
+        <PopupBox open={isLoginVisible}>
             <form onSubmit={handleSubmit}>
                 <EmailInput
                     value={formData.email}
@@ -73,7 +78,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onOpenSignup }) => {
                 />
                 <CustomLink
                     to="/#"
-                    onClick={(e) => { e.preventDefault(); onOpenSignup(); }}
+                    onClick={(e) => { e.preventDefault(); handleOpenSignup(); }}
                     text={t("login_form.signup_link")}
                 />
                 <FormError message={error} />

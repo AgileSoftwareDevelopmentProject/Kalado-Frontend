@@ -5,78 +5,76 @@ import { Logo, CustomButton } from '../../atoms';
 import { SearchBar } from '../../molecules';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useAuth } from '../../../contexts/AuthContext';
-import { useThemeContext } from '../../../contexts/ThemeContext';
+import { useAuth, useThemeContext, useModalContext, useLanguageContext } from '../../../contexts';
+import { toast } from 'react-toastify';
+import { OptionsComponent } from '../../../constants/options';
 
-interface NavBarProps {
-  onLoginClick?: () => void;
-  onCreateAdClick: () => void;
-  onProfileClick?: () => void;
-  onLogoutClick?: () => void;
-  isInProfile?: boolean;
-}
 
-const NavBar: React.FC<NavBarProps> = ({
-  onLoginClick,
-  onCreateAdClick,
-  onProfileClick,
-  onLogoutClick,
-  isInProfile
-}) => {
-  const { t, i18n } = useTranslation();
+const NavBar: React.FC = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
-  const { isDarkMode, toggleTheme } = useThemeContext();
   const { token } = useAuth();
+  const { isDarkMode, toggleTheme } = useThemeContext();
+  const { currentLanguage, toggleLanguage } = useLanguageContext();
   const [searchQuery, setSearchQuery] = useState('');
+  const { search_options } = OptionsComponent();
+  const {
+    handleOpenLogin,
+    handleOpenCreateAd,
+    handleOpenProfilePage,
+    handleLogoutClick,
+    isInProfile,
+  } = useModalContext();
 
   // TODO Seacrch API
-  const handleSearch = () => {
-    console.log('Searching for:', searchQuery);
-  };
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'fa' : 'en';
-    i18n.changeLanguage(newLang);
-    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr';
+    const response = await searchByKeyword(searchQuery);
+    if (response.isSuccess) {
+
+    } else {
+      toast(response.message);
+    }
   };
 
   return (
     <AppBar
       position="fixed"
       sx={{
-        width: '100%',
         backgroundColor: theme.palette.background.paper,
         boxShadow: 'none'
       }}
     >
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, ml: 10, mr: 10 }}>
+      <Toolbar sx={{ display: 'flex', mt: 5, ml: 10, mr: 10 }}>
         <Logo />
 
         <SearchBar
           value={searchQuery}
+          options={search_options}
           onChange={(e) => setSearchQuery(e.target.value)}
           onSearch={handleSearch}
         />
 
         <IconButton onClick={toggleLanguage} color="secondary">
-          {i18n.language === 'en' ? "Fa" : "En"}
+          {currentLanguage === 'en' ? "Fa" : "En"}
         </IconButton>
 
         <IconButton onClick={toggleTheme} color="secondary">
-          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon sx={{ color: '#363e6b' }} />}
         </IconButton>
 
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex' }}>
           {!!token ? (
             isInProfile ? (
-              <CustomButton text={t('navbar.logout')} onClick={onLogoutClick} />
+              <CustomButton text={t('navbar.logout')} onClick={handleLogoutClick} />
             ) : (
-              <CustomButton text={t('navbar.profile')} onClick={onProfileClick} />
+              <CustomButton text={t('navbar.profile')} onClick={handleOpenProfilePage} />
             )
           ) : (
-            <CustomButton text={t('navbar.login/signup')} onClick={onLoginClick} />
+            <CustomButton text={t('navbar.login/signup')} onClick={handleOpenLogin} />
           )}
-          <CustomButton text={t('navbar.create_ad')} onClick={onCreateAdClick} />
+          <CustomButton text={t('navbar.create_ad')} onClick={handleOpenCreateAd} />
         </Box>
       </Toolbar>
     </AppBar>

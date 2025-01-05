@@ -6,6 +6,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts/AuthContext';
 import defaultImage from '../../../assets/images/no-image.png';
+import { getProfile, modifyProfile } from '../../../api/services/UserService';
+
 
 interface UserData {
     firstName: string;
@@ -13,7 +15,7 @@ interface UserData {
     email: string;
     password: string;
     phoneNumber: string;
-    residentialLocation: string;
+    address: string;
     profileImage: File | null;
 }
 
@@ -33,8 +35,8 @@ const ProfileManagement = () => {
         try {
             setLoading(true);
             // GetUserByToken API call
-            const response = await getUserByToken(token);
-            setUserData(response.data);
+            const response = await getProfile(token);
+            setUserData(response);
         } catch (err) {
             setError(t("error.profile_management.retrive_failed"));
         } finally {
@@ -61,26 +63,28 @@ const ProfileManagement = () => {
     };
 
     const handleSaveChanges = async () => {
-        const formData = new FormData();
-        formData.append('firstName', userData!.firstName);
-        formData.append('lastName', userData!.lastName);
-        formData.append('email', userData!.email);
-        formData.append('phoneNumber', userData!.phoneNumber);
-        formData.append('password', userData!.password);
-        formData.append('residentialLocation', userData!.residentialLocation);
+        if (!userData) return; // Ensure userData is not null
 
-        if (userData!.profileImage) {
-            formData.append('profileImage', userData!.profileImage);
+        const formData = new FormData();
+        formData.append('firstName', userData.firstName);
+        formData.append('lastName', userData.lastName);
+        formData.append('phoneNumber', userData.phoneNumber);
+        formData.append('password', userData.password);
+        formData.append('address', userData.address);
+
+        if (userData.profileImage) {
+            formData.append('profileImage', userData.profileImage);
         }
 
         // Update Profile API call
-        const response = await UpdateProfile(formData);
+        const response = await modifyProfile(formData);
         if (response.isSuccess) {
             toast(t('success.profile_management'));
         } else {
             toast(t("error.profile_management.save_failed"));
         }
     };
+
 
     return (
         <Box sx={{ maxWidth: 600, margin: '90px auto', padding: 3 }}>
@@ -144,9 +148,9 @@ const ProfileManagement = () => {
                         onChange={handleInputChange}
                     />
                     <NameInput
-                        name="residentialLocation"
-                        placeholder={t('dashboard.user.profile_management.location')}
-                        value={userData.residentialLocation}
+                        name="address"
+                        placeholder={t('dashboard.user.profile_management.address')}
+                        value={userData.address}
                         onChange={handleInputChange}
                     />
                     <CustomButton

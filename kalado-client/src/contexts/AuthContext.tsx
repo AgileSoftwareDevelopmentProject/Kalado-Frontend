@@ -1,16 +1,16 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface AuthContextType {
-    token: string | null;
+    token: string;
     userRole: string | null;
-    setToken: (token: string | null) => void;
+    setToken: (token: string) => void;
     setUserRole: (role: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(null);
+    const [token, setToken] = useState<string>('');
     const [userRole, setUserRole] = useState<string | null>('USER');
 
     return (

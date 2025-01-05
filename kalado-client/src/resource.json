@@ -49,6 +49,18 @@
             "most_expensive": "Most Expensive",
             "cheapest": "Cheapest"
         },
+        "search": {
+            "option1": "laptop",
+            "option2": "house",
+            "option3": "phone",
+            "option4": "sofa",
+            "option5": "refrigerator",
+            "option6": "shoes",
+            "option7": "headphone",
+            "option8": "tv",
+            "option9": "car",
+            "option10": "game"
+        },
         "create_ad": {
             "input": {
                 "title": "Ad's Title",
@@ -138,7 +150,7 @@
                     "email": "Email",
                     "password": "Password",
                     "phone_number": "Phone Number",
-                    "location": "Location",
+                    "address": "Address",
                     "save_changes_btn": "Save Changes"
                 }
             },
@@ -195,7 +207,8 @@
                 "not_verified": "For login, First Verify your Email"
             },
             "landing": {
-                "empty_product_list": "No Ad Submitted in the Selected Category"
+                "empty_product_list": "No Ad Submitted in the Selected Category",
+                "error_get_product": "Error Ocuured during Getting Product List"
             },
             "item_details": {
                 "not_found": "Item not found",
@@ -266,6 +279,18 @@
             "oldest": "قدیمی‌ترین",
             "most_expensive": "گران‌ترین",
             "cheapest": "ارزان‌ترین"
+        },
+        "search": {
+            "option1": "لپ‌تاپ",
+            "option2": "خانه",
+            "option3": "موبایل",
+            "option4": "مبل",
+            "option5": "یخچال",
+            "option6": "کفش",
+            "option7": "هدفون",
+            "option8": "تلویزیون",
+            "option9": "ماشین",
+            "option10": "بازی"
         },
         "create_ad": {
             "input": {
@@ -355,7 +380,7 @@
                     "email": "ایمیل",
                     "password": "رمز عبور",
                     "phone_number": "شماره تلفن",
-                    "location": "محل سکونت",
+                    "address": "محل سکونت",
                     "save_changes_btn": "ذخیره تغییرات"
                 }
             },
@@ -412,7 +437,8 @@
                 "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
             },
             "landing": {
-                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
+                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است",
+                "error_get_product": "خطایی در گرفتن آگهی‌ها رخ داده است"
             },
             "item_details": {
                 "not_found": "کالای مورد نظر پیدا نشد",
