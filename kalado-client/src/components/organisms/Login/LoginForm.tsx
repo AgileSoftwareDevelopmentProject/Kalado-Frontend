@@ -21,7 +21,8 @@ const LoginForm: React.FC = () => {
 
     const {
         isLoginVisible,
-        handleOpenSignup
+        handleOpenSignup,
+        handleClosePopups,
     } = useModalContext();
 
 
@@ -56,6 +57,7 @@ const LoginForm: React.FC = () => {
     const handleClose = () => {
         setFormData(initialFormData);
         setError('');
+        handleClosePopups();
     };
 
     return (

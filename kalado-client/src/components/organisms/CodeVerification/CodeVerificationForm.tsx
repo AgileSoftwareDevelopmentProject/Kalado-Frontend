@@ -13,6 +13,7 @@ const CodeVerificationForm: React.FC = () => {
     const [error, setError] = useState<string>('');
     const {
         isCodeVerificationVisible,
+        handleClosePopups,
     } = useModalContext();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +28,7 @@ const CodeVerificationForm: React.FC = () => {
         // Code Verification API call
         const response = await verifyCode(code);
         if (response.isSuccess) {
-            onClose();
+            handleClosePopups();
             toast(t("success.login"));
         } else {
             setError(response.message);

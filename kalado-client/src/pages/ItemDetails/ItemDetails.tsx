@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
-import { ReportSubmissionModal, ItemDetailsCard } from '../../components/organisms';
-import { getSingleProduct } from '../../api/services/product/getSingleProductService';
+import { ReportSubmissionForm, ItemDetailsCard } from '../../components/organisms';
+import { getSingleProduct } from '../../api/services/ProductService';
 
 interface Item {
     title: string;
@@ -64,7 +64,7 @@ const ItemDetails: React.FC = () => {
                         item={item}
                     />
 
-                    {/* <ReportSubmissionModal /> */}
+                    <ReportSubmissionForm />
                 </>
             }
         </Box >

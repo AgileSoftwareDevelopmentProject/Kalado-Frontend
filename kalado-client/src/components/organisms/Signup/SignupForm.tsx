@@ -24,7 +24,8 @@ const SignupForm: React.FC = () => {
 
   const {
     isSignupVisible,
-    handleOpenLogin
+    handleOpenLogin,
+    handleOpenCodeVerification,
   } = useModalContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +70,6 @@ const SignupForm: React.FC = () => {
 
     if (validateUserInputs()) {
       // Signup API call
-      // const response = await signupUser(formData.firstName, formData.lastName, formData.email, formData.phoneNumber, formData.password, formData.role);
       const response = await signupUser({
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -78,9 +78,8 @@ const SignupForm: React.FC = () => {
         password: formData.password,
         role: formData.role
       });
-  
+
       if (response.isSuccess) {
-        onSignUpSuccess(formData.email);
         handleClose();
         toast(t("success.signup"));
       } else {
@@ -92,6 +91,7 @@ const SignupForm: React.FC = () => {
   const handleClose = () => {
     setFormData(initialFormData);
     setError('');
+    handleOpenCodeVerification();
   };
 
   return (

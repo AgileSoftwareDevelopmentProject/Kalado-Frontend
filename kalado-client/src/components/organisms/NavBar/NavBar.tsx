@@ -26,8 +26,6 @@ const NavBar: React.FC = () => {
     isInProfile,
   } = useModalContext();
 
-
-
   // TODO Seacrch API
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

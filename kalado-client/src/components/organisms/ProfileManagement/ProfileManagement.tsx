@@ -6,8 +6,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts/AuthContext';
 import defaultImage from '../../../assets/images/no-image.png';
-import { getUser } from '../../../api/services/user/GetUser';
-import { putUser } from '../../../api/services/user/PutUser';
+import { getProfile, modifyProfile } from '../../../api/services/UserService';
+
 
 interface UserData {
     firstName: string;
@@ -35,7 +35,7 @@ const ProfileManagement = () => {
         try {
             setLoading(true);
             // GetUserByToken API call
-            const response = await getUser(token);
+            const response = await getProfile(token);
             setUserData(response);
         } catch (err) {
             setError(t("error.profile_management.retrive_failed"));
@@ -77,7 +77,7 @@ const ProfileManagement = () => {
         }
 
         // Update Profile API call
-        const response = await putUser(formData);
+        const response = await modifyProfile(formData);
         if (response.isSuccess) {
             toast(t('success.profile_management'));
         } else {
