@@ -64,7 +64,9 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenCreateAd = () => {
-        if (token == null) {
+        console.log("handleOpenCreateAd")
+        console.log(token);
+        if (token === null) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
         }
@@ -80,6 +82,8 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenProfilePage = () => {
+        console.log("handleOpenProfilePage");
+        console.log(userRole);
         setIsInProfile(true);
         if (userRole === 'ADMIN') {
             navigate('/admin-dashboard');
