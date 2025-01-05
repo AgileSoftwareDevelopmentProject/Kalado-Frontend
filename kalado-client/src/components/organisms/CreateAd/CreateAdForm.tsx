@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
+import { NameInput, PriceInput, DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
@@ -16,21 +16,22 @@ const CreateAdForm: React.FC = () => {
         category: string;
         description: string;
         images: File[];
+        date: string;
     }>({
         title: '',
         price: 0,
         category: '',
         description: '',
         images: [],
+        date: '',
     });
     const [error, setError] = useState<string>('');
     const { create_ad_options } = OptionsComponent();
 
     const {
         isCreateAdVisible,
+        handleClosePopups,
     } = useModalContext();
-
-
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
         setFormData(prevData => ({
@@ -73,8 +74,8 @@ const CreateAdForm: React.FC = () => {
 
         const response = await createAd(formData.title, formData.description, formData.price, formData.category);
         if (response.isSuccess) {
-            setFormData({ title: '', price: 0, category: '', description: '', images: [] });
-            onClose();
+            // setFormData({ title: '', price: 0, category: '', description: '', images: [] });
+            handleClosePopups();
             toast(t("success.create_ad"));
         } else {
             setError(response.message);
@@ -103,6 +104,15 @@ const CreateAdForm: React.FC = () => {
                     placeholder={t("create_ad.input.category")}
                     onChange={handleCategoryChange}
                     value={create_ad_options.find(option => option.value === formData.category) || null}
+                />
+                <DateInput
+                    label={t("create_ad.input.production_year")}
+                    value={formData.date ? new Date(formData.date) : null}
+                    onChange={(newValue) => {
+                        if (newValue) {
+                            handleChange('date', newValue.toISOString());
+                        }
+                    }}
                 />
                 <DescriptionInput
                     value={formData.description}

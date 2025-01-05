@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
-
+import { createReport } from '../../../api/services/ReportService';
 
 const ReportSubmissionForm: React.FC = () => {
     const { t } = useTranslation();
@@ -23,13 +21,11 @@ const ReportSubmissionForm: React.FC = () => {
         images: [],
     });
     const [error, setError] = useState<string>('');
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const { report_options } = OptionsComponent();
     const {
         isReportSubmissionVisible,
+        handleClosePopups,
     } = useModalContext();
-
-
 
     const handleChange = (field: string, value: any) => {
         setFormData(prevData => ({
@@ -39,7 +35,7 @@ const ReportSubmissionForm: React.FC = () => {
     };
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
-        handleChange('type', selectedOption ? selectedOption.value : null);
+        handleChange('type', selectedOption ? selectedOption.value : '');
     };
 
     const handleImageUpload = (files: File[]) => {
@@ -49,9 +45,10 @@ const ReportSubmissionForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await submitReport(formData.date, formData.type, formData.description, formData.images);
+        const response = await createReport(formData.date, formData.type, formData.description, formData.images);
         if (response.isSuccess) {
             setFormData({ date: '', type: '', description: '', images: [] });
+            handleClosePopups();
             toast(t("success.report"));
         } else {
             setError(response.message);
@@ -67,18 +64,15 @@ const ReportSubmissionForm: React.FC = () => {
                     onChange={handleCategoryChange}
                     value={report_options.find(option => option.value === formData.type) || null}
                 />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateInput
-                        label={t("general_inputs.date")}
-                        value={selectedDate}
-                        onChange={(newValue) => {
-                            setSelectedDate(newValue);
-                            if (newValue) {
-                                handleChange('date', newValue.toISOString());
-                            }
-                        }}
-                    />
-                </LocalizationProvider>
+                <DateInput
+                    label={t("general_inputs.date")}
+                    value={formData.date ? new Date(formData.date) : null}
+                    onChange={(newValue) => {
+                        if (newValue) {
+                            handleChange('date', newValue.toISOString());
+                        }
+                    }}
+                />
                 <DescriptionInput
                     value={formData.description}
                     onChange={(description) => handleChange('description', description)}

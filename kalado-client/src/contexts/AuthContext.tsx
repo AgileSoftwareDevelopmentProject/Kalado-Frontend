@@ -1,17 +1,17 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface AuthContextType {
-    token: string;
+    token: string | null;
     userRole: string | null;
-    setToken: (token: string) => void;
+    setToken: (token: string | null) => void;
     setUserRole: (role: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [token, setToken] = useState<string>('');
-    const [userRole, setUserRole] = useState<string | null>('USER');
+    const [token, setToken] = useState<string | null>(null);
+    const [userRole, setUserRole] = useState<string | null>(null);
 
     return (
         <AuthContext.Provider value={{ token, userRole, setToken, setUserRole }}>
