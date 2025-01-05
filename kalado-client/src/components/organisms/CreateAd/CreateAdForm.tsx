@@ -17,6 +17,7 @@ const CreateAdForm: React.FC = () => {
         description: string;
         images: File[];
         date: string;
+        brand: string;
     }>({
         title: '',
         price: 0,
@@ -24,6 +25,7 @@ const CreateAdForm: React.FC = () => {
         description: '',
         images: [],
         date: '',
+        brand: '',
     });
     const [error, setError] = useState<string>('');
     const { create_ad_options } = OptionsComponent();
@@ -113,6 +115,12 @@ const CreateAdForm: React.FC = () => {
                             handleChange('date', newValue.toISOString());
                         }
                     }}
+                />
+                <NameInput
+                    name="brand"
+                    placeholder={t("create_ad.input.brand")}
+                    value={formData.brand}
+                    onChange={handleChange}
                 />
                 <DescriptionInput
                     value={formData.description}

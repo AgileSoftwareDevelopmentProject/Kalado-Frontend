@@ -39,6 +39,8 @@ const LoginForm: React.FC = () => {
             // Login API call
             const response = await loginUser(formData.email, formData.password);
             if (response.isSuccess) {
+                console.log("Login API call");
+                console.log(response);
                 setToken(response.token);
                 setUserRole(response.role);
                 setFormData({ email: '', password: '' });
