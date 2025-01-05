@@ -4,9 +4,11 @@ import { Box, Typography } from '@mui/material';
 import { CustomButton, NumberInput } from '../../atoms';
 import { LabelList } from '../../molecules';
 import { fetchItems } from '../../../api/services/FilterService';
+import { OptionsComponent } from '../../../constants/options';
 
 const Filter: React.FC = () => {
   const { t } = useTranslation();
+  const { date_filter_options } = OptionsComponent();
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number | ''>('');
   const [maxPrice, setMaxPrice] = useState<number | ''>('');
@@ -36,12 +38,6 @@ const Filter: React.FC = () => {
     }
   };
 
-  const dateOptions = [
-    { title: t('filter.one_day'), value: 'oneDay' },
-    { title: t('filter.one_week'), value: 'oneWeek' },
-    { title: t('filter.one_month'), value: 'oneMonth' },
-  ];
-
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold' }}>
@@ -67,7 +63,7 @@ const Filter: React.FC = () => {
       </Box>
 
       <LabelList
-        items={dateOptions}
+        items={date_filter_options}
         selectedValue={selectedFilter}
         onSelect={handleFilterSelect}
         title={t("filter.ad_date")}

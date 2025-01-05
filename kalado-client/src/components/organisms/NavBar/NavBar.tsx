@@ -27,13 +27,13 @@ const NavBar: React.FC = () => {
     isInProfile,
   } = useModalContext();
 
-  // TODO Seacrch API
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Seacrch API call
     const response = await getSearchByKeyword(searchQuery);
     if (response.isSuccess) {
-
+      // TODO
     } else {
       toast(response.message);
     }

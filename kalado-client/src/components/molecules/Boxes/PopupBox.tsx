@@ -29,7 +29,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
             open={open}
             onClick={handleBackdropClick}
             sx={{
-                zIndex: 1500,
+                zIndex: 1200,
             }}
         >
             <Box sx={{

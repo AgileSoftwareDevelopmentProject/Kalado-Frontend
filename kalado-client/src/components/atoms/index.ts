@@ -6,6 +6,7 @@ export { default as FormError } from './Errors/FormError';
 export { default as CodeInput } from './Inputs/CodeInput';
 export { default as CustomCheckBox } from './Inputs/CustomCheckBox';
 export { default as DateInput } from './Inputs/DateInput';
+export { default as YearInput } from './Inputs/YearInput';
 export { default as DescriptionInput } from './Inputs/DescriptionInput';
 export { default as Dropdown } from './Inputs/Dropdown';
 export { default as EmailInput } from './Inputs/EmailInput';

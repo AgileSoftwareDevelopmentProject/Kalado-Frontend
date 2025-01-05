@@ -23,12 +23,18 @@ const CodeVerificationForm: React.FC = () => {
         }
     };
 
+    const handleClose = () => {
+        setCode('');
+        setError('');
+        handleClosePopups();
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // Code Verification API call
         const response = await verifyCode(code);
         if (response.isSuccess) {
-            handleClosePopups();
+            handleClose();
             toast(t("success.login"));
         } else {
             setError(response.message);

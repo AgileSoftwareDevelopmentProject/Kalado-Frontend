@@ -37,7 +37,6 @@ export const OptionsComponent = () => {
         { value: 'Digital Stuff', label: t("category.four") },
         { value: 'Entertainment', label: t("category.five") },
         { value: 'Personal Stuff', label: t("category.six") },
-        { value: 'Others', label: t("category.seven") },
     ];
 
     const search_options = [
@@ -53,5 +52,12 @@ export const OptionsComponent = () => {
         t("search.option10"),
     ];
 
-    return { product_categories, user_dashboard_menu, admin_dashboard_menu, report_options, create_ad_options, search_options };
+
+    const date_filter_options = [
+        { title: t('filter.one_day'), value: 'oneDay' },
+        { title: t('filter.one_week'), value: 'oneWeek' },
+        { title: t('filter.one_month'), value: 'oneMonth' },
+    ];
+
+    return { product_categories, user_dashboard_menu, admin_dashboard_menu, report_options, create_ad_options, search_options, date_filter_options };
 };

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
 import { getProductsByCategory } from '../../../api/services/ProductService';
 import defaultImage from '../../../assets/images/no-image.png';
-
 
 interface Item {
     title: string;
@@ -19,12 +19,12 @@ interface Item {
 }
 
 interface ItemsHolderProps {
-    onItemSelect: (itemId: number) => void;
     selectedCategoryTitle: string;
 }
 
-const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategoryTitle }) => {
+const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
@@ -32,23 +32,32 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
 
     useEffect(() => {
         const loadItems = async () => {
+            setLoading(true);
+            setError('');
             try {
-                setLoading(true);
-                // getProductByCategory API call
-                const fetchedData = getProductsByCategory(selectedCategoryTitle);
-                const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
-                console.log(fetchedItems);
-                setItems(fetchedItems);
-                console.log(items);
+                const fetchedData = await getProductsByCategory(selectedCategoryTitle);
+                setItems(fetchedData);
+                // Check if fetchedData is null or empty
+                // if (response.isSuccess) {
+                //     fetchedData = response.data;
+                //     if (!fetchedData || fetchedData.length === 0) {
+
+                //         setError(t("error.landing.empty_product_list"));
+                //     } else {
+
+                //     }
+                // }
+
             } catch (error) {
                 setError(t("error.landing.error_get_product"));
+                console.error(error);
             } finally {
                 setLoading(false);
             }
         };
 
         loadItems();
-    }, []);
+    }, [selectedCategoryTitle, t]);
 
     const sortedItems = () => {
         return [...items].sort((a, b) => {
@@ -67,63 +76,56 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategor
         });
     };
 
-    const displayedItems = sortedItems();
+    const handleItemSelect = (itemId: number) => {
+        navigate(`/item/${itemId}`);
+    };
+
+    const renderLoadingOrError = () => (
+        <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+            {loading ? <CircularProgress /> : error}
+        </Typography>
+    );
+
+    const renderItems = () => (
+        <>
+            <ItemSort
+                sortOption={sortOption}
+                setSortOption={(e) => setSortOption(e.target.value as string)}
+            />
+            <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+                {selectedCategoryTitle}
+            </Typography>
+            <Box sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: items.length === 1 ? 'center' : 'space-between',
+                gap: 2,
+                flexGrow: 1,
+            }}>
+                {sortedItems().map(item => (
+                    <Box key={item.itemId} sx={{
+                        flexBasis: { xs: '100%', sm: '50%', md: items.length === 1 ? '100%' : '30%' },
+                        mb: 2,
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}>
+                        <ItemCard
+                            title={item.title}
+                            price={`${item.price.toLocaleString()} ${t("currency")}`}
+                            city={item.city}
+                            date={item.date}
+                            image={item.imageUrl || defaultImage}
+                            onClick={() => handleItemSelect(item.itemId)}
+                        />
+                    </Box>
+                ))}
+            </Box>
+        </>
+    );
 
     return (
         <ProductListBox>
-            {
-                (loading) && (<CircularProgress />)
-            }
-
-            {
-                (items.length === 0) &&
-                (<Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                    {error ? error : t("error.landing.empty_product_list")}
-                </Typography>)
-            }
-
-            {
-                (items.length !== 0) && (!!error) &&
-                <>
-                    <ItemSort
-                        sortOption={sortOption}
-                        setSortOption={(e) => setSortOption(e.target.value as string)}
-                    />
-
-                    <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                        {selectedCategoryTitle}
-                    </Typography>
-
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between',
-                            gap: 2,
-                            flexGrow: 1,
-                        }}
-                    >
-                        {displayedItems.map(item => (
-                            <Box
-                                key={item.itemId}
-                                sx={{
-                                    flexBasis: { xs: '100%', sm: '48%', md: '30%' },
-                                    mb: 2,
-                                }}
-                            >
-                                <ItemCard
-                                    title={item.title}
-                                    price={`${item.price.toLocaleString()} ${t("currency")} `}
-                                    city={item.city}
-                                    date={item.date}
-                                    image={item.imageUrl || defaultImage}
-                                    onClick={() => onItemSelect(item.itemId)}
-                                />
-                            </Box>
-                        ))}
-                    </Box>
-                </>
-            }
+            {loading || error ? renderLoadingOrError() : renderItems()}
         </ProductListBox>
     );
 };
