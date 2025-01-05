@@ -68,7 +68,8 @@
                 "category": "Category",
                 "description": "Description",
                 "add_image": "Add Image",
-                "production_year": "Production Year"
+                "production_year": "Production Year",
+                "brand": "Brand"
             },
             "choose_image": "Choose Image",
             "create_ad_btn": "Submit Ad"
@@ -299,7 +300,8 @@
                 "category": "دسته‌بندی",
                 "description": "توضیحات",
                 "add_image": "افزودن عکس",
-                "production_year": "سال تولید"
+                "production_year": "سال تولید",
+                "brand": "برند"
             },
             "choose_image": "انتخاب عکس",
             "create_ad_btn": "ثبت آگهی"
