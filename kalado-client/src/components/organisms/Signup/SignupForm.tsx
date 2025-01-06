@@ -60,7 +60,6 @@ const SignupForm: React.FC = () => {
     return true;
   }
 
-
   const handleClose = () => {
     setFormData(initialFormData);
     setError('');

@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CustomToast } from './components/molecules';
 import { Landing, ItemDetails, UserDashboard, AdminDashboard } from './pages';
 import './index.css';
-import { AuthProvider, ThemeProvider, ModalProvider, LanguageProvider } from './contexts';
+import { AuthProvider, ThemeProvider, ModalProvider, LanguageProvider, ProductProvider } from './contexts';
 
 function App() {
   return (
@@ -16,12 +16,18 @@ function App() {
             <CssBaseline />
             <Router>
               <ModalProvider>
-                <Routes>
-                  <Route path="/" element={<Landing />} />
-                  <Route path="/item/:itemId" element={<ItemDetails />} />
-                  <Route path="/user-dashboard" element={<UserDashboard />} />
-                  <Route path="/admin-dashboard" element={<AdminDashboard />} />
-                </Routes>
+                <ProductProvider>
+                  <Routes>
+                    <Route path="/" element={
+
+                      <Landing />
+
+                    } />
+                    <Route path="/item/:itemId" element={<ItemDetails />} />
+                    <Route path="/user-dashboard" element={<UserDashboard />} />
+                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                  </Routes>
+                </ProductProvider>
               </ModalProvider>
             </Router>
             <CustomToast />

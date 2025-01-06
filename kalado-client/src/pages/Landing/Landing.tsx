@@ -4,9 +4,9 @@ import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
 import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CodeVerificationForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
-import { ProductProvider, useProductContext } from '../../contexts';
+import { useProductContext } from '../../contexts';
 
-const LandingContent: React.FC = () => {
+const Landing: React.FC = () => {
     const { t } = useTranslation();
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
 
@@ -43,11 +43,5 @@ const LandingContent: React.FC = () => {
         </Box>
     );
 };
-
-const Landing: React.FC = () => (
-    <ProductProvider>
-        <LandingContent />
-    </ProductProvider>
-);
 
 export default Landing;
