@@ -65,26 +65,25 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
                                 {`${item.price.amount.toLocaleString()} ${t("currency")}`}
                             </Typography>
                         </Box> */}
-                        <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                        {/* <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <CityIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
                                 {item.brand}
                             </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                        </Box> */}
+                        {/* <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <DateIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
                                 {formatDate(item.createdAt)}
                             </Typography>
-                        </Box>
+                        </Box> */}
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <DescriptionIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
                                 {item.description}
                             </Typography>
                         </Box>
-
-                        <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                        {/* <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <PhoneIcon sx={{ ml: 2 }} />
                             <Typography
                                 variant="h6"
@@ -98,15 +97,15 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
                             >
                                 {item.sellerId}
                             </Typography>
-                        </Box>
+                        </Box> */}
                     </CardContent>
                 </Box>
-                <CardMedia
+                {/* <CardMedia
                     component="img"
                     image={imageToDisplay}
                     alt={item.title}
                     sx={{ height: 400, width: 500, objectFit: 'cover' }}
-                />
+                /> */}
             </Box >
             <CustomButton
                 text={t("item_details.report_submission_btn")}
