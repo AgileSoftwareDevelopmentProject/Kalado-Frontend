@@ -5,19 +5,19 @@ import { useAuth } from '../../contexts/AuthContext';
 import mockData from '../../mockData.json';  // use for mocking APIs
 
 
-export async function createAd(productData: ProductData) {
-    const { token } = useAuth();
-    return sendRequest<TProductResponseType>(
-        PRODUCT.CREATE,
-        'POST',
-        productData,
-        undefined,
-        {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        }
-    );
-}
+// export async function createAd(productData: ProductData) {
+//     const { token } = useAuth();
+//     return sendRequest<TProductResponseType>(
+//         PRODUCT.CREATE,
+//         'POST',
+//         productData,
+//         undefined,
+//         {
+//             'Content-Type': 'application/json',
+//             Authorization: `Bearer ${token}`,
+//         }
+//     );
+// }
 
 
 export async function createProductWithImages(productData: ProductData, imageFiles: File[]) {
@@ -83,30 +83,27 @@ export async function updateAdStatus(productId: number, status: string) {
     );
 }
 
-// export async function getSingleProduct(adId: number) {
-//     const { token } = useAuth();
-//     return sendRequest<TProductResponseType>(
-//         PRODUCT.GET_SINGLE(adId),
-//         'GET',
-//         undefined,
-//         undefined,
-//         {
-//             Authorization: `Bearer ${token}`,
-//         }
-//     );
-// }
+export async function getSingleProduct(adId: number) {
+    // const { token } = useAuth();
+    return sendRequest<TProductResponseType>(
+        PRODUCT.GET_SINGLE(adId),
+        'GET',
+        undefined,
+        undefined
+    );
+}
 
 // Mock Function
-export const getSingleProduct = async (itemId: number) => {
-    return new Promise((resolve, reject) => {
-        const item = mockData.items.find(product => product.itemId === String(itemId));
-        if (item) {
-            resolve(item);
-        } else {
-            reject(new Error('Item not found'));
-        }
-    });
-};
+// export const getSingleProduct = async (itemId: number) => {
+//     return new Promise((resolve, reject) => {
+//         const item = mockData.items.find(product => product.itemId === String(itemId));
+//         if (item) {
+//             resolve(item);
+//         } else {
+//             reject(new Error('Item not found'));
+//         }
+//     });
+// };
 
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
@@ -141,17 +138,24 @@ export async function getProductsByCategory(category: string): Promise<TProductR
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
 // setProducts(res)
-export async function getSellersProducts() {
-    const { token } = useAuth();
-    return sendRequest(
-        PRODUCT.GET_BY_SELLER,
-        'GET',
-        undefined,
-        undefined,
-        {
-            Authorization: `Bearer ${token}`,
-        }
-    );
+export async function getSellersProducts(): Promise<TProductResponseType[]> {
+    try {
+        const { token } = useAuth();
+        const response = await sendRequest(
+            PRODUCT.GET_BY_SELLER,
+            'GET',
+            undefined,
+            undefined,
+            {
+                Authorization: `Bearer ${token}`,
+            }
+        );
+
+        return response.data as TProductResponseType[];
+    } catch (error) {
+        console.error('Error fetching seller’s products:', error);
+        return [];
+    }
 }
 
 
