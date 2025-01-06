@@ -137,6 +137,20 @@
                     "title": "Are you Sure to Block this User?"
                 },
                 "block_success_message": "The user has been successfully blocked."
+            },
+            "error": {
+
+                "missing_violation_type": "Violation type is required.",
+        
+                "missing_description_or_image": "You must provide either a description or at least one piece of evidence.",
+        
+                "submission_failed": "An error occurred while submitting the report. Please try again."
+        
+            },
+            "success": {
+        
+                "report_submitted": "Your report has been successfully submitted."
+        
             }
         },
         "dashboard": {
@@ -370,6 +384,14 @@
                     "title": "آیا از مسدود کردن این کاربر اطمینان دارید؟"
                 },
                 "block_success_message": "کاربر با موفقیت مسدود شد."
+            },
+            "error": {
+                "missing_violation_type": "انتخاب نوع تخلف الزامی است.",
+                "missing_description_or_image": "لطفاً توضیحاتی ارائه دهید یا حداقل یک مدرک بارگذاری کنید.",
+                "submission_failed": "در ارسال گزارش خطایی رخ داد. لطفاً دوباره تلاش کنید."
+            },
+            "success": {
+                "report_submitted": "گزارش شما با موفقیت ثبت شد."
             }
         },
         "dashboard": {

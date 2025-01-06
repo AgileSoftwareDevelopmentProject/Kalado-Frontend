@@ -1,55 +1,48 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
-import { PopupBox, ImageUploadBox } from '../../molecules';
+import { PopupBox } from '../../molecules';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
 import { createReport } from '../../../api/services/ReportService';
-import { ReportData } from '../../../utils/apiTypes';
-
+import ImageUploadBox from './ImageUploadBox';
 
 const ReportSubmissionForm: React.FC = () => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState<ReportData>({
-        date: '',
+    const [formData, setFormData] = useState<{
+        violationType: string;
+        description: string;
+        images: File[];
+    }>({
         violationType: '',
         description: '',
         images: [],
-        reportedUserId: 0,
-        reportedContentId: 0,
     });
     const [error, setError] = useState<string>('');
     const { report_options } = OptionsComponent();
     const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
 
     const handleChange = (field: string, value: any) => {
-        setFormData(prevData => ({
+        setFormData((prevData) => ({
             ...prevData,
             [field]: value,
         }));
     };
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
-        handleChange('type', selectedOption ? selectedOption.value : '');
+        handleChange('violationType', selectedOption ? selectedOption.value : '');
     };
 
     const handleImageUpload = (files: File[]) => {
         handleChange('images', files);
     };
 
-    const handleClose = () => {
+    const resetForm = () => {
         setFormData({
-            title: '',
-            price: {
-                amount: 0,
-                unit: 'Toman',
-            },
-            category: '',
+            violationType: '',
             description: '',
             images: [],
-            productionYear: null,
-            brand: null,
         });
         setError('');
         handleClosePopups();
@@ -58,33 +51,70 @@ const ReportSubmissionForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await createReport(formData);
-        if (response.isSuccess) {
-            handleClose();
-            toast(t("success.report"));
-        } else {
-            setError(response.message);
+        if (!formData.violationType) {
+            setError(t('report.error.missing_violation_type'));
+            return;
+        }
+
+        if (!formData.description && formData.images.length === 0) {
+            setError(t('report.error.missing_description_or_image'));
+            return;
+        }
+
+        try {
+            const reportData = {
+                violationType: formData.violationType,
+                description: formData.description,
+            };
+
+            const response = await createReport(reportData, formData.images);
+
+            if (response.isSuccess) {
+                resetForm();
+                toast(t('report.success.report_submitted'));
+            } else {
+                setError(response.message || t('report.error.submission_failed'));
+            }
+        } catch (err) {
+            setError(t('report.error.submission_failed'));
+            console.error(err);
         }
     };
 
     return (
         <PopupBox open={isReportSubmissionVisible}>
             <form onSubmit={handleSubmit}>
+                {/* Dropdown for Violation Type */}
                 <Dropdown
                     options={report_options}
-                    placeholder={t("report.input.category")}
+                    placeholder={t('report.input.category')}
                     onChange={handleCategoryChange}
-                    value={report_options.find(option => option.value === formData.type) || null}
+                    value={report_options.find((option) => option.value === formData.violationType) || null}
+                    isRequired={true}
+                    // errorMessage={t('report.error.missing_violation_type')}
                 />
+
+                {/* Description Input */}
                 <DescriptionInput
                     value={formData.description}
                     onChange={(description) => handleChange('description', description)}
                 />
-                <ImageUploadBox onUpload={handleImageUpload} title={t("report.choose_evidence")} />
+
+                {/* Image Upload */}
+                <ImageUploadBox
+                    onUpload={handleImageUpload}
+                    title={t('report.choose_evidence')}
+                    isRequired={formData.description.length === 0} // if no description
+                    errorMessage={t('report.error.missing_description_or_image')}
+                />
+
+                {/* Submit Button */}
                 <CustomButton
-                    text={t("item_details.report_submission_btn")}
+                    text={t('item_details.report_submission_btn')}
                     type="submit"
                 />
+
+                {/* Error Message */}
                 <FormError message={error} />
             </form>
         </PopupBox>
