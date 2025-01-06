@@ -202,15 +202,15 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
             marginTop: 4,
           }}
         >
-          <Button
-            variant="outlined"
-            onClick={() => window.open(`/ad/${report.reportedContentId}`, '_blank')}
-            sx={{
-              textTransform: 'none',
-            }}
-          >
-            {t('report.report_card.actions.go_to_ad')}
-          </Button>
+        <Button
+          variant="outlined"
+          onClick={() => window.open(`/product/${report.reportedContentId}`, '_blank')}
+          sx={{
+            textTransform: 'none',
+          }}
+        >
+          {t('report.report_card.actions.go_to_ad')}
+        </Button>
 
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Button
