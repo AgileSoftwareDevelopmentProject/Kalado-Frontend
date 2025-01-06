@@ -53,7 +53,6 @@ const Filter: React.FC = () => {
         title={t("filter.ad_date")}
       />
 
-
       <CustomButton
         text={t('filter.apply')}
         onClick={handleApplyFilters}

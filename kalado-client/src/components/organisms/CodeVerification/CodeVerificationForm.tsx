@@ -32,7 +32,7 @@ const CodeVerificationForm: React.FC = () => {
         const response = await verifyCode(code);
         if (response.isSuccess) {
             handleClose();
-            toast(t("success.login"));
+            toast(t("success.code_verification"));
         } else {
             setError(response.message);
         }
