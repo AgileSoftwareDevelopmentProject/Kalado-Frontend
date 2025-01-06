@@ -26,9 +26,9 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
                 case 'most_cheap':
                     return a.price - b.price;
                 case 'oldest':
-                    return new Date(a.date).getTime() - new Date(b.date).getTime();
+                    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
                 case 'newest':
-                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                 default:
                     return 0;
             }
@@ -44,6 +44,15 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
             {loading ? <CircularProgress /> : error || t("error.landing.error_get_product")}
         </Typography>
     );
+
+    const formatDate = (timestamp: number): string => {
+        const date = new Date(timestamp);
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }).format(date);
+    };
 
     const renderItems = () => {
         if (!products || products.length === 0) {
@@ -79,11 +88,10 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
                         }}>
                             <ItemCard
                                 title={item.title}
-                                price={`${item.price.toLocaleString()} ${t("currency")}`}
-                                city={item.city}
-                                date={item.date}
-                                image={item.imageUrl || defaultImage}
-                                onClick={() => handleItemSelect(item.itemId)}
+                                price={`${item.price.amount.toLocaleString()} ${t("currency")}`}
+                                createdAt={formatDate(item.createdAt)}
+                                imageUrls={item.imageUrls}
+                                onClick={() => handleItemSelect(item.id)}
                             />
                         </Box>
                     ))}
