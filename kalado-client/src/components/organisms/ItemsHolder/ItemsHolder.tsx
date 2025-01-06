@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
-import defaultImage from '../../../assets/images/no-image.png';
 import { useProductContext } from '../../../contexts/ProductContext';
+
 
 interface ItemsHolderProps {
     selectedCategoryTitle: string;
@@ -55,10 +55,18 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
     };
 
     const renderItems = () => {
-        if (!products || products.length === 0) {
+        if (error) {
             return (
                 <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
                     {t("error.landing.error_get_product")}
+                </Typography>
+            );
+        }
+
+        if (!products || products.length === 0) {
+            return (
+                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+                    {t("error.landing.empty_product_list")}
                 </Typography>
             );
         }

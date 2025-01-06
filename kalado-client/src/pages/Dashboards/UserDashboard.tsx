@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { CustomButton } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, NavBar } from '../../components/organisms';
+import { SideBarMenu, ProfileManagement, AdManagement, NavBar, CreateAdForm } from '../../components/organisms';
 import { useModalContext } from '../../contexts';
 import { OptionsComponent } from '../../constants/options';
 
@@ -37,18 +37,13 @@ const UserDashboard: React.FC = () => {
                     onSelectCategory={handleSelectMenu}
                     initialSelect={t("dashboard.user.menu.one")}
                 />
-                <CustomButton
-                    text={t("item_details.report_submission_btn")}
-                    onClick={handleOpenReportSubmission}
-                />
             </SideBar>
 
             <Box sx={{ flexGrow: 1, padding: 2 }}>
                 {renderContent()}
             </Box>
 
-            {/* <CreateAdModal /> */}
-            {/* <ReportSubmissionModal /> */}
+            <CreateAdForm />
         </Box>
     );
 };
