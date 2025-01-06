@@ -6,37 +6,25 @@ import { SearchBar } from '../../molecules';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useAuth, useThemeContext, useModalContext, useLanguageContext } from '../../../contexts';
-import { toast } from 'react-toastify';
 import { OptionsComponent } from '../../../constants/options';
-import { getSearchByKeyword } from '../../../api/services/SearchService';
+import { useProductContext } from '../../../contexts';
 
 
 const NavBar: React.FC = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const { token } = useAuth();
+  const theme = useTheme();
   const { isDarkMode, toggleTheme } = useThemeContext();
   const { currentLanguage, toggleLanguage } = useLanguageContext();
+  const { handleOpenLogin, handleOpenCreateAd, handleOpenProfilePage, handleLogoutClick, isInProfile } = useModalContext();
+  const { searchProductsByKeyword } = useProductContext();
   const [searchQuery, setSearchQuery] = useState('');
   const { search_options } = OptionsComponent();
-  const {
-    handleOpenLogin,
-    handleOpenCreateAd,
-    handleOpenProfilePage,
-    handleLogoutClick,
-    isInProfile,
-  } = useModalContext();
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Rendering products based on keyword search
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Seacrch API call
-    const response = await getSearchByKeyword(searchQuery);
-    if (response.isSuccess) {
-      // TODO
-    } else {
-      toast(response.message);
-    }
+    searchProductsByKeyword(searchQuery);
   };
 
   return (

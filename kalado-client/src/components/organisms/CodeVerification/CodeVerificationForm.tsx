@@ -11,10 +11,7 @@ const CodeVerificationForm: React.FC = () => {
     const { t } = useTranslation();
     const [code, setCode] = useState('');
     const [error, setError] = useState<string>('');
-    const {
-        isCodeVerificationVisible,
-        handleClosePopups,
-    } = useModalContext();
+    const { isCodeVerificationVisible, handleClosePopups } = useModalContext();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
