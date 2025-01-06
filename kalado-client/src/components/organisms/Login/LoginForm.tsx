@@ -43,8 +43,8 @@ const LoginForm: React.FC = () => {
             if (response.isSuccess) {
                 console.log("Login API call");
                 console.log(response);
-                setToken(response.token);
-                setUserRole(response.role);
+                setToken(response.data.token);
+                setUserRole(response.data.role);
                 handleClose();
                 toast(t("success.login"));
             } else {
