@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -25,6 +25,7 @@ interface ModalContextType {
     handleOpenProfilePage: () => void;
     handleClosePopups: () => void;
     handleLogoutClick: () => void;
+    handlePopState: () => void;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -102,6 +103,18 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         navigate('/');
     };
 
+    const handlePopState = () => {
+        setIsInProfile(false);
+        navigate('/');
+    };
+
+    useEffect(() => {
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, []);
+
     return (
         <ModalContext.Provider value={{
             isLoginVisible,
@@ -124,6 +137,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             handleOpenProfilePage,
             handleClosePopups,
             handleLogoutClick,
+            handlePopState,
         }}>
             {children}
         </ModalContext.Provider>
