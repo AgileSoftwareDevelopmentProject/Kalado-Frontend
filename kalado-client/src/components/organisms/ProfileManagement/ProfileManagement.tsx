@@ -29,7 +29,7 @@ const ProfileManagement = () => {
 
     useEffect(() => {
         fetchUserData();
-    }, []);
+    }, [token]);
 
     const fetchUserData = async () => {
         try {

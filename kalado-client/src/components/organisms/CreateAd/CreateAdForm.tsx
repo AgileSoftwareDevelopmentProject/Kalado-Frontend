@@ -86,8 +86,12 @@ const CreateAdForm: React.FC = () => {
         e.preventDefault();
 
         try {
+            // Create Ad API call
             const response = await createProductWithImages(formData, images);
-
+            console.log("Create Ad API call");
+            console.log(formData);
+            console.log(images);
+            console.log(response);
             if (response.isSuccess) {
                 handleClose();
                 toast(t("success.create_ad"));
