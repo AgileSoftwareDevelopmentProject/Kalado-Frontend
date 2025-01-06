@@ -37,6 +37,25 @@ export interface CodeVerifyResponse {
     message?: string;
 }
 
+export interface ReportResponse {
+    isSuccess: boolean;
+    message?: string;
+}
+
+export interface SingleReport {
+    id: number;
+    violationType: string;
+    description: string;
+    createdAt: string;
+    reporterId: number;
+    contentId: number;
+}
+
+export interface ReportListResponse {
+    isSuccess: boolean;
+    message?: string;
+    data: SingleReport[] | null;
+}
 
 
 // Product
@@ -75,8 +94,8 @@ export type TProductResponseType = {
 export interface ReportData {
     violationType: string;
     description: string;
-    reportedUserId: number;
-    reportedContentId: number;
+    reportedUserId?: number;
+    reportedContentId?: number;
 }
 
 export interface ReportStatusUpdateData {
