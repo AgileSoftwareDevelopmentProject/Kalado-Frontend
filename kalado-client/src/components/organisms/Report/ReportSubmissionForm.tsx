@@ -18,12 +18,9 @@ const ReportSubmissionForm: React.FC = () => {
         violationType: '',
         description: '',
         images: [],
-        reportedUserId: 0,
-        reportedContentId: 0,
     });
     const [error, setError] = useState<string>('');
     const { report_options } = OptionsComponent();
-    const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
     const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
 
     const handleChange = (field: string, value: any) => {
@@ -94,7 +91,7 @@ const ReportSubmissionForm: React.FC = () => {
                     onChange={handleCategoryChange}
                     value={report_options.find((option) => option.value === formData.violationType) || null}
                     isRequired={true}
-                    errorMessage={t('report.error.missing_violation_type')}
+                    // errorMessage={t('report.error.missing_violation_type')}
                 />
 
                 {/* Description Input */}
