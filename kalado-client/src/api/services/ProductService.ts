@@ -111,13 +111,20 @@ export const getSingleProduct = async (itemId: number) => {
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
 // setProducts(res)
-export async function getProductsByCategory(category: string) {
-    return sendRequest(
-        PRODUCT.GET_BY_CATEGORY(category),
-        'GET',
-        undefined,
-        undefined
-    );
+export async function getProductsByCategory(category: string): Promise<TProductResponseType[]> {
+    try {
+        const response = await sendRequest(
+            PRODUCT.GET_BY_CATEGORY(category),
+            'GET',
+            undefined,
+            undefined
+        );
+
+        return response.data as TProductResponseType[];
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
 }
 
 // // Mock Function
