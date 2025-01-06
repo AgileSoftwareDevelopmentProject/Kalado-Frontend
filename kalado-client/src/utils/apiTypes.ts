@@ -1,4 +1,4 @@
-import { User, UserType } from '../utils/types'
+import { ReportStatus, User, UserType, ViolationType} from '../utils/types'
 
 
 // Login
@@ -96,7 +96,7 @@ export type TProductResponseType = {
 export interface ReportData {
     violationType: string;
     description: string;
-    reportedUserId?: number;
+    // reportedUserId?: number;
     reportedContentId?: number;
 }
 
@@ -105,6 +105,21 @@ export interface ReportStatusUpdateData {
     adminNotes: string;
     blockUser: boolean;
     blockReason: string | null;
+}
+
+export interface TReportResponseType {
+    id: number;
+    violationType: ViolationType;
+    description: string;
+    reporterId: number;
+    reportedContentId: number;
+    evidenceFiles: string[]; // Array of file Image URLs
+    createdAt: [number, number, number, number, number, number, number]; // Tuple for date 
+    status: ReportStatus; 
+    adminNotes: string | null;
+    lastUpdatedAt: [number, number, number, number, number, number, number]; // Tuple for date 
+    adminId: number | null;
+    userBlocked: boolean;
 }
 
 
