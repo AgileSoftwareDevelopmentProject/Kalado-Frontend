@@ -36,6 +36,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
   const isRtl = i18n.language === 'fa';
   const [openImage, setOpenImage] = useState<string | null>(null);
   const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false);
+  const [isBlockAdDialogOpen, setIsBlockAdDialogOpen] = useState(false);
 
   const evidenceImages = [pishi1, pishi4];
 
@@ -52,7 +53,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
       onBlockContent(report.reportedContentId);
 
       // Display success toast
-      toast.success(t('report.report_card.block_success_message'), {
+      toast.success(t('report.report_card.block_usr_success_message'), {
         position: isRtl ? 'bottom-right' : 'bottom-left',
         autoClose: 3000,
         hideProgressBar: false,
@@ -62,6 +63,21 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
       });
     }
     setIsBlockDialogOpen(false);
+  };
+
+  const handleBlockAdConfirm = () => {
+    if (report) {
+      // Perform ad blocking logic
+      toast.success(t('report.report_card.block_ad_success_message'), {
+        position: isRtl ? 'bottom-right' : 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+    setIsBlockAdDialogOpen(false);
   };
 
   return (
@@ -181,20 +197,43 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
           sx={{
             display: 'flex',
             flexDirection: isRtl ? 'row-reverse' : 'row',
-            justifyContent: isRtl ? 'flex-start' : 'flex-end',
+            justifyContent: 'space-between',
             gap: 2,
             marginTop: 4,
           }}
         >
           <Button
-            variant="contained"
-            onClick={() => setIsBlockDialogOpen(true)}
+            variant="outlined"
+            onClick={() => window.open(`/ad/${report.reportedContentId}`, '_blank')}
             sx={{
               textTransform: 'none',
             }}
           >
-            {t('report.report_card.actions.block')}
+            {t('report.report_card.actions.go_to_ad')}
           </Button>
+
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => setIsBlockAdDialogOpen(true)}
+              sx={{
+                textTransform: 'none',
+              }}
+            >
+              {t('report.report_card.actions.block_ad')}
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => setIsBlockDialogOpen(true)}
+              sx={{
+                textTransform: 'none',
+              }}
+            >
+              {t('report.report_card.actions.block_user')}
+            </Button>
+          </Box>
+
           <Button
             variant="outlined"
             onClick={onBackToList}
@@ -240,7 +279,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
           }}
         >
           <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
-            {t('report.report_card.block_confirmation.title')}
+            {t('report.report_card.block_confirmation.title_usr')}
           </Typography>
           <Box sx={{ display: 'flex', gap: 3 }}>
             <IconButton
@@ -258,6 +297,59 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
             </IconButton>
             <IconButton
               onClick={() => setIsBlockDialogOpen(false)}
+              sx={{
+                backgroundColor: 'red',
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                '&:hover': { backgroundColor: '#ff4d4d' },
+              }}
+              aria-label={t('dialog.cancel')}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={isBlockAdDialogOpen}
+        onClose={() => setIsBlockAdDialogOpen(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: 2,
+            padding: 2,
+          },
+        }}
+      >
+        <DialogContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 2,
+          }}
+        >
+          <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+            {t('report.report_card.block_confirmation.title_ad')}
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 3 }}>
+            <IconButton
+              onClick={handleBlockAdConfirm}
+              sx={{
+                backgroundColor: 'green',
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                '&:hover': { backgroundColor: '#66bb66' },
+              }}
+              aria-label={t('dialog.confirm')}
+            >
+              <CheckIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => setIsBlockAdDialogOpen(false)}
               sx={{
                 backgroundColor: 'red',
                 width: 48,

@@ -115,13 +115,17 @@
                 "evidence": "Evidence",
                 "actions": {
                     "show_details": "Show Details",
-                    "block": "Block",
+                    "go_to_ad": "Go to Ad",
+                    "block_ad": "Block Ad",
+                    "block_user": "Block User",
                     "back_to_list": "Back to List"
                 },
                 "block_confirmation": {
-                    "title": "Are you Sure to Block this User?"
+                    "title_usr": "Are you Sure to Block this User?",
+                    "title_ad": "Are you Sure to Block this Ad?"
               },
-              "block_success_message": "The user has been successfully blocked."
+              "block_usr_success_message": "The user has been successfully blocked.",
+                "block_ad_success_message": "The ad has been successfully blocked."
      
         }
         },
@@ -333,13 +337,17 @@
                 "evidence": "شواهد",
                 "actions": {
                     "show_details": "جزئیات بیشتر",
-                    "block": "مسدود کردن",
+                    "go_to_ad": "مشاهده آگهی",
+                    "block_ad": "مسدود کردن آگهی",
+                    "block_user": "مسدود کردن کاربر",
                     "back_to_list": "بازگشت به لیست"
                 },
                 "block_confirmation": {
-                    "title": "آیا از مسدود کردن این کاربر اطمینان دارید؟"
+                    "title_usr": "آیا از مسدود کردن این کاربر اطمینان دارید؟",
+                    "title_ad": "آیا از مسدود کردن این آگهی اطمینان دارید؟"
                 },
-                "block_success_message": "کاربر با موفقیت مسدود شد."    
+                "block_usr_success_message": "کاربر با موفقیت مسدود شد.",
+                "block_ad_success_message": "آگهی با موفقیت مسدود شد."
             }           
         },
         "dashboard": {
