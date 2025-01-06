@@ -59,12 +59,12 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
                         <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', mb: 3 }}>
                             {item.title}
                         </Typography>
-                        <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
+                        {/* <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <PriceIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
                                 {`${item.price.amount.toLocaleString()} ${t("currency")}`}
                             </Typography>
-                        </Box>
+                        </Box> */}
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <CityIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
