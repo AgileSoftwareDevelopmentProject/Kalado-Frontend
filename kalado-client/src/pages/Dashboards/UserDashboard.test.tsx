@@ -1,94 +1,78 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import UserDashboard from './UserDashboard';
-import { useTranslation } from 'react-i18next';
+import { useModalContext } from '../../contexts';
+import { OptionsComponent } from '../../constants/options';
 
-// Mocking necessary components and hooks
 jest.mock('react-i18next', () => ({
-    useTranslation: jest.fn(),
+    useTranslation: () => ({ t: (key: string) => key }),
 }));
 
 jest.mock('../../components/organisms', () => ({
-    NavBar: ({ onCreateAdClick }) => <button onClick={onCreateAdClick}>Create Ad</button>,
-    CreateAdModal: ({ open, onClose }) => (
-        open ? <div role="dialog">Create Ad Modal <button onClick={onClose}>Close</button></div> : null
-    ),
-    SideBarMenu: ({ categories, onSelectCategory }) => (
-        <div>
-            {categories.map((cat, index) => (
-                <button key={index} onClick={() => onSelectCategory(cat.title)}>{cat.title}</button>
-            ))}
-        </div>
-    ),
-    ProfileManagement: () => <div>Profile Management Content</div>,
-    AdManagement: () => <div>Ad Management Content</div>,
-    ReportHistory: () => <div>Report History Content</div>,
+    SideBarMenu: jest.fn(() => <div data-testid="sidebar-menu" />),
+    ProfileManagement: jest.fn(() => <div data-testid="profile-management" />),
+    AdManagement: jest.fn(() => <div data-testid="ad-management" />),
+    NavBar: jest.fn(() => <div data-testid="navbar" />),
 }));
 
+jest.mock('../../components/molecules', () => ({
+    SideBar: jest.fn(({ children }) => <div data-testid="sidebar">{children}</div>),
+}));
+
+jest.mock('../../components/atoms', () => ({
+    CustomButton: jest.fn(({ text, onClick }) => <button onClick={onClick}>{text}</button>),
+}));
+
+jest.mock('../../contexts');
+jest.mock('../../constants/options');
+
 describe('UserDashboard', () => {
-    const mockSetState = jest.fn();
+    const mockHandleOpenReportSubmission = jest.fn();
+    const mockUserDashboardMenu = [
+        { title: 'dashboard.user.menu.one', icon: null },
+        { title: 'dashboard.user.menu.two', icon: null },
+    ];
 
     beforeEach(() => {
-        (useTranslation as jest.Mock).mockReturnValue({
-            t: (key: string) => key, // Mock translation function
+        (useModalContext as jest.Mock).mockReturnValue({
+            handleOpenReportSubmission: mockHandleOpenReportSubmission,
+        });
+        (OptionsComponent as jest.Mock).mockReturnValue({
+            user_dashboard_menu: mockUserDashboardMenu,
         });
     });
 
-    afterEach(() => {
-        jest.clearAllMocks(); // Clear mock calls after each test
+    it('renders the UserDashboard component', () => {
+        render(<UserDashboard />);
+        expect(screen.getByTestId('navbar')).toBeInTheDocument();
+        expect(screen.getByTestId('sidebar')).toBeInTheDocument();
+        expect(screen.getByTestId('sidebar-menu')).toBeInTheDocument();
+        expect(screen.getByTestId('profile-management')).toBeInTheDocument();
     });
 
-    test('renders correctly', () => {
-        render(<UserDashboard toggleTheme={jest.fn()} isDarkMode={false} />);
-
-        // Check if the sidebar menu items are rendered
-        expect(screen.getByText("dashboard.user.menu.one")).toBeInTheDocument();
-        expect(screen.getByText("dashboard.user.menu.two")).toBeInTheDocument();
-        expect(screen.getByText("dashboard.user.menu.three")).toBeInTheDocument();
-
-        // Check that Profile Management is rendered by default
-        expect(screen.getByText("Profile Management Content")).toBeInTheDocument();
+    it('renders the report submission button', () => {
+        render(<UserDashboard />);
+        const reportButton = screen.getByText('item_details.report_submission_btn');
+        expect(reportButton).toBeInTheDocument();
     });
 
-    test('opens CreateAdModal when Create Ad button is clicked', () => {
-        render(<UserDashboard toggleTheme={jest.fn()} isDarkMode={false} />);
-
-        // Click the Create Ad button
-        fireEvent.click(screen.getByText("Create Ad"));
-
-        // Check if the modal is opened
-        expect(screen.getByRole('dialog')).toBeInTheDocument();
+    it('calls handleOpenReportSubmission when report button is clicked', () => {
+        render(<UserDashboard />);
+        const reportButton = screen.getByText('item_details.report_submission_btn');
+        fireEvent.click(reportButton);
+        expect(mockHandleOpenReportSubmission).toHaveBeenCalled();
     });
 
-    test('closes CreateAdModal when Close button is clicked', () => {
-        render(<UserDashboard toggleTheme={jest.fn()} isDarkMode={false} />);
+    it('switches content when sidebar menu item is selected', () => {
+        render(<UserDashboard />);
+        const sidebarMenu = screen.getByTestId('sidebar-menu');
 
-        // Open the modal first
-        fireEvent.click(screen.getByText("Create Ad"));
+        // Simulate menu selection
+        fireEvent.click(sidebarMenu);
 
-        // Close the modal
-        fireEvent.click(screen.getByRole('button', { name: /close/i }));
-
-        // Check if the modal is closed
-        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-
-    test('displays correct content based on selected menu item', () => {
-        render(<UserDashboard toggleTheme={jest.fn()} isDarkMode={false} />);
-
-        // Select Ad Management menu item
-        fireEvent.click(screen.getByText("dashboard.user.menu.two"));
-
-        // Check if Ad Management content is displayed
-        expect(screen.getByText("Ad Management Content")).toBeInTheDocument();
-
-        // Select Report History menu item
-        fireEvent.click(screen.getByText("dashboard.user.menu.three"));
-
-        // Check if Report History content is displayed
-        expect(screen.getByText("Report History Content")).toBeInTheDocument();
-
-        // Ensure Profile Management content is not displayed anymore
-        expect(screen.queryByText("Profile Management Content")).not.toBeInTheDocument();
+        // Check if AdManagement is rendered
+        expect(screen.getByTestId('ad-management')).toBeInTheDocument();
+        expect(screen.queryByTestId('profile-management')).not.toBeInTheDocument();
     });
 });
