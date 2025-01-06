@@ -15,7 +15,7 @@ interface Item {
     title: string;
     price: string;
     createdAt: string;
-    imageUrls: string[];
+    imageUrls?: string[]; // Make imageUrls optional
     description: string;
     id: number;
     sellerId: number;
@@ -30,7 +30,7 @@ interface ItemDetailsCardProps {
 const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
     const { t } = useTranslation();
     const { handleOpenReportSubmission } = useModalContext();
-    const imageToDisplay = item.imageUrls.length > 0 ? item.imageUrls[0] : defaultImage;
+    const imageToDisplay = item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : defaultImage;
 
     const copyToClipboard = (phoneNumber: number) => {
         navigator.clipboard.writeText(String(phoneNumber))

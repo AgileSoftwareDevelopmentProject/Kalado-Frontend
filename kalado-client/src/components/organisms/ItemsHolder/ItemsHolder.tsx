@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
-import defaultImage from '../../../assets/images/no-image.png';
 import { useProductContext } from '../../../contexts/ProductContext';
+
 
 interface ItemsHolderProps {
     selectedCategoryTitle: string;

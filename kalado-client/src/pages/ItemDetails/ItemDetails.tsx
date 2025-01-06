@@ -7,13 +7,14 @@ import { getSingleProduct } from '../../api/services/ProductService';
 
 interface Item {
     title: string;
-    imageUrl: string;
-    price: number;
-    city: string;
-    date: string;
+    price: string;
+    createdAt: string;
+    imageUrls: string[];
     description: string;
-    itemId: number;
-    seller_phone: string;
+    id: number;
+    sellerId: number;
+    brand: string;
+    productionYear: string;
 }
 
 const ItemDetails: React.FC = () => {
