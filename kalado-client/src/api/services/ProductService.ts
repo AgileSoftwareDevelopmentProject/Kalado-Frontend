@@ -111,24 +111,24 @@ export const getSingleProduct = async (itemId: number) => {
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
 // setProducts(res)
-// export async function getProductsByCategory(category: string) {
-//     return sendRequest(
-//         PRODUCT.GET_BY_CATEGORY(category),
-//         'GET',
-//         undefined,
-//         undefined
-//     );
-// }
+export async function getProductsByCategory(category: string) {
+    return sendRequest(
+        PRODUCT.GET_BY_CATEGORY(category),
+        'GET',
+        undefined,
+        undefined
+    );
+}
 
-// Mock Function
-export const getProductsByCategory = async (category) => {
+// // Mock Function
+// export const getProductsByCategory = async (category) => {
 
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(mockData.items);
-        }, 1000);
-    });
-};
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(mockData.items);
+//         }, 1000);
+//     });
+// };
 
 
 // Use it like the following:
