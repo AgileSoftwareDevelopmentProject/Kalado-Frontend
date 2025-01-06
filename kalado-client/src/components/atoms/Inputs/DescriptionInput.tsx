@@ -40,7 +40,6 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
                 required={isRequired}
                 multiline
                 rows={4}
-                maxRows={6}
                 variant="outlined"
                 sx={{
                     width: '70%',

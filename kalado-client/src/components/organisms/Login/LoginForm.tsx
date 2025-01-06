@@ -18,11 +18,7 @@ const LoginForm: React.FC = () => {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState<string>('');
     const { setToken, setUserRole } = useAuth();
-    const {
-        isLoginVisible,
-        handleOpenSignup,
-        handleClosePopups,
-    } = useModalContext();
+    const { isLoginVisible, handleOpenSignup, handleClosePopups } = useModalContext();
 
     const validateUserInputs = () => {
         const emailValidationResult = validateEmail(formData.email, t);

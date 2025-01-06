@@ -33,7 +33,10 @@ const ItemDetails: React.FC = () => {
 
             try {
                 setLoading(true);
+                console.log("GetSingleProduct API call");
+                console.log(itemId);
                 const fetchedItem = await getSingleProduct(Number(itemId));
+                console.log(fetchedItem);
                 setItem(fetchedItem);
             } catch (err) {
                 setError(t("error.general"));

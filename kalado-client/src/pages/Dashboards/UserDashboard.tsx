@@ -12,9 +12,7 @@ const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { user_dashboard_menu } = OptionsComponent();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
-    const {
-        handleOpenReportSubmission
-    } = useModalContext();
+    const { handleOpenReportSubmission } = useModalContext();
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);

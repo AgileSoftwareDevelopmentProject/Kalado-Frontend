@@ -23,14 +23,10 @@ const CreateAdForm: React.FC = () => {
         brand: null,
     });
 
-    const [images, setImages] = useState<File[]>([]); 
+    const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
     const { create_ad_options } = OptionsComponent();
-
-    const {
-        isCreateAdVisible,
-        handleClosePopups,
-    } = useModalContext();
+    const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
     const handleCategoryChange = (selectedOption: Option | null) => {
         setFormData(prevData => ({

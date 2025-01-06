@@ -28,10 +28,7 @@ interface ItemDetailsCardProps {
 
 const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
     const { t } = useTranslation();
-
-    const {
-        handleOpenReportSubmission,
-    } = useModalContext();
+    const { handleOpenReportSubmission } = useModalContext();
 
     const copyToClipboard = (phoneNumber: string) => {
         navigator.clipboard.writeText(phoneNumber)

@@ -21,12 +21,7 @@ const SignupForm: React.FC = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
-
-  const {
-    isSignupVisible,
-    handleOpenLogin,
-    handleOpenCodeVerification,
-  } = useModalContext();
+  const { isSignupVisible, handleOpenLogin, handleOpenCodeVerification } = useModalContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
