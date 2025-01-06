@@ -1,95 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
+import { Autocomplete } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 interface Option {
-    value: string;
     label: string;
+    value: string;
 }
 
 interface DropdownProps {
     options: Option[];
-    placeholder?: string;
-    onChange: (selectedOption: Option | null) => void;
-    value?: Option | null;
+    placeholder: string;
+    onChange: (value: Option | null) => void;
+    value: Option | null;
     isRequired?: boolean;
-    errorMessage?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
-    options,
-    placeholder,
-    onChange,
-    value,
-    isRequired = false,
-    errorMessage,
-}) => {
-    const { i18n } = useTranslation();
-    const [error, setError] = useState(false); // tracks if the field has an error
-
-    const handleChange = (event: SelectChangeEvent<string>) => {
-        const selectedValue = event.target.value;
-        const selectedOption = options.find(option => option.value === selectedValue) || null;
-        onChange(selectedOption);
-
-        // clear error when a valid value is selected
-        if (isRequired && selectedOption) {
-            setError(false);
-        }
-    };
-
-    const validate = () => {
-        // check if the field is required and has a value
-        if (isRequired && (!value || !value.value)) {
-            setError(true);
-            return false;
-        }
-        return true;
-    };
+const Dropdown: React.FC<DropdownProps> = ({ options, placeholder, onChange, value, isRequired = true }) => {
+    const { t, i18n } = useTranslation();
+    const translatedPlaceholder = placeholder || t('general_inputs.category');
 
     return (
-        <FormControl
-            variant="standard"
-            sx={{ mb: 2, width: '70%' }}
-            error={error} // highlight the dropdown in red if there's an error
-        >
-            <InputLabel
-                sx={{
-                    textAlign: i18n.language === 'fa' ? 'right' : 'left',
-                    width: '100%',
-                    position: 'absolute',
-                    right: 30,
-                }}
-            >
-                {placeholder}
-            </InputLabel>
-            <Select
-                value={value ? value.value : ''}
-                onChange={handleChange}
-                displayEmpty
-                onBlur={validate} // validate the field on blur
-            >
-                {options.map(option => (
-                    <MenuItem
-                        key={option.value}
-                        value={option.value}
-                        sx={{
-                            '&:hover': {
-                                backgroundColor: '#D74101',
-                            },
-                        }}
-                    >
-                        {option.label}
-                    </MenuItem>
-                ))}
-            </Select>
-            {error && (
-                <FormHelperText>
-                    {errorMessage || i18n.t('This field is required')}
-                </FormHelperText>
+        <Autocomplete
+            disablePortal
+            options={options}
+            includeInputInList
+            autoComplete
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={translatedPlaceholder}
+                    variant="standard"
+                    margin="normal"
+                    required={isRequired}
+                    sx={{
+                        width: '70%',
+                        '& .MuiInputLabel-root': {
+                            textAlign: i18n.language === 'fa' ? 'right' : 'left',
+                            width: '90%',
+                        },
+                    }}
+                />
             )}
-        </FormControl>
+            getOptionLabel={(option) => option.label}
+            isOptionEqualToValue={(option, value) => option.value === value.value}
+            noOptionsText={t("general_inputs.no_option")}
+            onChange={(event, newValue) => {
+                onChange(newValue);
+            }}
+            value={value}
+        />
     );
 };
 

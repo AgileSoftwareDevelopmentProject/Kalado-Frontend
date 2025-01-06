@@ -1,23 +1,26 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Autocomplete, TextField, IconButton, Box, InputAdornment } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
+
 
 interface SearchBarProps {
     value: string;
     placeholder?: string;
-    options: string[]; // Add options prop
+    options: string[];
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onSearch: () => void;
+    onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
 }
+
 
 const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, options, onChange, onSearch }) => {
     const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('navbar.searchbar');
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
         if (event.key === 'Enter') {
-            onSearch();
+            onSearch(event as React.FormEvent<HTMLFormElement>);
         }
     };
 
@@ -42,17 +45,22 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder, options, onCh
                         InputProps={{
                             ...params.InputProps,
                             endAdornment: (
-                                <InputAdornment position="start">
-                                    <IconButton onClick={onSearch} aria-label="search">
+                                <InputAdornment position="end">
+                                    {value && (
+                                        <IconButton onClick={() => onChange({ target: { value: '' } })} aria-label="clear">
+                                            <ClearIcon />
+                                        </IconButton>
+                                    )}
+                                    <IconButton onClick={(e) => onSearch(e as React.FormEvent<HTMLFormElement>)} aria-label="search">
                                         <SearchIcon />
                                     </IconButton>
                                 </InputAdornment>
                             ),
                         }}
+
                     />
                 )}
                 onChange={(event, newValue) => {
-                    console.log(newValue);
                     onChange({ target: { value: newValue || '' } });
                 }}
                 onInputChange={(event, newInputValue) => {

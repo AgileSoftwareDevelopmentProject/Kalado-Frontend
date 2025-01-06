@@ -11,10 +11,7 @@ const CodeVerificationForm: React.FC = () => {
     const { t } = useTranslation();
     const [code, setCode] = useState('');
     const [error, setError] = useState<string>('');
-    const {
-        isCodeVerificationVisible,
-        handleClosePopups,
-    } = useModalContext();
+    const { isCodeVerificationVisible, handleClosePopups } = useModalContext();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -23,13 +20,19 @@ const CodeVerificationForm: React.FC = () => {
         }
     };
 
+    const handleClose = () => {
+        setCode('');
+        setError('');
+        handleClosePopups();
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // Code Verification API call
         const response = await verifyCode(code);
         if (response.isSuccess) {
-            handleClosePopups();
-            toast(t("success.login"));
+            handleClose();
+            toast(t("success.code_verification"));
         } else {
             setError(response.message);
         }

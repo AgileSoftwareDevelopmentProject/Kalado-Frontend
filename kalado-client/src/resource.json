@@ -13,7 +13,9 @@
             "date": "Date",
             "code": "Verification Code",
             "add_image": "Add Image",
-            "description": "Description"
+            "description": "Description",
+            "category": "Category",
+            "no_option": "No option"
         },
         "navbar": {
             "create_ad": "Submit Ad",
@@ -29,8 +31,7 @@
             "three": "Home & Kitchen",
             "four": "Digital Stuff",
             "five": "Entertainment",
-            "six": "Personal Stuff",
-            "seven": "Others"
+            "six": "Personal Stuff"
         },
         "filter": {
             "title": "Filters",
@@ -259,7 +260,9 @@
             "date": "تاریخ",
             "code": "کد تأیید",
             "add_image": "افزودن عکس",
-            "description": "توضیحات"
+            "description": "توضیحات",
+            "category": "دسته‌بندی",
+            "no_option": "بدون گزینه"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -275,8 +278,7 @@
             "three": "خانه و آشپزخانه",
             "four": "کالای دیجیتال",
             "five": "سرگرمی",
-            "six": "لوازم شخصی",
-            "seven": "موارد دیگر"
+            "six": "لوازم شخصی"
         },
         "filter": {
             "title": "فیلترها",

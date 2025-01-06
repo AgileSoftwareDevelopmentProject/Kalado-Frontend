@@ -12,10 +12,7 @@ interface PopupBoxProps {
 
 const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
     const theme = useTheme();
-
-    const {
-        handleClosePopups,
-    } = useModalContext();
+    const { handleClosePopups } = useModalContext();
 
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
@@ -29,7 +26,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
             open={open}
             onClick={handleBackdropClick}
             sx={{
-                zIndex: 1500,
+                zIndex: 1200,
             }}
         >
             <Box sx={{

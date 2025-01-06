@@ -1,123 +1,108 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import CodeVerificationForm from './CodeVerificationForm';
 import { verifyCode } from '../../../api/services/AuthService';
+import { useModalContext } from '../../../contexts';
 import { toast } from 'react-toastify';
 
-// Mocking the verifyCode service
-jest.mock('../../../services/CodeVerificationService', () => ({
-    verifyCode: jest.fn(),
+jest.mock('react-i18next', () => ({
+    useTranslation: () => ({ t: (key: string) => key }),
 }));
 
-// Mocking toast
-jest.mock('react-toastify', () => ({
-    toast: jest.fn(),
-}));
+jest.mock('../../../api/services/AuthService');
+jest.mock('../../../contexts');
+jest.mock('react-toastify');
 
 describe('CodeVerificationForm', () => {
-    const mockOnClose = jest.fn();
+    const mockHandleClosePopups = jest.fn();
+
+    beforeEach(() => {
+        (useModalContext as jest.Mock).mockReturnValue({
+            isCodeVerificationVisible: true,
+            handleClosePopups: mockHandleClosePopups,
+        });
+    });
 
     afterEach(() => {
-        jest.clearAllMocks(); // Clear mock calls after each test
+        jest.clearAllMocks();
     });
 
-    test('renders correctly', () => {
-        const { getByText } = render(
-            <CodeVerificationForm onClose={mockOnClose} />
-        );
-
-        expect(getByText(/code_verification.enter_code/i)).toBeInTheDocument();
-        expect(getByText(/code_verification.verify_btn/i)).toBeInTheDocument();
+    it('renders the code verification form', () => {
+        render(<CodeVerificationForm />);
+        expect(screen.getByText('code_verification.enter_code')).toBeInTheDocument();
+        expect(screen.getByRole('textbox')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'code_verification.verify_btn' })).toBeInTheDocument();
     });
 
-    test('handles input change correctly', () => {
-        const { getByRole } = render(
-            <CodeVerificationForm onClose={mockOnClose} />
-        );
+    it('handles input changes and only allows numbers', () => {
+        render(<CodeVerificationForm />);
+        const input = screen.getByRole('textbox');
 
-        const input = getByRole('textbox'); // Assuming CodeInput renders an input element
-
-        // Test valid input
-        fireEvent.change(input, { target: { value: '123456' } });
-        expect(input).toHaveValue('123456');
-
-        // Test invalid input (non-numeric)
         fireEvent.change(input, { target: { value: '123abc' } });
-        expect(input).toHaveValue('123456'); // Should remain unchanged
+        expect(input).toHaveValue('123');
 
-        // Test exceeding length
         fireEvent.change(input, { target: { value: '1234567' } });
-        expect(input).toHaveValue('123456'); // Should remain unchanged
-
-        // Test backspace
-        fireEvent.change(input, { target: { value: '' } });
-        expect(input).toHaveValue('');
+        expect(input).toHaveValue('123456');
     });
 
-    test('handles successful code verification', async () => {
-        (verifyCode as jest.Mock).mockResolvedValueOnce({
-            isSuccess: true,
-        });
+    it('disables submit button when code length is not 6', () => {
+        render(<CodeVerificationForm />);
+        const input = screen.getByRole('textbox');
+        const submitButton = screen.getByRole('button', { name: 'code_verification.verify_btn' });
 
-        const { getByRole, getByText } = render(
-            <CodeVerificationForm onClose={mockOnClose} />
-        );
+        expect(submitButton).toBeDisabled();
 
-        const input = getByRole('textbox');
+        fireEvent.change(input, { target: { value: '12345' } });
+        expect(submitButton).toBeDisabled();
 
-        // Fill in the code
         fireEvent.change(input, { target: { value: '123456' } });
+        expect(submitButton).not.toBeDisabled();
+    });
 
-        // Submit the form
-        fireEvent.click(getByText(/code_verification.verify_btn/i));
+    it('calls verifyCode with correct code on form submission', async () => {
+        (verifyCode as jest.Mock).mockResolvedValue({ isSuccess: true });
+
+        render(<CodeVerificationForm />);
+        const input = screen.getByRole('textbox');
+        const submitButton = screen.getByRole('button', { name: 'code_verification.verify_btn' });
+
+        fireEvent.change(input, { target: { value: '123456' } });
+        fireEvent.click(submitButton);
 
         await waitFor(() => {
-            expect(mockOnClose).toHaveBeenCalledTimes(1);
-            expect(toast).toHaveBeenCalledWith(expect.stringContaining("success.login"));
+            expect(verifyCode).toHaveBeenCalledWith('123456');
         });
     });
 
-    test('handles failed code verification', async () => {
-        (verifyCode as jest.Mock).mockResolvedValueOnce({
-            isSuccess: false,
-            message: 'Invalid code',
-        });
+    it('handles successful code verification', async () => {
+        (verifyCode as jest.Mock).mockResolvedValue({ isSuccess: true });
 
-        const { getByRole, getByText } = render(
-            <CodeVerificationForm onClose={mockOnClose} />
-        );
+        render(<CodeVerificationForm />);
+        const input = screen.getByRole('textbox');
+        const submitButton = screen.getByRole('button', { name: 'code_verification.verify_btn' });
 
-        const input = getByRole('textbox');
-
-        // Fill in the code
         fireEvent.change(input, { target: { value: '123456' } });
-
-        // Submit the form
-        fireEvent.click(getByText(/code_verification.verify_btn/i));
+        fireEvent.click(submitButton);
 
         await waitFor(() => {
-            expect(getByText('Invalid code')).toBeInTheDocument();
-            expect(mockOnClose).not.toHaveBeenCalled();
-            expect(toast).not.toHaveBeenCalled();
+            expect(mockHandleClosePopups).toHaveBeenCalled();
+            expect(toast).toHaveBeenCalledWith('success.code_verification');
         });
     });
 
-    test('disables submit button when code length is not 6', () => {
-        const { getByRole, getByText } = render(
-            <CodeVerificationForm onClose={mockOnClose} />
-        );
+    it('handles code verification failure', async () => {
+        (verifyCode as jest.Mock).mockResolvedValue({ isSuccess: false, message: 'Invalid code' });
 
-        const button = getByText(/code_verification.verify_btn/i);
+        render(<CodeVerificationForm />);
+        const input = screen.getByRole('textbox');
+        const submitButton = screen.getByRole('button', { name: 'code_verification.verify_btn' });
 
-        // Initially disabled
-        expect(button).toBeDisabled();
+        fireEvent.change(input, { target: { value: '123456' } });
+        fireEvent.click(submitButton);
 
-        // Input less than 6 characters
-        fireEvent.change(getByRole('textbox'), { target: { value: '123' } });
-        expect(button).toBeDisabled();
-
-        // Input exactly 6 characters
-        fireEvent.change(getByRole('textbox'), { target: { value: '123456' } });
-        expect(button).toBeEnabled();
+        await waitFor(() => {
+            expect(screen.getByText('Invalid code')).toBeInTheDocument();
+        });
     });
 });

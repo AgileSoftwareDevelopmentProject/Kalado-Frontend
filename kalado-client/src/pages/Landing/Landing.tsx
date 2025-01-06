@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
 import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CodeVerificationForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
+import { ProductProvider, useProductContext } from '../../contexts';
 
-
-const Landing: React.FC = () => {
+const LandingContent: React.FC = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    const { product_categories } = OptionsComponent();
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
 
     const handleSelectCategory = (categoryKey: string) => {
         setSelectedCategoryTitle(t(categoryKey));
     };
 
+    // Rendering products based on the selected category
+    const { fetchProductsByCategory } = useProductContext();
+    useEffect(() => {
+        fetchProductsByCategory(selectedCategoryTitle);
+    }, [selectedCategoryTitle]);
+
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Box>
             <NavBar />
 
             <SideBar>
                 <SideBarMenu
-                    categories={product_categories}
+                    categories={OptionsComponent().product_categories}
                     onSelectCategory={handleSelectCategory}
                     title={t("category.title")}
                     initialSelect={t("category.one")}
@@ -31,10 +34,7 @@ const Landing: React.FC = () => {
                 <Filter />
             </SideBar>
 
-            <ItemsHolder
-                onItemSelect={(itemId) => navigate(`/item/${itemId}`)}
-                selectedCategoryTitle={selectedCategoryTitle}
-            />
+            <ItemsHolder selectedCategoryTitle={selectedCategoryTitle} />
 
             <LoginForm />
             <SignupForm />
@@ -43,5 +43,11 @@ const Landing: React.FC = () => {
         </Box>
     );
 };
+
+const Landing: React.FC = () => (
+    <ProductProvider>
+        <LandingContent />
+    </ProductProvider>
+);
 
 export default Landing;

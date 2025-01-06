@@ -18,9 +18,12 @@ const ReportSubmissionForm: React.FC = () => {
         violationType: '',
         description: '',
         images: [],
+        reportedUserId: 0,
+        reportedContentId: 0,
     });
     const [error, setError] = useState<string>('');
     const { report_options } = OptionsComponent();
+    const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
     const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
 
     const handleChange = (field: string, value: any) => {

@@ -20,6 +20,7 @@
     "@mui/x-date-pickers": "^7.23.3",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
+    "dayjs": "^1.11.13",
     "i18next": "^24.1.2",
     "jalaali-js": "^1.2.7",
     "react": "^19.0.0",

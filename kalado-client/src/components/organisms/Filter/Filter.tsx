@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
-import { CustomButton, NumberInput } from '../../atoms';
-import { LabelList } from '../../molecules';
-import { fetchItems } from '../../../api/services/FilterService';
+import { CustomButton } from '../../atoms';
+import { LabelList, NumberRange } from '../../molecules';
+import { OptionsComponent } from '../../../constants/options';
+import { useProductContext } from '../../../contexts/ProductContext';
+
 
 const Filter: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-  const [minPrice, setMinPrice] = useState<number | ''>('');
-  const [maxPrice, setMaxPrice] = useState<number | ''>('');
+  const { date_filter_options } = OptionsComponent();
+  const { applyFilters } = useProductContext();
+  const [date, setDate] = useState<string | null>(null);
+  const [minPrice, setMinPrice] = useState<number | 0>(0);
+  const [maxPrice, setMaxPrice] = useState<number | 0>(0);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -17,30 +21,16 @@ const Filter: React.FC = () => {
       e.target.value = '0';
     }
     if (e.target.name === 'minPrice') {
-      setMinPrice(value ? parseFloat(value) : '');
+      setMinPrice(value ? parseFloat(value) : 0);
     } else if (e.target.name === 'maxPrice') {
-      setMaxPrice(value ? parseFloat(value) : '');
+      setMaxPrice(value ? parseFloat(value) : 0);
     }
   };
 
-  const handleFilterSelect = (filter: string | null) => {
-    setSelectedFilter(filter);
+  // Rendering products based on Applied Filters
+  const handleApplyFilters = () => {
+    applyFilters(date, minPrice, maxPrice, date);
   };
-
-  const handleApplyFilters = async () => {
-    try {
-      const data = await fetchItems(selectedFilter, minPrice, maxPrice);
-      console.log('Fetched Items:', data);
-    } catch (error) {
-      console.error('Failed to apply filters:', error);
-    }
-  };
-
-  const dateOptions = [
-    { title: t('filter.one_day'), value: 'oneDay' },
-    { title: t('filter.one_week'), value: 'oneWeek' },
-    { title: t('filter.one_month'), value: 'oneMonth' },
-  ];
 
   return (
     <Box sx={{ p: 2 }}>
@@ -48,35 +38,24 @@ const Filter: React.FC = () => {
         {t("filter.title")}
       </Typography>
 
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="body1" sx={{ mb: 1, textAlign: 'right' }}>
-          {t("filter.price")}
-        </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <NumberInput
-            name="minPrice"
-            placeholder={t("filter.min_price")}
-            onChange={handlePriceChange}
-          />
-          <NumberInput
-            name="maxPrice"
-            placeholder={t("filter.max_price")}
-            onChange={handlePriceChange}
-          />
-        </Box>
-      </Box>
+      <NumberRange
+        minName="minPrice"
+        maxName="maxPrice"
+        minPlaceholder={t("filter.min_price")}
+        maxPlaceholder={t("filter.max_price")}
+        onChange={handlePriceChange}
+      />
 
       <LabelList
-        items={dateOptions}
-        selectedValue={selectedFilter}
-        onSelect={handleFilterSelect}
+        items={date_filter_options}
+        selectedValue={date}
+        onSelect={(newDate) => setDate(newDate)}
         title={t("filter.ad_date")}
       />
 
       <CustomButton
         text={t('filter.apply')}
         onClick={handleApplyFilters}
-        margin="20px 0px"
       />
     </Box>
   );

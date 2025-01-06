@@ -17,16 +17,11 @@ const SignupForm: React.FC = () => {
     phoneNumber: '',
     password: '',
     passwordRepeat: '',
-    role: 'ADMIN'
+    role: 'USER'
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
-
-  const {
-    isSignupVisible,
-    handleOpenLogin,
-    handleOpenCodeVerification,
-  } = useModalContext();
+  const { isSignupVisible, handleOpenLogin, handleOpenCodeVerification } = useModalContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -65,11 +60,17 @@ const SignupForm: React.FC = () => {
     return true;
   }
 
+
+  const handleClose = () => {
+    setFormData(initialFormData);
+    setError('');
+    handleOpenCodeVerification();
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (validateUserInputs()) {
-      // Signup API call
       const response = await signupUser({
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -80,18 +81,14 @@ const SignupForm: React.FC = () => {
       });
 
       if (response.isSuccess) {
+        console.log("Register API call");
+        console.log(response);
         handleClose();
         toast(t("success.signup"));
       } else {
         setError(response.message);
       }
     }
-  };
-
-  const handleClose = () => {
-    setFormData(initialFormData);
-    setError('');
-    handleOpenCodeVerification();
   };
 
   return (

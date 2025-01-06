@@ -1,4 +1,4 @@
-import { User , UserType} from '../utils/types'
+import { User, UserType } from '../utils/types'
 
 
 // Login
@@ -67,8 +67,9 @@ export interface ProductData {
         unit: string;
     };
     category: string;
-    productionYear: number;
-    brand: string;
+    // images?: File[] | null;
+    productionYear?: number | null;
+    brand?: string | null;
     // sellerId: number;
 }
 
@@ -80,6 +81,7 @@ export type TProductResponseType = {
         amount: number;
         unit: string;
     };
+    imageUrls: string[];   // contains urls
     category: string;
     productionYear: number;
     brand: string;

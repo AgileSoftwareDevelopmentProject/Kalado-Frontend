@@ -32,7 +32,7 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { token, setToken, userRole } = useAuth();
+    const { token, setToken, userRole, setUserRole } = useAuth();
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
@@ -66,7 +66,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleOpenCreateAd = () => {
         console.log("handleOpenCreateAd")
         console.log(token);
-        if (token === null) {
+        if (token == null) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
         }
@@ -74,7 +74,9 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenReportSubmission = () => {
-        if (!!token) {
+        console.log("handleOpenReportSubmission")
+        console.log(token);
+        if (token == null) {
             toast.error(t("error.item_details.disable_report_submiision"));
             return;
         }
@@ -84,6 +86,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleOpenProfilePage = () => {
         console.log("handleOpenProfilePage");
         console.log(userRole);
+        console.log(token);
         setIsInProfile(true);
         if (userRole === 'ADMIN') {
             navigate('/admin-dashboard');
@@ -95,6 +98,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleLogoutClick = () => {
         setIsInProfile(false);
         setToken(null);
+        setUserRole(null);
         navigate('/');
     };
 
