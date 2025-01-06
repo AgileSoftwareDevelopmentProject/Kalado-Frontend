@@ -37,7 +37,7 @@ const ProfileManagement = () => {
             // GetUserByToken API call
             console.log("GetUserByToken API call");
             console.log(token);
-            const response = await getProfile(token);
+            const response = await getProfile();
             console.log(response);
             setUserData(response);
         } catch (err) {
