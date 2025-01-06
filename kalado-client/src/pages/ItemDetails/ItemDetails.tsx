@@ -24,6 +24,7 @@ const ItemDetails: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
 
+
     useEffect(() => {
         const fetchItem = async () => {
             if (!itemId) {
