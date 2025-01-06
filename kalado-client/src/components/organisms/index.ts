@@ -14,14 +14,9 @@ export { default as UserManagement } from './UserManagement/UserManagement';
 export { default as ReportHistory } from './Report/ReportHistory';
 
 export { default as LoginForm } from './Login/LoginForm';
-export { default as LoginModal } from './Login/LoginModal';
 export { default as SignupForm } from './Signup/SignupForm';
-export { default as SignupModal } from './Signup/SignupModal';
 export { default as CodeVerificationForm } from './CodeVerification/CodeVerificationForm';
-export { default as CodeVerificationModal } from './CodeVerification/CodeVerificationModal';
 export { default as CreateAdForm } from './CreateAd/CreateAdForm';
-export { default as CreateAdModal } from './CreateAd/CreateAdModal';
 export { default as ReportSubmissionForm } from './Report/ReportSubmissionForm';
-export { default as ReportSubmissionModal } from './Report/ReportSubmissionModal';
 
 

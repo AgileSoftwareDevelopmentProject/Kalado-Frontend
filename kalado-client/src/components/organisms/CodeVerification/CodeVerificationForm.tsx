@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CodeInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
-import { verifyCode } from '../../../api/services/CodeVerificationService';
+import { verifyCode } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
+import { useModalContext } from '../../../contexts';
 
-interface CodeVerificationFormProps {
-    onClose: () => void;
-}
 
-const CodeVerificationForm: React.FC<CodeVerificationFormProps> = ({ onClose }) => {
+const CodeVerificationForm: React.FC = () => {
     const { t } = useTranslation();
     const [code, setCode] = useState('');
     const [error, setError] = useState<string>('');
+    const { isCodeVerificationVisible, handleClosePopups } = useModalContext();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -21,20 +20,26 @@ const CodeVerificationForm: React.FC<CodeVerificationFormProps> = ({ onClose }) 
         }
     };
 
+    const handleClose = () => {
+        setCode('');
+        setError('');
+        handleClosePopups();
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        // Code Verification API call
         const response = await verifyCode(code);
         if (response.isSuccess) {
-            onClose();
-            toast(t("success.login"));
+            handleClose();
+            toast(t("success.code_verification"));
         } else {
             setError(response.message);
         }
     };
 
     return (
-        <PopupBox onClose={onClose}>
+        <PopupBox open={isCodeVerificationVisible}>
             <p>{t("code_verification.enter_code")}</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput

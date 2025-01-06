@@ -1,125 +1,116 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
-import { getProductsByCategory } from '../../../api/services/product/getProductsByCategoryService';
-import defaultImage from '../../../assets/images/no-image.png';
-import { tr } from 'date-fns/locale';
+import { useProductContext } from '../../../contexts/ProductContext';
 
-interface Item {
-    title: string;
-    imageUrl: string;
-    price: number;
-    city: string;
-    date: string;
-    itemId: string;
-}
 
 interface ItemsHolderProps {
-    onItemSelect: (itemId: string) => void;
     selectedCategoryTitle: string;
 }
 
-const ItemsHolder: React.FC<ItemsHolderProps> = ({ onItemSelect, selectedCategoryTitle }) => {
+const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
     const { t } = useTranslation();
-    const [items, setItems] = useState<Item[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>('');
+    const navigate = useNavigate();
+    const { products, loading, error } = useProductContext();
     const [sortOption, setSortOption] = useState<string>('newest');
 
-    useEffect(() => {
-        const loadItems = async () => {
-            try {
-                setLoading(true);
-                // getProductByCategory API call
-                const fetchedData = getProductsByCategory(selectedCategoryTitle);
-                const fetchedItems = Array.isArray(fetchedData) ? fetchedData : [];
-                setItems(fetchedItems as Item[]);
-            } catch (error) {
-                setError(t("error.general"));
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        loadItems();
-    }, []);
-
     const sortedItems = () => {
-        return [...items].sort((a, b) => {
+        if (!products) return [];
+        return [...products].sort((a, b) => {
             switch (sortOption) {
                 case 'most_expensive':
                     return b.price - a.price;
                 case 'most_cheap':
                     return a.price - b.price;
                 case 'oldest':
-                    return new Date(a.date).getTime() - new Date(b.date).getTime();
+                    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
                 case 'newest':
-                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
                 default:
                     return 0;
             }
         });
     };
 
-    const displayedItems = sortedItems();
+    const handleItemSelect = (itemId: number) => {
+        navigate(`/item/${itemId}`);
+    };
+
+    const renderLoadingOrError = () => (
+        <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+            {loading ? <CircularProgress /> : error || t("error.landing.error_get_product")}
+        </Typography>
+    );
+
+    const formatDate = (timestamp: number): string => {
+        const date = new Date(timestamp);
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }).format(date);
+    };
+
+    const renderItems = () => {
+        if (error) {
+            return (
+                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+                    {t("error.landing.error_get_product")}
+                </Typography>
+            );
+        }
+
+        if (!products || products.length === 0) {
+            return (
+                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+                    {t("error.landing.empty_product_list")}
+                </Typography>
+            );
+        }
+
+        return (
+            <>
+                <ItemSort
+                    sortOption={sortOption}
+                    setSortOption={(e) => setSortOption(e.target.value as string)}
+                />
+                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
+                    {selectedCategoryTitle}
+                </Typography>
+                <Box sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: products.length === 1 ? 'center' : 'space-between',
+                    gap: 2,
+                    flexGrow: 1,
+                }}>
+                    {sortedItems().map(item => (
+                        <Box key={item.itemId} sx={{
+                            flexBasis: { xs: '100%', sm: '50%', md: products.length === 1 ? '100%' : '30%' },
+                            mb: 2,
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}>
+                            <ItemCard
+                                title={item.title}
+                                price={`${item.price.amount.toLocaleString()} ${t("currency")}`}
+                                createdAt={formatDate(item.createdAt)}
+                                imageUrls={item.imageUrls}
+                                onClick={() => handleItemSelect(item.id)}
+                            />
+                        </Box>
+                    ))}
+                </Box>
+            </>
+        );
+    };
 
     return (
         <ProductListBox>
-            {
-                (loading) && (<CircularProgress />)
-            }
-
-            {
-                (items.length === 0) &&
-                (<Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                    {error ? error : t("error.landing.empty_product_list")}
-                </Typography>)
-            }
-
-            {
-                (items.length !== 0) && (!!error) &&
-                <>
-                    <ItemSort
-                        sortOption={sortOption}
-                        setSortOption={(e) => setSortOption(e.target.value as string)}
-                    />
-
-                    <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                        {selectedCategoryTitle}
-                    </Typography>
-
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between',
-                            gap: 2,
-                            flexGrow: 1,
-                        }}
-                    >
-                        {displayedItems.map(item => (
-                            <Box
-                                key={item.itemId}
-                                sx={{
-                                    flexBasis: { xs: '100%', sm: '48%', md: '30%' },
-                                    mb: 2,
-                                }}
-                            >
-                                <ItemCard
-                                    title={item.title}
-                                    price={`${item.price.toLocaleString()} ${t("currency")} `}
-                                    city={item.city}
-                                    date={item.date}
-                                    image={item.imageUrl || defaultImage}
-                                    onClick={() => onItemSelect(item.itemId)}
-                                />
-                            </Box>
-                        ))}
-                    </Box>
-                </>
-            }
+            {loading || error || !products ? renderLoadingOrError() : renderItems()}
         </ProductListBox>
     );
 };

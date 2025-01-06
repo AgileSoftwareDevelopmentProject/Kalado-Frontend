@@ -1,61 +1,115 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import NavBar from './NavBar';
+import { useAuth, useThemeContext, useModalContext, useLanguageContext, useProductContext } from '../../../contexts';
 
-describe('Navbar Component', () => {
-  test('renders the logo correctly', () => {
-    render(<NavBar />);
-    const logo = screen.getByAltText('کالادو');
-    expect(logo).toBeInTheDocument();
-    expect(logo).toHaveClass('logo');
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
+jest.mock('@mui/material', () => ({
+  ...jest.requireActual('@mui/material'),
+  useTheme: () => ({
+    palette: {
+      background: {
+        paper: '#ffffff',
+      },
+    },
+  }),
+}));
+
+jest.mock('../../../contexts');
+jest.mock('../../../constants/options', () => ({
+  OptionsComponent: () => ({
+    search_options: ['Option 1', 'Option 2'],
+  }),
+}));
+
+describe('NavBar', () => {
+  const mockToggleTheme = jest.fn();
+  const mockToggleLanguage = jest.fn();
+  const mockHandleOpenLogin = jest.fn();
+  const mockHandleOpenCreateAd = jest.fn();
+  const mockHandleOpenProfilePage = jest.fn();
+  const mockHandleLogoutClick = jest.fn();
+  const mockSearchProductsByKeyword = jest.fn();
+
+  beforeEach(() => {
+    (useAuth as jest.Mock).mockReturnValue({ token: null });
+    (useThemeContext as jest.Mock).mockReturnValue({ isDarkMode: false, toggleTheme: mockToggleTheme });
+    (useLanguageContext as jest.Mock).mockReturnValue({ currentLanguage: 'en', toggleLanguage: mockToggleLanguage });
+    (useModalContext as jest.Mock).mockReturnValue({
+      handleOpenLogin: mockHandleOpenLogin,
+      handleOpenCreateAd: mockHandleOpenCreateAd,
+      handleOpenProfilePage: mockHandleOpenProfilePage,
+      handleLogoutClick: mockHandleLogoutClick,
+      isInProfile: false,
+    });
+    (useProductContext as jest.Mock).mockReturnValue({ searchProductsByKeyword: mockSearchProductsByKeyword });
   });
 
-  test('renders the search bar correctly', () => {
+  it('renders the NavBar component', () => {
     render(<NavBar />);
-    const searchInput = screen.getByPlaceholderText('جستجوی کالا');
-    expect(searchInput).toBeInTheDocument();
-    expect(searchInput).toHaveAttribute('type', 'text');
+    expect(screen.getByRole('banner')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'En' })).toBeInTheDocument();
+    expect(screen.getByTestId('DarkModeIcon')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'navbar.login/signup' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'navbar.create_ad' })).toBeInTheDocument();
   });
 
-  test('renders the search button', () => {
+  it('toggles language when language button is clicked', () => {
     render(<NavBar />);
-    const searchButton = screen.getByRole('button', { name: /search/i });
-    expect(searchButton).toBeInTheDocument();
+    const languageButton = screen.getByRole('button', { name: 'En' });
+    fireEvent.click(languageButton);
+    expect(mockToggleLanguage).toHaveBeenCalled();
   });
 
-  test('renders the "ثبت آگهی" button', () => {
+  it('toggles theme when theme button is clicked', () => {
     render(<NavBar />);
-    const signupButton = screen.getByText('ثبت آگهی');
-    expect(signupButton).toBeInTheDocument();
-    expect(signupButton).toHaveClass('navbar-button signup');
+    const themeButton = screen.getByTestId('DarkModeIcon').parentElement;
+    fireEvent.click(themeButton!);
+    expect(mockToggleTheme).toHaveBeenCalled();
   });
 
-  test('renders the "ورود/ثبت‌نام" button', () => {
+  it('opens login modal when login button is clicked', () => {
     render(<NavBar />);
-    const loginButton = screen.getByText('ورود/ثبت‌نام');
-    expect(loginButton).toBeInTheDocument();
-    expect(loginButton).toHaveClass('navbar-button login');
+    const loginButton = screen.getByRole('button', { name: 'navbar.login/signup' });
+    fireEvent.click(loginButton);
+    expect(mockHandleOpenLogin).toHaveBeenCalled();
   });
 
-  test('handles typing in the search bar', async () => {
+  it('opens create ad modal when create ad button is clicked', () => {
     render(<NavBar />);
-    const searchInput = screen.getByPlaceholderText('جستجوی کالا');
-    await userEvent.type(searchInput, 'Test Query');
-    expect(searchInput).toHaveValue('Test Query');
+    const createAdButton = screen.getByRole('button', { name: 'navbar.create_ad' });
+    fireEvent.click(createAdButton);
+    expect(mockHandleOpenCreateAd).toHaveBeenCalled();
   });
 
-  test('handles click events on buttons', async () => {
-    const user = userEvent.setup();
+  it('shows profile button when user is logged in', () => {
+    (useAuth as jest.Mock).mockReturnValue({ token: 'fake-token' });
     render(<NavBar />);
-    const signupButton = screen.getByText('ثبت آگهی');
-    const loginButton = screen.getByText('ورود/ثبت‌نام');
+    expect(screen.getByRole('button', { name: 'navbar.profile' })).toBeInTheDocument();
+  });
 
-    await user.click(signupButton);
-    await user.click(loginButton);
+  it('shows logout button when user is in profile page', () => {
+    (useAuth as jest.Mock).mockReturnValue({ token: 'fake-token' });
+    (useModalContext as jest.Mock).mockReturnValue({
+      ...useModalContext(),
+      isInProfile: true,
+    });
+    render(<NavBar />);
+    expect(screen.getByRole('button', { name: 'navbar.logout' })).toBeInTheDocument();
+  });
 
-    expect(signupButton).toBeInTheDocument();
-    expect(loginButton).toBeInTheDocument();
+  it('handles search functionality', () => {
+    render(<NavBar />);
+    const searchInput = screen.getByRole('textbox');
+    const searchForm = screen.getByRole('search');
+
+    fireEvent.change(searchInput, { target: { value: 'test search' } });
+    fireEvent.submit(searchForm);
+
+    expect(mockSearchProductsByKeyword).toHaveBeenCalledWith('test search');
   });
 });

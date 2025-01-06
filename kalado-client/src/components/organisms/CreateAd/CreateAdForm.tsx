@@ -1,45 +1,34 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
+import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../api/services/product/CreateAdService';
-
-
+import { createAd, createProductWithImages } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
+import { useModalContext } from '../../../contexts';
+import { OptionsComponent } from '../../../constants/options';
+import { ProductData } from '../../../utils/apiTypes';
 
-
-interface CreateAdFormProps {
-    onClose: () => void;
-}
-
-const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
+const CreateAdForm: React.FC = () => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState<{
-        title: string;
-        price: number;
-        category: string;
-        description: string;
-        images: File[];
-    }>({
+    const [formData, setFormData] = useState<ProductData>({
         title: '',
-        price: 0,
+        price: {
+            amount: 0,
+            unit: 'TOMAN',
+        },
         category: '',
         description: '',
-        images: [],
+        // images: [],
+        productionYear: null,
+        brand: null,
     });
+
+    const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
+    const { create_ad_options } = OptionsComponent();
+    const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
-    const categoryOptions = [
-        { value: 'Real estate', label: t("category.one") },
-        { value: 'Transportation', label: t("category.two") },
-        { value: 'House and Kitchen', label: t("category.three") },
-        { value: 'Digital Stuff', label: t("category.four") },
-        { value: 'Entertainment', label: t("category.five") },
-        { value: 'Personal Stuff', label: t("category.six") },
-        { value: 'Others', label: t("category.seven") },
-    ];
-
-    const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
+    const handleCategoryChange = (selectedOption: Option | null) => {
         setFormData(prevData => ({
             ...prevData,
             category: selectedOption ? selectedOption.value : ''
@@ -54,7 +43,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         }));
     };
 
-    const handlePriceChange = (price: number) => {
+    const handlePriceChange = (price: { amount: number; unit: string }) => {
         setFormData((prevData) => ({
             ...prevData,
             price,
@@ -75,21 +64,47 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
         }));
     };
 
+    const handleClose = () => {
+        setFormData({
+            title: '',
+            price: {
+                amount: 0,
+                unit: 'TOMAN',
+            },
+            category: '',
+            description: '',
+            // images: [],
+            productionYear: null,
+            brand: null,
+        });
+        setImages([]);
+        setError('');
+        handleClosePopups();
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await createAd(formData.title, formData.description, formData.price, formData.category);
-        if (response.isSuccess) {
-            setFormData({ title: '', price: 0, category: '', description: '', images: [] });
-            onClose();
-            toast(t("success.create_ad"));
-        } else {
-            setError(response.message);
+        try {
+            // Create Ad API call
+            const response = await createProductWithImages(formData, images);
+            console.log("Create Ad API call");
+            console.log(formData);
+            console.log(images);
+            console.log(response);
+            if (response.isSuccess) {
+                handleClose();
+                toast(t("success.create_ad"));
+            } else {
+                setError(response.message);
+            }
+        } catch (error) {
+            setError('An error occurred while creating the product');
         }
     };
 
     return (
-        <PopupBox onClose={onClose}>
+        <PopupBox open={isCreateAdVisible}>
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
@@ -106,10 +121,17 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ onClose }) => {
                     isStarNeeded={true}
                 />
                 <Dropdown
-                    options={categoryOptions}
+                    options={create_ad_options}
                     placeholder={t("create_ad.input.category")}
                     onChange={handleCategoryChange}
-                    value={categoryOptions.find(option => option.value === formData.category) || null}
+                    value={create_ad_options.find(option => option.value === formData.category) || null}
+                />
+                <YearInput />
+                <NameInput
+                    name="brand"
+                    placeholder={t("create_ad.input.brand")}
+                    value={formData.brand || ''}
+                    onChange={handleChange}
                 />
                 <DescriptionInput
                     value={formData.description}

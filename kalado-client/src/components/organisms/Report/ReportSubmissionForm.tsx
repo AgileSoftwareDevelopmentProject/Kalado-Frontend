@@ -1,98 +1,120 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DateInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
-import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd } from '../../../api/services/product/CreateAdService';
-
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
+import { PopupBox } from '../../molecules';
 import { toast } from 'react-toastify';
+import { useModalContext } from '../../../contexts';
+import { OptionsComponent } from '../../../constants/options';
+import { createReport } from '../../../api/services/ReportService';
+import ImageUploadBox from './ImageUploadBox';
 
-interface ReportSubmissionFormProps {
-    onClose: () => void;
-}
-
-const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ onClose }) => {
+const ReportSubmissionForm: React.FC = () => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState<{
-        date: string;
-        type: string;
+        violationType: string;
         description: string;
         images: File[];
     }>({
-        date: '',
-        type: '',
+        violationType: '',
         description: '',
         images: [],
     });
     const [error, setError] = useState<string>('');
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-    const reportOptions = [
-        { value: 'Abuse', label: t("report.category.one") },
-        { value: 'Inproper Content', label: t("report.category.two") },
-        { value: 'Inproper Price', label: t("report.category.three") },
-    ];
+    const { report_options } = OptionsComponent();
+    const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
 
     const handleChange = (field: string, value: any) => {
-        setFormData(prevData => ({
+        setFormData((prevData) => ({
             ...prevData,
             [field]: value,
         }));
     };
 
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
-        handleChange('type', selectedOption ? selectedOption.value : null);
+        handleChange('violationType', selectedOption ? selectedOption.value : '');
     };
 
     const handleImageUpload = (files: File[]) => {
         handleChange('images', files);
     };
 
+    const resetForm = () => {
+        setFormData({
+            violationType: '',
+            description: '',
+            images: [],
+        });
+        setError('');
+        handleClosePopups();
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const response = await submitReport(formData.date, formData.type, formData.description, formData.images);
-        if (response.isSuccess) {
-            setFormData({ date: '', type: '', description: '', images: [] });
-            onClose();
-            toast(t("success.report"));
-        } else {
-            setError(response.message);
+        if (!formData.violationType) {
+            setError(t('report.error.missing_violation_type'));
+            return;
+        }
+
+        if (!formData.description && formData.images.length === 0) {
+            setError(t('report.error.missing_description_or_image'));
+            return;
+        }
+
+        try {
+            const reportData = {
+                violationType: formData.violationType,
+                description: formData.description,
+            };
+
+            const response = await createReport(reportData, formData.images);
+
+            if (response.isSuccess) {
+                resetForm();
+                toast(t('report.success.report_submitted'));
+            } else {
+                setError(response.message || t('report.error.submission_failed'));
+            }
+        } catch (err) {
+            setError(t('report.error.submission_failed'));
+            console.error(err);
         }
     };
 
     return (
-        <PopupBox onClose={onClose}>
+        <PopupBox open={isReportSubmissionVisible}>
             <form onSubmit={handleSubmit}>
+                {/* Dropdown for Violation Type */}
                 <Dropdown
-                    options={reportOptions}
-                    placeholder={t("report.input.category")}
+                    options={report_options}
+                    placeholder={t('report.input.category')}
                     onChange={handleCategoryChange}
-                    value={reportOptions.find(option => option.value === formData.type) || null}
+                    value={report_options.find((option) => option.value === formData.violationType) || null}
+                    isRequired={true}
+                    // errorMessage={t('report.error.missing_violation_type')}
                 />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateInput
-                        label={t("general_inputs.date")}
-                        value={selectedDate}
-                        onChange={(newValue) => {
-                            setSelectedDate(newValue);
-                            if (newValue) {
-                                handleChange('date', newValue.toISOString());
-                            }
-                        }}
-                    />
-                </LocalizationProvider>
+
+                {/* Description Input */}
                 <DescriptionInput
-                    name="description"
                     value={formData.description}
                     onChange={(description) => handleChange('description', description)}
                 />
-                <ImageUploadBox onUpload={handleImageUpload} title={t("report.choose_evidence")} />
+
+                {/* Image Upload */}
+                <ImageUploadBox
+                    onUpload={handleImageUpload}
+                    title={t('report.choose_evidence')}
+                    isRequired={formData.description.length === 0} // if no description
+                    errorMessage={t('report.error.missing_description_or_image')}
+                />
+
+                {/* Submit Button */}
                 <CustomButton
-                    text={t("item_details.report_submission_btn")}
+                    text={t('item_details.report_submission_btn')}
                     type="submit"
                 />
+
+                {/* Error Message */}
                 <FormError message={error} />
             </form>
         </PopupBox>

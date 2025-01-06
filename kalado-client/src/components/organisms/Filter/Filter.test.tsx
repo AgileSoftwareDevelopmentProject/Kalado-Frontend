@@ -1,104 +1,105 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Filter from './Filter';
-import { fetchItems } from '../../../api/services/filterService';
-
-jest.mock('../../../services/filterService', () => ({
-  fetchItems: jest.fn(),
-}));
-
+import { useProductContext } from '../../../contexts/ProductContext';
+import { OptionsComponent } from '../../../constants/options';
 
 jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
+  useTranslation: () => ({ t: (key: string) => key }),
 }));
 
-describe('Filter Component', () => {
+jest.mock('../../../contexts/ProductContext');
+jest.mock('../../../constants/options');
+
+jest.mock('../../atoms', () => ({
+  CustomButton: jest.fn(({ text, onClick }) => <button onClick={onClick}>{text}</button>),
+}));
+
+jest.mock('../../molecules', () => ({
+  LabelList: jest.fn(({ items, selectedValue, onSelect }) => (
+    <div data-testid="label-list">
+      {items.map((item: any) => (
+        <button key={item.value} onClick={() => onSelect(item.value)}>
+          {item.title}
+        </button>
+      ))}
+    </div>
+  )),
+  NumberRange: jest.fn(({ minName, maxName, onChange }) => (
+    <div>
+      <input data-testid="min-price" name={minName} onChange={onChange} />
+      <input data-testid="max-price" name={maxName} onChange={onChange} />
+    </div>
+  )),
+}));
+
+describe('Filter', () => {
+  const mockApplyFilters = jest.fn();
+  const mockDateFilterOptions = [
+    { title: 'Today', value: 'today' },
+    { title: 'This Week', value: 'this_week' },
+    { title: 'This Month', value: 'this_month' },
+  ];
+
   beforeEach(() => {
-    jest.clearAllMocks();
+    (useProductContext as jest.Mock).mockReturnValue({
+      applyFilters: mockApplyFilters,
+    });
+    (OptionsComponent as jest.Mock).mockReturnValue({
+      date_filter_options: mockDateFilterOptions,
+    });
   });
 
-  it('renders correctly with initial state', () => {
-    const { getByText, getByPlaceholderText } = render(<Filter />);
-
-    expect(getByText('filter.title')).toBeInTheDocument();
-    expect(getByPlaceholderText('filter.min_price')).toBeInTheDocument();
-    expect(getByPlaceholderText('filter.max_price')).toBeInTheDocument();
-    expect(getByText('filter.apply')).toBeInTheDocument();
+  it('renders the Filter component', () => {
+    render(<Filter />);
+    expect(screen.getByText('filter.title')).toBeInTheDocument();
+    expect(screen.getByTestId('min-price')).toBeInTheDocument();
+    expect(screen.getByTestId('max-price')).toBeInTheDocument();
+    expect(screen.getByTestId('label-list')).toBeInTheDocument();
+    expect(screen.getByText('filter.apply')).toBeInTheDocument();
   });
 
-  it('updates minPrice and maxPrice on input change', () => {
-    const { getByPlaceholderText } = render(<Filter />);
-
-    const minPriceInput = getByPlaceholderText('filter.min_price');
-    const maxPriceInput = getByPlaceholderText('filter.max_price');
+  it('handles price changes', () => {
+    render(<Filter />);
+    const minPriceInput = screen.getByTestId('min-price');
+    const maxPriceInput = screen.getByTestId('max-price');
 
     fireEvent.change(minPriceInput, { target: { value: '100' } });
-    expect(minPriceInput.value).toBe('100');
-
     fireEvent.change(maxPriceInput, { target: { value: '200' } });
-    expect(maxPriceInput.value).toBe('200');
+
+    expect(minPriceInput).toHaveValue('100');
+    expect(maxPriceInput).toHaveValue('200');
   });
 
-  it('sets minPrice to 0 if negative value is entered', () => {
-    const { getByPlaceholderText } = render(<Filter />);
+  it('prevents negative price inputs', () => {
+    render(<Filter />);
+    const minPriceInput = screen.getByTestId('min-price');
 
-    const minPriceInput = getByPlaceholderText('filter.min_price');
+    fireEvent.change(minPriceInput, { target: { value: '-100' } });
 
-    fireEvent.change(minPriceInput, { target: { value: '-50' } });
-    expect(minPriceInput.value).toBe('0');
+    expect(minPriceInput).toHaveValue('0');
   });
 
-  it('selects a filter option when clicked', () => {
-    const { getByText } = render(<Filter />);
+  it('handles date selection', () => {
+    render(<Filter />);
+    const dateButton = screen.getByText('This Week');
 
-    const oneDayButton = getByText('filter.one_day');
-    fireEvent.click(oneDayButton);
+    fireEvent.click(dateButton);
 
-    expect(oneDayButton).toHaveAttribute('variant', 'contained');
-
-    const oneWeekButton = getByText('filter.one_week');
-    fireEvent.click(oneWeekButton);
-
-    expect(oneWeekButton).toHaveAttribute('variant', 'contained');
-    expect(oneDayButton).toHaveAttribute('variant', 'text');
+    // You might need to adjust this expectation based on how your LabelList component works
+    expect(dateButton).toHaveStyle('background-color: some-selected-color');
   });
 
-  it('calls fetchItems with correct parameters on apply button click', async () => {
-    (fetchItems as jest.Mock).mockResolvedValueOnce([]);
+  it('applies filters when apply button is clicked', () => {
+    render(<Filter />);
+    const applyButton = screen.getByText('filter.apply');
 
-    const { getByPlaceholderText, getByText } = render(<Filter />);
+    fireEvent.change(screen.getByTestId('min-price'), { target: { value: '100' } });
+    fireEvent.change(screen.getByTestId('max-price'), { target: { value: '200' } });
+    fireEvent.click(screen.getByText('This Week'));
+    fireEvent.click(applyButton);
 
-    fireEvent.change(getByPlaceholderText('filter.min_price'), { target: { value: '100' } });
-    fireEvent.change(getByPlaceholderText('filter.max_price'), { target: { value: '500' } });
-
-    fireEvent.click(getByText('filter.one_week'));
-    fireEvent.click(getByText('filter.apply'));
-
-    await waitFor(() => {
-      expect(fetchItems).toHaveBeenCalledWith(
-        'oneWeek',
-        100,
-        500
-      );
-    });
-  });
-
-  it('handles errors when applying filters', async () => {
-    (fetchItems as jest.Mock).mockRejectedValueOnce(new Error('Fetch error'));
-
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
-
-    const { getByPlaceholderText, getByText } = render(<Filter />);
-
-    fireEvent.change(getByPlaceholderText('filter.min_price'), { target: { value: '100' } });
-
-    fireEvent.click(getByText('filter.apply'));
-
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
-      consoleSpy.mockRestore();
-    });
+    expect(mockApplyFilters).toHaveBeenCalledWith('this_week', 100, 200, 'this_week');
   });
 });

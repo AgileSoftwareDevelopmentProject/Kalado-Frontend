@@ -1,4 +1,4 @@
-import { User , UserType} from '../utils/types'
+import { User, UserType } from '../utils/types'
 
 
 // Login
@@ -7,20 +7,18 @@ export interface LoginRequest {
     password: string;
 }
 
-export interface LoginResponse {
-    success: boolean;
-    token: string;
-    role: string
+export type TLoginResponseType = {
+    token: string
+    role: UserType
 }
 
 // Register
-export interface RegisterRequest {
+export interface UserData {
     firstName: string;
     lastName: string;
     email: string;
     phoneNumber: string;
     password: string;
-    passwordRepeat: string;
     role: string;
 }
 
@@ -39,111 +37,123 @@ export interface CodeVerifyResponse {
     message?: string;
 }
 
-
-
-
-export type RestaurantsResponseType = {
-    id: string
-    username: string
-    address: string
-    first_name: string
-    last_name: string
-    phone_number: string
-    restaurant_name: string
-    restaurant_comments: {
-        avg: number
-        number_of_rate: number
-        number_of_review: number
-    }
+export interface ReportResponse {
+    isSuccess: boolean;
+    message?: string;
 }
 
-type CategoryResponseType = {
-    id: number
-    name: string
+export interface SingleReport {
+    id: number;
+    violationType: string;
+    description: string;
+    createdAt: string;
+    reporterId: number;
+    contentId: number;
 }
 
-export type FoodResponseType = {
-    id: number
-    name: string
-    description: string
-    stock: number
+export interface ReportListResponse {
+    isSuccess: boolean;
+    message?: string;
+    data: SingleReport[] | null;
+}
+
+
+// Product
+export interface ProductData {
+    title: string;
+    description: string;
     price: {
-        amount: number
-        unit: string
-    }
-    category_id: number
+        amount: number;
+        unit: string;
+    };
+    category: string;
+    // images?: File[] | null;
+    productionYear?: number | null;
+    brand?: string | null;
+    // sellerId: number;
 }
 
-export type RestaurantMenuResponseType = {
-    id: string
-    restaurant_id: string
-    categories: CategoryResponseType[]
-    foods: FoodResponseType[]
-}
-
-export type ShoppingCartItemResponseType = {
-    name: string
-    description: string
+export type TProductResponseType = {
+    id: number;
+    title: string;
+    description: string;
     price: {
-        amount: number
-        unit: string
-    }
-    quantity: number
-    shopping_cart_id: number
-    food_id: number
+        amount: number;
+        unit: string;
+    };
+    imageUrls: string[];   // contains urls
+    category: string;
+    productionYear: number;
+    brand: string;
+    status: string;
+    createdAt: number; // Timestamp in milliseconds
+    sellerId: number;
+};
+
+
+
+// Report
+export interface ReportData {
+    violationType: string;
+    description: string;
+    reportedUserId?: number;
+    reportedContentId?: number;
 }
 
-export type ShoppingCartResponseType = {
-    id: number
-    customer_id: number
-    restaurant_owner_id: number
-    restaurant_owner: RestaurantsResponseType
-    shopping_cart_items: ShoppingCartItemResponseType[]
-    total_price: {
-        amount: number
-        unit: string
-    }
+export interface ReportStatusUpdateData {
+    status: string;
+    adminNotes: string;
+    blockUser: boolean;
+    blockReason: string | null;
 }
 
-export type TCourierProfile = {
-    first_name: string
-    last_name: string
-    phone_number: string
-    address: string
+
+// User
+export interface ProfileData {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    address: string;
 }
 
-export type TLoginRes = {
-    token: string
-    role: UserType
-}
+export type TUserProfileResponse = {
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+    address: string | null;
+    phoneNumber: string;
+};
 
-export type TDeliveryPersonProfile = {
-    first_name: string
-    last_name: string
-    phone_number: string
-}
 
-export type TRestaurantOwnerProfile = {
-    first_name: string
-    last_name: string
-    phone_number: string
-    restaurant_name: string
-    address: string
-}
 
-export type TCategory = {
-    name: string
-}
+// Search
 
-export type TFood = {
-    name: string
-    description: string
-    stock: number
-    price: Price
-    category_id: number
-}
-
-export type TLocation = {
-    latitude: number
-    longitude: number
-}
+export type PageableResponseType<T> = {
+    content: T[];
+    pageable: {
+        sort: {
+            empty: boolean;
+            sorted: boolean;
+            unsorted: boolean;
+        };
+        offset: number;
+        pageNumber: number;
+        pageSize: number;
+        unpaged: boolean;
+        paged: boolean;
+    };
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    size: number;
+    number: number;
+    sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+    };
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+};

@@ -1,6 +1,7 @@
 
 
 export type UserType = 'USER' | 'ADMIN'
+export type SortOrder = 'ASC' | 'DESC'
 export type ReportStatus = 'PREPARING' 
 export type AdType = 'PREPARING' 
 
@@ -19,3 +20,4 @@ export type Price = {
     amount: number
     unit: string
 }
+

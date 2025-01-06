@@ -13,7 +13,9 @@
             "date": "Date",
             "code": "Verification Code",
             "add_image": "Add Image",
-            "description": "Description"
+            "description": "Description",
+            "category": "Category",
+            "no_option": "No option"
         },
         "navbar": {
             "create_ad": "Submit Ad",
@@ -29,8 +31,7 @@
             "three": "Home & Kitchen",
             "four": "Digital Stuff",
             "five": "Entertainment",
-            "six": "Personal Stuff",
-            "seven": "Others"
+            "six": "Personal Stuff"
         },
         "filter": {
             "title": "Filters",
@@ -49,13 +50,27 @@
             "most_expensive": "Most Expensive",
             "cheapest": "Cheapest"
         },
+        "search": {
+            "option1": "laptop",
+            "option2": "house",
+            "option3": "phone",
+            "option4": "sofa",
+            "option5": "refrigerator",
+            "option6": "shoes",
+            "option7": "headphone",
+            "option8": "tv",
+            "option9": "car",
+            "option10": "game"
+        },
         "create_ad": {
             "input": {
                 "title": "Ad's Title",
                 "price": "Price",
                 "category": "Category",
                 "description": "Description",
-                "add_image": "Add Image"
+                "add_image": "Add Image",
+                "production_year": "Production Year",
+                "brand": "Brand"
             },
             "choose_image": "Choose Image",
             "create_ad_btn": "Submit Ad"
@@ -127,7 +142,21 @@
               "block_usr_success_message": "The user has been successfully blocked.",
                 "block_ad_success_message": "The ad has been successfully blocked."
      
-        }
+            },
+            "error": {
+
+                "missing_violation_type": "Violation type is required.",
+        
+                "missing_description_or_image": "You must provide either a description or at least one piece of evidence.",
+        
+                "submission_failed": "An error occurred while submitting the report. Please try again."
+        
+            },
+            "success": {
+        
+                "report_submitted": "Your report has been successfully submitted."
+        
+            }
         },
         "dashboard": {
             "user": {
@@ -142,7 +171,7 @@
                     "email": "Email",
                     "password": "Password",
                     "phone_number": "Phone Number",
-                    "location": "Location",
+                    "address": "Address",
                     "save_changes_btn": "Save Changes"
                 }
             },
@@ -199,7 +228,8 @@
                 "not_verified": "For login, First Verify your Email"
             },
             "landing": {
-                "empty_product_list": "No Ad Submitted in the Selected Category"
+                "empty_product_list": "No Ad Submitted in the Selected Category",
+                "error_get_product": "Error Ocuured during Getting Product List"
             },
             "item_details": {
                 "not_found": "Item not found",
@@ -235,7 +265,9 @@
             "date": "تاریخ",
             "code": "کد تأیید",
             "add_image": "افزودن عکس",
-            "description": "توضیحات"
+            "description": "توضیحات",
+            "category": "دسته‌بندی",
+            "no_option": "بدون گزینه"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -251,8 +283,7 @@
             "three": "خانه و آشپزخانه",
             "four": "کالای دیجیتال",
             "five": "سرگرمی",
-            "six": "لوازم شخصی",
-            "seven": "موارد دیگر"
+            "six": "لوازم شخصی"
         },
         "filter": {
             "title": "فیلترها",
@@ -271,13 +302,27 @@
             "most_expensive": "گران‌ترین",
             "cheapest": "ارزان‌ترین"
         },
+        "search": {
+            "option1": "لپ‌تاپ",
+            "option2": "خانه",
+            "option3": "موبایل",
+            "option4": "مبل",
+            "option5": "یخچال",
+            "option6": "کفش",
+            "option7": "هدفون",
+            "option8": "تلویزیون",
+            "option9": "ماشین",
+            "option10": "بازی"
+        },
         "create_ad": {
             "input": {
                 "title": "عنوان آگهی",
                 "price": "قیمت",
                 "category": "دسته‌بندی",
                 "description": "توضیحات",
-                "add_image": "افزودن عکس"
+                "add_image": "افزودن عکس",
+                "production_year": "سال تولید",
+                "brand": "برند"
             },
             "choose_image": "انتخاب عکس",
             "create_ad_btn": "ثبت آگهی"
@@ -348,7 +393,15 @@
                 },
                 "block_usr_success_message": "کاربر با موفقیت مسدود شد.",
                 "block_ad_success_message": "آگهی با موفقیت مسدود شد."
-            }           
+            },           
+            "error": {
+                "missing_violation_type": "انتخاب نوع تخلف الزامی است.",
+                "missing_description_or_image": "لطفاً توضیحاتی ارائه دهید یا حداقل یک مدرک بارگذاری کنید.",
+                "submission_failed": "در ارسال گزارش خطایی رخ داد. لطفاً دوباره تلاش کنید."
+            },
+            "success": {
+                "report_submitted": "گزارش شما با موفقیت ثبت شد."
+            }
         },
         "dashboard": {
             "user": {
@@ -363,7 +416,7 @@
                     "email": "ایمیل",
                     "password": "رمز عبور",
                     "phone_number": "شماره تلفن",
-                    "location": "محل سکونت",
+                    "address": "محل سکونت",
                     "save_changes_btn": "ذخیره تغییرات"
                 }
             },
@@ -420,7 +473,8 @@
                 "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
             },
             "landing": {
-                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است"
+                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است",
+                "error_get_product": "خطایی در گرفتن آگهی‌ها رخ داده است"
             },
             "item_details": {
                 "not_found": "کالای مورد نظر پیدا نشد",

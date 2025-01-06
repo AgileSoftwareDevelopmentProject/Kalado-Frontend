@@ -1,0 +1,106 @@
+import React, { createContext, useState, useContext } from 'react';
+import { getProductsByCategory } from '../api/services/ProductService';
+import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters, getSearchByBrandWithSorting, getPaginatedSearch } from '../api/services/SearchService';
+
+interface Product {
+    title: string;
+    imageUrl: string;
+    price: number;
+    city: string;
+    date: string;
+    description: string;
+    itemId: number;
+    seller_phone: string;
+}
+
+interface ProductContextType {
+    products: Product[];
+    loading: boolean;
+    error: string;
+    fetchProductsByCategory: (category: string) => void;
+    applyFilters: (keyword: string | null, minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => void;
+    searchProductsByKeyword: (keyword: string) => void;
+    searchProductsByPriceRange: (minPrice: number | 0, maxPrice: number | 0) => void;
+}
+
+const ProductContext = createContext<ProductContextType | undefined>(undefined);
+
+export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
+
+    const fetchProductsByCategory = async (category: string) => {
+        setLoading(true);
+        setError('');
+        try {
+            console.log('Fetching products by Category');
+            const response = await getProductsByCategory(category);
+            setProducts(response);
+            console.log(response);
+        } catch (err) {
+            setError('Failed to fetch products');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const applyFilters = async (keyword: string | null, minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => {
+        setLoading(true);
+        setError('');
+        try {
+            console.log('Fetching products by multiple filters');
+            const response = await getSearchByMultipleFilters(keyword, minPrice, maxPrice, timeFilter);
+            setProducts(response);
+            console.log(response);
+        } catch (err) {
+            setError('Failed to apply filters');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const searchProductsByKeyword = async (keyword: string) => {
+        setLoading(true);
+        setError('');
+        try {
+            console.log('Fetching products by search keyword');
+            const response = await getSearchByKeyword(keyword);
+            setProducts(response);
+            console.log(response);
+        } catch (err) {
+            setError('Failed to search products');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const searchProductsByPriceRange = async (minPrice: number | 0, maxPrice: number | 0) => {
+        setLoading(true);
+        setError('');
+        try {
+            console.log('Fetching products by price range');
+            const response = await getSearchByPriceRange(minPrice, maxPrice);
+            setProducts(response);
+            console.log(response);
+        } catch (err) {
+            setError('Failed to search products');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <ProductContext.Provider value={{ products, loading, error, fetchProductsByCategory, applyFilters, searchProductsByKeyword, searchProductsByPriceRange }}>
+            {children}
+        </ProductContext.Provider>
+    );
+};
+
+export const useProductContext = () => {
+    const context = useContext(ProductContext);
+    if (context === undefined) {
+        throw new Error('useProductContext must be used within a ProductProvider');
+    }
+    return context;
+};

@@ -5,6 +5,7 @@ on:
     branches:
       - api
       - main
+      - feature/api-connection
   # pull_request:
   #   branches: [main]
 

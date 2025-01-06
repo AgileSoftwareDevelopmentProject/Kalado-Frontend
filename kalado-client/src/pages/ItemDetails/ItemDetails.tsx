@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
-import { ReportSubmissionModal, ItemDetailsCard } from '../../components/organisms';
-import { useAuth } from '../../contexts/AuthContext';
-import { toast } from 'react-toastify';
-import { getSingleProduct } from '../../api/services/product/getSingleProductService';
+import { ReportSubmissionForm, ItemDetailsCard } from '../../components/organisms';
+import { getSingleProduct } from '../../api/services/ProductService';
 
 interface Item {
     title: string;
-    imageUrl: string;
-    price: number;
-    city: string;
-    date: string;
+    price: string;
+    createdAt: string;
+    imageUrls: string[];
     description: string;
-    itemId: string;
-    seller_phone: string;
+    id: number;
+    sellerId: number;
+    brand: string;
+    productionYear: string;
 }
 
 const ItemDetails: React.FC = () => {
@@ -24,16 +23,21 @@ const ItemDetails: React.FC = () => {
     const [item, setItem] = useState<Item | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
-    const [isReportSubmissionVisible, setReportSubmissionVisible] = useState(false);
-
-    const { token } = useAuth();
 
     useEffect(() => {
         const fetchItem = async () => {
+            if (!itemId) {
+                setError(t("error.general"));
+                setLoading(false);
+                return;
+            }
+
             try {
                 setLoading(true);
-                // getSingleProduct API call
-                const fetchedItem = await getSingleProduct(itemId!);
+                console.log("GetSingleProduct API call");
+                console.log(itemId);
+                const fetchedItem = await getSingleProduct(Number(itemId));
+                console.log(fetchedItem);
                 setItem(fetchedItem);
             } catch (err) {
                 setError(t("error.general"));
@@ -45,14 +49,6 @@ const ItemDetails: React.FC = () => {
         fetchItem();
     }, [itemId, t]);
 
-    const handleOpenReportSubmission = () => {
-        if (!token) {
-            toast.error(t("error.item_details.disable_report_submiision"));
-            return;
-        }
-        setReportSubmissionVisible(true);
-    };
-
     return (
         <Box
             sx={{
@@ -63,28 +59,17 @@ const ItemDetails: React.FC = () => {
                 p: 2,
             }}
         >
-            {
-                (loading) && (<CircularProgress />)
-            }
-
-            {
-                (!item || error) &&
-                (<Typography variant="h6">{t("item_details.not_found")}</Typography>)
-            }
-            {
+            {loading && <CircularProgress />}
+            {!loading && (error || !item) && (
+                <Typography variant="h6">{t("error.item_details.not_found")}</Typography>
+            )}
+            {!loading && item && (
                 <>
-                    <ItemDetailsCard
-                        item={item}
-                        onReportSubmissionClick={handleOpenReportSubmission}
-                    />
-
-                    <ReportSubmissionModal
-                        open={isReportSubmissionVisible}
-                        onClose={() => setReportSubmissionVisible(false)}
-                    />
+                    <ItemDetailsCard item={item} />
+                    <ReportSubmissionForm />
                 </>
-            }
-        </Box >
+            )}
+        </Box>
     );
 };
 

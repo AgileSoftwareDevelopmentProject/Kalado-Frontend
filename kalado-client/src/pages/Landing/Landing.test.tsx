@@ -1,85 +1,71 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Landing from './Landing';
+import { ProductProvider, useProductContext } from '../../contexts';
 
-jest.mock('../../components/Navbar/Navbar', () => ({ onLoginClick }: any) => (
-  <button onClick={onLoginClick} data-testid="navbar-login-button">Login</button>
-));
-jest.mock('../../components/Category/Category', () => () => <div data-testid="category-sidebar">Category Sidebar</div>);
-jest.mock('../../components/Filter/Filter', () => () => <div data-testid="filter">Filter</div>);
-jest.mock('../../components/Advertisement/ItemCard', () => ({ title }: any) => (
-  <div data-testid="item-card">{title}</div>
-));
-jest.mock('../../components/Login/LoginForm', () => ({ onClose, onOpenSignup }: any) => (
-  <div role="dialog" aria-labelledby="login-dialog">
-    <h2 id="login-dialog">Login</h2>
-    <button onClick={onClose} aria-label="close login">Close</button>
-    <button onClick={onOpenSignup} aria-label="open signup">Sign Up</button>
-  </div>
-));
-jest.mock('../../components/Signup/SignupForm', () => ({ onClose, onOpenLogin }: any) => (
-  <div role="dialog" aria-labelledby="signup-dialog">
-    <h2 id="signup-dialog">Sign Up</h2>
-    <button onClick={onClose} aria-label="close signup">Close</button>
-    <button onClick={onOpenLogin} aria-label="open login">Log In</button>
-  </div>
-));
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
 
-describe('Landing Component', () => {
-  test('renders all main components', () => {
+jest.mock('../../components/molecules', () => ({
+  SideBar: jest.fn(({ children }) => <div data-testid="sidebar">{children}</div>),
+}));
+
+jest.mock('../../components/organisms', () => ({
+  NavBar: jest.fn(() => <div data-testid="navbar" />),
+  SideBarMenu: jest.fn(({ onSelectCategory }) => (
+    <div data-testid="sidebar-menu">
+      <button onClick={() => onSelectCategory('category.one')}>Category One</button>
+      <button onClick={() => onSelectCategory('category.two')}>Category Two</button>
+    </div>
+  )),
+  Filter: jest.fn(() => <div data-testid="filter" />),
+  LoginForm: jest.fn(() => <div data-testid="login-form" />),
+  SignupForm: jest.fn(() => <div data-testid="signup-form" />),
+  CodeVerificationForm: jest.fn(() => <div data-testid="code-verification-form" />),
+  CreateAdForm: jest.fn(() => <div data-testid="create-ad-form" />),
+  ItemsHolder: jest.fn(() => <div data-testid="items-holder" />),
+}));
+
+jest.mock('../../contexts', () => ({
+  ProductProvider: jest.fn(({ children }) => <div>{children}</div>),
+  useProductContext: jest.fn(() => ({
+    fetchProductsByCategory: jest.fn(),
+  })),
+}));
+
+describe('Landing', () => {
+  it('renders the Landing component', () => {
     render(<Landing />);
-
-    expect(screen.getByTestId('navbar-login-button')).toBeInTheDocument();
-    expect(screen.getByTestId('category-sidebar')).toBeInTheDocument();
+    expect(screen.getByTestId('navbar')).toBeInTheDocument();
+    expect(screen.getByTestId('sidebar')).toBeInTheDocument();
+    expect(screen.getByTestId('sidebar-menu')).toBeInTheDocument();
     expect(screen.getByTestId('filter')).toBeInTheDocument();
-    expect(screen.getByText('Category Sidebar')).toBeInTheDocument();
+    expect(screen.getByTestId('items-holder')).toBeInTheDocument();
+    expect(screen.getByTestId('login-form')).toBeInTheDocument();
+    expect(screen.getByTestId('signup-form')).toBeInTheDocument();
+    expect(screen.getByTestId('code-verification-form')).toBeInTheDocument();
+    expect(screen.getByTestId('create-ad-form')).toBeInTheDocument();
   });
 
-  test('opens and closes the login modal', () => {
-    render(<Landing />);
-
-    // Open Login Modal
-    const loginButton = screen.getByTestId('navbar-login-button');
-    fireEvent.click(loginButton);
-    expect(screen.getByRole('dialog', { name: /Login/i })).toBeInTheDocument();
-
-    // Close Login Modal
-    const closeLoginButton = screen.getByLabelText('close login');
-    fireEvent.click(closeLoginButton);
-    expect(screen.queryByRole('dialog', { name: /Login/i })).not.toBeInTheDocument();
-  });
-
-  test('switches from login modal to signup modal', () => {
-    render(<Landing />);
-
-    // Open Login Modal
-    const loginButton = screen.getByTestId('navbar-login-button');
-    fireEvent.click(loginButton);
-
-    // Switch to Signup Modal
-    const openSignupButton = screen.getByLabelText('open signup');
-    fireEvent.click(openSignupButton);
-    expect(screen.getByRole('dialog', { name: /Sign Up/i })).toBeInTheDocument();
-    expect(screen.queryByRole('dialog', { name: /Login/i })).not.toBeInTheDocument();
-  });
-
-  test('renders item cards when items are provided', () => {
-    const mockItems = [
-      { title: 'Test Item 1', imageUrl: '/test1.jpg', price: 100, city: 'City 1', date: '2024-12-14', itemId: '1' },
-      { title: 'Test Item 2', imageUrl: '/test2.jpg', price: 200, city: 'City 2', date: '2024-12-13', itemId: '2' },
-    ];
-
-    render(
-      <Landing />
-    );
-
-    // Mock the items directly in the component if needed.
-    mockItems.forEach(item => {
-      expect(screen.getByText(item.title)).toBeInTheDocument();
+  it('changes category and fetches products when a new category is selected', async () => {
+    const mockFetchProductsByCategory = jest.fn();
+    (useProductContext as jest.Mock).mockReturnValue({
+      fetchProductsByCategory: mockFetchProductsByCategory,
     });
 
-    const itemCards = screen.getAllByTestId('item-card');
-    expect(itemCards).toHaveLength(mockItems.length);
+    render(<Landing />);
+
+    fireEvent.click(screen.getByText('Category Two'));
+
+    await waitFor(() => {
+      expect(mockFetchProductsByCategory).toHaveBeenCalledWith('category.two');
+    });
+  });
+
+  it('wraps LandingContent with ProductProvider', () => {
+    render(<Landing />);
+    expect(ProductProvider).toHaveBeenCalled();
   });
 });

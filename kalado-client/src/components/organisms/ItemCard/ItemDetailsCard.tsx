@@ -9,34 +9,46 @@ import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { toast } from 'react-toastify';
+import { useModalContext } from '../../../contexts';
 
 interface Item {
     title: string;
-    imageUrl: string;
-    price: number;
-    city: string;
-    date: string;
+    price: string;
+    createdAt: string;
+    imageUrls?: string[];
     description: string;
-    itemId: string;
-    seller_phone: string;
+    id: number;
+    sellerId: number;
+    brand: string;
+    productionYear: string;
 }
 
 interface ItemDetailsCardProps {
     item: Item;
-    onReportSubmissionClick: () => void;
 }
 
-const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmissionClick }) => {
+const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
     const { t } = useTranslation();
+    const { handleOpenReportSubmission } = useModalContext();
+    const imageToDisplay = item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : defaultImage;
 
-    const copyToClipboard = (phoneNumber: string) => {
-        navigator.clipboard.writeText(phoneNumber)
+    const copyToClipboard = (phoneNumber: number) => {
+        navigator.clipboard.writeText(String(phoneNumber))
             .then(() => {
                 toast(t("success.copy_phone_number"));
             })
             .catch(err => {
                 toast(t('error.item_details.copy_phone_number_failed'));
             });
+    };
+
+    const formatDate = (timestamp: string): string => {
+        const date = new Date(timestamp);
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }).format(date);
     };
 
     return (
@@ -50,19 +62,19 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmiss
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <PriceIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
-                                {item.price.toLocaleString()} {t("currency")}
+                                {`${item.price.amount.toLocaleString()} ${t("currency")}`}
                             </Typography>
                         </Box>
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <CityIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
-                                {item.city}
+                                {item.brand}
                             </Typography>
                         </Box>
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <DateIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
-                                {item.date}
+                                {formatDate(item.createdAt)}
                             </Typography>
                         </Box>
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
@@ -76,7 +88,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmiss
                             <PhoneIcon sx={{ ml: 2 }} />
                             <Typography
                                 variant="h6"
-                                onClick={() => copyToClipboard(item.seller_phone)}
+                                onClick={() => copyToClipboard(item.sellerId)}
                                 sx={{
                                     cursor: 'pointer',
                                     '&:hover': {
@@ -84,21 +96,21 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, onReportSubmiss
                                     },
                                 }}
                             >
-                                {item.seller_phone}
+                                {item.sellerId}
                             </Typography>
                         </Box>
                     </CardContent>
                 </Box>
                 <CardMedia
                     component="img"
-                    image={item.imageUrl || defaultImage}
+                    image={imageToDisplay}
                     alt={item.title}
                     sx={{ height: 400, width: 500, objectFit: 'cover' }}
                 />
             </Box >
             <CustomButton
                 text={t("item_details.report_submission_btn")}
-                onClick={onReportSubmissionClick}
+                onClick={handleOpenReportSubmission}
             />
         </Card >
     );
