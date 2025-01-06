@@ -108,30 +108,30 @@ export async function getSingleProduct(adId: number) {
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
 // setProducts(res)
-// export async function getProductsByCategory(category: string): Promise<TProductResponseType[]> {
-//     try {
-//         const response = await sendRequest(
-//             PRODUCT.GET_BY_CATEGORY(category),
-//             'GET',
-//             undefined,
-//             undefined
-//         );
+export async function getProductsByCategory(category: string): Promise<TProductResponseType[]> {
+    try {
+        const response = await sendRequest(
+            PRODUCT.GET_BY_CATEGORY(category),
+            'GET',
+            undefined,
+            undefined
+        );
 
-//         return response.data as TProductResponseType[];
-//     } catch (error) {
-//         console.error('Error fetching products:', error);
-//         return [];
-//     }
-// }
+        return response.data as TProductResponseType[];
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
+}
 
 // Mock Function
-export const getProductsByCategory = async (category) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(mockData.items);
-        }, 1000);
-    });
-};
+// export const getProductsByCategory = async (category) => {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(mockData.items);
+//         }, 1000);
+//     });
+// };
 
 
 // Use it like the following:
