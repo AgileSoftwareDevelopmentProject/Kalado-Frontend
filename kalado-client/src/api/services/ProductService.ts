@@ -126,7 +126,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
 
 // Mock Function
 // export const getProductsByCategory = async (category) => {
-
 //     return new Promise((resolve) => {
 //         setTimeout(() => {
 //             resolve(mockData.items);

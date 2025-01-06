@@ -35,7 +35,10 @@ const ProfileManagement = () => {
         try {
             setLoading(true);
             // GetUserByToken API call
+            console.log("GetUserByToken API call");
+            console.log(token);
             const response = await getProfile(token);
+            console.log(response);
             setUserData(response);
         } catch (err) {
             setError(t("error.profile_management.retrive_failed"));
@@ -63,7 +66,7 @@ const ProfileManagement = () => {
     };
 
     const handleSaveChanges = async () => {
-        if (!userData) return; // Ensure userData is not null
+        if (!userData) return;
 
         const formData = new FormData();
         formData.append('firstName', userData.firstName);
@@ -77,7 +80,10 @@ const ProfileManagement = () => {
         }
 
         // Update Profile API call
+        console.log("Update Profile API call");
+        console.log(formData);
         const response = await modifyProfile(formData);
+        console.log(response);
         if (response.isSuccess) {
             toast(t('success.profile_management'));
         } else {
