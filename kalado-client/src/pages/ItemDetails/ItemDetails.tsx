@@ -21,7 +21,6 @@ const ItemDetails: React.FC = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', p: 2 }}>
             {loading && <CircularProgress />}
             {!loading && (error || !singleProduct) && (
-                
                 <Box sx={{ textAlign: 'center' }}>
                     <ErrorOutlineIcon sx={{ fontSize: 100, color: 'error.main' }} />
                     <Typography variant="h6" sx={{ mt: 2 }}>
@@ -29,10 +28,12 @@ const ItemDetails: React.FC = () => {
                     </Typography>
                 </Box>
             )}
+            {!loading && singleProduct && (
                 <>
                     <ItemDetailsCard item={singleProduct} />
-                    <ReportSubmissionForm reportedContentId={Number(itemId)} />
+                    <ReportSubmissionForm reportedContentId={Number(itemId)}/>
                 </>
+            )}
         </Box>
     );
 };
