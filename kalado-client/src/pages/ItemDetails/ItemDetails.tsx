@@ -15,7 +15,7 @@ const ItemDetails: React.FC = () => {
     useEffect(() => {
         if (!itemId) return;
         fetchSingleProduct(Number(itemId));
-    }, [itemId, fetchSingleProduct]);
+    }, [itemId]);
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', p: 2 }}>
