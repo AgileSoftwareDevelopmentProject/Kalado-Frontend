@@ -81,9 +81,14 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
             } else {
                 setError(response?.message || t("report.error.submission_failed"));
             }
-        } catch (err) {
+        } catch (err: any) {
             console.error('****************************** error:', err);
-            setError(t("report.error.submission_failed"));
+            if (err.response && err.response.data) {
+                console.error('****************************** backend error response:', err.response.data);
+                setError(err.response.data.message || t("report.error.submission_failed"));
+            } else {
+                setError(t("report.error.submission_failed"));
+            }
         }
     };
 
