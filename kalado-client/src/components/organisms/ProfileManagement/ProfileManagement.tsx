@@ -32,23 +32,24 @@ const ProfileManagement = () => {
     const fetchUserData = async () => {
         try {
             setLoading(true);
-            console.log("GetUserByToken API call");
+            console.log('GetUserByToken API call');
             console.log(token);
-    
+
             const response = await getProfile(token);
             console.log(response);
-    
+
             if (response.isSuccess) {
                 setUserData(response.data);
             } else {
-                setError(t("error.profile_management.retrive_failed"));
+                setError(t('error.profile_management.retrieve_failed'));
             }
         } catch (err) {
-            setError(t("error.profile_management.retrive_failed"));
+            setError(t('error.profile_management.retrieve_failed'));
         } finally {
             setLoading(false);
         }
     };
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -71,30 +72,18 @@ const ProfileManagement = () => {
     const handleSaveChanges = async () => {
         if (!userData) return;
 
-        const formData = new FormData();
-        formData.append('firstName', userData.firstName);
-        formData.append('lastName', userData.lastName);
-        formData.append('phoneNumber', userData.phoneNumber);
-        formData.append('address', userData.address);
-
-        if (userData.profileImage instanceof File) {
-            formData.append('profileImage', userData.profileImage);
-        }
-         
         try {
-            console.log("Update Profile API call");
-            console.log(formData);
-    
-            const response = await modifyProfile(formData);
+            console.log('Update Profile API call', userData);
+            const response = await modifyProfile(userData);
             console.log(response);
     
             if (response.isSuccess) {
                 toast(t('success.profile_management'));
             } else {
-                toast(t("error.profile_management.save_failed"));
+                toast(t('error.profile_management.save_failed'));
             }
         } catch (err) {
-            toast(t("error.profile_management.save_failed"));
+            toast(t('error.profile_management.save_failed'));
         }
     };
     
