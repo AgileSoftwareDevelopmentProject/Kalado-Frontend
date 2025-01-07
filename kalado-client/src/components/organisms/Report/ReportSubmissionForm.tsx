@@ -56,16 +56,26 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (!formData.violationType) {
+            setError(t("report.error.missing_violation_type"));
+            return;
+        }
+
+        if (!formData.description.trim() && images.length === 0) {
+            setError(t("report.error.missing_description_or_image"));
+            return;
+        }
+
         try {
             const response = await createReportWithImages(formData, images);
             if (response.isSuccess) {
                 handleClose();
-                toast(t("success.report_submission"));
+                toast(t("report.success.report_submitted"));
             } else {
-                setError(response.message || t("error.report_submission"));
+                setError(response.message || t("report.error.submission_failed"));
             }
         } catch (err) {
-            setError(t("error.report_submission"));
+            setError(t("report.error.submission_failed"));
         }
     };
 
@@ -89,7 +99,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
                     title={t("report.choose_evidence")}
                 />
                 <CustomButton
-                    text={t("report.submit_btn")}
+                    text={t("report.item_details.report_submission_btn")}
                     type="submit"
                 />
                 <FormError message={error} />
