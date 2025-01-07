@@ -37,7 +37,7 @@ const ProfileManagement = () => {
             // GetUserByToken API call
             console.log("GetUserByToken API call");
             console.log(token);
-            const response = await getProfile();
+            const response = await getProfile(token);
             console.log(response);
             setUserData(response);
         } catch (err) {
@@ -82,7 +82,7 @@ const ProfileManagement = () => {
         // Update Profile API call
         console.log("Update Profile API call");
         console.log(formData);
-        const response = await modifyProfile(formData);
+        const response = await modifyProfile(formData, token);
         console.log(response);
         if (response.isSuccess) {
             toast(t('success.profile_management'));

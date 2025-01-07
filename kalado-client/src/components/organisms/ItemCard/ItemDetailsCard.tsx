@@ -26,9 +26,10 @@ interface ItemDetailsCardProps {
         brand: string | null;
         productionYear: string | null;
     };
+    neededReportSubmissionForm?: boolean;
 }
 
-const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
+const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSubmissionForm }) => {
     const { t } = useTranslation();
     const { handleOpenReportSubmission } = useModalContext();
 
@@ -112,10 +113,12 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
                     sx={{ height: 400, width: 500, objectFit: 'cover' }}
                 />
             </Box >
-            <CustomButton
-                text={t("item_details.report_submission_btn")}
-                onClick={handleOpenReportSubmission}
-            />
+            {
+                neededReportSubmissionForm && (<CustomButton
+                    text={t("item_details.report_submission_btn")}
+                    onClick={handleOpenReportSubmission}
+                />)
+            }
         </Card >
     );
 };

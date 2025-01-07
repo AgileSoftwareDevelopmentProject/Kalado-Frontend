@@ -1,11 +1,9 @@
 import { sendRequest } from './axiosInstance';
 import { USER } from './urls';
 import { ProfileData, TUserProfileResponse } from '../../utils/apiTypes';
-import { useAuth } from '../../contexts/AuthContext';
 
 
-export async function getProfile() {
-    const { token } = useAuth();
+export async function getProfile(token: string | null) {
     return sendRequest<TUserProfileResponse>(
         USER.GET_PROFILE,
         'GET',
@@ -18,8 +16,7 @@ export async function getProfile() {
 }
 
 
-export async function modifyProfile(profileData: ProfileData) {
-    const { token } = useAuth();
+export async function modifyProfile(profileData: ProfileData, token: string | null) {
     return sendRequest(
         USER.MODIFY_PROFILE,
         'PUT',
