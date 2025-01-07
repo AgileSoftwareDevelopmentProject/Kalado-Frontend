@@ -17,6 +17,8 @@ const ItemDetails: React.FC = () => {
         fetchSingleProduct(Number(itemId));
     }, [itemId]);
 
+    console.log('single Product:', singleProduct);
+
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', p: 2 }}>
             {loading && <CircularProgress />}
@@ -28,12 +30,12 @@ const ItemDetails: React.FC = () => {
                     </Typography>
                 </Box>
             )}
-            {!loading && singleProduct && (
+            {!loading && singleProduct && singleProduct.id ? (
                 <>
                     <ItemDetailsCard item={singleProduct} />
-                    <ReportSubmissionForm reportedContentId={singleProduct.id}/>
+                    <ReportSubmissionForm reportedContentId={singleProduct.id} />
                 </>
-            )}
+            ) : null}
         </Box>
     );
 };
