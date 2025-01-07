@@ -4,12 +4,13 @@ import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
 import defaultImage from '../../../assets/images/no-image.png';
 import { CustomButton } from '../../../components/atoms';
 import PriceIcon from '@mui/icons-material/AttachMoney';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer'; // Use a brand-related icon
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
-import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
+import { toast } from 'react-toastify';
+
 
 interface ItemDetailsCardProps {
     item: {
@@ -29,26 +30,14 @@ interface ItemDetailsCardProps {
     neededReportSubmissionForm?: boolean;
 }
 
-const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSubmissionForm }) => {
+const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSubmissionForm = false }) => {
     const { t } = useTranslation();
     const { handleOpenReportSubmission } = useModalContext();
 
     const imageToDisplay = item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : defaultImage;
 
-    const copyToClipboard = (phoneNumber: number | null) => {
-        if (phoneNumber) {
-            navigator.clipboard.writeText(String(phoneNumber))
-                .then(() => {
-                    toast(t("success.copy_phone_number"));
-                })
-                .catch(err => {
-                    toast(t('error.item_details.copy_phone_number_failed'));
-                });
-        }
-    };
-
     const formatDate = (timestamp: string | null): string => {
-        if (!timestamp) return 'N/A';
+        if (!timestamp) return t("item_details.no_date");
         const date = new Date(timestamp);
         return new Intl.DateTimeFormat('fa-IR', {
             year: 'numeric',
@@ -57,24 +46,36 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
         }).format(date);
     };
 
+    const copyPhoneNumberToClipboard = () => {
+        if (item.sellerId) {
+            navigator.clipboard.writeText(item.sellerId.toString())
+                .then(() => {
+                    toast(t("item_details.phone_copied"));
+                })
+                .catch(err => {
+                    toast(t("error.item_details.copy_phone_number_failed"));
+                });
+        }
+    };
+
     return (
         <Card sx={{ width: 800, height: 'auto' }}>
             <Box sx={{ display: 'flex' }}>
                 <Box sx={{ flexGrow: 1 }}>
                     <CardContent>
                         <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', mb: 3 }}>
-                            {item.title || 'Untitled Item'}
+                            {item.title || t("item_details.no_title")}
                         </Typography>
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <PriceIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
-                                {`${item.price?.amount?.toLocaleString() || 0} ${item.price?.unit || ''}`}
+                                {`${item.price?.amount?.toLocaleString() || 0} ${t("currency")}`}
                             </Typography>
                         </Box>
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <LocalOfferIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
-                                {item.brand || 'Unknown Brand'}
+                                {item.brand || t("item_details.no_brand")}
                             </Typography>
                         </Box>
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
@@ -86,14 +87,14 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <DescriptionIcon sx={{ ml: 2 }} />
                             <Typography variant="h6">
-                                {item.description || 'No description available.'}
+                                {item.description || t("item_details.no_description")}
                             </Typography>
                         </Box>
                         <Box display="flex" alignItems="center" sx={{ ml: 1, mb: 2 }}>
                             <PhoneIcon sx={{ ml: 2 }} />
                             <Typography
                                 variant="h6"
-                                onClick={() => copyToClipboard(item.sellerId)}
+                                onClick={copyPhoneNumberToClipboard}
                                 sx={{
                                     cursor: 'pointer',
                                     '&:hover': {
@@ -101,7 +102,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
                                     },
                                 }}
                             >
-                                {item.sellerId || 'N/A'}
+                                {item.sellerId || t("item_details.no_seller_phone")}
                             </Typography>
                         </Box>
                     </CardContent>
@@ -114,10 +115,11 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
                 />
             </Box >
             {
-                neededReportSubmissionForm && (<CustomButton
-                    text={t("item_details.report_submission_btn")}
-                    onClick={handleOpenReportSubmission}
-                />)
+                neededReportSubmissionForm && (
+                    <CustomButton
+                        text={t("item_details.report_submission_btn")}
+                        onClick={handleOpenReportSubmission}
+                    />)
             }
         </Card >
     );
