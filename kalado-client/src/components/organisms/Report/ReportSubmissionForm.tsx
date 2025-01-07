@@ -24,6 +24,10 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
     const { report_options } = OptionsComponent();
     const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
 
+    if (!report_options) {
+        console.error('report_options is undefined or null');
+    }
+
     const handleCategoryChange = (selectedOption: { value: string; label: string } | null) => {
         setFormData((prevData) => ({
             ...prevData,
@@ -66,13 +70,16 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
         }
 
         try {
+            console.log('submitting form with data:', formData);
+            console.log('images:', images);
+
             const response = await createReportWithImages(formData, images);
             console.log('****************************** api response:', response); 
-            if (response.isSuccess) {
+            if (response?.isSuccess) {
                 handleClose();
                 toast(t("report.success.report_submitted"));
             } else {
-                setError(response.message || t("report.error.submission_failed"));
+                setError(response?.message || t("report.error.submission_failed"));
             }
         } catch (err) {
             console.error('****************************** error:', err);
@@ -83,13 +90,17 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
     return (
         <PopupBox open={isReportSubmissionVisible}>
             <form onSubmit={handleSubmit}>
-                <Dropdown
-                    options={report_options}
-                    placeholder={t("report.input.category")}
-                    onChange={handleCategoryChange}
-                    value={report_options.find((option) => option.value === formData.violationType) || null}
-                    isRequired={true}
-                />
+                {report_options ? (
+                    <Dropdown
+                        options={report_options}
+                        placeholder={t("report.input.category")}
+                        onChange={handleCategoryChange}
+                        value={report_options.find((option) => option.value === formData.violationType) || null}
+                        isRequired={true}
+                    />
+                ) : (
+                    <p>{t("report_options is unavailable")}</p>
+                )}
                 <DescriptionInput
                     value={formData.description}
                     onChange={handleDescriptionChange}
