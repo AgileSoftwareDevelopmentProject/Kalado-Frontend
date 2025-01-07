@@ -99,7 +99,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
                     title={t("report.choose_evidence")}
                 />
                 <CustomButton
-                    text={t("report.item_details.report_submission_btn")}
+                    text={t("error.item_details.report_submission_btn")}
                     type="submit"
                 />
                 <FormError message={error} />
