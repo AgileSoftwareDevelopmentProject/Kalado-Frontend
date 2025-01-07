@@ -84,7 +84,6 @@ export async function updateAdStatus(productId: number, status: string) {
 }
 
 export async function getSingleProduct(adId: number) {
-    // const { token } = useAuth();
     return sendRequest<TProductResponseType>(
         PRODUCT.GET_SINGLE(adId),
         'GET',
@@ -92,18 +91,6 @@ export async function getSingleProduct(adId: number) {
         undefined
     );
 }
-
-// Mock Function
-// export const getSingleProduct = async (itemId: number) => {
-//     return new Promise((resolve, reject) => {
-//         const item = mockData.items.find(product => product.itemId === String(itemId));
-//         if (item) {
-//             resolve(item);
-//         } else {
-//             reject(new Error('Item not found'));
-//         }
-//     });
-// };
 
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
@@ -123,16 +110,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
         return [];
     }
 }
-
-// Mock Function
-// export const getProductsByCategory = async (category) => {
-//     return new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(mockData.items);
-//         }, 1000);
-//     });
-// };
-
 
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
@@ -159,3 +136,22 @@ export async function getSellersProducts(): Promise<TProductResponseType[]> {
 
 
 
+// **************** Mock Functions ****************
+// export const getSingleProduct = async (itemId: number) => {
+//     return new Promise((resolve, reject) => {
+//         const item = mockData.items.find(product => product.id === String(itemId));
+//         if (item) {
+//             resolve(item);
+//         } else {
+//             reject(new Error('Item not found'));
+//         }
+//     });
+// };
+
+// export const getProductsByCategory = async (category) => {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(mockData.items);
+//         }, 1000);
+//     });
+// };

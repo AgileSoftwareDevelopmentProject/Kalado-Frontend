@@ -60,7 +60,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
             console.log('Fetching single product');
             console.log(id);
             const response = await getSingleProduct(id);
-            setSingleProduct(response);
+            setSingleProduct(response.data);
             console.log(response);
             return response;
         } catch (err) {
