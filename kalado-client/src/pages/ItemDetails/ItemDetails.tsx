@@ -17,7 +17,7 @@ const ItemDetails: React.FC = () => {
         fetchSingleProduct(Number(itemId));
     }, [itemId]);
 
-    console.log('single Product:', singleProduct);
+    console.log('single Product id:', singleProduct?.id);
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', p: 2 }}>
