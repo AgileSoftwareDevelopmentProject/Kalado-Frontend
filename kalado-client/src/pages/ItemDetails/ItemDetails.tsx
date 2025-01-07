@@ -31,6 +31,7 @@ const ItemDetails: React.FC = () => {
             {!loading && singleProduct && (
                 <>
                     <ItemDetailsCard
+                    
                         item={singleProduct}
                         neededReportSubmissionForm={true}
                     />
