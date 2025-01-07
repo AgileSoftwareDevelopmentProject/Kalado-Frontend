@@ -1,148 +1,49 @@
-import axios, { AxiosError } from 'axios';
-import { BASE_URL as baseURL } from './urls';
-import { toast } from 'sonner';
+import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
-const axiosInstance = axios.create({ baseURL });
+const instance = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL || 'http://kaladoshop.com:8081', // Ensure your base URL is correct
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
 
-interface ErrorResponseData {
-    message?: string;
-    [key: string]: any;
-}
-
-axiosInstance.interceptors.request.use(
-    async (config) => {
-        const token = localStorage.getItem('token');
-        const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
-
-        console.log('-----------------------------------');
-        console.log('[Request] URL:', config.url);
-        console.log('[Request] Method:', config.method);
-        console.log('[Request] Headers:', config.headers);
-        console.log('[Request] Data:', config.data);
-
-        if (token && !isPublicEndpoint) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-            console.log('[Request] Authorization Token Attached');
-        } else {
-            console.log('[Request] Public Endpoint - No Token Attached');
+// Add interceptors to attach the token dynamically
+instance.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token'); // Retrieve token from localStorage
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
         }
-
-        console.log('-----------------------------------');
         return config;
     },
     (error) => {
-        console.error('[Request Interceptor] Error:', error);
         return Promise.reject(error);
     }
 );
 
-
-axiosInstance.interceptors.response.use(
-    (response) => {
-        console.log('-----------------------------------');
-        console.log('[Response] URL:', response.config.url);
-        console.log('[Response] Status:', response.status);
-        console.log('[Response] Data:', response.data);
-        console.log('-----------------------------------');
-        return response;
-    },
-    (error: AxiosError<ErrorResponseData>) => {
-        const statusCode = error.response?.status;
-        console.log('-----------------------------------');
-        console.error('[Response Interceptor] Error Status:', statusCode);
-        console.error('[Response Interceptor] Error Data:', error.response?.data);
-        console.log('-----------------------------------');
-
-        if (statusCode === 401 || statusCode === 403) {
-            console.warn('[Response Interceptor] Unauthorized or Forbidden. Redirecting...');
-            localStorage.clear();
-        }
-
-        const message = error.response?.data?.message || 'An unknown error occurred.';
-        toast.error(
-            statusCode === 409
-                ? 'This email is already registered.'
-                : message || message.replace(/_/g, ' ')
-        );
-
-        return Promise.reject(error);
-    }
-);
-
-// Request Wrapper Function
-// export async function sendRequest<T>(
-//     url: string,
-//     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-//     requestData?: any,
-//     signal?: AbortSignal
-// ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
-//     try {
-//         console.log('-----------------------------------');
-//         console.log(`[Request Wrapper] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
-//         const response = await axiosInstance.request({
-//             method,
-//             url,
-//             data: requestData,
-//             signal,
-//         });
-
-//         console.log('[Request Wrapper] Success:', response.data);
-//         return {
-//             isSuccess: true,
-//             data: response.data as T,
-//             status: response.status,
-//         };
-//     } catch (error) {
-//         const axiosError = error as AxiosError<ErrorResponseData>;
-//         console.error('[Request Wrapper] Error:', axiosError);
-
-//         // Accessing message from error.response?.data
-//         const message = axiosError.response?.data?.message || 'An unknown error occurred.';
-
-//         return {
-//             isSuccess: false,
-//             data: null,
-//             status: axiosError.response?.status || 500,
-//             message,
-//         };
-//     }
-// }
-
-export async function sendRequest<T>(
+export const sendRequest = async <T>(
     url: string,
-    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-    requestData?: any,
-    signal?: AbortSignal,
-    headers: Record<string, string> = {}
-): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    data?: any,
+    params?: any,
+    headers?: Record<string, string>
+): Promise<T> => {
     try {
-        console.log("#####################################3");
-        console.log(url);
-        console.log(method);
-        console.log(requestData);
-        console.log(headers);
-        const response = await axiosInstance.request({
-            method,
+        const response = await instance({
             url,
-            data: requestData,
-            signal,
-            headers,
+            method,
+            data,
+            params,
+            headers: {
+                ...headers,
+            },
         });
-        console.log("***** Response *****");
-        console.log(response);
-        return {
-            isSuccess: true,
-            data: response.data as T,
-            status: response.status,
-        };
-    } catch (error) {
-        const axiosError = error as AxiosError<ErrorResponseData>;
-        const message = axiosError.response?.data?.message || 'An unknown error occurred.';
-        return {
-            isSuccess: false,
-            data: null,
-            status: axiosError.response?.status || 500,
-            message,
-        };
+        return response.data;
+    } catch (error: any) {
+        console.error('Axios request error:', error.response || error.message);
+        throw error.response?.data || { message: 'An error occurred' };
     }
-}
+};
+
+export default instance;

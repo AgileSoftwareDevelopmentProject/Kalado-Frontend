@@ -32,12 +32,17 @@ const ProfileManagement = () => {
     const fetchUserData = async () => {
         try {
             setLoading(true);
-            // GetUserByToken API call
             console.log("GetUserByToken API call");
             console.log(token);
+    
             const response = await getProfile(token);
             console.log(response);
-            setUserData(response);
+    
+            if (response.isSuccess) {
+                setUserData(response.data);
+            } else {
+                setError(t("error.profile_management.retrive_failed"));
+            }
         } catch (err) {
             setError(t("error.profile_management.retrive_failed"));
         } finally {
@@ -72,21 +77,27 @@ const ProfileManagement = () => {
         formData.append('phoneNumber', userData.phoneNumber);
         formData.append('address', userData.address);
 
-        if (userData.profileImage) {
+        if (userData.profileImage instanceof File) {
             formData.append('profileImage', userData.profileImage);
         }
-
-        // Update Profile API call
-        console.log("Update Profile API call");
-        console.log(formData);
-        const response = await modifyProfile(formData, token);
-        console.log(response);
-        if (response.isSuccess) {
-            toast(t('success.profile_management'));
-        } else {
+         
+        try {
+            console.log("Update Profile API call");
+            console.log(formData);
+    
+            const response = await modifyProfile(formData);
+            console.log(response);
+    
+            if (response.isSuccess) {
+                toast(t('success.profile_management'));
+            } else {
+                toast(t("error.profile_management.save_failed"));
+            }
+        } catch (err) {
             toast(t("error.profile_management.save_failed"));
         }
     };
+    
 
 
     return (

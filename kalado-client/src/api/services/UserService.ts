@@ -16,15 +16,21 @@ export async function getProfile(token: string | null) {
 }
 
 
-export async function modifyProfile(profileData: ProfileData, token: string | null) {
-    return sendRequest(
-        USER.MODIFY_PROFILE,
-        'PUT',
-        profileData,
-        undefined,
-        {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        }
-    );
+export async function modifyProfile(profileData: ProfileData) {
+    try {
+        console.log('Modifying profile with data:', profileData);
+
+        const response = await sendRequest(
+            USER.MODIFY_PROFILE,
+            'PUT',
+            profileData,
+            undefined,
+            { 'Content-Type': 'application/json' }
+        );
+        console.log('Profile modification response:', response);
+        return response;
+    } catch (error) {
+        console.error('Error during profile modification:', error);
+        throw error;
+    }
 }
