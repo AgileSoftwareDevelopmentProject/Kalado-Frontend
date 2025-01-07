@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { BASE_URL as baseURL } from './urls';
 import { toast } from 'sonner';
+import { useAuth } from '../../contexts';
 
 const axiosInstance = axios.create({ baseURL });
 
@@ -11,7 +12,8 @@ interface ErrorResponseData {
 
 axiosInstance.interceptors.request.use(
     async (config) => {
-        const token = localStorage.getItem('token');
+        const { token } = useAuth();
+        // const token = localStorage.getItem('token');
         const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
 
         console.log('-----------------------------------');
@@ -20,7 +22,7 @@ axiosInstance.interceptors.request.use(
         console.log('[Request] Headers:', config.headers);
         console.log('[Request] Data:', config.data);
 
-        if (token && !isPublicEndpoint) {
+        if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
             console.log('[Request] Authorization Token Attached');
         } else {
