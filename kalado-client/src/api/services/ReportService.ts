@@ -47,6 +47,11 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
         formData.append(`evidence[${index}]`, file);
     });
 
+    console.log('**************************** formData before submission:');
+    for (let i of formData.entries()) {
+        console.log(i[0], i[1]);
+    }
+
     return sendRequest<TReportResponseType>(
         REPORT.CREATE,
         'POST',
