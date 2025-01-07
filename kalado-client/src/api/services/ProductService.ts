@@ -14,7 +14,7 @@ export async function createProductWithImages(productData: ProductData, imageFil
     });
     console.log(formData);
     return sendRequest<TProductResponseType>(
-        '/v1/product',
+        PRODUCT.CREATE,
         'POST',
         formData,
         undefined,
