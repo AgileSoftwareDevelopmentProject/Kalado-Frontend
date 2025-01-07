@@ -88,10 +88,11 @@ const CreateAdForm: React.FC = () => {
 
         try {
             // Create Ad API call
-            const response = await createProductWithImages(formData, images, token);
             console.log("Create Ad API call");
+            console.log(token);
             console.log(formData);
             console.log(images);
+            const response = await createProductWithImages(formData, images, token);
             console.log(response);
             if (response.isSuccess) {
                 handleClose();

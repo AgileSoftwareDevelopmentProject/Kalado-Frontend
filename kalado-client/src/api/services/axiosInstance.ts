@@ -116,6 +116,11 @@ export async function sendRequest<T>(
     headers: Record<string, string> = {}
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
+        console.log("#####################################3");
+        console.log(url);
+        console.log(method);
+        console.log(requestData);
+        console.log(headers);
         const response = await axiosInstance.request({
             method,
             url,

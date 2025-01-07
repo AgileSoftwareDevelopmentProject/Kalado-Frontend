@@ -12,7 +12,7 @@ export async function createProductWithImages(productData: ProductData, imageFil
     imageFiles.forEach((file, index) => {
         formData.append(`images[${index}]`, file);
     });
-
+    console.log(formData);
     return sendRequest<TProductResponseType>(
         '/v1/product',
         'POST',
