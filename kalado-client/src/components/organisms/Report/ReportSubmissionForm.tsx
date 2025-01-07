@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
 import { ReportData } from '../../../utils/apiTypes';
+import { useAuth } from '../../../contexts';
+
 
 interface ReportSubmissionFormProps {
     reportedContentId?: number;
@@ -23,6 +25,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
     const [error, setError] = useState<string>('');
     const { report_options } = OptionsComponent();
     const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
+    const { token } = useAuth();
 
     if (!report_options) {
         console.error('report_options is undefined or null');
@@ -70,11 +73,11 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
         }
 
         try {
-            console.log('**************************** submitting form with data:', { ...formData});
+            console.log('**************************** submitting form with data:', { ...formData });
             console.log('**************************** images:', images);
 
-            const response = await createReportWithImages(formData, images);
-            console.log('****************************** api response:', response); 
+            const response = await createReportWithImages(formData, images, token);
+            console.log('****************************** api response:', response);
             if (response.isSuccess) {
                 handleClose();
                 toast(t("report.success.report_submitted"));

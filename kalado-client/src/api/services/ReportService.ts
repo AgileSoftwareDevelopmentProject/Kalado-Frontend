@@ -8,7 +8,6 @@ import {
     ReportListResponse,
     TReportResponseType,
 } from '../../utils/apiTypes';
-import { useAuth } from '../../contexts/AuthContext';
 
 // export async function createReport(reportData: ReportData, images: File[]): Promise<ReportResponse> {
 //     const formData = new FormData();
@@ -37,19 +36,18 @@ import { useAuth } from '../../contexts/AuthContext';
 //     }
 // }
 
-export async function createReportWithImages(reportData: ReportData, imageFiles: File[]) {
+export async function createReportWithImages(reportData: ReportData, imageFiles: File[], token: string | null) {
     console.log('**************************** createReportWithImages called');
     console.log('**************************** reportData:', reportData);
     console.log('**************************** imageFiles:', imageFiles);
-    
-    const { token } = useAuth();
+
     console.log('****************************token retrieved from useAuth:', token);
-    if (!token) {
+    if (token == null) {
         throw new Error('user is not authenticated');
     }
 
     const formData = new FormData();
-    console.log('**************************** formData: ',formData);
+    console.log('**************************** formData: ', formData);
     formData.append('report', JSON.stringify(reportData));
 
     imageFiles.forEach((file, index) => {
