@@ -43,7 +43,10 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
     console.log('**************************** imageFiles:', imageFiles);
     
     const { token } = useAuth();
-    console.log('****************************  auth token:', token);
+    console.log('****************************token retrieved from useAuth:', token);
+    if (!token) {
+        throw new Error('user is not authenticated');
+    }
 
     const formData = new FormData();
     console.log('**************************** formData: ',formData);

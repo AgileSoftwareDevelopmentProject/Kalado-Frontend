@@ -44,7 +44,9 @@ const LoginForm: React.FC = () => {
                 console.log("Login API call");
                 console.log(response);
                 setToken(response.data.token);
+                console.log('************************* token set in AuthContext:', response.data?.token);
                 setUserRole(response.data.role);
+                console.log('************************* user role set in AuthContext:', response.data?.role);
                 handleClose();
                 toast(t("success.login"));
             } else {
