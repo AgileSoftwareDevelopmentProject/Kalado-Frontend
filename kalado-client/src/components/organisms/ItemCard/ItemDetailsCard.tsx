@@ -20,7 +20,7 @@ interface ItemDetailsCardProps {
         };
         createdAt: string | null;
         imageUrls?: string[];
-        description: string | null;
+        description?: string | null;
         id: number;
         sellerId: number | null;
         brand: string | null;

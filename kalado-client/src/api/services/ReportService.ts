@@ -8,7 +8,6 @@ import {
     ReportListResponse,
     TReportResponseType,
 } from '../../utils/apiTypes';
-import { useAuth } from '../../contexts/AuthContext';
 
 // export async function createReport(reportData: ReportData, images: File[]): Promise<ReportResponse> {
 //     const formData = new FormData();
@@ -37,26 +36,46 @@ import { useAuth } from '../../contexts/AuthContext';
 //     }
 // }
 
-export async function createReportWithImages(reportData: ReportData, imageFiles: File[]) {
-    const { token } = useAuth();
+export async function createReportWithImages(reportData: ReportData, imageFiles: File[], token: string | null) {
+    console.log('**************************** createReportWithImages called');
+    console.log('**************************** reportData:', reportData);
+    console.log('**************************** imageFiles:', imageFiles);
+
+    console.log('****************************token retrieved from useAuth:', token);
+    if (token == null) {
+        throw new Error('user is not authenticated');
+    }
 
     const formData = new FormData();
+    console.log('**************************** formData: ', formData);
     formData.append('report', JSON.stringify(reportData));
 
     imageFiles.forEach((file, index) => {
         formData.append(`evidence[${index}]`, file);
     });
 
-    return sendRequest<TReportResponseType>(
-        REPORT.CREATE,
-        'POST',
-        formData,
-        undefined,
-        {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-        }
-    );
+    console.log('**************************** formData before submission:');
+    for (let i of formData.entries()) {
+        console.log(i[0], i[1]);
+    }
+
+    try {
+        const response = await sendRequest<TReportResponseType>(
+            REPORT.CREATE,
+            'POST',
+            formData,
+            undefined,
+            {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            }
+        );
+        console.log('****************************  api response:', response);
+        return response;
+    } catch (error) {
+        console.error('****************************  error in createReportWithImages:', error);
+        throw error;
+    }
 }
 
 

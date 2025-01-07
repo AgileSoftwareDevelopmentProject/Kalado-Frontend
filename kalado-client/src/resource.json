@@ -100,7 +100,8 @@
         },
         "report": {
             "input": {
-                "category": "Report's Type"
+                "category": "Report's Type",
+                "description": "Description"
             },
             "category": {
                 "one": "Abusiveness",
@@ -341,7 +342,8 @@
         },
         "report": {
             "input": {
-                "category": "نوع تخلف"
+                "category": "نوع تخلف",
+                "description": "توضیحات"
             },
             "category": {
                 "one": "فحاشی",
