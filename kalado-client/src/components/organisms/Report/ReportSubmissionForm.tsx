@@ -9,7 +9,7 @@ import { OptionsComponent } from '../../../constants/options';
 import { ReportData } from '../../../utils/apiTypes';
 
 interface ReportSubmissionFormProps {
-    reportedContentId: number;
+    reportedContentId?: number;
 }
 
 const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedContentId }) => {
@@ -83,7 +83,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
             }
         } catch (err: any) {
             console.error('****************************** error:', err);
-            
+
             if (err.response && err.response.data) {
                 console.error('****************************** backend error response:', err.response.data);
                 setError(err.response.data.message || t("report.error.submission_failed"));
