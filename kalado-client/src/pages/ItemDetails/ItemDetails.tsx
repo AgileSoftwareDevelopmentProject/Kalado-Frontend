@@ -67,7 +67,7 @@ const ItemDetails: React.FC = () => {
             {!loading && item && (
                 <>
                     <ItemDetailsCard item={item} />
-                    <ReportSubmissionForm />
+                    <ReportSubmissionForm reportedContentId={item.id} />
                 </>
             )}
         </Box>
