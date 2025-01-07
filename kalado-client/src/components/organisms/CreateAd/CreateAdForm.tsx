@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
 import { ProductData } from '../../../utils/apiTypes';
+import { useAuth } from '../../../contexts';
 
 
 const CreateAdForm: React.FC = () => {
@@ -22,7 +23,7 @@ const CreateAdForm: React.FC = () => {
         productionYear: null,
         brand: null,
     });
-
+    const { token } = useAuth();
     const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
     const { create_ad_options } = OptionsComponent();
@@ -87,10 +88,11 @@ const CreateAdForm: React.FC = () => {
 
         try {
             // Create Ad API call
-            const response = await createProductWithImages(formData, images);
             console.log("Create Ad API call");
+            console.log(token);
             console.log(formData);
             console.log(images);
+            const response = await createProductWithImages(formData, images, token);
             console.log(response);
             if (response.isSuccess) {
                 handleClose();

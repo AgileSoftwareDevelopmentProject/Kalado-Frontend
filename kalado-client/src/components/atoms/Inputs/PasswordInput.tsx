@@ -33,7 +33,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
             const validationResult = validatePassword(value, t);
             setHelperText(validationResult.error);
         }
-    }, [value, t, isValidatorActive]);
+    }, [value, t]);
 
 
     const handleToggleVisibility = () => {
