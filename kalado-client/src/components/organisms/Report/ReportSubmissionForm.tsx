@@ -5,7 +5,7 @@ import { PopupBox } from '../../molecules';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
-import { createReport } from '../../../api/services/ReportService';
+import { createReportWithImages } from '../../../api/services/ReportService';
 import ImageUploadBox from './ImageUploadBox';
 
 const ReportSubmissionForm: React.FC = () => {
@@ -67,7 +67,7 @@ const ReportSubmissionForm: React.FC = () => {
                 description: formData.description,
             };
 
-            const response = await createReport(reportData, formData.images);
+            const response = await createReportWithImages(reportData, formData.images);
 
             if (response.isSuccess) {
                 resetForm();
@@ -91,7 +91,7 @@ const ReportSubmissionForm: React.FC = () => {
                     onChange={handleCategoryChange}
                     value={report_options.find((option) => option.value === formData.violationType) || null}
                     isRequired={true}
-                    // errorMessage={t('report.error.missing_violation_type')}
+                // errorMessage={t('report.error.missing_violation_type')}
                 />
 
                 {/* Description Input */}

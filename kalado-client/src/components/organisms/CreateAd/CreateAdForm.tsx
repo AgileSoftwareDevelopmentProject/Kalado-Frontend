@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd, createProductWithImages } from '../../../api/services/ProductService';
+import { createProductWithImages } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
 import { ProductData } from '../../../utils/apiTypes';
+
 
 const CreateAdForm: React.FC = () => {
     const { t } = useTranslation();
@@ -18,7 +19,6 @@ const CreateAdForm: React.FC = () => {
         },
         category: '',
         description: '',
-        // images: [],
         productionYear: null,
         brand: null,
     });
