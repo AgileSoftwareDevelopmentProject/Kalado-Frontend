@@ -75,11 +75,11 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
 
             const response = await createReportWithImages(formData, images);
             console.log('****************************** api response:', response); 
-            if (response?.isSuccess) {
+            if (response.isSuccess) {
                 handleClose();
                 toast(t("report.success.report_submitted"));
             } else {
-                setError(response?.message || t("report.error.submission_failed"));
+                setError(response.message || t("report.error.submission_failed"));
             }
         } catch (err: any) {
             console.error('****************************** error:', err);
