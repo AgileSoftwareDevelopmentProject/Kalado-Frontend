@@ -1,4 +1,4 @@
-import { ReportStatus, User, UserType, ViolationType} from '../utils/types'
+import { ReportStatus, User, UserType, ViolationType } from '../utils/types'
 
 
 // Login
@@ -115,13 +115,12 @@ export interface TReportResponseType {
     reportedContentId: number;
     evidenceFiles: string[]; // Array of file Image URLs
     createdAt: [number, number, number, number, number, number, number]; // Tuple for date 
-    status: ReportStatus; 
+    status: ReportStatus;
     adminNotes: string | null;
     lastUpdatedAt: [number, number, number, number, number, number, number]; // Tuple for date 
     adminId: number | null;
     userBlocked: boolean;
 }
-
 
 // User
 export interface ProfileData {
@@ -133,17 +132,13 @@ export interface ProfileData {
 
 export type TUserProfileResponse = {
     id: number;
-    username: string;
     firstName: string;
     lastName: string;
     address: string | null;
     phoneNumber: string;
 };
 
-
-
 // Search
-
 export type PageableResponseType<T> = {
     content: T[];
     pageable: {

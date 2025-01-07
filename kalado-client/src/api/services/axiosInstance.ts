@@ -56,7 +56,6 @@ axiosInstance.interceptors.response.use(
         if (statusCode === 401 || statusCode === 403) {
             console.warn('[Response Interceptor] Unauthorized or Forbidden. Redirecting...');
             localStorage.clear();
-            window.location.href = '/login';
         }
 
         const message = error.response?.data?.message || 'An unknown error occurred.';
@@ -124,7 +123,8 @@ export async function sendRequest<T>(
             signal,
             headers,
         });
-
+        console.log("***** Response *****");
+        console.log(response);
         return {
             isSuccess: true,
             data: response.data as T,

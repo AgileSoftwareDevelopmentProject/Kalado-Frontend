@@ -5,24 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import mockData from '../../mockData.json';  // use for mocking APIs
 
 
-// export async function createAd(productData: ProductData) {
-//     const { token } = useAuth();
-//     return sendRequest<TProductResponseType>(
-//         PRODUCT.CREATE,
-//         'POST',
-//         productData,
-//         undefined,
-//         {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${token}`,
-//         }
-//     );
-// }
-
-
-export async function createProductWithImages(productData: ProductData, imageFiles: File[]) {
-    const { token } = useAuth();
-
+export async function createProductWithImages(productData: ProductData, imageFiles: File[], token: string | null) {
     const formData = new FormData();
     formData.append('product', JSON.stringify(productData));
 
@@ -69,8 +52,7 @@ export async function updateAd(productId: number, productData: ProductData) {
     );
 }
 
-export async function updateAdStatus(productId: number, status: string) {
-    const { token } = useAuth();
+export async function updateAdStatus(productId: number, status: string, token: string | null) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE_STATUS(productId),
         'PUT',
@@ -103,7 +85,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
             undefined,
             undefined
         );
-
         return response.data as TProductResponseType[];
     } catch (error) {
         console.error('Error fetching products:', error);

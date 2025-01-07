@@ -8,21 +8,25 @@ interface PhoneNumberInputProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
+    isValidatorActive?: boolean;
 }
 
 const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     placeholder,
     value,
     onChange,
-    isRequired = true
+    isRequired = true,
+    isValidatorActive = true
 }) => {
     const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.phone_number');
     const [helperText, setHelperText] = useState<string>('');
 
     useEffect(() => {
-        const validationResult = validatePhoneNumber(value, t);
-        setHelperText(validationResult.error);
+        if (isValidatorActive) {
+            const validationResult = validatePhoneNumber(value, t);
+            setHelperText(validationResult.error);
+        }
     }, [value, t]);
 
     return (

@@ -4,7 +4,7 @@ import { Box, Avatar, CircularProgress, IconButton } from '@mui/material';
 import { CustomButton, NameInput, EmailInput, PhoneNumberInput, PasswordInput, FormError } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from '../../../contexts';
 import defaultImage from '../../../assets/images/no-image.png';
 import { getProfile, modifyProfile } from '../../../api/services/UserService';
 
@@ -12,8 +12,6 @@ import { getProfile, modifyProfile } from '../../../api/services/UserService';
 interface UserData {
     firstName: string;
     lastName: string;
-    email: string;
-    password: string;
     phoneNumber: string;
     address: string;
     profileImage: File | null;
@@ -72,7 +70,6 @@ const ProfileManagement = () => {
         formData.append('firstName', userData.firstName);
         formData.append('lastName', userData.lastName);
         formData.append('phoneNumber', userData.phoneNumber);
-        formData.append('password', userData.password);
         formData.append('address', userData.address);
 
         if (userData.profileImage) {
@@ -138,21 +135,21 @@ const ProfileManagement = () => {
                         value={userData.lastName}
                         onChange={handleInputChange}
                     />
-                    <EmailInput
+                    {/* <EmailInput
                         value={userData.email}
                         onChange={handleInputChange}
                         disabled
-                    />
+                    /> */}
                     <PhoneNumberInput
                         value={userData.phoneNumber}
                         onChange={handleInputChange}
                     />
-                    <PasswordInput
+                    {/* <PasswordInput
                         name="password"
                         value={userData.password}
                         placeholder={t('dashboard.user.profile_management.password')}
                         onChange={handleInputChange}
-                    />
+                    /> */}
                     <NameInput
                         name="address"
                         placeholder={t('dashboard.user.profile_management.address')}

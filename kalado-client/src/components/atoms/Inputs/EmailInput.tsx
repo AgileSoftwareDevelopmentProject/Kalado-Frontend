@@ -29,7 +29,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             const validationResult = validateEmail(value, t);
             setHelperText(validationResult.error);
         }
-    }, [value, t, isValidatorActive]);
+    }, [value, t]);
 
     return (
         <TextField
