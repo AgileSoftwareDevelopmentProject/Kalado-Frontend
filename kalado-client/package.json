@@ -20,7 +20,9 @@
     "@mui/x-date-pickers": "^7.23.3",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
+    "date-fns-jalali": "^3.2.0-0",
     "dayjs": "^1.11.13",
+    "dayjs-jalali": "^0.0.2",
     "i18next": "^24.1.2",
     "jalaali-js": "^1.2.7",
     "react": "^19.0.0",
@@ -30,7 +32,9 @@
     "react-modern-calendar-datepicker": "^3.1.6",
     "react-router-dom": "^6.28.1",
     "react-toastify": "^11.0.2",
-    "sonner": "^1.7.1"
+    "sonner": "^1.7.1",
+    "stylis": "^4.3.4",
+    "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -45,6 +49,7 @@
     "@types/jest": "^29.5.14",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/stylis": "^4.2.7",
     "@types/testing-library__react": "^10.0.1",
     "@vitejs/plugin-react": "^4.3.3",
     "axios": "^1.7.9",

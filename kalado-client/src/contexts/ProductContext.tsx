@@ -1,23 +1,30 @@
 import React, { createContext, useState, useContext } from 'react';
-import { getProductsByCategory } from '../api/services/ProductService';
-import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters, getSearchByBrandWithSorting, getPaginatedSearch } from '../api/services/SearchService';
+import { getProductsByCategory, getSingleProduct } from '../api/services/ProductService';
+import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters } from '../api/services/SearchService';
 
 interface Product {
+    id: number;
     title: string;
-    imageUrl: string;
-    price: number;
-    city: string;
-    date: string;
-    description: string;
-    itemId: number;
-    seller_phone: string;
+    createdAt: string;
+    imageUrls?: string[];
+    price: {
+        amount: number,
+        unit: string,
+    },
+    description?: string;
+    seller_phone?: string;
+    sellerId: number;
+    brand?: string;
+    productionYear?: string;
 }
 
 interface ProductContextType {
     products: Product[];
+    singleProduct: Product | null;
     loading: boolean;
     error: string;
     fetchProductsByCategory: (category: string) => void;
+    fetchSingleProduct: (id: number) => Promise<Product | null>;
     applyFilters: (keyword: string | null, minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => void;
     searchProductsByKeyword: (keyword: string) => void;
     searchProductsByPriceRange: (minPrice: number | 0, maxPrice: number | 0) => void;
@@ -29,6 +36,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
+    const [singleProduct, setSingleProduct] = useState<Product | null>(null);
 
     const fetchProductsByCategory = async (category: string) => {
         setLoading(true);
@@ -40,6 +48,24 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
             console.log(response);
         } catch (err) {
             setError('Failed to fetch products');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchSingleProduct = async (id: number): Promise<Product | null> => {
+        setLoading(true);
+        setError('');
+        try {
+            console.log('Fetching single product');
+            console.log(id);
+            const response = await getSingleProduct(id);
+            setSingleProduct(response);
+            console.log(response);
+            return response;
+        } catch (err) {
+            setError('Failed to fetch the product');
+            return null;
         } finally {
             setLoading(false);
         }
@@ -91,7 +117,17 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     };
 
     return (
-        <ProductContext.Provider value={{ products, loading, error, fetchProductsByCategory, applyFilters, searchProductsByKeyword, searchProductsByPriceRange }}>
+        <ProductContext.Provider value={{
+            products,
+            singleProduct,
+            loading,
+            error,
+            fetchProductsByCategory,
+            fetchSingleProduct,
+            applyFilters,
+            searchProductsByKeyword,
+            searchProductsByPriceRange
+        }}>
             {children}
         </ProductContext.Provider>
     );

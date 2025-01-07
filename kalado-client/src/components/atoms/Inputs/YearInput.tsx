@@ -14,13 +14,13 @@ interface YearInputProps {
 }
 
 const YearInput: React.FC<YearInputProps> = ({ label, value, onChange, minDate, maxDate }) => {
-    const { i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DatePicker']} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                 <DatePicker
-                    label={label || 'Year'}
+                    label={label || t("create_ad.input.production_year")}
                     value={value}
                     onChange={onChange}
                     openTo="year"

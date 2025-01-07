@@ -18,11 +18,7 @@ function App() {
               <ModalProvider>
                 <ProductProvider>
                   <Routes>
-                    <Route path="/" element={
-
-                      <Landing />
-
-                    } />
+                    <Route path="/" element={<Landing />} />
                     <Route path="/item/:itemId" element={<ItemDetails />} />
                     <Route path="/user-dashboard" element={<UserDashboard />} />
                     <Route path="/admin-dashboard" element={<AdminDashboard />} />
