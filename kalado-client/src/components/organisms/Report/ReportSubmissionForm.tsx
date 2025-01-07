@@ -60,7 +60,6 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
             setError(t("report.error.missing_violation_type"));
             return;
         }
-
         if (!formData.description.trim() && images.length === 0) {
             setError(t("report.error.missing_description_or_image"));
             return;
