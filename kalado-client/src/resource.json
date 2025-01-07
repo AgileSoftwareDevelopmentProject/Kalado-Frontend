@@ -96,7 +96,12 @@
             "city": "City",
             "date": "Issued Date",
             "description": "Description",
-            "report_submission_btn": "Submit Report"
+            "report_submission_btn": "Submit Report",
+            "no_title": "Unknown Title",
+            "no_brand": "Unknown Brand",
+            "no_date": "Unlnown Date",
+            "no_description": "No description available",
+            "no_seller_phone": "Unknown Seller Phone"
         },
         "report": {
             "input": {
@@ -338,7 +343,12 @@
             "city": "شهر",
             "date": "تاریخ ثبت",
             "description": "توضیحات",
-            "report_submission_btn": "ثبت تخلف"
+            "report_submission_btn": "ثبت تخلف",
+            "no_title": "بدون عنوان",
+            "no_brand": "برند نامشخص",
+            "no_date": "تاریخ ساخت نامشخص",
+            "no_description": "بدون توضیحات",
+            "no_seller_phone": "شماره تلفن فروشنده نامشخص"
         },
         "report": {
             "input": {
