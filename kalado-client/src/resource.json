@@ -139,18 +139,12 @@
                 "block_success_message": "The user has been successfully blocked."
             },
             "error": {
-
                 "missing_violation_type": "Violation type is required.",
-        
                 "missing_description_or_image": "You must provide either a description or at least one piece of evidence.",
-        
                 "submission_failed": "An error occurred while submitting the report. Please try again."
-        
             },
             "success": {
-        
                 "report_submitted": "Your report has been successfully submitted."
-        
             }
         },
         "dashboard": {

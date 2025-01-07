@@ -76,7 +76,8 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
                     options={report_options}
                     placeholder={t("report.input.category")}
                     onChange={handleCategoryChange}
-                    value={report_options.find(option => option.value === formData.violationType) || null}
+                    value={report_options.find((option) => option.value === formData.violationType) || null}
+                    isRequired={true}
                 />
                 <DescriptionInput
                     value={formData.description}
