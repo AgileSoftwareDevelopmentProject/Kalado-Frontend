@@ -70,8 +70,8 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
         }
 
         try {
-            console.log('submitting form with data:', formData);
-            console.log('images:', images);
+            console.log('**************************** submitting form with data:', { ...formData});
+            console.log('**************************** images:', images);
 
             const response = await createReportWithImages(formData, images);
             console.log('****************************** api response:', response); 

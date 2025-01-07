@@ -38,9 +38,15 @@ import { useAuth } from '../../contexts/AuthContext';
 // }
 
 export async function createReportWithImages(reportData: ReportData, imageFiles: File[]) {
+    console.log('**************************** createReportWithImages called');
+    console.log('**************************** reportData:', reportData);
+    console.log('**************************** imageFiles:', imageFiles);
+    
     const { token } = useAuth();
+    console.log('****************************  auth token:', token);
 
     const formData = new FormData();
+    console.log('**************************** formData: ',formData);
     formData.append('report', JSON.stringify(reportData));
 
     imageFiles.forEach((file, index) => {
@@ -52,16 +58,23 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
         console.log(i[0], i[1]);
     }
 
-    return sendRequest<TReportResponseType>(
-        REPORT.CREATE,
-        'POST',
-        formData,
-        undefined,
-        {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-        }
-    );
+    try {
+        const response = await sendRequest<TReportResponseType>(
+            REPORT.CREATE,
+            'POST',
+            formData,
+            undefined,
+            {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            }
+        );
+        console.log('****************************  api response:', response);
+        return response;
+    } catch (error) {
+        console.error('****************************  error in createReportWithImages:', error);
+        throw error;
+    }
 }
 
 
