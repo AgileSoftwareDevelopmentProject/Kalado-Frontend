@@ -11,31 +11,41 @@ interface ErrorResponseData {
 }
 
 axiosInstance.interceptors.request.use(
+
     async (config) => {
-        const { token } = useAuth();
-        // const token = localStorage.getItem('token');
+
         const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
 
+
         console.log('-----------------------------------');
+
         console.log('[Request] URL:', config.url);
+
         console.log('[Request] Method:', config.method);
+
         console.log('[Request] Headers:', config.headers);
+
         console.log('[Request] Data:', config.data);
 
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-            console.log('[Request] Authorization Token Attached');
-        } else {
-            console.log('[Request] Public Endpoint - No Token Attached');
-        }
 
-        console.log('-----------------------------------');
+        // Let the Authorization header be set by the individual requests
+
+        console.log('[Request] Headers:', config.headers);
+
+        
+
         return config;
+
     },
+
     (error) => {
+
         console.error('[Request Interceptor] Error:', error);
+
         return Promise.reject(error);
+
     }
+
 );
 
 
