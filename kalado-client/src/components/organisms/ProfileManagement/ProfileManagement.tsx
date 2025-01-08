@@ -25,12 +25,8 @@ const ProfileManagement = () => {
     const fetchUserData = async () => {
         try {
             setLoading(true);
-            // GetUserByToken API call
-            console.log("GetUserByToken API call");
-            console.log(token);
             const response = await getProfile();
-            console.log(response);
-            setUserData(response as TUserProfileResponse);
+            setUserData(response.data as TUserProfileResponse);
         } catch (err) {
             setError(t("error.profile_management.retrive_failed"));
         } finally {
