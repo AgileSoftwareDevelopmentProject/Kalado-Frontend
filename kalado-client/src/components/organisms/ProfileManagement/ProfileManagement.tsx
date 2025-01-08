@@ -1,25 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Avatar, CircularProgress, IconButton } from '@mui/material';
-import { CustomButton, NameInput, EmailInput, PhoneNumberInput, PasswordInput, FormError } from '../../atoms';
+import { CustomButton, NameInput, PhoneNumberInput, FormError } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts';
 import defaultImage from '../../../assets/images/no-image.png';
 import { getProfile, modifyProfile } from '../../../api/services/UserService';
+import { TUserProfileResponse } from '../../../utils/apiTypes'
 
-
-interface UserData {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    address: string;
-    profileImage: File | null;
-}
 
 const ProfileManagement = () => {
     const { t } = useTranslation();
-    const [userData, setUserData] = useState<UserData | null>(null);
+    const [userData, setUserData] = useState<TUserProfileResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -35,9 +28,9 @@ const ProfileManagement = () => {
             // GetUserByToken API call
             console.log("GetUserByToken API call");
             console.log(token);
-            const response = await getProfile(token);
+            const response = await getProfile();
             console.log(response);
-            setUserData(response);
+            setUserData(response as TUserProfileResponse);
         } catch (err) {
             setError(t("error.profile_management.retrive_failed"));
         } finally {
@@ -135,21 +128,10 @@ const ProfileManagement = () => {
                         value={userData.lastName}
                         onChange={handleInputChange}
                     />
-                    {/* <EmailInput
-                        value={userData.email}
-                        onChange={handleInputChange}
-                        disabled
-                    /> */}
                     <PhoneNumberInput
                         value={userData.phoneNumber}
                         onChange={handleInputChange}
                     />
-                    {/* <PasswordInput
-                        name="password"
-                        value={userData.password}
-                        placeholder={t('dashboard.user.profile_management.password')}
-                        onChange={handleInputChange}
-                    /> */}
                     <NameInput
                         name="address"
                         placeholder={t('dashboard.user.profile_management.address')}

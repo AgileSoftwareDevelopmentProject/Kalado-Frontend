@@ -3,20 +3,20 @@ import { USER } from './urls';
 import { ProfileData, TUserProfileResponse } from '../../utils/apiTypes';
 
 
-export async function getProfile(token: string | null) {
+export async function getProfile() {
     return sendRequest<TUserProfileResponse>(
         USER.GET_PROFILE,
         'GET',
         undefined,
         undefined,
         {
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
         }
     );
 }
 
 
-export async function modifyProfile(profileData: ProfileData, token: string | null) {
+export async function modifyProfile(profileData: ProfileData) {
     return sendRequest(
         USER.MODIFY_PROFILE,
         'PUT',
@@ -24,7 +24,6 @@ export async function modifyProfile(profileData: ProfileData, token: string | nu
         undefined,
         {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
         }
     );
 }
