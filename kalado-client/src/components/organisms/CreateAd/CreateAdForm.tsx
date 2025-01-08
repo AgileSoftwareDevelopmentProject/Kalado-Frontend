@@ -92,7 +92,7 @@ const CreateAdForm: React.FC = () => {
             console.log(token);
             console.log(formData);
             console.log(images);
-            const response = await createProductWithImages(formData, images);
+            const response = await createProductWithImages(formData, images, token);
             console.log(response);
             if (response.isSuccess) {
                 handleClose();
