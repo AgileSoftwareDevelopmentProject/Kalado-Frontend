@@ -15,7 +15,6 @@ const Landing: React.FC = () => {
         setSelectedCategory(categoryValue);
     };
 
-    // Rendering products based on the selected category
     const { fetchProductsByCategory } = useProductContext();
     useEffect(() => {
         fetchProductsByCategory(selectedCategory);
@@ -35,7 +34,7 @@ const Landing: React.FC = () => {
                 <Filter />
             </SideBar>
 
-            <ItemsHolder selectedCategoryTitle={product_categories.find(cat => cat.value === selectedCategory)?.title || ''} />
+            <ItemsHolder selectedCategoryTitle={selectedCategory} />
 
             <LoginForm />
             <SignupForm />
