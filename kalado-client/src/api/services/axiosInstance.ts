@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
         console.log('[Request] Data:', config.data);
 
         if (token && !isPublicEndpoint) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+            config.headers['Authorization'] = `${token}`;
             console.log('[Request] Authorization Token Attached');
         } else {
             console.log('[Request] Public Endpoint - No Token Attached');
