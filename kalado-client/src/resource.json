@@ -144,7 +144,8 @@
                 "block_confirmation": {
                     "title": "Are you Sure to Block this User?"
                 },
-                "block_success_message": "The user has been successfully blocked."
+                "block_success_message": "The user has been successfully blocked.",
+                "no_reports": "No reports found."
             },
             "error": {
                 "missing_violation_type": "Violation type is required.",
@@ -397,7 +398,8 @@
                 "block_confirmation": {
                     "title": "آیا از مسدود کردن این کاربر اطمینان دارید؟"
                 },
-                "block_success_message": "کاربر با موفقیت مسدود شد."
+                "block_success_message": "کاربر با موفقیت مسدود شد.",
+                "no_reports": "هیچ گزارشی یافت نشد"
             },
             "error": {
                 "missing_violation_type": "انتخاب نوع تخلف الزامی است.",
