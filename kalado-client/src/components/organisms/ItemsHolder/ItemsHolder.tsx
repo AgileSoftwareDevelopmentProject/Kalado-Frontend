@@ -89,7 +89,7 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
                     flexGrow: 1,
                 }}>
                     {sortedItems().map(item => (
-                        <Box key={item.itemId} sx={{
+                        <Box key={item.id} sx={{
                             flexBasis: { xs: '100%', sm: '50%', md: products.length === 1 ? '100%' : '30%' },
                             mb: 2,
                             display: 'flex',
