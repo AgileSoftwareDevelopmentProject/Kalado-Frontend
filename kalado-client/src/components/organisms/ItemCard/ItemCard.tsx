@@ -6,7 +6,7 @@ interface ItemCardProps {
   title: string;
   price: string;
   createdAt: string;
-  imageUrls: File[];
+  imageUrls: string[];
   onClick: () => void;
 }
 
