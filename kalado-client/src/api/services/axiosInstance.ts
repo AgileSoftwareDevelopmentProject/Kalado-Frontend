@@ -10,24 +10,32 @@ interface ErrorResponseData {
 }
 
 axiosInstance.interceptors.request.use(
-
     async (config) => {
-        // const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
+        const token = localStorage.getItem('token');
+        const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
+
         console.log('-----------------------------------');
         console.log('[Request] URL:', config.url);
         console.log('[Request] Method:', config.method);
         console.log('[Request] Headers:', config.headers);
         console.log('[Request] Data:', config.data);
-        console.log('[Request] Headers:', config.headers);
+
+        if (token && !isPublicEndpoint) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+            console.log('[Request] Authorization Token Attached');
+        } else {
+            console.log('[Request] Public Endpoint - No Token Attached');
+        }
+
+        console.log('-----------------------------------');
         return config;
     },
-
     (error) => {
         console.error('[Request Interceptor] Error:', error);
         return Promise.reject(error);
     }
-
 );
+
 
 axiosInstance.interceptors.response.use(
     (response) => {
@@ -48,6 +56,7 @@ axiosInstance.interceptors.response.use(
         if (statusCode === 401 || statusCode === 403) {
             console.warn('[Response Interceptor] Unauthorized or Forbidden. Redirecting...');
             localStorage.clear();
+            window.location.href = '/login';
         }
 
         const message = error.response?.data?.message || 'An unknown error occurred.';
@@ -66,23 +75,17 @@ export async function sendRequest<T>(
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     requestData?: any,
     signal?: AbortSignal,
-    token?: string | null, // Add token as an optional parameter
     headers: Record<string, string> = {}
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
-        console.log("[SendReuest]: ");
-        console.log(token);
-        console.log(requestData);
         const response = await axiosInstance.request({
             method,
             url,
             data: requestData,
             signal,
-            headers: {
-                ...headers,
-                ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            },
+            headers,
         });
+
         return {
             isSuccess: true,
             data: response.data as T,

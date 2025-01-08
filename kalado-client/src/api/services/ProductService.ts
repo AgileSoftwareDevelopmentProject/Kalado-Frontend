@@ -17,7 +17,6 @@ export async function createProductWithImages(productData: ProductData, imageFil
         'POST',
         formData,
         undefined,
-        token,
         {
             'Content-Type': 'multipart/form-data',
         }
@@ -31,7 +30,6 @@ export async function deleteAd(adId: number, token: string | null) {
         'PUT',
         undefined,
         undefined,
-        token,
         {
             'Content-Type': 'application/json',
         }
@@ -44,7 +42,6 @@ export async function updateAd(productId: number, productData: ProductData, toke
         'PUT',
         productData,
         undefined,
-        token,
         {
             'Content-Type': 'application/json',
         }
@@ -57,7 +54,6 @@ export async function updateAdStatus(productId: number, status: string, token: s
         'PUT',
         { status },
         undefined,
-        token,
         {
             'Content-Type': 'application/json',
         }
@@ -101,9 +97,8 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
             'GET',
             undefined,
             undefined,
-            token,
             {
-                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             }
         );
 

@@ -9,7 +9,6 @@ export async function loginUser(email: string, password: string) {
         'POST',
         { email, password },
         undefined,
-        '',
         { 'Content-Type': 'application/json' }
     );
 }
@@ -21,7 +20,6 @@ export async function signupUser(userData: UserData) {
         'POST',
         userData,
         undefined,
-        '',
         {
             'Content-Type': 'application/json',
         }
@@ -35,7 +33,6 @@ export async function verifyCode(token: string) {
         'POST',
         new URLSearchParams({ token }).toString(),
         undefined,
-        '',
         { 'Content-Type': 'application/x-www-form-urlencoded' }
     );
 }
