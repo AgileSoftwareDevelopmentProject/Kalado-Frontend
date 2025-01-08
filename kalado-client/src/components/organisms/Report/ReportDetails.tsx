@@ -16,28 +16,22 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomToast from '../../molecules/CustomToast/CustomToast';
 
-import pishi1 from '../../../assets/images/pishi1.jpg';
-import pishi4 from '../../../assets/images/pishi4.jpg';
-
-type Report = {
-  violationType: string;
-  description: string;
-  reportedContentId: string;
-};
-
-type ReportDetailsProps = {
-  report: Report;
+interface ReportDetailsProps {
+  report: {
+    violationType: string;
+    description: string;
+    image: string[];
+    contentId: number;
+  };
   onBackToList: () => void;
-  onBlockContent: (contentId: string) => void;
-};
+  onBlockContent: (contentId: number) => void;
+}
 
 const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onBlockContent }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === 'fa';
   const [openImage, setOpenImage] = useState<string | null>(null);
   const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false);
-
-  const evidenceImages = [pishi1, pishi4];
 
   const handleOpenImage = (image: string) => {
     setOpenImage(image);
@@ -49,7 +43,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
 
   const handleBlockConfirm = () => {
     if (report) {
-      onBlockContent(report.reportedContentId);
+      onBlockContent(report.contentId);
 
       // Display success toast
       toast.success(t('report.report_card.block_success_message'), {
@@ -118,8 +112,8 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
             xs={12}
             md={6}
             sx={{
-              borderLeft: isRtl ? 'none' : `1px solid`,
-              borderRight: isRtl ? `1px solid` : 'none',
+              borderLeft: isRtl ? 'none' : '1px solid',
+              borderRight: isRtl ? '1px solid' : 'none',
               paddingRight: isRtl ? 2 : 0,
               paddingLeft: isRtl ? 0 : 2,
               display: 'flex',
@@ -139,7 +133,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
               {t('report.choose_evidence')}:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4, justifyContent: 'center' }}>
-              {evidenceImages.map((image, index) => (
+              {report.image.map((image, index) => (
                 <Box
                   key={index}
                   sx={{
@@ -156,7 +150,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
                       height: '150px',
                       objectFit: 'cover',
                       borderRadius: 8,
-                      border: `1px solid`,
+                      border: '1px solid',
                       cursor: 'pointer',
                     }}
                     onClick={() => handleOpenImage(image)}
