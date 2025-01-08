@@ -98,7 +98,7 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
             undefined,
             undefined,
             {
-                Authorization: `Bearer ${token}`,
+                Authorization: `${token}`,
             }
         );
 
