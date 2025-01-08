@@ -42,19 +42,11 @@ export async function signupUser(userData: UserData) {
 
 // Verify code
 export async function verifyCode(token: string) {
-    try {
-        console.log('Verifying token:', token);
-        const response = await sendRequest(
-            AUTH.VERIFY,
-            'POST',
-            new URLSearchParams({ token }).toString(),
-            undefined,
-            { 'Content-Type': 'application/x-www-form-urlencoded' }
-        );
-        console.log('Verification response:', response);
-        return response;
-    } catch (error) {
-        console.error('Error during verification:', error);
-        throw error;
-    }
+    return sendRequest(
+        AUTH.VERIFY,
+        'POST',
+        new URLSearchParams({ token }).toString(),
+        undefined,
+        { 'Content-Type': 'application/x-www-form-urlencoded' }
+    );
 }

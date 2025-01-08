@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 import { getProductsByCategory, getSingleProduct } from '../api/services/ProductService';
 import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters } from '../api/services/SearchService';
+import resources from '../resource.json';
 
 interface Product {
     id: number;
@@ -43,6 +44,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setError('');
         try {
             console.log('Fetching products by Category');
+            console.log(category)
             const response = await getProductsByCategory(category);
             setProducts(response);
             console.log(response);

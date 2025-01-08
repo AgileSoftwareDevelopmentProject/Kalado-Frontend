@@ -67,7 +67,7 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
             undefined,
             {
                 'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${token}`,
+                Authorization: `${token}`,
             }
         );
         console.log('****************************  api response:', response);
@@ -88,7 +88,7 @@ export async function updateReportStatus(reportId: number, reportStatusData: Rep
         undefined,
         {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         }
     );
 }
@@ -129,7 +129,7 @@ export async function getAllReports() {
         undefined,
         {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         }
     );
 }
@@ -168,7 +168,7 @@ export async function getMyReports() {
         undefined,
         undefined,
         {
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         }
     );
 }
@@ -184,7 +184,7 @@ export async function getReportStatistics(startDate: string, endData: string) {
         undefined,
         {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         }
     );
 }
