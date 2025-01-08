@@ -5,14 +5,14 @@ import { useAuth } from '../../contexts/AuthContext';
 import mockData from '../../mockData.json';  // use for mocking APIs
 
 
-export async function createProductWithImages(productData: ProductData, imageFiles: File[], token: string | null) {
+export async function createProductWithImages(productData: ProductData, imageFiles: File[]) {
     const formData = new FormData();
     formData.append('product', JSON.stringify(productData));
 
     imageFiles.forEach((file, index) => {
         formData.append(`images[${index}]`, file);
     });
-    console.log(formData);
+
     return sendRequest<TProductResponseType>(
         PRODUCT.CREATE,
         'POST',
@@ -20,10 +20,10 @@ export async function createProductWithImages(productData: ProductData, imageFil
         undefined,
         {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
         }
     );
 }
+
 
 export async function deleteAd(adId: number) {
     const { token } = useAuth();
