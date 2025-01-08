@@ -80,8 +80,6 @@ const SignupForm: React.FC = () => {
       });
 
       if (response.isSuccess) {
-        console.log("Register API call");
-        console.log(response);
         handleClose();
         toast(t("success.signup"));
       } else {

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 import { getProductsByCategory, getSingleProduct } from '../api/services/ProductService';
 import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters } from '../api/services/SearchService';
-import resources from '../resource.json';
+
 
 interface Product {
     id: number;

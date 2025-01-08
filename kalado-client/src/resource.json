@@ -219,7 +219,8 @@
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "For Submitting an Ad, Login to your Account"
+                "disable_not_loggined": "For Submitting an Ad, Login to your Account",
+                "required_image": "Please choose at least one image for your Ad"
             },
             "login": {
                 "not_verified": "For login, First Verify your Email"
@@ -471,7 +472,8 @@
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید"
+                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید",
+                "required_image": "لطفا حداقل یک عکس برای آگهی خود انتخاب کنید"
             },
             "login": {
                 "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"

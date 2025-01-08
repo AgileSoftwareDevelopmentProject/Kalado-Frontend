@@ -9,7 +9,6 @@ import { OptionsComponent } from '../../../constants/options';
 import { ProductData } from '../../../utils/apiTypes';
 import { useAuth } from '../../../contexts';
 
-
 const CreateAdForm: React.FC = () => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState<ProductData>({
@@ -59,10 +58,8 @@ const CreateAdForm: React.FC = () => {
     };
 
     const handleImageUpload = (files: File[]) => {
-        setFormData(prevData => ({
-            ...prevData,
-            images: files
-        }));
+        setImages(files);
+        setError('');
     };
 
     const handleClose = () => {
@@ -74,7 +71,6 @@ const CreateAdForm: React.FC = () => {
             },
             category: '',
             description: '',
-            // images: [],
             productionYear: null,
             brand: null,
         });
@@ -86,14 +82,21 @@ const CreateAdForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (images.length === 0) {
+            setError(t("error.create_add.required_image"));
+            return;
+        }
+
         try {
             // Create Ad API call
             console.log("Create Ad API call");
-            console.log(formData.category)
+            console.log(formData.category);
             console.log(token);
             console.log(formData);
             console.log(images);
+
             const response = await createProductWithImages(formData, images, token);
+
             console.log(response);
             if (response.isSuccess) {
                 handleClose();

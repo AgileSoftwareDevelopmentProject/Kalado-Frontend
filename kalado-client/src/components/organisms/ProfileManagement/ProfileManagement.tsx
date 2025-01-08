@@ -1,25 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Avatar, CircularProgress, IconButton } from '@mui/material';
-import { CustomButton, NameInput, EmailInput, PhoneNumberInput, PasswordInput, FormError } from '../../atoms';
+import { CustomButton, NameInput, PhoneNumberInput, FormError } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts';
 import defaultImage from '../../../assets/images/no-image.png';
 import { getProfile, modifyProfile } from '../../../api/services/UserService';
+import { TUserProfileResponse } from '../../../utils/apiTypes'
 
-
-interface UserData {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    address: string;
-    profileImage: File | null;
-}
 
 const ProfileManagement = () => {
     const { t } = useTranslation();
-    const [userData, setUserData] = useState<UserData | null>(null);
+    const [userData, setUserData] = useState<TUserProfileResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -32,17 +25,10 @@ const ProfileManagement = () => {
     const fetchUserData = async () => {
         try {
             setLoading(true);
-            console.log('GetUserByToken API call');
-            console.log(token);
-
-            const response = await getProfile(token);
+            const response = await getProfile();
             console.log(response);
-
-            if (response.isSuccess) {
-                setUserData(response.data);
-            } else {
-                setError(t('error.profile_management.retrieve_failed'));
-            }
+            setUserData(response.data as TUserProfileResponse);
+            console.log(userData);
         } catch (err) {
             setError(t('error.profile_management.retrieve_failed'));
         } finally {
@@ -103,7 +89,8 @@ const ProfileManagement = () => {
                 <>
                     <Box sx={{ position: 'relative', width: 100, height: 100, margin: '20px auto' }}>
                         <Avatar
-                            src={userData.profileImage ? URL.createObjectURL(userData.profileImage) : defaultImage}
+                            // src={userData.profileImage ? URL.createObjectURL(userData.profileImage) : defaultImage}
+                            src={defaultImage}
                             sx={{ width: 100, height: 100 }}
                         />
                         <IconButton
@@ -126,34 +113,23 @@ const ProfileManagement = () => {
                     </Box>
                     <NameInput
                         name="firstName"
-                        value={userData.firstName}
+                        value={userData.firstName || ''}
                         onChange={handleInputChange}
                     />
                     <NameInput
                         name="lastName"
                         placeholder={t('dashboard.user.profile_management.last_name')}
-                        value={userData.lastName}
+                        value={userData.lastName || ''}
                         onChange={handleInputChange}
                     />
-                    {/* <EmailInput
-                        value={userData.email}
-                        onChange={handleInputChange}
-                        disabled
-                    /> */}
                     <PhoneNumberInput
-                        value={userData.phoneNumber}
+                        value={userData.phoneNumber || ''}
                         onChange={handleInputChange}
                     />
-                    {/* <PasswordInput
-                        name="password"
-                        value={userData.password}
-                        placeholder={t('dashboard.user.profile_management.password')}
-                        onChange={handleInputChange}
-                    /> */}
                     <NameInput
                         name="address"
                         placeholder={t('dashboard.user.profile_management.address')}
-                        value={userData.address}
+                        value={userData.address || ''}
                         onChange={handleInputChange}
                     />
                     <CustomButton
