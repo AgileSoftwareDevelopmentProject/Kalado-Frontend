@@ -9,9 +9,8 @@ export async function getProfile(token: string | null) {
         'GET',
         undefined,
         undefined,
-        token,
         {
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${token}`,
         }
     );
 }
@@ -23,9 +22,9 @@ export async function modifyProfile(profileData: ProfileData, token: string | nu
         'PUT',
         profileData,
         undefined,
-        token,
         {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         }
     );
 }
