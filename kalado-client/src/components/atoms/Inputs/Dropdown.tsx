@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 interface Option {
     value: string;
     title: string;
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
 }
 
 interface DropdownProps {

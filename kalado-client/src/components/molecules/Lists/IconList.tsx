@@ -34,7 +34,7 @@ const IconList: React.FC<IconListProps> = ({ items, onSelect, title, initialSele
                         key={item.title}
                         onClick={() => handleCategoryClick(item.value)}
                         sx={{
-                            backgroundColor: selectedCategory === item.title ? '#D74101' : 'transparent',
+                            backgroundColor: selectedCategory === item.value ? '#D74101' : 'transparent',
                             '&:hover': {
                                 backgroundColor: '#D74101',
                                 transform: i18n.language === 'fa' ? 'translateX(-30px)' : 'translateX(30px)',

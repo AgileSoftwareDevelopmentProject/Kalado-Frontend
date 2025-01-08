@@ -4,7 +4,7 @@ import { PRODUCT } from './urls';
 import mockData from '../../mockData.json';  // use for mocking APIs
 
 
-export async function createProductWithImages(productData: ProductData, imageFiles: File[], token: string | null) {
+export async function createProductWithImages(productData: ProductData, imageFiles: File[]) {
     const formData = new FormData();
     formData.append('product', JSON.stringify(productData));
 
