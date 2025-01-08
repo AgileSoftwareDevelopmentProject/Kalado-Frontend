@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 interface NameInputProps {
     name: string;
     placeholder?: string;
-    value: string | null;
+    value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isRequired?: boolean;
     isStarNeeded?: boolean;
@@ -27,7 +27,7 @@ const NameInput: React.FC<NameInputProps> = ({
             type="text"
             name={name}
             placeholder={isStarNeeded ? `${translatedPlaceholder} *` : translatedPlaceholder}
-            value={value != null ? value : translatedPlaceholder}
+            value={value}
             onChange={onChange}
             required={isRequired}
             variant="standard"
