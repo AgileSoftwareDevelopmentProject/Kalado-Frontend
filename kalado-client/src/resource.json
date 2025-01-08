@@ -31,7 +31,8 @@
             "three": "Home & Kitchen",
             "four": "Digital Stuff",
             "five": "Entertainment",
-            "six": "Personal Stuff"
+            "six": "Personal Stuff",
+            "seven": "Others"
         },
         "filter": {
             "title": "Filters",
@@ -278,7 +279,8 @@
             "three": "خانه و آشپزخانه",
             "four": "کالای دیجیتال",
             "five": "سرگرمی",
-            "six": "لوازم شخصی"
+            "six": "لوازم شخصی",
+            "seven": "سایر موارد"
         },
         "filter": {
             "title": "فیلترها",
