@@ -72,11 +72,11 @@ axiosInstance.interceptors.response.use(
 
 export async function sendRequest<T>(
     url: string,
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-    data?: any,
-    params?: any,
-    headers?: Record<string, string>
-): Promise<T> => {
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+    requestData?: any,
+    signal?: AbortSignal,
+    headers: Record<string, string> = {}
+): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
         const response = await axiosInstance.request({
             method,
