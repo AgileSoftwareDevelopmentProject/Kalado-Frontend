@@ -4,7 +4,11 @@ import { Box, Typography, List, ListItemIcon, ListItemText, ListItemButton } fro
 
 
 interface IconListProps {
-    items: { title: string; icon: React.ReactNode }[];
+    items: {
+        value: string;
+        title: string;
+        icon: React.ReactNode;
+    }[];
     onSelect: (title: string) => void;
     title?: string;
     initialSelect: string
@@ -28,9 +32,9 @@ const IconList: React.FC<IconListProps> = ({ items, onSelect, title, initialSele
                 {items.map((item) => (
                     <ListItemButton
                         key={item.title}
-                        onClick={() => handleCategoryClick(item.title)}
+                        onClick={() => handleCategoryClick(item.value)}
                         sx={{
-                            backgroundColor: selectedCategory === item.title ? '#D74101' : 'transparent',
+                            backgroundColor: selectedCategory === item.value ? '#D74101' : 'transparent',
                             '&:hover': {
                                 backgroundColor: '#D74101',
                                 transform: i18n.language === 'fa' ? 'translateX(-30px)' : 'translateX(30px)',

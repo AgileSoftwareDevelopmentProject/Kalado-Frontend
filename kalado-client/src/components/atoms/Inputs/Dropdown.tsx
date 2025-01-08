@@ -4,8 +4,9 @@ import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
 interface Option {
-    label: string;
     value: string;
+    title: string;
+    icon?: React.ReactNode;
 }
 
 interface DropdownProps {
@@ -42,7 +43,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, placeholder, onChange, val
                     }}
                 />
             )}
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={(option) => option.title}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             noOptionsText={t("general_inputs.no_option")}
             onChange={(event, newValue) => {

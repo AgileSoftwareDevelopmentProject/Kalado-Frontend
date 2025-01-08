@@ -31,7 +31,8 @@
             "three": "Home & Kitchen",
             "four": "Digital Stuff",
             "five": "Entertainment",
-            "six": "Personal Stuff"
+            "six": "Personal Stuff",
+            "seven": "Others"
         },
         "filter": {
             "title": "Filters",
@@ -111,7 +112,8 @@
             "category": {
                 "one": "Abusiveness",
                 "two": "Inappropriate Content",
-                "three": "Inappropriate Price"
+                "three": "Inappropriate Price",
+                "four": "Others"
             },
             "choose_evidence": "Evidence/Documents",
             "user_management": {
@@ -278,7 +280,8 @@
             "three": "خانه و آشپزخانه",
             "four": "کالای دیجیتال",
             "five": "سرگرمی",
-            "six": "لوازم شخصی"
+            "six": "لوازم شخصی",
+            "seven": "سایر موارد"
         },
         "filter": {
             "title": "فیلترها",
@@ -358,7 +361,8 @@
             "category": {
                 "one": "فحاشی",
                 "two": "محتوای نامناسب",
-                "three": "قیمت نامتناسب با بازار"
+                "three": "قیمت نامتناسب با بازار",
+                "four": "سایر موارد"
             },
             "choose_evidence": "شواهد/مدارک",
             "user_management": {

@@ -8,17 +8,18 @@ import { useProductContext } from '../../contexts';
 
 const Landing: React.FC = () => {
     const { t } = useTranslation();
-    const [selectedCategoryTitle, setSelectedCategoryTitle] = useState<string>(t("category.one"));
+    const { product_categories } = OptionsComponent();
+    const [selectedCategory, setSelectedCategory] = useState<string>(product_categories[0].value);
 
-    const handleSelectCategory = (categoryKey: string) => {
-        setSelectedCategoryTitle(t(categoryKey));
+    const handleSelectCategory = (categoryValue: string) => {
+        setSelectedCategory(categoryValue);
     };
 
     // Rendering products based on the selected category
     const { fetchProductsByCategory } = useProductContext();
     useEffect(() => {
-        fetchProductsByCategory(selectedCategoryTitle);
-    }, [selectedCategoryTitle]);
+        fetchProductsByCategory(selectedCategory);
+    }, [selectedCategory]);
 
     return (
         <Box>
@@ -29,12 +30,12 @@ const Landing: React.FC = () => {
                     categories={OptionsComponent().product_categories}
                     onSelectCategory={handleSelectCategory}
                     title={t("category.title")}
-                    initialSelect={t("category.one")}
+                    initialSelect={product_categories[0].value}
                 />
                 <Filter />
             </SideBar>
 
-            <ItemsHolder selectedCategoryTitle={selectedCategoryTitle} />
+            <ItemsHolder selectedCategoryTitle={product_categories.find(cat => cat.value === selectedCategory)?.title || ''} />
 
             <LoginForm />
             <SignupForm />
