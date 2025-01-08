@@ -3,6 +3,7 @@ import { IconList } from '../../molecules';
 
 
 interface SideBarMenu {
+    value: string;
     title: string;
     icon: React.ReactNode;
 }

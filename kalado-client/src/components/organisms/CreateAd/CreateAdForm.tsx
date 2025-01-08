@@ -26,7 +26,7 @@ const CreateAdForm: React.FC = () => {
     const { token } = useAuth();
     const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
-    const { create_ad_options } = OptionsComponent();
+    const { product_categories } = OptionsComponent();
     const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
     const handleCategoryChange = (selectedOption: Option | null) => {
@@ -89,6 +89,7 @@ const CreateAdForm: React.FC = () => {
         try {
             // Create Ad API call
             console.log("Create Ad API call");
+            console.log(formData.category)
             console.log(token);
             console.log(formData);
             console.log(images);
@@ -123,10 +124,10 @@ const CreateAdForm: React.FC = () => {
                     isStarNeeded={true}
                 />
                 <Dropdown
-                    options={create_ad_options}
+                    options={product_categories}
                     placeholder={t("create_ad.input.category")}
                     onChange={handleCategoryChange}
-                    value={create_ad_options.find(option => option.value === formData.category) || null}
+                    value={product_categories.find(option => option.value === formData.category) || null}
                 />
                 <YearInput />
                 <NameInput
