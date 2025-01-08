@@ -112,7 +112,8 @@
             "category": {
                 "one": "Abusiveness",
                 "two": "Inappropriate Content",
-                "three": "Inappropriate Price"
+                "three": "Inappropriate Price",
+                "four": "Others"
             },
             "choose_evidence": "Evidence/Documents",
             "user_management": {
@@ -360,7 +361,8 @@
             "category": {
                 "one": "فحاشی",
                 "two": "محتوای نامناسب",
-                "three": "قیمت نامتناسب با بازار"
+                "three": "قیمت نامتناسب با بازار",
+                "four": "سایر موارد"
             },
             "choose_evidence": "شواهد/مدارک",
             "user_management": {

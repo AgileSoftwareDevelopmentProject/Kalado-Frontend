@@ -15,20 +15,21 @@ export const OptionsComponent = () => {
     ];
 
     const user_dashboard_menu = [
-        { title: t("dashboard.user.menu.one"), icon: <FaUser /> },
-        { title: t("dashboard.user.menu.two"), icon: <FaAd /> },
+        { value: 'Profile Management', title: t("dashboard.user.menu.one"), icon: <FaUser /> },
+        { value: 'Ads Management', title: t("dashboard.user.menu.two"), icon: <FaAd /> },
     ];
 
     const admin_dashboard_menu = [
-        { title: t("dashboard.admin.menu.one"), icon: <FaUser /> },
-        { title: t("dashboard.admin.menu.two"), icon: <FaAd /> },
-        { title: t("dashboard.admin.menu.three"), icon: <FaHistory /> },
+        { value: 'Profile Management', title: t("dashboard.admin.menu.one"), icon: <FaUser /> },
+        { value: 'Users Management', title: t("dashboard.admin.menu.two"), icon: <FaAd /> },
+        { value: 'Report History', title: t("dashboard.admin.menu.three"), icon: <FaHistory /> },
     ];
 
     const report_options = [
-        { value: 'Abuse', label: t("report.category.one") },
-        { value: 'Inproper Content', label: t("report.category.two") },
-        { value: 'Inproper Price', label: t("report.category.three") },
+        { value: 'Abuse', title: t("report.category.one") },
+        { value: 'Inproper Content', title: t("report.category.two") },
+        { value: 'Inproper Price', title: t("report.category.three") },
+        { value: 'Others', title: t("report.category.four") },
     ];
 
     const search_options = [
