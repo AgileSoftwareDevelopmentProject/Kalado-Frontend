@@ -28,7 +28,6 @@ const CodeVerificationForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Code Verification API call
         const response = await verifyCode(code);
         if (response.isSuccess) {
             handleClose();
