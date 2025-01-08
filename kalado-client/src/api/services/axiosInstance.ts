@@ -10,42 +10,42 @@ interface ErrorResponseData {
     [key: string]: any;
 }
 
+// axiosInstance.interceptors.request.use(
+
+//     async (config) => {
+//         const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
+//         console.log('-----------------------------------');
+//         console.log('[Request] URL:', config.url);
+//         console.log('[Request] Method:', config.method);
+//         console.log('[Request] Headers:', config.headers);
+//         console.log('[Request] Data:', config.data);
+//         console.log('[Request] Headers:', config.headers);
+//         return config;
+//     },
+
+//     (error) => {
+//         console.error('[Request Interceptor] Error:', error);
+//         return Promise.reject(error);
+//     }
+
+// );
+
 axiosInstance.interceptors.request.use(
-
-    async (config) => {
-
-        const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
-
-
+    (config) => {
+        const { token } = useAuth(); // Get token from context
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
         console.log('-----------------------------------');
-
         console.log('[Request] URL:', config.url);
-
         console.log('[Request] Method:', config.method);
-
         console.log('[Request] Headers:', config.headers);
-
         console.log('[Request] Data:', config.data);
-
-
-        // Let the Authorization header be set by the individual requests
-
         console.log('[Request] Headers:', config.headers);
-
-        
-
+        console.log('Token in useAuth:', token);
         return config;
-
     },
-
-    (error) => {
-
-        console.error('[Request Interceptor] Error:', error);
-
-        return Promise.reject(error);
-
-    }
-
+    (error) => Promise.reject(error)
 );
 
 
@@ -128,7 +128,7 @@ export async function sendRequest<T>(
     headers: Record<string, string> = {}
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
-        console.log("#####################################3");
+        console.log("#####################################");
         console.log(url);
         console.log(method);
         console.log(requestData);
