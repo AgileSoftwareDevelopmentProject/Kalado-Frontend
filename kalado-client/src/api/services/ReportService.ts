@@ -120,8 +120,7 @@ export async function updateReportStatus(reportId: number, reportStatusData: Rep
 //     }
 // }
 
-export async function getAllReports() {
-    const { token } = useAuth();
+export async function getAllReports(token: string | null) {
     return sendRequest<TReportResponseType[]>(
         REPORT.GET_ALL_REPORTS,
         'GET',

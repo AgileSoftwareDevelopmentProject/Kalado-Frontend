@@ -236,6 +236,9 @@
             "profile_management": {
                 "save_failed": "Error Ocurred during Saving your Changes",
                 "retrive_failed": "Error Ocurred during Retrive you Profile Information"
+            },
+            "report_history": {
+                "retrieve_failed": "Error Ocurred during Getting Report History"
             }
         },
         "success": {
@@ -485,6 +488,9 @@
             "profile_management": {
                 "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد",
                 "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد"
+            },
+            "report_history": {
+                "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد",
             }
         },
         "success": {

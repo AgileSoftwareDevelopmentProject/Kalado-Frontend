@@ -3,51 +3,102 @@ import { Box, Typography, Grid, Card, Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useTranslation } from 'react-i18next';
 import ReportDetails from './ReportDetails';
-import pishi1 from '../../../assets/images/pishi1.jpg';
-import pishi4 from '../../../assets/images/pishi4.jpg';
+import {TReportResponseType} from '../../../utils/apiTypes';
+import { getAllReports } from '../../../api/services/ReportService';
+import { useAuth } from '../../../contexts';
+import {FormError} from '../../atoms';
+// import { useHistory } from 'react-router-dom';
 
-export type Report = {
-  id: number;
-  violationType: string;
-  description: string;
-  evidenceImages: string[];
-  reportedContentId: string;
-  reportUserId: string;
-  submissionDate: string;
-};
 
-// mocked reports
-const mockedReports: Report[] = Array.from({ length: 20 }, (_, index) => ({
-  id: index + 1,
-  violationType: index % 3 === 0 ? 'one' : index % 3 === 1 ? 'two' : 'three',
-  description: `من گربه دختر سفارش داده بودم پسر اوردن`,
-  evidenceImages: [
-    pishi1,
-    pishi4,
-  ],
-  reportedContentId: `content_id_${index + 1}`,
-  reportUserId: `user_${index + 1}`,
-  submissionDate: new Date().toISOString(),
-}));
+// for  component that shows in history and details
+// export type Report = {
+
+//   // for history
+//   violationType: string;
+//   submissionDate: string;
+//   reportedContentId: string;
+//   reportUserId: string;
+
+//  // invisible for details
+//   id: number;
+
+
+//   // for details
+//   description: string;
+//   evidenceImages: string[];
+
+
+// };
+
+
+// for api
+// export interface TReportResponseType {
+//   id: number;
+//   violationType: ViolationType;
+//   description: string;
+//   evidenceFiles: string[]; // Array of file Image URLs
+
+//   adminId: number | null;
+//   reporterId: number;
+//   reportedContentId: number;
+
+//   userBlocked: boolean;
+//   status: ReportStatus;
+
+//   createdAt: [number, number, number, number, number, number, number]; // Tuple for date 
+//   adminNotes: string | null;
+//   lastUpdatedAt: [number, number, number, number, number, number, number]; // Tuple for date 
+
+// }
+
+// in reportService:
+// export async function getAllReports() {
+//   const { token } = useAuth();
+//   return sendRequest<TReportResponseType[]>(
+//       REPORT.GET_ALL_REPORTS,
+//       'GET',
+//       undefined,
+//       undefined,
+//       {
+//           'Content-Type': 'application/json',
+//           Authorization: `${token}`,
+//       }
+//   );
+// }
+
 
 const ReportHistory: React.FC = () => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === 'fa';
-  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
-  const [reports, setReports] = useState<Report[]>([]);
+  const [selectedReport, setSelectedReport] = useState<TReportResponseType | null>(null);
+  const [reports, setReports] = useState<TReportResponseType[]>([]);
+  const [error, setError] = useState<string>('');
+  const { token } = useAuth();
+  // const history = useHistory();
 
   useEffect(() => {
-    // simulate API call
-    const fetchReports = async () => {
-      // replace this with an actual API call
-      const apiReports: Report[] = []; // fetch data from API
-      setReports(apiReports.length > 0 ? apiReports : mockedReports);
-    };
+    if (token) {
+      fetchReports();
+    }
+  }, [token]);
 
-    fetchReports();
-  }, []);
 
-  const handleShowDetails = (report: Report) => {
+  const fetchReports = async () => {
+  try {
+    console.log('********************** token:', token);
+    const response = await getAllReports(token);
+    console.log('****************************  api response:', response);
+    if (response.isSuccess) {
+      setReports(response.data);
+    } else {  
+      setError(t('error.report_history.retrieve_failed'));
+    }
+  } catch (err) {
+    setError(t('error.report_history.retrieve_failed'));
+  }
+  };
+
+  const handleShowDetails = (report: TReportResponseType) => {
     setSelectedReport(report);
   };
 
@@ -55,9 +106,19 @@ const ReportHistory: React.FC = () => {
     setSelectedReport(null);
   };
 
-  const handleBlockContent = (contentId: string) => {
-    console.log(`Blocked content: ${contentId}`);
-  };
+  // ****************************************
+  // const handleBlockUser = (userId: string) => {
+  //   console.log(`Blocked content: ${userId}`);
+  // };
+
+  // const handleShowContent = (contentId: string) => {
+  //   history.push(`/content/${contentId}`);
+  // };
+  // ****************************************
+
+  // const handleBlockContent = (contentId: string) => {
+  //   console.log(`Blocked content: ${contentId}`);
+  // };
 
   return (
     <Box
@@ -69,6 +130,10 @@ const ReportHistory: React.FC = () => {
         textAlign: isRtl ? 'right' : 'left',
       }}
     >
+      {error && (
+         <FormError message={error} />
+      )}
+
       {!selectedReport ? (
         <>
           <Typography
@@ -96,13 +161,19 @@ const ReportHistory: React.FC = () => {
                     {t('report.report_card.violation_type')}: {report.violationType}
                   </Typography>
                   <Typography variant="body2" sx={{ marginBottom: 1 }}>
-                    {t('report.report_card.reporter_id')}: {report.reportUserId}
+                    {t('report.report_card.reporter_id')}: {report.reporterId}
                   </Typography>
                   <Typography variant="body2" sx={{ marginBottom: 1 }}>
                     {t('report.report_card.content_id')}: {report.reportedContentId}
                   </Typography>
                   <Typography variant="body2" sx={{ marginBottom: 1 }}>
-                    {t('general_inputs.date')}: {new Date(report.submissionDate).toLocaleDateString()}
+                    {t('general_inputs.date')}: {new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
+                      new Date(
+                        report.createdAt[0], // Year
+                        report.createdAt[1] - 1, // Month (0-based index)
+                        report.createdAt[2] // Day
+                      )
+                    )}
                   </Typography>
                   <Button
                     variant="text"
@@ -125,9 +196,11 @@ const ReportHistory: React.FC = () => {
         </>
       ) : (
         <ReportDetails
-          report={selectedReport}
-          onBackToList={handleBackToList}
-          onBlockContent={handleBlockContent}
+        report={selectedReport}
+        onBackToList={handleBackToList}
+        // onBlockContent={handleBlockContent}
+        // onBlockUser={handleBlockUser}
+        // onShowContent={handleShowContent}
         />
       )}
     </Box>
