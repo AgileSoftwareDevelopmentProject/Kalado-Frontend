@@ -25,7 +25,7 @@ const ReportHistory: React.FC = () => {
     const fetchReports = async () => {
         try {
             const response = await getAllReports(token);
-            if (response.isSuccess) {
+            if (response.isSuccess && response.data) {
                 setReports(response.data);
             } else {
                 setError(t('error.report_history.retrieve_failed'));

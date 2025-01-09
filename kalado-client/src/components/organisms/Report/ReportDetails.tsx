@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import CustomToast from '../../molecules/CustomToast/CustomToast';
+import {ReportStatusUpdateData} from '../../../utils/apiTypes';
 
 interface ReportDetailsProps {
   report: {
@@ -234,7 +235,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
           }}
         >
           <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
-            {t('report.report_card.block_confirmation.title')}
+            {t('report.report_card.block_user_confirmation.title')}
           </Typography>
           <Box sx={{ display: 'flex', gap: 3 }}>
             <IconButton
