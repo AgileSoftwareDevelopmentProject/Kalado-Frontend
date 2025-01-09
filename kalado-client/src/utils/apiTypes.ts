@@ -1,4 +1,4 @@
-import { User, UserType } from '../utils/types'
+import { ReportStatus, User, UserType, ViolationType } from '../utils/types'
 
 
 // Login
@@ -96,7 +96,7 @@ export type TProductResponseType = {
 export interface ReportData {
     violationType: string;
     description: string;
-    reportedUserId?: number;
+    // reportedUserId?: number;
     reportedContentId?: number;
 }
 
@@ -105,8 +105,23 @@ export interface ReportStatusUpdateData {
     adminNotes: string;
     blockUser: boolean;
     blockReason: string | null;
+    blockProduct: boolean;
 }
 
+export interface TReportResponseType {
+    id: number;
+    violationType: ViolationType;
+    description: string;
+    reporterId: number;
+    reportedContentId: number;
+    evidenceFiles: string[]; // Array of file Image URLs
+    createdAt: [number, number, number, number, number, number, number]; // Tuple for date 
+    status: ReportStatus;
+    adminNotes: string | null;
+    lastUpdatedAt: [number, number, number, number, number, number, number]; // Tuple for date 
+    adminId: number | null;
+    userBlocked: boolean;
+}
 
 // User
 export interface ProfileData {
@@ -118,17 +133,13 @@ export interface ProfileData {
 
 export type TUserProfileResponse = {
     id: number;
-    username: string;
     firstName: string;
     lastName: string;
     address: string | null;
     phoneNumber: string;
 };
 
-
-
 // Search
-
 export type PageableResponseType<T> = {
     content: T[];
     pageable: {

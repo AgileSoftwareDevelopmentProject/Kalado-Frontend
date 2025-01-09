@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createAd, createProductWithImages } from '../../../api/services/ProductService';
+import { createProductWithImages } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
 import { ProductData } from '../../../utils/apiTypes';
+import { useAuth } from '../../../contexts';
 
 const CreateAdForm: React.FC = () => {
     const { t } = useTranslation();
@@ -18,14 +19,13 @@ const CreateAdForm: React.FC = () => {
         },
         category: '',
         description: '',
-        // images: [],
         productionYear: null,
         brand: null,
     });
-
+    const { token } = useAuth();
     const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
-    const { create_ad_options } = OptionsComponent();
+    const { product_categories } = OptionsComponent();
     const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
     const handleCategoryChange = (selectedOption: Option | null) => {
@@ -58,10 +58,8 @@ const CreateAdForm: React.FC = () => {
     };
 
     const handleImageUpload = (files: File[]) => {
-        setFormData(prevData => ({
-            ...prevData,
-            images: files
-        }));
+        setImages(files);
+        setError('');
     };
 
     const handleClose = () => {
@@ -73,7 +71,6 @@ const CreateAdForm: React.FC = () => {
             },
             category: '',
             description: '',
-            // images: [],
             productionYear: null,
             brand: null,
         });
@@ -85,12 +82,21 @@ const CreateAdForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (images.length === 0) {
+            setError(t("error.create_add.required_image"));
+            return;
+        }
+
         try {
             // Create Ad API call
-            const response = await createProductWithImages(formData, images);
             console.log("Create Ad API call");
+            console.log(formData.category);
+            console.log(token);
             console.log(formData);
             console.log(images);
+
+            const response = await createProductWithImages(formData, images, token);
+
             console.log(response);
             if (response.isSuccess) {
                 handleClose();
@@ -121,10 +127,10 @@ const CreateAdForm: React.FC = () => {
                     isStarNeeded={true}
                 />
                 <Dropdown
-                    options={create_ad_options}
+                    options={product_categories}
                     placeholder={t("create_ad.input.category")}
                     onChange={handleCategoryChange}
-                    value={create_ad_options.find(option => option.value === formData.category) || null}
+                    value={product_categories.find(option => option.value === formData.category) || null}
                 />
                 <YearInput />
                 <NameInput

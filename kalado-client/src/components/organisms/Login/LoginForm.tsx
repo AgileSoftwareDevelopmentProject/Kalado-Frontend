@@ -41,9 +41,8 @@ const LoginForm: React.FC = () => {
         if (validateUserInputs()) {
             const response = await loginUser(formData.email, formData.password);
             if (response.isSuccess) {
-                console.log("Login API call");
-                console.log(response);
                 setToken(response.data.token);
+                localStorage.setItem('token', response.data.token);
                 setUserRole(response.data.role);
                 handleClose();
                 toast(t("success.login"));

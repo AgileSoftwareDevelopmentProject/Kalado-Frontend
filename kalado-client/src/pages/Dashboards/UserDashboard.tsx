@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
-import { CustomButton } from '../../components/atoms';
 import { SideBar } from '../../components/molecules';
 import { SideBarMenu, ProfileManagement, AdManagement, NavBar, CreateAdForm } from '../../components/organisms';
 import { useModalContext } from '../../contexts';
@@ -12,7 +11,6 @@ const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { user_dashboard_menu } = OptionsComponent();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
-    const { handleOpenReportSubmission } = useModalContext();
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);

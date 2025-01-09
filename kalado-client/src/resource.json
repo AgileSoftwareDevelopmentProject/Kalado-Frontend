@@ -31,7 +31,8 @@
             "three": "Home & Kitchen",
             "four": "Digital Stuff",
             "five": "Entertainment",
-            "six": "Personal Stuff"
+            "six": "Personal Stuff",
+            "seven": "Others"
         },
         "filter": {
             "title": "Filters",
@@ -96,16 +97,23 @@
             "city": "City",
             "date": "Issued Date",
             "description": "Description",
-            "report_submission_btn": "Submit Report"
+            "report_submission_btn": "Submit Report",
+            "no_title": "Unknown Title",
+            "no_brand": "Unknown Brand",
+            "no_date": "Unlnown Date",
+            "no_description": "No description available",
+            "no_seller_phone": "Unknown Seller Phone"
         },
         "report": {
             "input": {
-                "category": "Report's Type"
+                "category": "Report's Type",
+                "description": "Description"
             },
             "category": {
                 "one": "Abusiveness",
                 "two": "Inappropriate Content",
-                "three": "Inappropriate Price"
+                "three": "Inappropriate Price",
+                "four": "Others"
             },
             "choose_evidence": "Evidence/Documents",
             "user_management": {
@@ -140,22 +148,16 @@
                     "title_ad": "Are you Sure to Block this Ad?"
               },
               "block_usr_success_message": "The user has been successfully blocked.",
-                "block_ad_success_message": "The ad has been successfully blocked."
-     
+                "block_ad_success_message": "The ad has been successfully blocked.",
+                "no_reports": "No reports found."
             },
             "error": {
-
                 "missing_violation_type": "Violation type is required.",
-        
                 "missing_description_or_image": "You must provide either a description or at least one piece of evidence.",
-        
                 "submission_failed": "An error occurred while submitting the report. Please try again."
-        
             },
             "success": {
-        
                 "report_submitted": "Your report has been successfully submitted."
-        
             }
         },
         "dashboard": {
@@ -222,7 +224,8 @@
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "For Submitting an Ad, Login to your Account"
+                "disable_not_loggined": "For Submitting an Ad, Login to your Account",
+                "required_image": "Please choose at least one image for your Ad"
             },
             "login": {
                 "not_verified": "For login, First Verify your Email"
@@ -239,6 +242,9 @@
             "profile_management": {
                 "save_failed": "Error Ocurred during Saving your Changes",
                 "retrive_failed": "Error Ocurred during Retrive you Profile Information"
+            },
+            "report_history": {
+                "retrieve_failed": "Error Ocurred during Getting Report History"
             }
         },
         "success": {
@@ -283,7 +289,8 @@
             "three": "خانه و آشپزخانه",
             "four": "کالای دیجیتال",
             "five": "سرگرمی",
-            "six": "لوازم شخصی"
+            "six": "لوازم شخصی",
+            "seven": "سایر موارد"
         },
         "filter": {
             "title": "فیلترها",
@@ -348,16 +355,23 @@
             "city": "شهر",
             "date": "تاریخ ثبت",
             "description": "توضیحات",
-            "report_submission_btn": "ثبت تخلف"
+            "report_submission_btn": "ثبت تخلف",
+            "no_title": "بدون عنوان",
+            "no_brand": "برند نامشخص",
+            "no_date": "تاریخ ساخت نامشخص",
+            "no_description": "بدون توضیحات",
+            "no_seller_phone": "شماره تلفن فروشنده نامشخص"
         },
         "report": {
             "input": {
-                "category": "نوع تخلف"
+                "category": "نوع تخلف",
+                "description": "توضیحات"
             },
             "category": {
                 "one": "فحاشی",
                 "two": "محتوای نامناسب",
-                "three": "قیمت نامتناسب با بازار"
+                "three": "قیمت نامتناسب با بازار",
+                "four": "سایر موارد"
             },
             "choose_evidence": "شواهد/مدارک",
             "user_management": {
@@ -392,8 +406,9 @@
                     "title_ad": "آیا از مسدود کردن این آگهی اطمینان دارید؟"
                 },
                 "block_usr_success_message": "کاربر با موفقیت مسدود شد.",
-                "block_ad_success_message": "آگهی با موفقیت مسدود شد."
-            },           
+                "block_ad_success_message": "آگهی با موفقیت مسدود شد.",        
+                "no_reports": "هیچ گزارشی یافت نشد"
+            },
             "error": {
                 "missing_violation_type": "انتخاب نوع تخلف الزامی است.",
                 "missing_description_or_image": "لطفاً توضیحاتی ارائه دهید یا حداقل یک مدرک بارگذاری کنید.",
@@ -467,7 +482,8 @@
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید"
+                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید",
+                "required_image": "لطفا حداقل یک عکس برای آگهی خود انتخاب کنید"
             },
             "login": {
                 "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
@@ -484,6 +500,9 @@
             "profile_management": {
                 "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد",
                 "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد"
+            },
+            "report_history": {
+                "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد"
             }
         },
         "success": {

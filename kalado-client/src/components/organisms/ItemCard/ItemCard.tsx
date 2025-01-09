@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import defaultImage from '../../../assets/images/no-image.png';
 
 interface ItemCardProps {

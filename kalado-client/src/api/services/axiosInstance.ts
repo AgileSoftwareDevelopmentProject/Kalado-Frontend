@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
         console.log('[Request] Data:', config.data);
 
         if (token && !isPublicEndpoint) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+            config.headers['Authorization'] = `${token}`;
             console.log('[Request] Authorization Token Attached');
         } else {
             console.log('[Request] Public Endpoint - No Token Attached');
@@ -69,45 +69,6 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
-// Request Wrapper Function
-// export async function sendRequest<T>(
-//     url: string,
-//     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-//     requestData?: any,
-//     signal?: AbortSignal
-// ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
-//     try {
-//         console.log('-----------------------------------');
-//         console.log(`[Request Wrapper] Sending Request: Method=${method}, URL=${url}, Data=`, requestData);
-//         const response = await axiosInstance.request({
-//             method,
-//             url,
-//             data: requestData,
-//             signal,
-//         });
-
-//         console.log('[Request Wrapper] Success:', response.data);
-//         return {
-//             isSuccess: true,
-//             data: response.data as T,
-//             status: response.status,
-//         };
-//     } catch (error) {
-//         const axiosError = error as AxiosError<ErrorResponseData>;
-//         console.error('[Request Wrapper] Error:', axiosError);
-
-//         // Accessing message from error.response?.data
-//         const message = axiosError.response?.data?.message || 'An unknown error occurred.';
-
-//         return {
-//             isSuccess: false,
-//             data: null,
-//             status: axiosError.response?.status || 500,
-//             message,
-//         };
-//     }
-// }
 
 export async function sendRequest<T>(
     url: string,

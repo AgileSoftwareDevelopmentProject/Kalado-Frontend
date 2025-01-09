@@ -45,9 +45,10 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
         </Typography>
     );
 
-    const formatDate = (timestamp: number): string => {
+    const formatDate = (timestamp: string | null): string => {
+        if (!timestamp) return t("item_details.no_date");
         const date = new Date(timestamp);
-        return new Intl.DateTimeFormat('en-US', {
+        return new Intl.DateTimeFormat('fa-IR', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
@@ -88,7 +89,7 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
                     flexGrow: 1,
                 }}>
                     {sortedItems().map(item => (
-                        <Box key={item.itemId} sx={{
+                        <Box key={item.id} sx={{
                             flexBasis: { xs: '100%', sm: '50%', md: products.length === 1 ? '100%' : '30%' },
                             mb: 2,
                             display: 'flex',

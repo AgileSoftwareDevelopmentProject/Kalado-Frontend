@@ -1,28 +1,10 @@
 import { ProductData, TProductResponseType } from '../../utils/apiTypes';
 import { sendRequest } from './axiosInstance';
 import { PRODUCT } from './urls';
-import { useAuth } from '../../contexts/AuthContext';
 import mockData from '../../mockData.json';  // use for mocking APIs
 
 
-// export async function createAd(productData: ProductData) {
-//     const { token } = useAuth();
-//     return sendRequest<TProductResponseType>(
-//         PRODUCT.CREATE,
-//         'POST',
-//         productData,
-//         undefined,
-//         {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${token}`,
-//         }
-//     );
-// }
-
-
 export async function createProductWithImages(productData: ProductData, imageFiles: File[]) {
-    const { token } = useAuth();
-
     const formData = new FormData();
     formData.append('product', JSON.stringify(productData));
 
@@ -31,32 +13,30 @@ export async function createProductWithImages(productData: ProductData, imageFil
     });
 
     return sendRequest<TProductResponseType>(
-        '/v1/product',
+        PRODUCT.CREATE,
         'POST',
         formData,
         undefined,
         {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
         }
     );
 }
 
-export async function deleteAd(adId: number) {
-    const { token } = useAuth();
+
+export async function deleteAd(adId: number, token: string | null) {
     return sendRequest(
         PRODUCT.DELETE(adId),
         'PUT',
         undefined,
         undefined,
         {
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
         }
     );
 }
 
-export async function updateAd(productId: number, productData: ProductData) {
-    const { token } = useAuth();
+export async function updateAd(productId: number, productData: ProductData, token: string | null) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE(productId),
         'PUT',
@@ -64,13 +44,11 @@ export async function updateAd(productId: number, productData: ProductData) {
         undefined,
         {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
         }
     );
 }
 
-export async function updateAdStatus(productId: number, status: string) {
-    const { token } = useAuth();
+export async function updateAdStatus(productId: number, status: string, token: string | null) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE_STATUS(productId),
         'PUT',
@@ -78,13 +56,11 @@ export async function updateAdStatus(productId: number, status: string) {
         undefined,
         {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
         }
     );
 }
 
 export async function getSingleProduct(adId: number) {
-    // const { token } = useAuth();
     return sendRequest<TProductResponseType>(
         PRODUCT.GET_SINGLE(adId),
         'GET',
@@ -92,18 +68,6 @@ export async function getSingleProduct(adId: number) {
         undefined
     );
 }
-
-// Mock Function
-// export const getSingleProduct = async (itemId: number) => {
-//     return new Promise((resolve, reject) => {
-//         const item = mockData.items.find(product => product.itemId === String(itemId));
-//         if (item) {
-//             resolve(item);
-//         } else {
-//             reject(new Error('Item not found'));
-//         }
-//     });
-// };
 
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
@@ -116,7 +80,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
             undefined,
             undefined
         );
-
         return response.data as TProductResponseType[];
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -124,29 +87,18 @@ export async function getProductsByCategory(category: string): Promise<TProductR
     }
 }
 
-// Mock Function
-// export const getProductsByCategory = async (category) => {
-//     return new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(mockData.items);
-//         }, 1000);
-//     });
-// };
-
-
 // Use it like the following:
 // const res = response.data as TProductResponseType[]
 // setProducts(res)
-export async function getSellersProducts(): Promise<TProductResponseType[]> {
+export async function getSellersProducts(token: string | null): Promise<TProductResponseType[]> {
     try {
-        const { token } = useAuth();
         const response = await sendRequest(
             PRODUCT.GET_BY_SELLER,
             'GET',
             undefined,
             undefined,
             {
-                Authorization: `Bearer ${token}`,
+                Authorization: `${token}`,
             }
         );
 
@@ -159,3 +111,22 @@ export async function getSellersProducts(): Promise<TProductResponseType[]> {
 
 
 
+// **************** Mock Functions ****************
+// export const getSingleProduct = async (itemId: number) => {
+//     return new Promise((resolve, reject) => {
+//         const item = mockData.items.find(product => product.id === String(itemId));
+//         if (item) {
+//             resolve(item);
+//         } else {
+//             reject(new Error('Item not found'));
+//         }
+//     });
+// };
+
+// export const getProductsByCategory = async (category) => {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(mockData.items);
+//         }, 1000);
+//     });
+// };
