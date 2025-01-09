@@ -79,8 +79,7 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
 }
 
 
-export async function updateReportStatus(reportId: number, reportStatusData: ReportStatusUpdateData) {
-    const { token } = useAuth();
+export async function updateReportStatus(reportId: number, reportStatusData: ReportStatusUpdateData, token: string | null) {
     return sendRequest<TReportResponseType>(
         REPORT.UPDATE_STATUS(reportId),
         'POST',

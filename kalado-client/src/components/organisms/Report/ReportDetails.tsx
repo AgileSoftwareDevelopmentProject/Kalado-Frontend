@@ -16,6 +16,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomToast from '../../molecules/CustomToast/CustomToast';
 import {ReportStatusUpdateData} from '../../../utils/apiTypes';
+import { useAuth } from '../../../contexts';
+import { FormError } from '../../atoms';
+import { updateReportStatus } from '../../../api/services/ReportService';
+
 
 interface ReportDetailsProps {
   report: {
@@ -23,6 +27,7 @@ interface ReportDetailsProps {
     description: string;
     image: string[];
     contentId: number;
+    id: number;
   };
   onBackToList: () => void;
   onBlockContent: (contentId: number) => void;
@@ -34,6 +39,69 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
   const [openImage, setOpenImage] = useState<string | null>(null);
   const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false);
   const [isBlockAdDialogOpen, setIsBlockAdDialogOpen] = useState(false);
+  const [error, setError] = useState<string>('');
+  const { token } = useAuth();
+
+
+const handleBlockUsrConfirm = async () => {
+  try {
+    const payload: ReportStatusUpdateData = {
+      status: 'APPROVED',
+      adminNotes: 'MIO',
+      blockUser: true,
+      blockReason: 'MIO',
+      blockProduct: true,
+    };
+
+    const response = await updateReportStatus(report.id, payload, token);
+    if (response.isSuccess) {
+      toast.success(t('report.report_card.block_usr_success_message'), {
+        position: isRtl ? 'bottom-right' : 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      setError(t('report.report_card.block_usr_error_message'));
+    }
+  } catch (err) {
+    console.error('error blocking usr:', err);
+    setError(t('report.report_card.block_usr_error_message'));
+  }
+  setIsBlockDialogOpen(false);
+};
+
+const handleBlockAdConfirm = async () => {
+  try {
+    const payload: ReportStatusUpdateData = {
+      status: 'APPROVED',
+      adminNotes: 'MIO',
+      blockUser: false,
+      blockReason:'MIO',
+      blockProduct: true,
+    };
+
+    const response = await updateReportStatus(report.id, payload, token);
+    if (response.isSuccess) {
+      toast.success(t('report.report_card.block_ad_success_message'), {
+        position: isRtl ? 'bottom-right' : 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      setError(t('report.report_card.block_ad_error_message'));
+    }
+  } catch (err) {
+    console.error('error blocking Ad:', err); 
+    setError(t('report.report_card.block_ad_error_message'));
+  }
+  setIsBlockAdDialogOpen(false);
+};
 
   const handleOpenImage = (image: string) => {
     setOpenImage(image);
@@ -43,37 +111,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
     setOpenImage(null);
   };
 
-  const handleBlockConfirm = () => {
-    if (report) {
-      onBlockContent(report.contentId);
-
-      // Display success toast
-      toast.success(t('report.report_card.block_usr_success_message'), {
-        position: isRtl ? 'bottom-right' : 'bottom-left',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
-    setIsBlockDialogOpen(false);
-  };
-
-  const handleBlockAdConfirm = () => {
-    if (report) {
-      // Perform ad blocking logic
-      toast.success(t('report.report_card.block_ad_success_message'), {
-        position: isRtl ? 'bottom-right' : 'bottom-left',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
-    setIsBlockAdDialogOpen(false);
-  };
+ {/* {error && <FormError message={error} />} */}
 
   return (
     <>
@@ -199,7 +237,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
         >
         <Button
           variant="outlined"
-          onClick={() => window.open(`/product/${report.reportedContentId}`, '_blank')}
+          onClick={() => window.open(`/product/${report.contentId}`, '_blank')}
           sx={{
             textTransform: 'none',
           }}
@@ -278,7 +316,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
           </Typography>
           <Box sx={{ display: 'flex', gap: 3 }}>
             <IconButton
-              onClick={handleBlockConfirm}
+              onClick={handleBlockUsrConfirm}
               sx={{
                 backgroundColor: 'green',
                 width: 48,

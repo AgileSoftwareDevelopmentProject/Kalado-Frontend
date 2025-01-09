@@ -53,7 +53,7 @@ const ReportHistory: React.FC = () => {
                 textAlign: isRtl ? 'right' : 'left',
             }}
         >
-            {error && <FormError message={error} />}
+            {/* {error && <FormError message={error} />} */}
 
             {!selectedReport ? (
                 <>
@@ -128,6 +128,7 @@ const ReportHistory: React.FC = () => {
                         description: selectedReport.description,
                         image: selectedReport.evidenceFiles,
                         contentId: selectedReport.reportedContentId,
+                        id: selectedReport.id,
                     }}
                     onBackToList={handleBackToList}
                     onBlockContent={(contentId) => {
