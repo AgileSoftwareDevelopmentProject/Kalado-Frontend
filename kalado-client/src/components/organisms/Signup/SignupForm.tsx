@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomCheckBox, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { signupUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 import { validatePassword, validatePhoneNumber } from '../../../validators';
-import { useModalContext } from '../../../contexts';
+import { openCodeVerification, openLogin, closePopups } from '../../../features/modal/modalSlice';
 
 
 const SignupForm: React.FC = () => {
@@ -21,7 +22,8 @@ const SignupForm: React.FC = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
-  const { isSignupVisible, handleOpenLogin, handleOpenCodeVerification } = useModalContext();
+  const dispatch = useDispatch();
+  const isSignupVisible = useSelector((state) => state.modal.isSignupVisible);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -63,7 +65,7 @@ const SignupForm: React.FC = () => {
   const handleClose = () => {
     setFormData(initialFormData);
     setError('');
-    handleOpenCodeVerification();
+    dispatch(closePopups());
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,6 +83,7 @@ const SignupForm: React.FC = () => {
 
       if (response.isSuccess) {
         handleClose();
+        dispatch(openCodeVerification());
         toast(t("success.signup"));
       } else {
         setError(response.message);
@@ -89,7 +92,7 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <PopupBox open={isSignupVisible}>
+    <PopupBox onOpen={isSignupVisible} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <NameInput
           name="firstName"
@@ -138,8 +141,7 @@ const SignupForm: React.FC = () => {
           type="submit"
         />
         <CustomLink
-          to="/#"
-          onClick={(e) => { e.preventDefault(); handleOpenLogin(); }}
+          onClick={(e) => { e.preventDefault(); dispatch(openLogin()); }}
           text={t("signup_form.login_link")}
         />
         <FormError message={error} />

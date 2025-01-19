@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
 import { SideBarMenu, ProfileManagement, AdManagement, NavBar, CreateAdForm } from '../../components/organisms';
-import { useModalContext } from '../../contexts';
 import { OptionsComponent } from '../../constants/options';
 
 

@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
-import { useProductContext } from '../../../contexts/ProductContext';
+import { Product } from '../../../types/apiTypes';
 
 
 interface ItemsHolderProps {
-    selectedCategoryTitle: string;
+    selectedCategory: string;
 }
 
-const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
+const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategory }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { products, loading, error } = useProductContext();
     const [sortOption, setSortOption] = useState<string>('newest');
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.products);
+    const loading = useSelector((state) => state.products.loading);
+    const error = useSelector((state) => state.products.error);
+
+    useEffect(() => {
+        //  dispatch(fetchProductsByCategory(selectedCategory));
+    }, [selectedCategory, dispatch]);
+
 
     const sortedItems = () => {
         if (!products) return [];

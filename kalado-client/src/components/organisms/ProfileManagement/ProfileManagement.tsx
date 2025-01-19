@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box, Avatar, CircularProgress, IconButton } from '@mui/material';
 import { CustomButton, NameInput, PhoneNumberInput, FormError } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../contexts';
 import defaultImage from '../../../assets/images/no-image.png';
 import { getProfile, modifyProfile } from '../../../api/services/UserService';
 import { TUserProfileResponse } from '../../../utils/apiTypes'
@@ -16,7 +16,7 @@ const ProfileManagement = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const { token } = useAuth();
+    const token = useSelector((state) => state.auth.token);
 
     useEffect(() => {
         fetchUserData();

@@ -1,20 +1,24 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { ReportSubmissionForm, ItemDetailsCard } from '../../components/organisms';
-import { useProductContext } from '../../contexts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 
 const ItemDetails: React.FC = () => {
     const { t } = useTranslation();
     const { itemId } = useParams<{ itemId: string }>();
-    const { singleProduct, loading, error, fetchSingleProduct } = useProductContext();
+    // const { singleProduct, loading, error, fetchSingleProduct } = useProductContext();
+    const products = useSelector((state) => state.products.products);
+    const loading = useSelector((state) => state.products.loading);
+    const error = useSelector((state) => state.products.error);
+
 
     useEffect(() => {
         if (!itemId) return;
-        fetchSingleProduct(Number(itemId));
+        // fetchSingleProduct(Number(itemId));
     }, [itemId]);
 
     return (
@@ -31,7 +35,7 @@ const ItemDetails: React.FC = () => {
             {!loading && singleProduct && (
                 <>
                     <ItemDetailsCard
-                    
+
                         item={singleProduct}
                         neededReportSubmissionForm={true}
                     />

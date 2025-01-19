@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { loginUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../contexts/AuthContext';
 import { validateEmail } from '../../../validators';
-import { useModalContext } from '../../../contexts';
+import { setToken, setUserRole } from '../../../features/auth/authSlice';
+import { openSignup, closePopups } from '../../../features/modal/modalSlice';
 
 
 const LoginForm: React.FC = () => {
@@ -17,8 +18,8 @@ const LoginForm: React.FC = () => {
     };
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState<string>('');
-    const { setToken, setUserRole } = useAuth();
-    const { isLoginVisible, handleOpenSignup, handleClosePopups } = useModalContext();
+    const dispatch = useDispatch();
+    const isLoginVisible = useSelector((state) => state.modal.isLoginVisible);
 
     const validateUserInputs = () => {
         const emailValidationResult = validateEmail(formData.email, t);
@@ -32,7 +33,7 @@ const LoginForm: React.FC = () => {
     const handleClose = () => {
         setFormData(initialFormData);
         setError('');
-        handleClosePopups();
+        dispatch(closePopups());
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +54,7 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <PopupBox open={isLoginVisible}>
+        <PopupBox onOpen={isLoginVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 <EmailInput
                     value={formData.email}
@@ -69,8 +70,7 @@ const LoginForm: React.FC = () => {
                     type="submit"
                 />
                 <CustomLink
-                    to="/#"
-                    onClick={(e) => { e.preventDefault(); handleOpenSignup(); }}
+                    onClick={(e) => { e.preventDefault(); dispatch(openSignup()); }}
                     text={t("login_form.signup_link")}
                 />
                 <FormError message={error} />

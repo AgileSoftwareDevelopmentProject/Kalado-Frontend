@@ -4,13 +4,12 @@ import { Box, Typography } from '@mui/material';
 import { CustomButton } from '../../atoms';
 import { LabelList, NumberRange } from '../../molecules';
 import { OptionsComponent } from '../../../constants/options';
-import { useProductContext } from '../../../contexts/ProductContext';
 
 
 const Filter: React.FC = () => {
   const { t } = useTranslation();
   const { date_filter_options } = OptionsComponent();
-  const { applyFilters } = useProductContext();
+  // const { applyFilters } = useProductContext();
   const [date, setDate] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number | 0>(0);
   const [maxPrice, setMaxPrice] = useState<number | 0>(0);
@@ -29,7 +28,7 @@ const Filter: React.FC = () => {
 
   // Rendering products based on Applied Filters
   const handleApplyFilters = () => {
-    applyFilters(date, minPrice, maxPrice, date);
+    // applyFilters(date, minPrice, maxPrice, date);
   };
 
   return (

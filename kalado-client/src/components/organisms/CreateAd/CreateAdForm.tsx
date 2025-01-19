@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createProductWithImages } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
-import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
 import { ProductData } from '../../../utils/apiTypes';
-import { useAuth } from '../../../contexts';
+import { openCreateAd, closePopups } from '../../../features/modal/modalSlice';
+
 
 const CreateAdForm: React.FC = () => {
     const { t } = useTranslation();
@@ -22,11 +23,12 @@ const CreateAdForm: React.FC = () => {
         productionYear: null,
         brand: null,
     });
-    const { token } = useAuth();
+    const dispatch = useDispatch();
+    const isCreateAdVisible = useSelector((state) => state.modal.isCreateAdVisible);
+    const token = useSelector((state) => state.auth.token);
     const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
     const { product_categories } = OptionsComponent();
-    const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
     const handleCategoryChange = (selectedOption: Option | null) => {
         setFormData(prevData => ({
@@ -76,7 +78,7 @@ const CreateAdForm: React.FC = () => {
         });
         setImages([]);
         setError('');
-        handleClosePopups();
+        dispatch(closePopups());
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,7 +112,7 @@ const CreateAdForm: React.FC = () => {
     };
 
     return (
-        <PopupBox open={isCreateAdVisible}>
+        <PopupBox onOpen={isCreateAdVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"

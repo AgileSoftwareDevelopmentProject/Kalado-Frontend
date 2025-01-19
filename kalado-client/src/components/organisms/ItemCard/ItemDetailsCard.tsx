@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
 import defaultImage from '../../../assets/images/no-image.png';
@@ -8,7 +9,6 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
-import { useModalContext } from '../../../contexts';
 import { toast } from 'react-toastify';
 
 
@@ -32,7 +32,7 @@ interface ItemDetailsCardProps {
 
 const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSubmissionForm = false }) => {
     const { t } = useTranslation();
-    const { handleOpenReportSubmission } = useModalContext();
+    const isReportSubmissionVisible = useSelector((state) => state.modal.isReportSubmissionVisible);
 
     const imageToDisplay = item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : defaultImage;
 

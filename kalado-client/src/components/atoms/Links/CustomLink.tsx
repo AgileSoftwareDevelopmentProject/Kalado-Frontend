@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink, LinkProps as MuiLinkProps, useTheme } from '@mui/material';
 
 interface CustomLinkProps extends MuiLinkProps {
-    to: string;
+    to?: string;
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
     text: string;
 }

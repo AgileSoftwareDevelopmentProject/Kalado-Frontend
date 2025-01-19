@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { createReportWithImages } from '../../../api/services/ReportService';
 import { toast } from 'react-toastify';
-import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
 import { ReportData } from '../../../utils/apiTypes';
-import { useAuth } from '../../../contexts';
+import { openSignup, closePopups } from '../../../features/modal/modalSlice';
 
 
 interface ReportSubmissionFormProps {
@@ -24,8 +24,9 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
     const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
     const { report_options } = OptionsComponent();
-    const { isReportSubmissionVisible, handleClosePopups } = useModalContext();
-    const { token } = useAuth();
+    const dispatch = useDispatch();
+    const isReportSubmissionVisible = useSelector((state) => state.modal.isReportSubmissionVisible);
+    const token = useSelector((state) => state.auth.token);
 
     if (!report_options) {
         console.error('report_options is undefined or null');
@@ -57,7 +58,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
         });
         setImages([]);
         setError('');
-        handleClosePopups();
+        dispatch(closePopups());
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -97,7 +98,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
     };
 
     return (
-        <PopupBox open={isReportSubmissionVisible}>
+        <PopupBox onOpen={isReportSubmissionVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 {report_options ? (
                     <Dropdown

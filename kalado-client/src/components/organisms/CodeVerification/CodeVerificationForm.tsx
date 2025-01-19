@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { CodeInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { verifyCode } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
-import { useModalContext } from '../../../contexts';
+import { openCodeVerification, openLogin, closePopups } from '../../../features/modal/modalSlice';
 
 
 const CodeVerificationForm: React.FC = () => {
     const { t } = useTranslation();
     const [code, setCode] = useState('');
     const [error, setError] = useState<string>('');
-    const { isCodeVerificationVisible, handleClosePopups } = useModalContext();
+    const dispatch = useDispatch();
+    const isCodeVerificationVisible = useSelector((state) => state.modal.isCodeVerificationVisible);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -23,7 +25,7 @@ const CodeVerificationForm: React.FC = () => {
     const handleClose = () => {
         setCode('');
         setError('');
-        handleClosePopups();
+        dispatch(closePopups());
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -38,7 +40,7 @@ const CodeVerificationForm: React.FC = () => {
     };
 
     return (
-        <PopupBox open={isCodeVerificationVisible}>
+        <PopupBox onOpen={isCodeVerificationVisible} onClose={handleClose}>
             <p>{t("code_verification.enter_code")}</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput

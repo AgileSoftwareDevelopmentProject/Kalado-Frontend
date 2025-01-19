@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
 import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CodeVerificationForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
-import { useProductContext } from '../../contexts';
+
 
 const Landing: React.FC = () => {
     const { t } = useTranslation();
     const { product_categories } = OptionsComponent();
     const [selectedCategory, setSelectedCategory] = useState<string>(product_categories[0].value);
-
-    const handleSelectCategory = (categoryValue: string) => {
-        setSelectedCategory(categoryValue);
-    };
-
-    const { fetchProductsByCategory } = useProductContext();
-    useEffect(() => {
-        fetchProductsByCategory(selectedCategory);
-    }, [selectedCategory]);
 
     return (
         <Box>
@@ -27,14 +18,14 @@ const Landing: React.FC = () => {
             <SideBar>
                 <SideBarMenu
                     categories={OptionsComponent().product_categories}
-                    onSelectCategory={handleSelectCategory}
+                    onSelectCategory={(categoryValue: string) => setSelectedCategory(categoryValue)}
                     title={t("category.title")}
                     initialSelect={product_categories[0].value}
                 />
                 <Filter />
             </SideBar>
 
-            <ItemsHolder selectedCategoryTitle={selectedCategory} />
+            <ItemsHolder selectedCategory={selectedCategory} />
 
             <LoginForm />
             <SignupForm />
