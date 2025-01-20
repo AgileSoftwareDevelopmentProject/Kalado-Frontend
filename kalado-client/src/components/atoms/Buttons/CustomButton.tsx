@@ -36,7 +36,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         borderRadius: borderRadius || (shape === 'square' ? '0px' : '30px'),
         width: 'auto',
         backgroundColor: backgroundColor,
-        padding: padding,
+        padding: type === 'submit' ? '5px 30px' : padding,
         margin: margin,
         color: color,
         transition: 'all 0.3s ease',

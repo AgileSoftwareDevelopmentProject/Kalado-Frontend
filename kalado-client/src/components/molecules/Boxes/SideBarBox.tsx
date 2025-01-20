@@ -12,14 +12,14 @@ const SideBarBox: React.FC<SideBarBoxProps> = ({ children }) => {
     return (
         <Box
             sx={{
-                width: i18n.language === 'en' ? '400px' : '350px',
+                width: { xs: '100%', sm: '300px', md: i18n.language === 'en' ? '400px' : '350px' },
                 padding: 2,
                 height: '100vh',
                 position: 'fixed',
                 overflowY: 'auto',
                 top: '150px',
-                left: i18n.language === 'en' ? '30px' : 'unset',
-                right: i18n.language === 'fa' ? '30px' : 'unset',
+                left: { xs: '0', md: i18n.language === 'en' ? '30px' : 'unset' },
+                right: { xs: '0', md: i18n.language === 'fa' ? '30px' : 'unset' },
                 p: 2,
             }}
         >

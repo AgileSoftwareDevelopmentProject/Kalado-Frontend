@@ -38,7 +38,6 @@ const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
                 transform: 'translate(-50%, -50%)',
                 backgroundColor: theme.palette.background.default,
                 borderRadius: 10,
-                border: '2px solid rgba(255, 255, 255, 0.5)',
             }}>
                 <Logo />
                 <CloseButton onClose={handleClosePopups} />

@@ -18,11 +18,11 @@ const CloseButton: React.FC<CloseButtonProps> = ({ onClose }) => {
                 backgroundColor: 'transparent',
                 position: 'absolute',
                 top: '10px',
-                right: '10px',
+                right: '5px',
                 padding: '0',
             }}
         >
-            <FaTimes size={24} />
+            <FaTimes size={20} />
         </Button>
     );
 };
