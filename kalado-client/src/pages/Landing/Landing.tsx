@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton } from '@mui/material';
 import { SideBar } from '../../components/molecules';
-import { NavBar, SideBarMenu, Filter, LoginForm, ForgetPasswordForm, SignupForm, CodeVerificationForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
+import { NavBar, SideBarMenu, Filter, FormGroup, ItemsHolder } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 import { useProductContext } from '../../contexts';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -76,11 +76,7 @@ const Landing: React.FC = () => {
 
             <ItemsHolder selectedCategoryTitle={selectedCategory.title} />
 
-            <LoginForm />
-            <ForgetPasswordForm />
-            <SignupForm />
-            <CodeVerificationForm />
-            <CreateAdForm />
+            <FormGroup />
         </Box>
     );
 };

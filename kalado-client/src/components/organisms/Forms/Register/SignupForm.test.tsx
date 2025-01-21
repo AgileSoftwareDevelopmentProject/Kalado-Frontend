@@ -2,8 +2,8 @@ import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import SignupForm from './SignupForm';
-import { signupUser } from '../../../api/services/AuthService';
-import { useModalContext } from '../../../contexts';
+import { signupUser } from '../../../../api/services/AuthService';
+import { useModalContext } from '../../../../contexts';
 import { toast } from 'react-toastify';
 
 jest.mock('react-i18next', () => ({

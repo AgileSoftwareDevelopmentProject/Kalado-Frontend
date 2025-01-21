@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
-import { PopupBox } from '../../molecules';
-import { signupUser } from '../../../api/services/AuthService';
+import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../../atoms';
+import { PopupBox } from '../../../molecules';
+import { signupUser } from '../../../../api/services/AuthService';
 import { toast } from 'react-toastify';
-import { validatePassword, validatePhoneNumber } from '../../../validators';
-import { useModalContext } from '../../../contexts';
+import { validatePassword, validatePhoneNumber } from '../../../../validators';
+import { useModalContext } from '../../../../contexts';
 
 
 const SignupForm: React.FC = () => {

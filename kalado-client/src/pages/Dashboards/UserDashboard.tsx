@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, NavBar, CreateAdForm } from '../../components/organisms';
-import { useModalContext } from '../../contexts';
+import { SideBarMenu, ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 
 
@@ -41,7 +40,7 @@ const UserDashboard: React.FC = () => {
                 {renderContent()}
             </Box>
 
-            <CreateAdForm />
+            <FormGroup />
         </Box>
     );
 };

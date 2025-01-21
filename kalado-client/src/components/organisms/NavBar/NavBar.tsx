@@ -12,7 +12,7 @@ import { useProductContext } from '../../../contexts';
 
 const NavBar: React.FC = () => {
   const { t } = useTranslation();
-  const { token } = useAuth();
+  const { token, role } = useAuth(); // Get user role
   const theme = useTheme();
   const { isDarkMode, toggleTheme } = useThemeContext();
   const { currentLanguage, toggleLanguage } = useLanguageContext();
@@ -77,7 +77,10 @@ const NavBar: React.FC = () => {
           ) : (
             <CustomButton text={t('navbar.login/signup')} onClick={handleOpenLogin} />
           )}
-          <CustomButton text={t('navbar.create_ad')} onClick={handleOpenCreateAd} />
+
+          {role === 'USER' && (
+            <CustomButton text={t('navbar.create_ad')} onClick={handleOpenCreateAd} />
+          )}
         </Box>
 
         {/* Hamburger Menu for mobile view */}
@@ -104,7 +107,10 @@ const NavBar: React.FC = () => {
             ) : (
               <MenuItem onClick={handleOpenLogin}>{t('navbar.login/signup')}</MenuItem>
             )}
-            <MenuItem onClick={handleOpenCreateAd}>{t('navbar.create_ad')}</MenuItem>
+
+            {role === 'USER' && (
+              <MenuItem onClick={handleOpenCreateAd}>{t('navbar.create_ad')}</MenuItem>
+            )}
           </Menu>
         </Box>
       </Toolbar>

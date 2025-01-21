@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EmailInput, CustomButton, FormError } from '../../atoms';
-import { PopupBox } from '../../molecules';
-import { loginUser } from '../../../api/services/AuthService';
+import { EmailInput, CustomButton, FormError } from '../../../atoms';
+import { PopupBox } from '../../../molecules';
+import { loginUser } from '../../../../api/services/AuthService';
 import { toast } from 'react-toastify';
-import { validateEmail } from '../../../validators';
-import { useModalContext } from '../../../contexts';
+import { validateEmail } from '../../../../validators';
+import { useModalContext } from '../../../../contexts';
 
 
 const ForgetPasswordForm: React.FC = () => {

@@ -2,9 +2,9 @@ import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import LoginForm from './LoginForm';
-import { loginUser } from '../../../api/services/AuthService';
-import { useAuth } from '../../../contexts/AuthContext';
-import { useModalContext } from '../../../contexts';
+import { loginUser } from '../../../../api/services/AuthService';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { useModalContext } from '../../../../contexts';
 import { toast } from 'react-toastify';
 
 jest.mock('react-i18next', () => ({

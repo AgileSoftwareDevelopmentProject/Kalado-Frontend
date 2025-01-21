@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
-import { PopupBox } from '../../molecules';
-import { loginUser } from '../../../api/services/AuthService';
+import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../../atoms';
+import { PopupBox } from '../../../molecules';
+import { loginUser } from '../../../../api/services/AuthService';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../contexts/AuthContext';
-import { validateEmail } from '../../../validators';
-import { useModalContext } from '../../../contexts';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { validateEmail } from '../../../../validators';
+import { useModalContext } from '../../../../contexts';
 
 
 const LoginForm: React.FC = () => {
@@ -17,7 +17,7 @@ const LoginForm: React.FC = () => {
     };
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState<string>('');
-    const { setToken, setUserRole } = useAuth();
+    const { setToken, setRole } = useAuth();
     const { isLoginVisible, handleOpenSignup, handleClosePopups, handleOpenForgetPassword } = useModalContext();
 
     const validateUserInputs = () => {
@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
             if (response.isSuccess) {
                 setToken(response.data.token);
                 localStorage.setItem('token', response.data.token);
-                setUserRole(response.data.role);
+                setRole(response.data.role);
                 handleClose();
                 toast(t("success.login"));
             } else {

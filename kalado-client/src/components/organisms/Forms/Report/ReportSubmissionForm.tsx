@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
-import { PopupBox, ImageUploadBox } from '../../molecules';
-import { createReportWithImages } from '../../../api/services/ReportService';
+import { Dropdown, DescriptionInput, CustomButton, FormError } from '../../../atoms';
+import { PopupBox, ImageUploadBox } from '../../../molecules';
+import { createReportWithImages } from '../../../../api/services/ReportService';
 import { toast } from 'react-toastify';
-import { useModalContext } from '../../../contexts';
-import { OptionsComponent } from '../../../constants/options';
-import { ReportData } from '../../../constants/apiTypes';
-import { useAuth } from '../../../contexts';
+import { useModalContext } from '../../../../contexts';
+import { OptionsComponent } from '../../../../constants/options';
+import { ReportData } from '../../../../constants/apiTypes';
+import { useAuth } from '../../../../contexts';
 
 
 interface ReportSubmissionFormProps {

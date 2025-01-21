@@ -35,7 +35,7 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { token, setToken, userRole, setUserRole } = useAuth();
+    const { token, setToken, role, setRole } = useAuth();
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isForgetPasswordVisible, setForgetPasswordVisible] = useState(false);
     const [isSignupVisible, setSignupVisible] = useState(false);
@@ -95,12 +95,12 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const handleOpenProfilePage = () => {
         console.log("handleOpenProfilePage");
-        console.log(userRole);
+        console.log(role);
         console.log(token);
         setIsInProfile(true);
-        if (userRole === 'ADMIN') {
+        if (role === 'ADMIN') {
             navigate('/admin-dashboard');
-        } else if (userRole === 'USER') {
+        } else if (role === 'USER') {
             navigate('/user-dashboard');
         }
     };
@@ -108,7 +108,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleLogoutClick = () => {
         setIsInProfile(false);
         setToken(null);
-        setUserRole(null);
+        setRole(null);
         navigate('/');
     };
 
