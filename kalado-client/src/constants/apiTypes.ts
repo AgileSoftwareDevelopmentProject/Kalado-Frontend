@@ -19,6 +19,7 @@ export interface UserData {
     email: string;
     phoneNumber: string;
     password: string;
+    role: string;
 }
 
 export interface RegisterResponse {

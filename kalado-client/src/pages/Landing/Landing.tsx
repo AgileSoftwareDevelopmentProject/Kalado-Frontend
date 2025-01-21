@@ -8,7 +8,6 @@ import { useProductContext } from '../../contexts';
 import MenuIcon from '@mui/icons-material/Menu'; // Import Menu icon
 import { Drawer } from '@mui/material'; // Import Drawer
 
-
 const Landing: React.FC = () => {
     const { t } = useTranslation();
     const { product_categories } = OptionsComponent();
@@ -37,7 +36,7 @@ const Landing: React.FC = () => {
 
             {/* Hamburger Menu Icon for Mobile */}
             <IconButton
-                sx={{ display: { xs: 'block', md: 'none' } }}
+                sx={{ display: { xs: 'block', md: 'none', marginTop: '100px' } }}
                 onClick={() => setDrawerOpen(true)}
             >
                 <MenuIcon />
@@ -57,8 +56,13 @@ const Landing: React.FC = () => {
             </Box>
 
             {/* Drawer for Mobile */}
-            <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                <Box sx={{ width: 250 }}>
+            <Drawer
+                anchor="top"
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                sx={{ zIndex: 1200, top: 200 }} // Ensure it's below the AppBar
+            >
+                <Box sx={{ width: '100%', paddingTop: '64px' }}> {/* Adjust padding to match NavBar height */}
                     <SideBarMenu
                         categories={product_categories}
                         onSelectCategory={handleSelectCategory}

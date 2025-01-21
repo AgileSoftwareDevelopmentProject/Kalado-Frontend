@@ -25,7 +25,7 @@ export async function getSearchByBrandWithSorting(keyword: string, sortBy: strin
     );
 }
 
-export async function getSearchByMultipleFilters(keyword: string | '', minPrice: number | 0, maxPrice: number | 0, timeFilter: string | '') {
+export async function getSearchByMultipleFilters(keyword: string | '', minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) {
     console.log(keyword, minPrice, maxPrice, timeFilter);
     return sendRequest<PageableResponseType<TProductResponseType>>(
         SEARCH.FILTERED(keyword, minPrice, maxPrice, timeFilter),

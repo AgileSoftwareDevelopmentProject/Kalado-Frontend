@@ -58,7 +58,8 @@ const SignupForm: React.FC = () => {
         lastName: formData.lastName,
         email: formData.email.toLowerCase(),
         phoneNumber: formData.phoneNumber,
-        password: formData.password
+        password: formData.password,
+        role: 'USER',
       });
 
       if (response.isSuccess) {

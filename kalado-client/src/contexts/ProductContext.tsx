@@ -73,7 +73,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
-    const applyFilters = async (keyword: string | '', minPrice: number | 0, maxPrice: number | 0, timeFilter: string | '') => {
+    const applyFilters = async (keyword: string | '', minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => {
         setLoading(true);
         setError('');
         try {

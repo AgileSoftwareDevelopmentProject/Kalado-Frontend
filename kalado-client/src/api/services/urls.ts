@@ -51,7 +51,7 @@ export const SEARCH = {
         keyword: string | '',
         minPrice: number | 0,
         maxPrice: number | 0,
-        timeFilter: string | ''
+        timeFilter: string | null
     ) =>
         `/search/products?keyword=${encodeURIComponent(keyword)}&minPrice=${minPrice}&maxPrice=${maxPrice}&timeFilter=${timeFilter}`,
     PAGINATED: (page: number, size: number) => `/search/products?page=${page}&size=${size}`,
