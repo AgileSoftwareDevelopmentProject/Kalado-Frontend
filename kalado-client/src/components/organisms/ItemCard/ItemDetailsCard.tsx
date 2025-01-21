@@ -51,7 +51,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
         if (navigator.clipboard && item.sellerPhoneNumber) {
             navigator.clipboard.writeText(item.sellerPhoneNumber)
                 .then(() => {
-                    toast(t("item_details.phone_copied"));
+                    toast(t("success.copy_phone_number"));
                 })
                 .catch(err => {
                     fallbackCopyTextToClipboard(item.sellerPhoneNumber);
@@ -75,7 +75,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
         try {
             const successful = document.execCommand('copy');
             if (successful) {
-                toast(t("item_details.phone_copied"));
+                toast(t("success.copy_phone_number"));
             } else {
                 toast(t("error.item_details.copy_phone_number_failed"));
             }
