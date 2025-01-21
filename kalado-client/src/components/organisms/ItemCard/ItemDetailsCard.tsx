@@ -23,7 +23,7 @@ interface ItemDetailsCardProps {
         imageUrls?: string[];
         description?: string | null;
         id: number;
-        sellerId: number | null;
+        sellerId?: number | null;
         sellerPhoneNumber: string | '';
         brand: string | null;
         productionYear: string | null;
