@@ -16,10 +16,6 @@ export async function createProductWithImages(productData: ProductData, imageFil
         PRODUCT.CREATE,
         'POST',
         formData,
-        undefined,
-        {
-            'Content-Type': 'multipart/form-data',
-        }
     );
 }
 
@@ -27,11 +23,6 @@ export async function deleteAd(adId: number) {
     return sendRequest(
         PRODUCT.DELETE(adId),
         'PUT',
-        undefined,
-        undefined,
-        {
-            'Content-Type': 'application/json',
-        }
     );
 }
 
@@ -40,10 +31,6 @@ export async function updateAd(productId: number, productData: ProductData) {
         PRODUCT.UPDATE(productId),
         'PUT',
         productData,
-        undefined,
-        {
-            'Content-Type': 'application/json',
-        }
     );
 }
 
@@ -52,10 +39,6 @@ export async function updateAdStatus(productId: number, status: string) {
         PRODUCT.UPDATE_STATUS(productId),
         'PUT',
         { status },
-        undefined,
-        {
-            'Content-Type': 'application/json',
-        }
     );
 }
 
@@ -63,8 +46,6 @@ export async function getSingleProduct(adId: number) {
     return sendRequest<TProductResponseType>(
         PRODUCT.GET_SINGLE(adId),
         'GET',
-        undefined,
-        undefined
     );
 }
 
@@ -76,8 +57,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
         const response = await sendRequest(
             PRODUCT.GET_BY_CATEGORY(category),
             'GET',
-            undefined,
-            undefined
         );
         return response.data as TProductResponseType[];
     } catch (error) {
@@ -94,11 +73,7 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
         const response = await sendRequest(
             PRODUCT.GET_BY_SELLER,
             'GET',
-            undefined,
-            undefined,
-            {
-                Authorization: `${token}`,
-            }
+            token
         );
 
         return response.data as TProductResponseType[];
