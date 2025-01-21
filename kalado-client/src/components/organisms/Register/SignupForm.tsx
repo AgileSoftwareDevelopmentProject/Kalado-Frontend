@@ -20,7 +20,7 @@ const SignupForm: React.FC = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
-  const { isSignupVisible, handleOpenLogin, handleOpenCodeVerification } = useModalContext();
+  const { isSignupVisible, handleOpenLogin, handleOpenCodeVerification, handleClosePopups } = useModalContext();
 
   const validateUserInputs = () => {
     const phoneValidationResult = validatePhoneNumber(formData.phoneNumber, t);
@@ -46,6 +46,7 @@ const SignupForm: React.FC = () => {
   const handleClose = () => {
     setFormData(initialFormData);
     setError('');
+    handleClosePopups();
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
