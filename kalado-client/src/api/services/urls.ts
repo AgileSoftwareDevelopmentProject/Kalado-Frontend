@@ -48,10 +48,10 @@ export const SEARCH = {
     BY_KEYWORD_SORTED: (keyword: string, sortBy: string, sortOrder: SortOrder) =>
         `/search/products?keyword=${encodeURIComponent(keyword)}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
     FILTERED: (
-        keyword: string,
-        minPrice: number,
-        maxPrice: number,
-        timeFilter: string
+        keyword: string | '',
+        minPrice: number | 0,
+        maxPrice: number | 0,
+        timeFilter: string | ''
     ) =>
         `/search/products?keyword=${encodeURIComponent(keyword)}&minPrice=${minPrice}&maxPrice=${maxPrice}&timeFilter=${timeFilter}`,
     PAGINATED: (page: number, size: number) => `/search/products?page=${page}&size=${size}`,

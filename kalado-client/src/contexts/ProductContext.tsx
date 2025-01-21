@@ -78,7 +78,6 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setError('');
         try {
             console.log('Fetching products by multiple filters');
-            console.log(keyword, minPrice, maxPrice, timeFilter);
             const response = await getSearchByMultipleFilters(keyword, minPrice, maxPrice, timeFilter);
             setProducts(response.data);
             console.log(response);
