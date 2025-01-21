@@ -28,32 +28,11 @@ const CreateAdForm: React.FC = () => {
     const { product_categories } = OptionsComponent();
     const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
-    const handleCategoryChange = (selectedOption: Option | null) => {
-        setFormData(prevData => ({
-            ...prevData,
-            category: selectedOption ? selectedOption.value : ''
-        }));
-    };
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
-        }));
-    };
-
-    const handlePriceChange = (price: { amount: number; unit: string }) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            price,
-        }));
-    };
-
-    const handleDescriptionchange = (description: string) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            description,
         }));
     };
 
@@ -83,12 +62,11 @@ const CreateAdForm: React.FC = () => {
         e.preventDefault();
 
         if (images.length === 0) {
-            setError(t("error.create_add.required_image"));
+            setError(t("error.create_ad.required_image"));
             return;
         }
 
         try {
-            // Create Ad API call
             console.log("Create Ad API call");
             console.log(formData.category);
             console.log(token);
@@ -110,7 +88,7 @@ const CreateAdForm: React.FC = () => {
     };
 
     return (
-        <PopupBox open={isCreateAdVisible}>
+        <PopupBox open={isCreateAdVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 <NameInput
                     name="title"
@@ -122,14 +100,17 @@ const CreateAdForm: React.FC = () => {
                 />
                 <PriceInput
                     value={formData.price}
-                    onChange={handlePriceChange}
+                    onChange={(price: { amount: number; unit: string }) => setFormData(prevData => ({ ...prevData, price }))}
                     isRequired={true}
                     isStarNeeded={true}
                 />
                 <Dropdown
                     options={product_categories}
                     placeholder={t("create_ad.input.category")}
-                    onChange={handleCategoryChange}
+                    onChange={(selectedOption: Option | null) => setFormData(prevData => ({
+                        ...prevData,
+                        category: selectedOption ? selectedOption.value : ''
+                    }))}
                     value={product_categories.find(option => option.value === formData.category) || null}
                 />
                 <YearInput />
@@ -141,7 +122,7 @@ const CreateAdForm: React.FC = () => {
                 />
                 <DescriptionInput
                     value={formData.description}
-                    onChange={handleDescriptionchange}
+                    onChange={(description: string) => setFormData(prevData => ({ ...prevData, description }))}
                 />
                 <ImageUploadBox onUpload={handleImageUpload} title={t("create_ad.choose_image")} />
                 <CustomButton

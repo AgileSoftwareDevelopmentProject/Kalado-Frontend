@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <PopupBox open={isLoginVisible}>
+        <PopupBox open={isLoginVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 <EmailInput
                     value={formData.email}

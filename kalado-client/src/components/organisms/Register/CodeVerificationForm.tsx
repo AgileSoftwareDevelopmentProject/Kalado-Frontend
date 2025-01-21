@@ -38,7 +38,7 @@ const CodeVerificationForm: React.FC = () => {
     };
 
     return (
-        <PopupBox open={isCodeVerificationVisible}>
+        <PopupBox open={isCodeVerificationVisible} onClose={handleClose}>
             <p>{t("code_verification.enter_code")}</p>
             <form onSubmit={handleSubmit}>
                 <CodeInput
