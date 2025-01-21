@@ -21,10 +21,10 @@ export async function signupUser(userData: UserData) {
 }
 
 
-export async function verifyCode(token: string) {
+export async function verifyCode(code: string) {
     return sendRequest(
         AUTH.VERIFY,
         'POST',
-        new URLSearchParams({ token }).toString(),
+        code,
     );
 }
