@@ -38,7 +38,13 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: theme.palette.background.paper }}>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: 'none', // Remove shadow here
+      }}
+    >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
         <Logo />
 

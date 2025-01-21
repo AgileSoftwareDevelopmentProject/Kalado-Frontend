@@ -17,7 +17,7 @@ const Landing: React.FC = () => {
         title: product_categories[0].title
     });
 
-    const [drawerOpen, setDrawerOpen] = useState(false); // State for Drawer
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const handleSelectCategory = (categoryValue: string) => {
         const selected = product_categories.find(cat => cat.value === categoryValue);
@@ -34,6 +34,7 @@ const Landing: React.FC = () => {
     return (
         <Box>
             <NavBar />
+
             {/* Hamburger Menu Icon for Mobile */}
             <IconButton
                 sx={{ display: { xs: 'block', md: 'none' } }}

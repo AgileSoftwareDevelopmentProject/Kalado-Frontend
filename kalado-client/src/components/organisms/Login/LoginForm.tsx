@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
         e.preventDefault();
 
         if (validateUserInputs()) {
-            const response = await loginUser(formData.email, formData.password);
+            const response = await loginUser(formData.email.toLowerCase(), formData.password);
             if (response.isSuccess) {
                 setToken(response.data.token);
                 localStorage.setItem('token', response.data.token);

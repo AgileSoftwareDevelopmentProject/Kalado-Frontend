@@ -17,7 +17,7 @@ export const lightTheme = createTheme({
         },
         background: {
             default: '#f5f5f5', // Default background color for the app
-            paper: '#fcd7c7', // Background color for paper elements (cards, etc.)
+            paper: '#ffe8de', // Background color for paper elements (cards, etc.)
         },
         text: {
             primary: '#000000', // Primary text color

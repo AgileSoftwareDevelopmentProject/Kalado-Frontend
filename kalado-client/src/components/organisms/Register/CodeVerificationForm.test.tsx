@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CodeVerificationForm from './CodeVerificationForm';
+import CodeVerificationForm from '../Register/CodeVerificationForm';
 import { verifyCode } from '../../../api/services/AuthService';
 import { useModalContext } from '../../../contexts';
 import { toast } from 'react-toastify';
