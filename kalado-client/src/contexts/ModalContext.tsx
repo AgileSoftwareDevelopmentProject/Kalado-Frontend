@@ -108,7 +108,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleLogoutClick = () => {
         setIsInProfile(false);
         setToken(null);
-        setRole(null);
+        setRole('USER');
         navigate('/');
     };
 
