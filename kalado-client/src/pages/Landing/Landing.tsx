@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, IconButton } from '@mui/material';
 import { SideBar } from '../../components/molecules';
-import { NavBar, SideBarMenu, Filter, LoginForm, SignupForm, CodeVerificationForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
+import { NavBar, SideBarMenu, Filter, LoginForm, ForgetPasswordForm, SignupForm, CodeVerificationForm, CreateAdForm, ItemsHolder } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 import { useProductContext } from '../../contexts';
-import MenuIcon from '@mui/icons-material/Menu'; // Import Menu icon
-import { Drawer } from '@mui/material'; // Import Drawer
+import MenuIcon from '@mui/icons-material/Menu';
+import { Drawer } from '@mui/material';
+
 
 const Landing: React.FC = () => {
     const { t } = useTranslation();
@@ -76,6 +77,7 @@ const Landing: React.FC = () => {
             <ItemsHolder selectedCategoryTitle={selectedCategory.title} />
 
             <LoginForm />
+            <ForgetPasswordForm />
             <SignupForm />
             <CodeVerificationForm />
             <CreateAdForm />

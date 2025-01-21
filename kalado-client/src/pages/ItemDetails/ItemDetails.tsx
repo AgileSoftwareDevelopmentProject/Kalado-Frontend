@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { ReportSubmissionForm, ItemDetailsCard, NavBar } from '../../components/organisms';
+import { ReportSubmissionForm, ItemDetailsCard, NavBar, LoginForm, ForgetPasswordForm, SignupForm, CodeVerificationForm, CreateAdForm } from '../../components/organisms';
 import { useProductContext } from '../../contexts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
@@ -38,6 +38,13 @@ const ItemDetails: React.FC = () => {
                     <ReportSubmissionForm reportedContentId={Number(itemId)} />
                 </>
             )}
+
+
+            <LoginForm />
+            <ForgetPasswordForm />
+            <SignupForm />
+            <CodeVerificationForm />
+            <CreateAdForm />
         </Box>
     );
 };

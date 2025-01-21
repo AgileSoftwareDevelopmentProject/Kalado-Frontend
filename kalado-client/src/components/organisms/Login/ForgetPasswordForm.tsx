@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EmailInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
+import { EmailInput, CustomButton, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { loginUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../contexts/AuthContext';
 import { validateEmail } from '../../../validators';
 import { useModalContext } from '../../../contexts';
 
 
-const LoginForm: React.FC = () => {
+const ForgetPasswordForm: React.FC = () => {
     const { t } = useTranslation();
-    const initialFormData = {
-        email: '',
-        password: '',
-    };
+    const initialFormData = { email: '' };
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState<string>('');
-    const { setToken, setUserRole } = useAuth();
-    const { isLoginVisible, handleOpenSignup, handleClosePopups, handleOpenForgetPassword } = useModalContext();
+    const { isForgetPasswordVisible, handleClosePopups } = useModalContext();
 
     const validateUserInputs = () => {
         const emailValidationResult = validateEmail(formData.email, t);
@@ -39,13 +34,11 @@ const LoginForm: React.FC = () => {
         e.preventDefault();
 
         if (validateUserInputs()) {
-            const response = await loginUser(formData.email.toLowerCase(), formData.password);
+            const response = await forgetPassword(formData.email.toLowerCase());
             if (response.isSuccess) {
-                setToken(response.data.token);
-                localStorage.setItem('token', response.data.token);
-                setUserRole(response.data.role);
+
                 handleClose();
-                toast(t("success.login"));
+                toast(t("success.forget_password"));
             } else {
                 setError(response.message);
             }
@@ -53,30 +46,17 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <PopupBox open={isLoginVisible} onClose={handleClose}>
+        <PopupBox open={isForgetPasswordVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
+                <p>{t("forget_password_form.enter_your_email")}</p>
                 <EmailInput
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     isValidatorActive={true}
                 />
-                <PasswordInput
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                />
-                <CustomLink
-                    to="/#"
-                    onClick={(e) => { e.preventDefault(); handleOpenForgetPassword(); }}
-                    text={t("login_form.forget_password_link")}
-                />
                 <CustomButton
-                    text={t("login_form.login_btn")}
+                    text={t("forget_password_form.forget_password_btn")}
                     type="submit"
-                />
-                <CustomLink
-                    to="/#"
-                    onClick={(e) => { e.preventDefault(); handleOpenSignup(); }}
-                    text={t("login_form.signup_link")}
                 />
                 <FormError message={error} />
             </form>
@@ -84,4 +64,4 @@ const LoginForm: React.FC = () => {
     );
 };
 
-export default LoginForm;
+export default ForgetPasswordForm;

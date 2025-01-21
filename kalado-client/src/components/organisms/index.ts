@@ -14,6 +14,7 @@ export { default as UserManagement } from './UserManagement/UserManagement';
 export { default as ReportHistory } from './Report/ReportHistory';
 
 export { default as LoginForm } from './Login/LoginForm';
+export { default as ForgetPasswordForm } from './Login/ForgetPasswordForm';
 export { default as SignupForm } from './Register/SignupForm';
 export { default as CodeVerificationForm } from './Register/CodeVerificationForm';
 export { default as CreateAdForm } from './CreateAd/CreateAdForm';
