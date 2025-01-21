@@ -46,7 +46,6 @@ const SignupForm: React.FC = () => {
   const handleClose = () => {
     setFormData(initialFormData);
     setError('');
-    handleOpenCodeVerification();
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,6 +63,7 @@ const SignupForm: React.FC = () => {
       if (response.isSuccess) {
         handleClose();
         toast(t("success.signup"));
+        handleOpenCodeVerification();
       } else {
         setError(response.message);
       }
