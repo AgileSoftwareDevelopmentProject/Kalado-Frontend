@@ -1,4 +1,4 @@
-import { ReportStatus, User, UserType, ViolationType } from '../utils/types'
+import { ReportStatus, User, UserType, ViolationType } from './types'
 
 
 // Login

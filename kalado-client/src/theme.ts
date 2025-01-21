@@ -59,7 +59,6 @@ export const lightTheme = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: '#fff99f', // Set Box background color for dark mode
-                    // color: 'inherit', // Inherit text color, can be overridden by child components
                 },
             },
         },

@@ -1,6 +1,6 @@
 import { sendRequest } from './axiosInstance';
 import { USER } from './urls';
-import { ProfileData, TUserProfileResponse } from '../../utils/apiTypes';
+import { ProfileData, TUserProfileResponse } from '../../constants/apiTypes';
 
 
 export async function getProfile() {

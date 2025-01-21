@@ -28,7 +28,6 @@ const NavBar: React.FC = () => {
     searchProductsByKeyword(searchQuery);
   };
 
-  // Handle menu open/close
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -42,10 +41,16 @@ const NavBar: React.FC = () => {
       position="fixed"
       sx={{
         backgroundColor: theme.palette.background.paper,
-        boxShadow: 'none', // Remove shadow here
+        boxShadow: 'none',
       }}
     >
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
+      <Toolbar sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingTop: { xs: '10px', sm: '15px', md: '30px' },
+        paddingLeft: { xs: '20px', sm: '40px', md: '60px' },
+        paddingRight: { xs: '20px', sm: '40px', md: '60px' }
+      }}>
         <Logo />
 
         <SearchBar

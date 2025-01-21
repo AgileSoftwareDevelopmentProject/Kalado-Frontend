@@ -6,7 +6,7 @@ import { createReportWithImages } from '../../../api/services/ReportService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
-import { ReportData } from '../../../utils/apiTypes';
+import { ReportData } from '../../../constants/apiTypes';
 import { useAuth } from '../../../contexts';
 
 

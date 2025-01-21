@@ -7,7 +7,7 @@ import {
     SingleReport,
     ReportListResponse,
     TReportResponseType,
-} from '../../utils/apiTypes';
+} from '../../constants/apiTypes';
 
 // export async function createReport(reportData: ReportData, images: File[]): Promise<ReportResponse> {
 //     const formData = new FormData();

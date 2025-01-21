@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts';
 import defaultImage from '../../../assets/images/no-image.png';
 import { getProfile, modifyProfile } from '../../../api/services/UserService';
-import { TUserProfileResponse } from '../../../utils/apiTypes'
+import { TUserProfileResponse } from '../../../constants/apiTypes'
 
 
 const ProfileManagement = () => {
