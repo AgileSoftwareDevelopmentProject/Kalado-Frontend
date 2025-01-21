@@ -1,7 +1,7 @@
 import { sendRequest } from './axiosInstance';
 import { SEARCH } from './urls';
-import { SortOrder } from '../../utils/types';
-import { PageableResponseType, TProductResponseType } from '../../utils/apiTypes';
+import { SortOrder } from '../../constants/types';
+import { PageableResponseType, TProductResponseType } from '../../constants/apiTypes';
 import { useAuth } from '../../contexts/AuthContext';
 
 

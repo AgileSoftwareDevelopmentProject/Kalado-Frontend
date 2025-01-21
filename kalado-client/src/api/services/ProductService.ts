@@ -1,4 +1,4 @@
-import { ProductData, TProductResponseType } from '../../utils/apiTypes';
+import { ProductData, TProductResponseType } from '../../constants/apiTypes';
 import { sendRequest } from './axiosInstance';
 import { PRODUCT } from './urls';
 import mockData from '../../mockData.json';  // use for mocking APIs

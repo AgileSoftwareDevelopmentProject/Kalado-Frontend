@@ -1,5 +1,4 @@
 export { default as CustomButton } from './Buttons/CustomButton';
-export { default as CloseButton } from './Buttons/CloseButton';
 
 export { default as FormError } from './Errors/FormError';
 

@@ -6,7 +6,7 @@ import { createProductWithImages } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../contexts';
 import { OptionsComponent } from '../../../constants/options';
-import { ProductData } from '../../../utils/apiTypes';
+import { ProductData } from '../../../constants/apiTypes';
 import { useAuth } from '../../../contexts';
 
 const CreateAdForm: React.FC = () => {

@@ -35,7 +35,6 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         }
     }, [value, t]);
 
-
     const handleToggleVisibility = () => {
         setIsVisible(prev => !prev);
     };
@@ -55,19 +54,22 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
                 width: '70%',
                 '& .MuiFormHelperText-root': {
                     textAlign: i18n.language === 'fa' ? 'right' : 'left',
+                    color: '#D74101'
                 }
             }}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end">
-                        <IconButton
-                            onClick={handleToggleVisibility}
-                            edge="end"
-                        >
-                            {isVisible ? <FaEyeSlash /> : <FaEye />}
-                        </IconButton>
-                    </InputAdornment>
-                ),
+            slotProps={{
+                input: {
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                                onClick={handleToggleVisibility}
+                                edge="end"
+                            >
+                                {isVisible ? <FaEyeSlash /> : <FaEye />}
+                            </IconButton>
+                        </InputAdornment>
+                    ),
+                },
             }}
         />
     );

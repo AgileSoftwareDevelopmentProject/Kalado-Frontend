@@ -1,6 +1,6 @@
 import { sendRequest } from './axiosInstance'
 import { AUTH } from './urls'
-import { TLoginResponseType, UserData } from '../../utils/apiTypes';
+import { TLoginResponseType, UserData } from '../../constants/apiTypes';
 
 
 export async function loginUser(email: string, password: string) {

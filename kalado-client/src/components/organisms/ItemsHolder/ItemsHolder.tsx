@@ -22,9 +22,9 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
         return [...products].sort((a, b) => {
             switch (sortOption) {
                 case 'most_expensive':
-                    return b.price - a.price;
+                    return b.price.amount - a.price.amount;
                 case 'most_cheap':
-                    return a.price - b.price;
+                    return a.price.amount - b.price.amount;
                 case 'oldest':
                     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
                 case 'newest':

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomCheckBox, CustomButton, CustomLink, FormError } from '../../atoms';
+import { NameInput, EmailInput, PhoneNumberInput, PasswordInput, CustomButton, CustomLink, FormError } from '../../atoms';
 import { PopupBox } from '../../molecules';
 import { signupUser } from '../../../api/services/AuthService';
 import { toast } from 'react-toastify';
@@ -16,28 +16,11 @@ const SignupForm: React.FC = () => {
     email: '',
     phoneNumber: '',
     password: '',
-    passwordRepeat: '',
-    role: 'USER'
+    passwordRepeat: ''
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState<string>('');
   const { isSignupVisible, handleOpenLogin, handleOpenCodeVerification } = useModalContext();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-
-    if (name === 'isAdmin') {
-      setFormData(prevData => ({
-        ...prevData,
-        role: checked ? 'ADMIN' : 'USER'
-      }));
-    } else {
-      setFormData(prevData => ({
-        ...prevData,
-        [name]: type === 'checkbox' ? checked : value
-      }));
-    }
-  };
 
   const validateUserInputs = () => {
     const phoneValidationResult = validatePhoneNumber(formData.phoneNumber, t);
@@ -73,10 +56,9 @@ const SignupForm: React.FC = () => {
       const response = await signupUser({
         firstName: formData.firstName,
         lastName: formData.lastName,
-        email: formData.email,
+        email: formData.email.toLowerCase(),
         phoneNumber: formData.phoneNumber,
-        password: formData.password,
-        role: formData.role
+        password: formData.password
       });
 
       if (response.isSuccess) {
@@ -95,43 +77,36 @@ const SignupForm: React.FC = () => {
           name="firstName"
           placeholder={t("general_inputs.first_name")}
           value={formData.firstName}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
           isRequired={true}
         />
         <NameInput
           name="lastName"
           placeholder={t("general_inputs.last_name")}
           value={formData.lastName}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
           isRequired={true}
         />
         <EmailInput
           value={formData.email}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           isValidatorActive={true}
         />
         <PhoneNumberInput
           value={formData.phoneNumber}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
         />
         <PasswordInput
           name="password"
           value={formData.password}
-          onChange={handleChange}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           isValidatorActive={true}
         />
         <PasswordInput
           name="passwordRepeat"
           placeholder={t("general_inputs.password_repeat")}
           value={formData.passwordRepeat}
-          onChange={handleChange}
-        />
-        <CustomCheckBox
-          label={t("signup_form.is_admin")}
-          checked={formData.role === 'ADMIN'}
-          onChange={handleChange}
-          name="isAdmin"
-          id="isAdminCheckbox"
+          onChange={(e) => setFormData({ ...formData, passwordRepeat: e.target.value })}
         />
         <CustomButton
           text={t("signup_form.signup_btn")}

@@ -1,4 +1,4 @@
-import { ReportStatus, User, UserType, ViolationType } from '../utils/types'
+import { ReportStatus, User, UserType, ViolationType } from './types'
 
 
 // Login
@@ -19,7 +19,6 @@ export interface UserData {
     email: string;
     phoneNumber: string;
     password: string;
-    role: string;
 }
 
 export interface RegisterResponse {

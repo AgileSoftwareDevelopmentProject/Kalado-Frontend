@@ -17,7 +17,7 @@ export const lightTheme = createTheme({
         },
         background: {
             default: '#f5f5f5', // Default background color for the app
-            paper: '#fcd7c7', // Background color for paper elements (cards, etc.)
+            paper: '#ffe8de', // Background color for paper elements (cards, etc.)
         },
         text: {
             primary: '#000000', // Primary text color
@@ -59,7 +59,6 @@ export const lightTheme = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: '#fff99f', // Set Box background color for dark mode
-                    // color: 'inherit', // Inherit text color, can be overridden by child components
                 },
             },
         },
@@ -79,8 +78,8 @@ export const darkTheme = createTheme({
             contrastText: '#FFFFFF',
         },
         background: {
-            default: '#272C48', // Dark mode background color
-            paper: '#272C48',  // Card, Item details
+            default: '#212121', // Dark mode background color
+            paper: '#212121',  // Card, Item details
         },
         text: {
             primary: '#FFFFFF',  // White text for dark mode

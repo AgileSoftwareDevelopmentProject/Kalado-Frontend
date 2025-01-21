@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box, useTheme } from '@mui/material';
+import { Box, useTheme, useMediaQuery } from '@mui/material';
 import { Backdrop as MuiBackdrop } from '@mui/material';
-import Logo from '../../atoms/Logo/Logo';
-import CloseButton from '../../atoms/Buttons/CloseButton';
+import { Logo, CustomButton } from '../../atoms';
+import { FaTimes } from 'react-icons/fa';
 import { useModalContext } from '../../../contexts';
 
 interface PopupBoxProps {
@@ -12,6 +12,7 @@ interface PopupBoxProps {
 
 const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const { handleClosePopups } = useModalContext();
 
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -30,22 +31,35 @@ const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
             }}
         >
             <Box sx={{
-                width: "25vw",
-                padding: "50px 0px",
+                width: isMobile ? "90vw" : "25vw",
+                maxWidth: "500px",
+                padding: isMobile ? "30px 20px" : "50px 30px",
                 position: 'fixed',
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 backgroundColor: theme.palette.background.default,
                 borderRadius: 10,
-                border: '2px solid rgba(255, 255, 255, 0.5)',
+                overflowY: 'auto',
+                maxHeight: '90vh',
             }}>
                 <Logo />
-                <CloseButton onClose={handleClosePopups} />
+                <CustomButton
+                    onClick={handleClosePopups}
+                    style={{
+                        color: theme.palette.primary.main,
+                        backgroundColor: 'transparent',
+                        position: 'absolute',
+                        top: '10px',
+                        right: '5px',
+                        padding: '0',
+                    }}
+                >
+                    <FaTimes size={20} />
+                </CustomButton>
                 {children}
             </Box>
         </MuiBackdrop>
-
     );
 };
 
