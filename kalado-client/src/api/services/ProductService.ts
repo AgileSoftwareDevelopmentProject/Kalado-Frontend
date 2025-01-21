@@ -23,8 +23,7 @@ export async function createProductWithImages(productData: ProductData, imageFil
     );
 }
 
-
-export async function deleteAd(adId: number, token: string | null) {
+export async function deleteAd(adId: number) {
     return sendRequest(
         PRODUCT.DELETE(adId),
         'PUT',
@@ -36,7 +35,7 @@ export async function deleteAd(adId: number, token: string | null) {
     );
 }
 
-export async function updateAd(productId: number, productData: ProductData, token: string | null) {
+export async function updateAd(productId: number, productData: ProductData) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE(productId),
         'PUT',
@@ -48,7 +47,7 @@ export async function updateAd(productId: number, productData: ProductData, toke
     );
 }
 
-export async function updateAdStatus(productId: number, status: string, token: string | null) {
+export async function updateAdStatus(productId: number, status: string) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE_STATUS(productId),
         'PUT',
@@ -123,7 +122,7 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
 //     });
 // };
 
-// export const getProductsByCategory = async (category) => {
+// export const getProductsByCategory = async () => {
 //     return new Promise((resolve) => {
 //         setTimeout(() => {
 //             resolve(mockData.items);
