@@ -8,17 +8,17 @@ import { useModalContext } from '../../../contexts';
 interface PopupBoxProps {
     open: boolean;
     children: React.ReactNode;
+    onClose: () => void;
 }
 
-const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
+const PopupBox: React.FC<PopupBoxProps> = ({ open, children, onClose }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const { handleClosePopups } = useModalContext();
 
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
         if (target.classList.contains('MuiBackdrop-root')) {
-            handleClosePopups();
+            onClose();
         }
     };
 
@@ -45,7 +45,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ open, children }) => {
             }}>
                 <Logo />
                 <CustomButton
-                    onClick={handleClosePopups}
+                    onClick={onClose}
                     style={{
                         color: theme.palette.primary.main,
                         backgroundColor: 'transparent',

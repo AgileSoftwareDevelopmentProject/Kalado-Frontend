@@ -71,7 +71,7 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <PopupBox open={isSignupVisible}>
+    <PopupBox open={isSignupVisible} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <NameInput
           name="firstName"

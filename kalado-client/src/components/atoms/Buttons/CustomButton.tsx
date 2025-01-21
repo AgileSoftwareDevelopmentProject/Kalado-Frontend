@@ -41,7 +41,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         padding: type === 'submit' ? '5px 30px' : padding,
         margin: margin,
         color: color,
-        fontSize: type === 'submit' ? 15 : fontSize,
+        fontSize: fontSize,
         transition: 'all 0.3s ease',
         '&:active': {
             transform: 'scale(0.95)',

@@ -97,7 +97,7 @@ const ReportSubmissionForm: React.FC<ReportSubmissionFormProps> = ({ reportedCon
     };
 
     return (
-        <PopupBox open={isReportSubmissionVisible}>
+        <PopupBox open={isReportSubmissionVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 {report_options ? (
                     <Dropdown
