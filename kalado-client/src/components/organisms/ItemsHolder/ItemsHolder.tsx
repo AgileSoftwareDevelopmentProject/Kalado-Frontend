@@ -5,6 +5,7 @@ import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
 import ItemCard from '../ItemCard/ItemCard';
 import { useProductContext } from '../../../contexts/ProductContext';
+import NoProductImage from '../../../assets/images/no-product-found.png';
 
 
 interface ItemsHolderProps {
@@ -39,12 +40,6 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
         navigate(`/item/${itemId}`);
     };
 
-    const renderLoadingOrError = () => (
-        <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-            {loading ? <CircularProgress /> : error || t("error.landing.error_get_product")}
-        </Typography>
-    );
-
     const formatDate = (timestamp: string | null): string => {
         if (!timestamp) return t("item_details.no_date");
         const date = new Date(timestamp);
@@ -55,21 +50,59 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
         }).format(date);
     };
 
-    const renderItems = () => {
-        if (error) {
-            return (
-                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                    {t("error.landing.error_get_product")}
-                </Typography>
-            );
-        }
+    const renderNoProductsFound = () => (
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                padding: 4
+            }}
+        >
+            <img
+                src={NoProductImage}
+                alt="No Products Found"
+                style={{
+                    maxWidth: '500px',
+                    marginBottom: '20px'
+                }}
+            />
+            <Typography
+                variant="h5"
+                sx={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    color: 'text.secondary'
+                }}
+            >
+                {error
+                    ? t("error.landing.error_get_product")
+                    : t("error.landing.empty_product_list")
+                }
+            </Typography>
+        </Box>
+    );
 
-        if (!products || products.length === 0) {
-            return (
-                <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 5 }}>
-                    {t("error.landing.empty_product_list")}
-                </Typography>
-            );
+    const renderLoadingState = () => (
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%'
+            }}
+        >
+            <CircularProgress />
+        </Box>
+    );
+
+    const renderItems = () => {
+        if (loading) return renderLoadingState();
+
+        if (error || !products || products.length === 0) {
+            return renderNoProductsFound();
         }
 
         return (
@@ -111,7 +144,7 @@ const ItemsHolder: React.FC<ItemsHolderProps> = ({ selectedCategoryTitle }) => {
 
     return (
         <ProductListBox>
-            {loading || error || !products ? renderLoadingOrError() : renderItems()}
+            {renderItems()}
         </ProductListBox>
     );
 };

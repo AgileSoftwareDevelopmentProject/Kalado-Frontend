@@ -73,13 +73,13 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
-    const applyFilters = async (keyword: string | null, minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => {
+    const applyFilters = async (keyword: string | '', minPrice: number | 0, maxPrice: number | 0, timeFilter: string | '') => {
         setLoading(true);
         setError('');
         try {
             console.log('Fetching products by multiple filters');
             const response = await getSearchByMultipleFilters(keyword, minPrice, maxPrice, timeFilter);
-            setProducts(response);
+            setProducts(response.data);
             console.log(response);
         } catch (err) {
             setError('Failed to apply filters');

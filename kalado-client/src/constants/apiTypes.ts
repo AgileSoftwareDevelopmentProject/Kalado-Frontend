@@ -133,6 +133,8 @@ export type TUserProfileResponse = {
     id: number;
     firstName: string;
     lastName: string;
+    email: string;
+    password: string;
     address: string | null;
     phoneNumber: string;
 };
