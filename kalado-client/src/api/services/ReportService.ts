@@ -87,7 +87,7 @@ export async function updateReportStatus(reportId: number, reportStatusData: Rep
         reportStatusData,
         undefined,
         {
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
             Authorization: `${token}`,
         }
     );
@@ -127,7 +127,7 @@ export async function getAllReports(token: string | null) {
         undefined,
         undefined,
         {
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
             Authorization: `${token}`,
         }
     );
@@ -182,7 +182,7 @@ export async function getReportStatistics(startDate: string, endData: string) {
         undefined,
         undefined,
         {
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
             Authorization: `${token}`,
         }
     );
