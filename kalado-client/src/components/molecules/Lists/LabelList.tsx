@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 interface LabelListProps {
     items: { title: string; value: string }[];
     selectedValue: string | null;
-    onSelect: (value: string | null) => void;
+    onSelect: (value: string | '') => void;
     title?: string;
 }
 
@@ -18,7 +18,7 @@ const LabelList: React.FC<LabelListProps> = ({ items, selectedValue, onSelect, t
                 {items.map((item) => (
                     <Typography
                         key={item.value}
-                        onClick={() => onSelect(selectedValue === item.value ? null : item.value)}
+                        onClick={() => onSelect(selectedValue === item.value ? '' : item.value)}
                         sx={{
                             cursor: 'pointer',
                             backgroundColor: selectedValue === item.value ? '#D74101' : 'transparent',
