@@ -1,44 +1,48 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import AdList from '../AdList/AdList';
-import EditAdCard from '../AdCard/EditAdCard'; // Import EditAdCard
+import EditAdCard from '../AdCard/EditAdCard';
 
 interface AdData {
     id: number;
     title: string;
-    price: string;
+    createdAt: string;
+    imageUrls?: string[];
+    price: {
+        amount: number,
+        unit: string,
+    },
+    description?: string;
+    sellerPhoneNumber?: string;
+    sellerId: number;
+    brand?: string;
+    productionYear?: string;
     status: string;
-    category: string;
-    description: string;
-    date: string;
-    images: string[];
 }
 
 interface AdManagementProps {
-    ads: AdData[]; // Include ads as a prop
-    onEdit: (adData: AdData) => void; // Enforce type of adData
+    ads: AdData[];
+    onEdit: (adData: AdData) => void;
     selectedAd?: AdData;
     onCloseEdit: () => void;
 }
 
 const AdManagement: React.FC<AdManagementProps> = ({ ads, onEdit, selectedAd, onCloseEdit }) => {
     return (
-        <Box sx={{ padding: 15}}>
-            {/* Ad List */}
+        <Box sx={{ padding: 15 }}>
             <Box sx={{ marginBottom: 4 }}>
                 <AdList ads={ads} onEdit={onEdit} />
             </Box>
 
-            {/* Edit Ad Card */}
             {selectedAd && (
                 <Box sx={{ marginTop: 4 }}>
                     <EditAdCard
                         title={selectedAd.title}
-                        price={selectedAd.price}
+                        price={selectedAd.price.amount}
                         category={selectedAd.category}
-                        date={selectedAd.date}
+                        date={selectedAd.createdAt}
                         description={selectedAd.description}
-                        images={selectedAd.images}
+                        images={selectedAd.imageUrls}
                         status={selectedAd.status}
                         onEdit={(updatedData) => onEdit(updatedData)}
                         onCancel={onCloseEdit}

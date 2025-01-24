@@ -9,7 +9,7 @@ import {
   MenuItem,
   Select,
   Divider,
-  InputAdornment, 
+  InputAdornment,
 } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -21,10 +21,10 @@ import { useTranslation } from "react-i18next";
 
 type EditAdCardProps = {
   title: string;
-  price: string;
+  price: number;
   category: string;
   date: string;
-  description: string;
+  description?: string;
   images: string[];
   status: string;
   onEdit: (data: any) => void;
@@ -53,7 +53,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
     images,
   });
   const { i18n } = useTranslation();
-  const language = i18n.language as "en" | "fa"; 
+  const language = i18n.language as "en" | "fa";
   const isRtl = language === "fa";
 
   const handleChange = (
@@ -65,29 +65,29 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-        const validImages: string[] = [];
+      const validImages: string[] = [];
 
-        Array.from(e.target.files).forEach((file) => {
-            if (!file.type.startsWith("image/")) {
-                toast.error(
-                    resources[language]?.error?.input?.invalid_image?.invalid_type || "Only image files are allowed."
-                );
-                return;
-            }
-
-            if (file.size > 1024 * 1024) {
-                toast.error(
-                    resources[language]?.error?.input?.invalid_image?.max_size || "File size must not exceed 1 MB."
-                );
-                return;
-            }
-
-            validImages.push(URL.createObjectURL(file));
-        });
-
-        if (validImages.length > 0) {
-            handleChange("images", [...formData.images, ...validImages]);
+      Array.from(e.target.files).forEach((file) => {
+        if (!file.type.startsWith("image/")) {
+          toast.error(
+            resources[language]?.error?.input?.invalid_image?.invalid_type || "Only image files are allowed."
+          );
+          return;
         }
+
+        if (file.size > 1024 * 1024) {
+          toast.error(
+            resources[language]?.error?.input?.invalid_image?.max_size || "File size must not exceed 1 MB."
+          );
+          return;
+        }
+
+        validImages.push(URL.createObjectURL(file));
+      });
+
+      if (validImages.length > 0) {
+        handleChange("images", [...formData.images, ...validImages]);
+      }
     }
   };
 
@@ -205,30 +205,30 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
       <Box sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "15px" }}>
         <Typography>{resources[language]?.general_inputs.price}</Typography>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-        <TextField
-          value={formData.price}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (/^\d*$/.test(value)) {
-              handleChange("price", value);
-            }
-          }}
-          fullWidth
-          variant="outlined"
-          size="small"
-          inputProps={{
-            inputMode: "numeric",
-            pattern: "[0-9]*",
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                {resources[language]?.currency || (language === "fa" ? "تومان" : "Toman")}
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box>
+          <TextField
+            value={formData.price}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value)) {
+                handleChange("price", value);
+              }
+            }}
+            fullWidth
+            variant="outlined"
+            size="small"
+            inputProps={{
+              inputMode: "numeric",
+              pattern: "[0-9]*",
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {resources[language]?.currency || (language === "fa" ? "تومان" : "Toman")}
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
         <Typography>{resources[language]?.create_ad.input.category}</Typography>
         <Select
           value={formData.category}

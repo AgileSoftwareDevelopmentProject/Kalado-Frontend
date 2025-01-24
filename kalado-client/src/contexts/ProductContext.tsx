@@ -17,6 +17,7 @@ interface Product {
     sellerId: number;
     brand?: string;
     productionYear?: string;
+    status: string;
 }
 
 interface ProductContextType {

@@ -4,11 +4,13 @@ import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
 import { SideBarMenu, ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
+import { useProductContext } from '../../contexts/ProductContext';
 
 
 const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { user_dashboard_menu } = OptionsComponent();
+    const { products, loading, error } = useProductContext();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
 
     const handleSelectMenu = (menuTitle: string) => {
@@ -20,7 +22,12 @@ const UserDashboard: React.FC = () => {
             case t("dashboard.user.menu.one"):
                 return <ProfileManagement />;
             case t("dashboard.user.menu.two"):
-                return <AdManagement />;
+                return <AdManagement
+                    ads={products}
+                    onEdit={ }
+                    selectedAd={ }
+                    onCloseEdit={ }
+                />;
         }
     };
 

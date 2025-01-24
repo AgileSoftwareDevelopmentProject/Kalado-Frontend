@@ -27,6 +27,7 @@ interface ItemDetailsCardProps {
         sellerId: number;
         brand?: string;
         productionYear?: string;
+        status: string;
     };
     neededReportSubmissionForm?: boolean;
 }
