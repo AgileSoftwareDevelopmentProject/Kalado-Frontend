@@ -2,7 +2,6 @@ import { SortOrder } from "../../constants/types";
 
 export const BASE_URL = 'http://kaladoshop.com:8083/v1';
 
-// AUTH
 export const AUTH = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
@@ -10,7 +9,13 @@ export const AUTH = {
     VERIFY: '/auth/verify',
 };
 
-// PRODUCT
+export const USER = {
+    GET: '/user',
+    PUT: '/user',
+    GET_PROFILE: '/user/getProfile',
+    MODIFY_PROFILE: '/user/modifyProfile',
+};
+
 export const PRODUCT = {
     CREATE: '/product',
     UPDATE: (productId: number) => `/product/${productId}`,
@@ -21,26 +26,6 @@ export const PRODUCT = {
     GET_SINGLE: (productId: number) => `/product/${productId}`,
 };
 
-
-// REPORT
-export const REPORT = {
-    CREATE: '/reports',
-    UPDATE_STATUS: (reportId: number) => `/reports/admin/status${reportId}`,
-    GET_MY_REPORTS: `/reports/my-reports`,
-    GET_ALL_REPORTS: `/reports/admin/all`,
-    GET_REPORT_STATISTICS: (startDate: string, endDate: string) =>
-        `/reports/admin/statistics?startDate=${startDate}&endDate=${endDate}`,
-};
-
-// USER
-export const USER = {
-    GET: '/user',
-    PUT: '/user',
-    GET_PROFILE: '/user/getProfile',
-    MODIFY_PROFILE: '/user/modifyProfile',
-};
-
-// SEARCH
 export const SEARCH = {
     BY_KEYWORD: (keyword: string) => `/search/products?keyword=${encodeURIComponent(keyword)}`,
     BY_PRICE_RANGE: (minPrice: number, maxPrice: number) =>
@@ -55,4 +40,13 @@ export const SEARCH = {
     ) =>
         `/search/products?keyword=${encodeURIComponent(keyword)}&minPrice=${minPrice}&maxPrice=${maxPrice}&timeFilter=${timeFilter}`,
     PAGINATED: (page: number, size: number) => `/search/products?page=${page}&size=${size}`,
+};
+
+export const REPORT = {
+    CREATE: '/reports',
+    UPDATE_STATUS: (reportId: number) => `/reports/admin/status${reportId}`,
+    GET_MY_REPORTS: `/reports/my-reports`,
+    GET_ALL_REPORTS: `/reports/admin/all`,
+    GET_REPORT_STATISTICS: (startDate: string, endDate: string) =>
+        `/reports/admin/statistics?startDate=${startDate}&endDate=${endDate}`,
 };

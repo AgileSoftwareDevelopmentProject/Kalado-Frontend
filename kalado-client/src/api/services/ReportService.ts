@@ -63,6 +63,7 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
         const response = await sendRequest<TReportResponseType>(
             REPORT.CREATE,
             'POST',
+            undefined,
             formData,
         );
         console.log('****************************  api response:', response);
@@ -78,6 +79,9 @@ export async function updateReportStatus(reportId: number, reportStatusData: Rep
     return sendRequest<TReportResponseType>(
         REPORT.UPDATE_STATUS(reportId),
         'POST',
+        {
+            'Content-Type': 'application/json'
+        },
         reportStatusData,
     );
 }
@@ -125,11 +129,6 @@ export async function getAllReports() {
 //         const response = await sendRequest<ReportListResponse>(
 //             REPORT.GET_MY_REPORTS,
 //             'GET',
-//             undefined,
-//             undefined,
-//             {
-//                 Authorization: `Bearer ${token}`,
-//             }
 //         );
 
 //         if (!response || !response.isSuccess || !Array.isArray(response.data)) {

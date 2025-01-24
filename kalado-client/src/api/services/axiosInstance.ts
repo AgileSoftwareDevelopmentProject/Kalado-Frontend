@@ -34,7 +34,6 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-
 axiosInstance.interceptors.response.use(
     (response) => {
         console.log('-----------------------------------');
@@ -70,18 +69,18 @@ axiosInstance.interceptors.response.use(
 export async function sendRequest<T>(
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+    headers?: Record<string, string>,
     requestData?: any,
-    signal?: AbortSignal
+    signal?: AbortSignal,
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
+
         const response = await axiosInstance.request({
             method,
             url,
+            headers: headers ? { ...headers } : {},
             data: requestData,
             signal,
-            headers: {
-                'Content-Type': 'application/json',
-            },
         });
 
         return {
