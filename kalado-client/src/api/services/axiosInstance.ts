@@ -62,7 +62,7 @@ axiosInstance.interceptors.response.use(
 
         const message = statusCode ? i18n.t(`error.server.${statusCode}`) : i18n.t(`error.general`);
 
-        return Promise.resolve({
+        return Promise.reject({
             isSuccess: false,
             data: null,
             status: statusCode,
@@ -95,22 +95,11 @@ export async function sendRequest<T>(
     } catch (error) {
         const axiosError = error as AxiosError<ErrorResponseData>;
 
-        if (!axiosError.response) {
-            return {
-                isSuccess: false,
-                data: null,
-                status: 0,
-                message: i18n.t('error.general'),
-            };
-        }
-
-        const message = axiosError.response?.data?.message || 'An unknown error occurred.';
-
         return {
             isSuccess: false,
             data: null,
             status: axiosError.response?.status || 500,
-            message,
+            message: i18n.t('error.general'),
         };
     }
 }
