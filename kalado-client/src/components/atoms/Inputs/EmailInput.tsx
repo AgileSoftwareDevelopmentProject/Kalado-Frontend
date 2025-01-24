@@ -47,6 +47,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
                 width: '70%',
                 '& .MuiFormHelperText-root': {
                     textAlign: i18n.language === 'fa' ? 'right' : 'left',
+                    color: '#D74101'
                 }
             }}
         />

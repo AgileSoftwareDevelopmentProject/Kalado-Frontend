@@ -1,4 +1,4 @@
-import { ReportStatus, User, UserType, ViolationType } from '../utils/types'
+import { ReportStatus, User, UserType, ViolationType } from './types'
 
 
 // Login
@@ -135,6 +135,8 @@ export type TUserProfileResponse = {
     id: number;
     firstName: string;
     lastName: string;
+    email: string;
+    password: string;
     address: string | null;
     phoneNumber: string;
 };

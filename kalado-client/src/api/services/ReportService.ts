@@ -7,7 +7,7 @@ import {
     SingleReport,
     ReportListResponse,
     TReportResponseType,
-} from '../../utils/apiTypes';
+} from '../../constants/apiTypes';
 
 // export async function createReport(reportData: ReportData, images: File[]): Promise<ReportResponse> {
 //     const formData = new FormData();
@@ -64,11 +64,6 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
             REPORT.CREATE,
             'POST',
             formData,
-            undefined,
-            {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `${token}`,
-            }
         );
         console.log('****************************  api response:', response);
         return response;
@@ -80,16 +75,10 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
 
 
 export async function updateReportStatus(reportId: number, reportStatusData: ReportStatusUpdateData) {
-    const { token } = useAuth();
     return sendRequest<TReportResponseType>(
         REPORT.UPDATE_STATUS(reportId),
         'POST',
         reportStatusData,
-        undefined,
-        {
-            // 'Content-Type': 'application/json',
-            Authorization: `${token}`,
-        }
     );
 }
 
@@ -120,16 +109,10 @@ export async function updateReportStatus(reportId: number, reportStatusData: Rep
 //     }
 // }
 
-export async function getAllReports(token: string | null) {
+export async function getAllReports() {
     return sendRequest<TReportResponseType[]>(
         REPORT.GET_ALL_REPORTS,
         'GET',
-        undefined,
-        undefined,
-        {
-            // 'Content-Type': 'application/json',
-            Authorization: `${token}`,
-        }
     );
 }
 
@@ -160,30 +143,17 @@ export async function getAllReports(token: string | null) {
 //     }
 // }
 export async function getMyReports() {
-    const { token } = useAuth();
     return sendRequest<TReportResponseType[]>(
         REPORT.GET_MY_REPORTS,
         'GET',
-        undefined,
-        undefined,
-        {
-            Authorization: `${token}`,
-        }
     );
 }
 
 
 // fetch report statistics for a date range
 export async function getReportStatistics(startDate: string, endData: string) {
-    const { token } = useAuth();
     return sendRequest<TReportResponseType[]>(
         REPORT.GET_REPORT_STATISTICS(startDate, endData),
         'GET',
-        undefined,
-        undefined,
-        {
-            // 'Content-Type': 'application/json',
-            Authorization: `${token}`,
-        }
     );
 }

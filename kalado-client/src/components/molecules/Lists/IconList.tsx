@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 
-
 interface IconListProps {
     items: {
         value: string;
@@ -11,7 +10,7 @@ interface IconListProps {
     }[];
     onSelect: (title: string) => void;
     title?: string;
-    initialSelect: string
+    initialSelect: string;
 }
 
 const IconList: React.FC<IconListProps> = ({ items, onSelect, title, initialSelect }) => {
@@ -34,14 +33,21 @@ const IconList: React.FC<IconListProps> = ({ items, onSelect, title, initialSele
                         key={item.title}
                         onClick={() => handleCategoryClick(item.value)}
                         sx={{
-                            backgroundColor: selectedCategory === item.value ? '#D74101' : 'transparent',
+                            backgroundColor: 'transparent',
+                            color: selectedCategory === item.value ? '#D74101' : 'inherit',
+                            '& .MuiListItemIcon-root': {
+                                color: selectedCategory === item.value ? '#D74101' : 'inherit',
+                            },
                             '&:hover': {
-                                backgroundColor: '#D74101',
+                                color: '#D74101',
                                 transform: i18n.language === 'fa' ? 'translateX(-30px)' : 'translateX(30px)',
+                                '& .MuiListItemIcon-root': {
+                                    color: '#D74101',
+                                },
                             },
                             cursor: 'pointer',
                             textAlign: i18n.language === 'fa' ? 'right' : 'left',
-                            transition: 'transform 0.5s ease, color 0.5s ease',
+                            transition: 'color 0.5s ease, transform 0.5s ease',
                         }}
                     >
                         <ListItemIcon>

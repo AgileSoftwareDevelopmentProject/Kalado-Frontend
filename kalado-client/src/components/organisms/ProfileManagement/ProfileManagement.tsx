@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Avatar, CircularProgress, IconButton } from '@mui/material';
-import { CustomButton, NameInput, PhoneNumberInput, FormError } from '../../atoms';
+import { CustomButton, NameInput, PhoneNumberInput, PasswordInput, FormError } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts';
 import defaultImage from '../../../assets/images/no-image.png';
 import { getProfile, modifyProfile } from '../../../api/services/UserService';
-import { TUserProfileResponse } from '../../../utils/apiTypes'
+import { TUserProfileResponse } from '../../../constants/apiTypes'
 
 
 const ProfileManagement = () => {
@@ -121,6 +121,11 @@ const ProfileManagement = () => {
                         placeholder={t('dashboard.user.profile_management.last_name')}
                         value={userData.lastName || ''}
                         onChange={handleInputChange}
+                    />
+                    <PasswordInput
+                        value={userData.password || ''}
+                        onChange={handleInputChange}
+                        isValidatorActive={true}
                     />
                     <PhoneNumberInput
                         value={userData.phoneNumber || ''}

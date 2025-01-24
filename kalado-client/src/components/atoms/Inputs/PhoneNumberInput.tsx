@@ -44,6 +44,7 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
                 width: '70%',
                 '& .MuiFormHelperText-root': {
                     textAlign: i18n.language === 'fa' ? 'right' : 'left',
+                    color: '#D74101'
                 },
                 '& input': {
                     textAlign: i18n.language === 'fa' ? 'right' : 'left',

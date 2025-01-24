@@ -13,7 +13,7 @@ interface Product {
         unit: string,
     },
     description?: string;
-    seller_phone?: string;
+    sellerPhoneNumber?: string;
     sellerId: number;
     brand?: string;
     productionYear?: string;
@@ -26,7 +26,7 @@ interface ProductContextType {
     error: string;
     fetchProductsByCategory: (category: string) => void;
     fetchSingleProduct: (id: number) => Promise<Product | null>;
-    applyFilters: (keyword: string | null, minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => void;
+    applyFilters: (keyword: string | '', minPrice: number | 0, maxPrice: number | 0, timeFilter: string | '') => void;
     searchProductsByKeyword: (keyword: string) => void;
     searchProductsByPriceRange: (minPrice: number | 0, maxPrice: number | 0) => void;
 }
@@ -73,13 +73,13 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
-    const applyFilters = async (keyword: string | null, minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => {
+    const applyFilters = async (keyword: string | '', minPrice: number | 0, maxPrice: number | 0, timeFilter: string | null) => {
         setLoading(true);
         setError('');
         try {
             console.log('Fetching products by multiple filters');
             const response = await getSearchByMultipleFilters(keyword, minPrice, maxPrice, timeFilter);
-            setProducts(response);
+            setProducts(response.data);
             console.log(response);
         } catch (err) {
             setError('Failed to apply filters');

@@ -78,19 +78,24 @@
         },
         "login_form": {
             "login_btn": "Login",
-            "signup_link": "Create New Account"
+            "signup_link": "Create new account",
+            "forget_password_link": "Forget password"
         },
+        "forget_password_form": {
+            "enter_your_email": "Enter your email to retrieve your password",
+            "forget_password_btn": "Send Email"
+       },
         "signup_form": {
             "signup_btn": "Signup",
-            "login_link": "In case of Having Account, Click Here",
+            "login_link": "In case of having account, click here",
             "is_admin": "I'm Admin",
             "error": {
-                "password_mismatch": "Password Mismatch"
+                "password_mismatch": "Password mismatch"
             }
         },
         "code_verification": {
             "verify_btn": "Verify",
-            "enter_code": "Please Enter the Verification Code Sent to your Email"
+            "enter_code": "Please enter the verification code sent to your email"
         },
         "item_details": {
             "price": "Price",
@@ -200,44 +205,44 @@
                 "sold": "Sold"
             },
             "delete_confirmation": {
-                "title": "Are you Sure to Delete this Ad?",
+                "title": "Are you sure to delete this ad?",
                 "message": ""
             },
             "buttons": {
-                "back_to_list": "Back to List"
+                "back_to_list": "Back to list"
             }
         },
         "error": {
             "general": "A system error occurred, Please try again later",
             "input": {
-                "invalid_email": "Enter a Valid Email",
+                "invalid_email": "Enter a valid email",
                 "invalid_password": {
-                    "min_length": "At least 8 Characters are Required",
-                    "has_number": "At least 1 Number is Required",
-                    "has_uppercase": "At least 1 Capital Letter is Required",
-                    "has_special_char": "At least 1 Special Character is Required"
+                    "min_length": "At least 8 characters are required",
+                    "has_number": "At least 1 number is required",
+                    "has_uppercase": "At least 1 capital letter is required",
+                    "has_special_char": "At least 1 special character is required"
                 },
-                "invalid_phone_number": "Enter a Valid Phone Number",
+                "invalid_phone_number": "Enter a valid phone number",
                 "invalid_image": {
                     "max_size": "The file size should not exceed 1 MB",
-                    "invalid_type": "Only Image Files are Allowed"
+                    "invalid_type": "Only image files are allowed"
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "For Submitting an Ad, Login to your Account",
-                "required_image": "Please choose at least one image for your Ad"
+                "disable_not_loggined": "For submitting an ad, login to your account",
+                "required_image": "Please choose at least one image for your ad"
             },
             "login": {
-                "not_verified": "For login, First Verify your Email"
+                "not_verified": "For login, first verify your email"
             },
             "landing": {
-                "empty_product_list": "No Ad Submitted in the Selected Category",
-                "error_get_product": "Error Ocuured during Getting Product List"
+                "empty_product_list": "No ad submitted in the selected category",
+                "error_get_product": "Error ocuured during getting product list"
             },
             "item_details": {
                 "not_found": "Item not found",
-                "disable_report_submiision": "For Submitting a Report, Login to your Account",
-                "copy_phone_number_failed": "Failed to Copy Seller's Phone Number"
+                "disable_report_submiision": "For submitting a report, login to your account",
+                "copy_phone_number_failed": "Failed to copy seller's phone number"
             },
             "profile_management": {
                 "save_failed": "Error Ocurred during Saving your Changes",
@@ -245,17 +250,18 @@
             },
             "report_history": {
                 "retrieve_failed": "Error Ocurred during Getting Report History"
-            }
+           }
         },
         "success": {
-            "signup": "Registered Successfully. Please Verify your Email.",
-            "code_verification": "Your Email Verified Successfully",
-            "login": "Logined Successfully",
-            "create_ad": "Ad Created Successfully",
-            "report": "Report Submitted Successfully",
-            "profile_management": "Changes Saved Successfully",
-            "copy_phone_number": "Seller's Phone Number Copied Successfully"
-        }
+            "signup": "Registered successfully. Please verify your email.",
+            "code_verification": "Your email verified successfully",
+            "login": "Logined successfully",
+            "forget_password": "A new password is sent to your email",
+            "create_ad": "Ad created successfully",
+            "report": "Report submitted successfully",
+            "profile_management": "Changes saved successfully",
+            "copy_phone_number": "Seller's phone mumber copied successfully"
+       }
     },
     "fa": {
         "brand_name": "کالادو",
@@ -336,8 +342,13 @@
         },
         "login_form": {
             "login_btn": "ورود",
-            "signup_link": "ایجاد حساب جدید"
+            "signup_link": "ایجاد حساب جدید",
+            "forget_password_link": "فراموشی رمز عبور"
         },
+        "forget_password_form": {
+            "enter_your_email": "لطفا ایمیل خود را برای بازیابی رمز عبور وارد نمایید",
+            "forget_password_btn": "بازیابی رمز عبور"
+       },
         "signup_form": {
             "signup_btn": "ثبت‌نام",
             "login_link": "در صورت داشتن حساب کاربری، کلیک کنید",
@@ -509,6 +520,7 @@
             "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
             "code_verification": "ایمیل شما با موفقیت تایید شد",
             "login": "با موفقیت وارد شدید",
+            "forget_password": "رمز عبور جدیدی به ایمیل شما فرستاده شد",
             "create_ad": "آگهی شما با موفقیت ثبت شد",
             "report": "گزارش تخلف شما با موفقیت ثبت شد",
             "profile_management": "تغییرات شما با موفقیت ذخیره شد",

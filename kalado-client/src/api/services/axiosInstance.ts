@@ -12,7 +12,6 @@ interface ErrorResponseData {
 axiosInstance.interceptors.request.use(
     async (config) => {
         const token = localStorage.getItem('token');
-        const isPublicEndpoint = config.url?.includes('/signup') || config.url?.includes('/login');
 
         console.log('-----------------------------------');
         console.log('[Request] URL:', config.url);
@@ -20,14 +19,13 @@ axiosInstance.interceptors.request.use(
         console.log('[Request] Headers:', config.headers);
         console.log('[Request] Data:', config.data);
 
-        if (token && !isPublicEndpoint) {
+        if (token) {
             config.headers['Authorization'] = `${token}`;
             console.log('[Request] Authorization Token Attached');
         } else {
             console.log('[Request] Public Endpoint - No Token Attached');
         }
 
-        console.log('-----------------------------------');
         return config;
     },
     (error) => {
@@ -56,7 +54,6 @@ axiosInstance.interceptors.response.use(
         if (statusCode === 401 || statusCode === 403) {
             console.warn('[Response Interceptor] Unauthorized or Forbidden. Redirecting...');
             localStorage.clear();
-            window.location.href = '/login';
         }
 
         const message = error.response?.data?.message || 'An unknown error occurred.';
@@ -74,8 +71,7 @@ export async function sendRequest<T>(
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     requestData?: any,
-    signal?: AbortSignal,
-    headers: Record<string, string> = {}
+    signal?: AbortSignal
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
         const response = await axiosInstance.request({
@@ -83,7 +79,9 @@ export async function sendRequest<T>(
             url,
             data: requestData,
             signal,
-            headers,
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         return {

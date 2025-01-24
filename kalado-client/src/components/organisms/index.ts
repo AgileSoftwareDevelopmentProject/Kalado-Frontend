@@ -13,10 +13,13 @@ export { default as AdManagement } from './AdManagement/AdManagement';
 export { default as UserManagement } from './UserManagement/UserManagement';
 export { default as ReportHistory } from './Report/ReportHistory';
 
-export { default as LoginForm } from './Login/LoginForm';
-export { default as SignupForm } from './Signup/SignupForm';
-export { default as CodeVerificationForm } from './CodeVerification/CodeVerificationForm';
-export { default as CreateAdForm } from './CreateAd/CreateAdForm';
-export { default as ReportSubmissionForm } from './Report/ReportSubmissionForm';
+export { default as LoginForm } from './Forms/Login/LoginForm';
+export { default as ForgetPasswordForm } from './Forms/Login/ForgetPasswordForm';
+export { default as SignupForm } from './Forms/Register/SignupForm';
+export { default as CodeVerificationForm } from './Forms/Register/CodeVerificationForm';
+export { default as CreateAdForm } from './Forms/CreateAd/CreateAdForm';
+export { default as ReportSubmissionForm } from './Forms/Report/ReportSubmissionForm';
+export { default as FormGroup } from './Forms/FormGroup';
+
 
 

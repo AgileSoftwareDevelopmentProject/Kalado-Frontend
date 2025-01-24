@@ -12,7 +12,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "id": "1",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Iphone 15",
@@ -26,7 +26,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "id": "2",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Xiaomi Redmi Note 11",
@@ -40,7 +40,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "id": "3",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "OnePlus Nord CE 5G",
@@ -54,7 +54,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "4",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Google Pixel 6a",
@@ -68,7 +68,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "5",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Oppo Reno8 Pro",
@@ -82,7 +82,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "6",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Samsung A54",
@@ -96,7 +96,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "7",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Iphone 15",
@@ -110,7 +110,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "8",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Xiaomi Redmi Note 11",
@@ -124,7 +124,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "9",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "OnePlus Nord CE 5G",
@@ -138,7 +138,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "10",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Google Pixel 6a",
@@ -152,7 +152,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "11",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         },
         {
             "title": "Oppo Reno8 Pro",
@@ -166,7 +166,7 @@
             "createdAt": 1736122836240,
             "description": "موبایل خیلی خوبی است. دوماه بیشتر استفاده نشده است.",
             "itemId": "12",
-            "seller_phone": "09123498076"
+            "sellerPhoneNumber": "09123498076"
         }
     ]
 }

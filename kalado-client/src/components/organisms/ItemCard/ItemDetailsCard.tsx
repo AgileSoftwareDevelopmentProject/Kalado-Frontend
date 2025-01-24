@@ -23,7 +23,8 @@ interface ItemDetailsCardProps {
         imageUrls?: string[];
         description?: string | null;
         id: number;
-        sellerId: number | null;
+        sellerId?: number | null;
+        sellerPhoneNumber: string | '';
         brand: string | null;
         productionYear: string | null;
     };
@@ -47,16 +48,44 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
     };
 
     const copyPhoneNumberToClipboard = () => {
-        if (item.sellerId) {
-            navigator.clipboard.writeText(item.sellerId.toString())
+        if (navigator.clipboard && item.sellerPhoneNumber) {
+            navigator.clipboard.writeText(item.sellerPhoneNumber)
                 .then(() => {
-                    toast(t("item_details.phone_copied"));
+                    toast(t("success.copy_phone_number"));
                 })
                 .catch(err => {
-                    toast(t("error.item_details.copy_phone_number_failed"));
+                    fallbackCopyTextToClipboard(item.sellerPhoneNumber);
                 });
+        } else {
+            fallbackCopyTextToClipboard(item.sellerPhoneNumber);
         }
     };
+
+    const fallbackCopyTextToClipboard = (text: string) => {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                toast(t("success.copy_phone_number"));
+            } else {
+                toast(t("error.item_details.copy_phone_number_failed"));
+            }
+        } catch (err) {
+            toast(t("error.item_details.copy_phone_number_failed"));
+        }
+
+        document.body.removeChild(textArea);
+    };
+
 
     return (
         <Card sx={{ width: 800, height: 'auto' }}>
@@ -97,13 +126,15 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
                                 onClick={copyPhoneNumberToClipboard}
                                 sx={{
                                     cursor: 'pointer',
+                                    userSelect: 'text',
                                     '&:hover': {
                                         color: 'primary.main',
                                     },
                                 }}
                             >
-                                {item.sellerId || t("item_details.no_seller_phone")}
+                                {item.sellerPhoneNumber || t("item_details.no_seller_phone")}
                             </Typography>
+
                         </Box>
                     </CardContent>
                 </Box>

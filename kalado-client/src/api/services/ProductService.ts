@@ -1,4 +1,4 @@
-import { ProductData, TProductResponseType } from '../../utils/apiTypes';
+import { ProductData, TProductResponseType } from '../../constants/apiTypes';
 import { sendRequest } from './axiosInstance';
 import { PRODUCT } from './urls';
 import mockData from '../../mockData.json';  // use for mocking APIs
@@ -16,47 +16,29 @@ export async function createProductWithImages(productData: ProductData, imageFil
         PRODUCT.CREATE,
         'POST',
         formData,
-        undefined,
-        {
-            'Content-Type': 'multipart/form-data',
-        }
     );
 }
 
-
-export async function deleteAd(adId: number, token: string | null) {
+export async function deleteAd(adId: number) {
     return sendRequest(
         PRODUCT.DELETE(adId),
         'PUT',
-        undefined,
-        undefined,
-        {
-            'Content-Type': 'application/json',
-        }
     );
 }
 
-export async function updateAd(productId: number, productData: ProductData, token: string | null) {
+export async function updateAd(productId: number, productData: ProductData) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE(productId),
         'PUT',
         productData,
-        undefined,
-        {
-            'Content-Type': 'application/json',
-        }
     );
 }
 
-export async function updateAdStatus(productId: number, status: string, token: string | null) {
+export async function updateAdStatus(productId: number, status: string) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE_STATUS(productId),
         'PUT',
         { status },
-        undefined,
-        {
-            'Content-Type': 'application/json',
-        }
     );
 }
 
@@ -64,8 +46,6 @@ export async function getSingleProduct(adId: number) {
     return sendRequest<TProductResponseType>(
         PRODUCT.GET_SINGLE(adId),
         'GET',
-        undefined,
-        undefined
     );
 }
 
@@ -77,8 +57,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
         const response = await sendRequest(
             PRODUCT.GET_BY_CATEGORY(category),
             'GET',
-            undefined,
-            undefined
         );
         return response.data as TProductResponseType[];
     } catch (error) {
@@ -95,11 +73,7 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
         const response = await sendRequest(
             PRODUCT.GET_BY_SELLER,
             'GET',
-            undefined,
-            undefined,
-            {
-                Authorization: `${token}`,
-            }
+            token
         );
 
         return response.data as TProductResponseType[];
@@ -123,7 +97,7 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
 //     });
 // };
 
-// export const getProductsByCategory = async (category) => {
+// export const getProductsByCategory = async () => {
 //     return new Promise((resolve) => {
 //         setTimeout(() => {
 //             resolve(mockData.items);

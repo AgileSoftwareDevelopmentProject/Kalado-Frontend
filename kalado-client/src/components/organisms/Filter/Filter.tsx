@@ -6,14 +6,13 @@ import { LabelList, NumberRange } from '../../molecules';
 import { OptionsComponent } from '../../../constants/options';
 import { useProductContext } from '../../../contexts/ProductContext';
 
-
 const Filter: React.FC = () => {
   const { t } = useTranslation();
   const { date_filter_options } = OptionsComponent();
   const { applyFilters } = useProductContext();
   const [date, setDate] = useState<string | null>(null);
-  const [minPrice, setMinPrice] = useState<number | 0>(0);
-  const [maxPrice, setMaxPrice] = useState<number | 0>(0);
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -27,9 +26,8 @@ const Filter: React.FC = () => {
     }
   };
 
-  // Rendering products based on Applied Filters
   const handleApplyFilters = () => {
-    applyFilters(date, minPrice, maxPrice, date);
+    applyFilters('', minPrice, maxPrice, date);
   };
 
   return (

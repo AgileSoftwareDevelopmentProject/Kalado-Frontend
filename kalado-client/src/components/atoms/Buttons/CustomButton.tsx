@@ -4,6 +4,7 @@ import { OverridableStringUnion } from '@mui/types';
 
 interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
     text?: string;
+    fontSize?: string | number;
     icon?: React.ReactNode;
     shape?: 'rounded' | 'square';
     borderRadius?: string;
@@ -19,6 +20,7 @@ interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
 const CustomButton: React.FC<CustomButtonProps> = ({
     children,
     text,
+    fontSize,
     icon,
     shape = 'rounded',
     borderRadius,
@@ -36,9 +38,10 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         borderRadius: borderRadius || (shape === 'square' ? '0px' : '30px'),
         width: 'auto',
         backgroundColor: backgroundColor,
-        padding: padding,
+        padding: type === 'submit' ? '5px 30px' : padding,
         margin: margin,
         color: color,
+        fontSize: fontSize,
         transition: 'all 0.3s ease',
         '&:active': {
             transform: 'scale(0.95)',
