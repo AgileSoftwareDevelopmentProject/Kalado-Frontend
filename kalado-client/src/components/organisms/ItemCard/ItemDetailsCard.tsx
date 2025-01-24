@@ -14,19 +14,19 @@ import { toast } from 'react-toastify';
 
 interface ItemDetailsCardProps {
     item: {
-        title: string | null;
-        price: {
-            amount: number | null;
-            unit: string | null;
-        };
-        createdAt: string | null;
-        imageUrls?: string[];
-        description?: string | null;
         id: number;
-        sellerId?: number | null;
-        sellerPhoneNumber: string | '';
-        brand: string | null;
-        productionYear: string | null;
+        title: string;
+        createdAt: string;
+        imageUrls?: string[];
+        price: {
+            amount: number,
+            unit: string,
+        },
+        description?: string;
+        sellerPhoneNumber?: string;
+        sellerId: number;
+        brand?: string;
+        productionYear?: string;
     };
     neededReportSubmissionForm?: boolean;
 }

@@ -9,8 +9,7 @@ interface CustomButtonProps extends Omit<MuiButtonProps, 'color'> {
     shape?: 'rounded' | 'square';
     borderRadius?: string;
     backgroundColor?: string;
-    color?: OverridableStringUnion<'inherit' | 'primary' | 'secondary' | 'success' | 'error',
-        React.ElementType>;
+    color?: OverridableStringUnion<'inherit' | 'primary' | 'secondary' | 'success' | 'error', React.ElementType>;
     padding?: string;
     margin?: string;
     type?: 'button' | 'submit' | 'reset';
@@ -34,29 +33,26 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     ...props
 }) => {
 
-    const buttonStyles = {
-        borderRadius: borderRadius || (shape === 'square' ? '0px' : '30px'),
-        width: 'auto',
-        backgroundColor: backgroundColor,
-        padding: type === 'submit' ? '5px 30px' : padding,
-        margin: margin,
-        color: color,
-        fontSize: fontSize,
-        transition: 'all 0.3s ease',
-        '&:active': {
-            transform: 'scale(0.95)',
-            transition: 'all 0.2s ease',
-        }
-    };
-
     return (
-        <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-        >
+        <Box display="flex" justifyContent="center" alignItems="center">
             <MuiButton
-                style={buttonStyles}
+                sx={{
+                    borderRadius: borderRadius || (shape === 'square' ? '0px' : '30px'),
+                    width: 'auto',
+                    backgroundColor: backgroundColor,
+                    padding: type === 'submit' ? '5px 30px' : padding,
+                    margin: margin,
+                    color: color,
+                    fontSize: fontSize,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                        backgroundColor: '#FF5722',
+                    },
+                    '&:active': {
+                        transform: 'scale(0.95)',
+                        transition: 'all 0.2s ease',
+                    },
+                }}
                 onClick={onClick}
                 type={type}
                 disabled={disabled}

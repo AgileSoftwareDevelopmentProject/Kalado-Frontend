@@ -14,7 +14,6 @@ export async function loginUser(email: string, password: string) {
     );
 }
 
-
 export async function signupUser(userData: UserData) {
     return sendRequest(
         AUTH.REGISTER,
@@ -26,7 +25,6 @@ export async function signupUser(userData: UserData) {
     );
 }
 
-
 export async function verifyCode(code: string) {
     return sendRequest(
         AUTH.VERIFY,
@@ -35,5 +33,16 @@ export async function verifyCode(code: string) {
             'Content-Type': 'application/json'
         },
         code,
+    );
+}
+
+export async function forgetPassword(email: string) {
+    return sendRequest(
+        AUTH.FORGETPASSWORD,
+        'POST',
+        {
+            'Content-Type': 'application/json'
+        },
+        email,
     );
 }

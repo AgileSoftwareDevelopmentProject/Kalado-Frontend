@@ -40,6 +40,7 @@ const LoginForm: React.FC = () => {
 
         if (validateUserInputs()) {
             const response = await loginUser(formData.email.toLowerCase(), formData.password);
+            console.log(response);
             if (response.isSuccess) {
                 setToken(response.data.token);
                 localStorage.setItem('token', response.data.token);
@@ -64,11 +65,6 @@ const LoginForm: React.FC = () => {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
-                <CustomLink
-                    to="/#"
-                    onClick={(e) => { e.preventDefault(); handleOpenForgetPassword(); }}
-                    text={t("login_form.forget_password_link")}
-                />
                 <CustomButton
                     text={t("login_form.login_btn")}
                     type="submit"
@@ -77,6 +73,12 @@ const LoginForm: React.FC = () => {
                     to="/#"
                     onClick={(e) => { e.preventDefault(); handleOpenSignup(); }}
                     text={t("login_form.signup_link")}
+                />
+                <CustomLink
+                    to="/#"
+                    onClick={(e) => { e.preventDefault(); handleOpenForgetPassword(); }}
+                    text={t("login_form.forget_password_link")}
+                    fontSize={15}
                 />
                 <FormError message={error} />
             </form>

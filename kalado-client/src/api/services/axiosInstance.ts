@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { BASE_URL as baseURL } from './urls';
-import { toast } from 'sonner';
+import i18n from '../../i18n';
 
 const axiosInstance = axios.create({ baseURL });
 
@@ -45,24 +45,29 @@ axiosInstance.interceptors.response.use(
     },
     (error: AxiosError<ErrorResponseData>) => {
         const statusCode = error.response?.status;
+
+        if (!error.response) {
+            return Promise.resolve({
+                isSuccess: false,
+                data: null,
+                status: 0,
+                message: i18n.t('error.general'),
+            });
+        }
+
         console.log('-----------------------------------');
         console.error('[Response Interceptor] Error Status:', statusCode);
         console.error('[Response Interceptor] Error Data:', error.response?.data);
         console.log('-----------------------------------');
 
-        if (statusCode === 401 || statusCode === 403) {
-            console.warn('[Response Interceptor] Unauthorized or Forbidden. Redirecting...');
-            localStorage.clear();
-        }
+        const message = statusCode ? i18n.t(`error.server.${statusCode}`) : i18n.t(`error.general`);
 
-        const message = error.response?.data?.message || 'An unknown error occurred.';
-        toast.error(
-            statusCode === 409
-                ? 'This email is already registered.'
-                : message || message.replace(/_/g, ' ')
-        );
-
-        return Promise.reject(error);
+        return Promise.resolve({
+            isSuccess: false,
+            data: null,
+            status: statusCode,
+            message: message,
+        });
     }
 );
 
@@ -74,7 +79,6 @@ export async function sendRequest<T>(
     signal?: AbortSignal,
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
-
         const response = await axiosInstance.request({
             method,
             url,
@@ -90,7 +94,18 @@ export async function sendRequest<T>(
         };
     } catch (error) {
         const axiosError = error as AxiosError<ErrorResponseData>;
+
+        if (!axiosError.response) {
+            return {
+                isSuccess: false,
+                data: null,
+                status: 0,
+                message: i18n.t('error.general'),
+            };
+        }
+
         const message = axiosError.response?.data?.message || 'An unknown error occurred.';
+
         return {
             isSuccess: false,
             data: null,

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EmailInput, CustomButton, FormError } from '../../../atoms';
 import { PopupBox } from '../../../molecules';
-import { loginUser } from '../../../../api/services/AuthService';
+import { forgetPassword } from '../../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 import { validateEmail } from '../../../../validators';
 import { useModalContext } from '../../../../contexts';
@@ -36,7 +36,6 @@ const ForgetPasswordForm: React.FC = () => {
         if (validateUserInputs()) {
             const response = await forgetPassword(formData.email.toLowerCase());
             if (response.isSuccess) {
-
                 handleClose();
                 toast(t("success.forget_password"));
             } else {
