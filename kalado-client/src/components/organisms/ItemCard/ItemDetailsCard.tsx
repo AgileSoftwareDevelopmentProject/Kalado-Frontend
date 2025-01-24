@@ -9,25 +9,11 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../contexts';
+import { TProductResponseType } from '../../../constants/apiTypes';
 
 
 interface ItemDetailsCardProps {
-    item: {
-        id: number;
-        title: string;
-        createdAt: string;
-        imageUrls?: string[];
-        price: {
-            amount: number,
-            unit: string,
-        },
-        description?: string;
-        sellerPhoneNumber: string;
-        sellerId: number;
-        brand?: string;
-        productionYear?: string;
-        status: string;
-    };
+    item: TProductResponseType;
 }
 
 const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {

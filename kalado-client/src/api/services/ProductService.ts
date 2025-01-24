@@ -100,7 +100,7 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
 //     });
 // };
 
-// export const getProductsByCategory = async () => {
+// export const getProductsByCategory = async (category: string) => {
 //     return new Promise((resolve) => {
 //         setTimeout(() => {
 //             resolve(mockData.items);

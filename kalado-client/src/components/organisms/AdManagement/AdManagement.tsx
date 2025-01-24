@@ -2,28 +2,13 @@ import React from 'react';
 import { Box } from '@mui/material';
 import AdList from '../AdList/AdList';
 import EditAdCard from '../AdCard/EditAdCard';
+import { TProductResponseType } from '../../../constants/apiTypes';
 
-interface AdData {
-    id: number;
-    title: string;
-    createdAt: string;
-    imageUrls?: string[];
-    price: {
-        amount: number,
-        unit: string,
-    },
-    description?: string;
-    sellerPhoneNumber: string;
-    sellerId: number;
-    brand?: string;
-    productionYear?: string;
-    status: string;
-}
 
 interface AdManagementProps {
-    ads: AdData[];
-    onEdit: (adData: AdData) => void;
-    selectedAd?: AdData;
+    ads: TProductResponseType[];
+    onEdit: (adData: TProductResponseType) => void;
+    selectedAd?: TProductResponseType;
     onCloseEdit: () => void;
 }
 

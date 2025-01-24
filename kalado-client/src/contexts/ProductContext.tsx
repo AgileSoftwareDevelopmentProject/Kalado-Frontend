@@ -1,32 +1,16 @@
 import React, { createContext, useState, useContext } from 'react';
 import { getProductsByCategory, getSingleProduct } from '../api/services/ProductService';
 import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters } from '../api/services/SearchService';
+import { TProductResponseType } from '../constants/apiTypes';
 
-
-interface Product {
-    id: number;
-    title: string;
-    createdAt: string;
-    imageUrls?: string[];
-    price: {
-        amount: number,
-        unit: string,
-    },
-    description?: string;
-    sellerPhoneNumber: string;
-    sellerId: number;
-    brand?: string;
-    productionYear?: string;
-    status: string;
-}
 
 interface ProductContextType {
-    products: Product[];
-    singleProduct: Product | null;
+    products: TProductResponseType[];
+    singleProduct: TProductResponseType | null;
     loading: boolean;
     error: string;
     fetchProductsByCategory: (category: string) => void;
-    fetchSingleProduct: (id: number) => Promise<Product | null>;
+    fetchSingleProduct: (id: number) => Promise<TProductResponseType | null>;
     applyFilters: (minPrice: number | 0, maxPrice: number | 0, timeFilter: string | '') => void;
     searchProductsByKeyword: (keyword: string) => void;
     searchProductsByPriceRange: (minPrice: number | 0, maxPrice: number | 0) => void;
@@ -35,10 +19,10 @@ interface ProductContextType {
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<TProductResponseType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
-    const [singleProduct, setSingleProduct] = useState<Product | null>(null);
+    const [singleProduct, setSingleProduct] = useState<TProductResponseType | null>(null);
 
     const fetchProductsByCategory = async (category: string) => {
         setLoading(true);
@@ -47,8 +31,13 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
             console.log('Fetching products by Category');
             console.log(category)
             const response = await getProductsByCategory(category);
-            setProducts(response);
             console.log(response);
+            const filteredProducts = response.filter((product: TProductResponseType) =>
+                product.status === 'ACTIVE' || product.status === 'RESERVED'
+            );
+
+            setProducts(filteredProducts);
+            console.log(filteredProducts);
         } catch (err) {
             setError('Failed to fetch products');
         } finally {
@@ -60,11 +49,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setLoading(true);
         setError('');
         try {
-            console.log('Fetching single product');
-            console.log(id);
             const response = await getSingleProduct(id);
-            setSingleProduct(response);
-            console.log("WWWWWWWW");
+            setSingleProduct(response.data);
             console.log(response.data);
             console.log(response);
         } catch (err) {

@@ -76,20 +76,19 @@ export interface ProductData {
 export type TProductResponseType = {
     id: number;
     title: string;
-    description: string;
+    createdAt: string;
+    imageUrls?: string[];
     price: {
-        amount: number;
-        unit: string;
-    };
-    imageUrls: string[];   // contains urls
-    category: string;
-    productionYear: number;
-    brand: string;
-    status: string;
-    createdAt: number; // Timestamp in milliseconds
+        amount: number,
+        unit: string,
+    },
+    description?: string;
+    sellerPhoneNumber: string;
     sellerId: number;
+    brand?: string;
+    productionYear?: string;
+    status: string;
 };
-
 
 
 // Report
