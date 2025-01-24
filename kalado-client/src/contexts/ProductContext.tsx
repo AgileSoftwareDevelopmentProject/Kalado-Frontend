@@ -79,8 +79,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         try {
             console.log('Fetching products by multiple filters');
             const response = await getSearchByMultipleFilters('', minPrice, maxPrice, timeFilter);
-            setProducts(response.data);
-            console.log(response);
+            setProducts(response.content);
         } catch (err) {
             setError('Failed to apply filters');
         } finally {

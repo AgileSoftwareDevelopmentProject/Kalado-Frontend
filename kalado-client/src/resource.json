@@ -82,12 +82,12 @@
             "forget_password_link": "Forget password"
         },
         "forget_password_form": {
-            "enter_your_email": "Enter your email to retrieve your password",
+            "enter_your_email": "Enter your email to retrieve your password.",
             "forget_password_btn": "Send Email"
         },
         "signup_form": {
             "signup_btn": "Signup",
-            "login_link": "In case of having account, click here",
+            "login_link": "In case of having account, click here.",
             "is_admin": "I'm Admin",
             "error": {
                 "password_mismatch": "Password mismatch"
@@ -95,7 +95,7 @@
         },
         "code_verification": {
             "verify_btn": "Verify",
-            "enter_code": "Please enter the verification code sent to your email"
+            "enter_code": "Please enter the verification code sent to your email."
         },
         "item_details": {
             "price": "Price",
@@ -213,43 +213,43 @@
             }
         },
         "error": {
-            "general": "A system error occurred, Please try again later",
+            "general": "A system error occurred, Please try again later.",
             "input": {
-                "invalid_email": "Enter a valid email",
+                "invalid_email": "Enter a valid email.",
                 "invalid_password": {
-                    "min_length": "At least 8 characters are required",
-                    "has_number": "At least 1 number is required",
-                    "has_uppercase": "At least 1 capital letter is required",
-                    "has_special_char": "At least 1 special character is required"
+                    "min_length": "At least 8 characters are required.",
+                    "has_number": "At least 1 number is required.",
+                    "has_uppercase": "At least 1 capital letter is required.",
+                    "has_special_char": "At least 1 special character is required."
                 },
-                "invalid_phone_number": "Enter a valid phone number",
+                "invalid_phone_number": "Enter a valid phone number.",
                 "invalid_image": {
-                    "max_size": "The file size should not exceed 1 MB",
-                    "invalid_type": "Only image files are allowed"
+                    "max_size": "The file size should not exceed 1 MB.",
+                    "invalid_type": "Only image files are allowed."
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "For submitting an ad, login to your account",
-                "required_image": "Please choose at least one image for your ad"
+                "disable_not_loggined": "For submitting an ad, login to your account.",
+                "required_image": "Please choose at least one image for your ad."
             },
             "login": {
-                "not_verified": "For login, first verify your email"
+                "not_verified": "For login, first verify your email."
             },
             "landing": {
-                "empty_product_list": "No ad submitted in the selected category",
-                "error_get_product": "Error ocuured during getting product list"
+                "empty_product_list": "No ad submitted in the selected category.",
+                "error_get_product": "Error ocuured during getting product list."
             },
             "item_details": {
                 "not_found": "Item not found",
                 "disable_report_submiision": "For submitting a report, login to your account.",
-                "copy_phone_number_failed": "Failed to copy seller's phone number"
+                "copy_phone_number_failed": "Failed to copy seller's phone number."
             },
             "profile_management": {
-                "save_failed": "Error Ocurred during Saving your Changes",
-                "retrive_failed": "Error Ocurred during Retrive you Profile Information"
+                "save_failed": "Error ocurred during saving your changes",
+                "retrive_failed": "Error ocurred during retrive you profile information."
             },
             "report_history": {
-                "retrieve_failed": "Error Ocurred during Getting Report History"
+                "retrieve_failed": "Error ocurred during getting report history."
             },
             "server": {
                 "401": "You are not authorized to perform this action.",
@@ -261,13 +261,13 @@
         },
         "success": {
             "signup": "Registered successfully. Please verify your email.",
-            "code_verification": "Your email verified successfully",
+            "code_verification": "Your email verified successfully.",
             "login": "You are welcome!",
-            "forget_password": "A new password is sent to your email",
-            "create_ad": "Ad created successfully",
-            "report": "Report submitted successfully",
-            "profile_management": "Changes saved successfully",
-            "copy_phone_number": "Seller's phone mumber copied successfully"
+            "forget_password": "A new password is sent to your email.",
+            "create_ad": "Ad created successfully.",
+            "report": "Report submitted successfully.",
+            "profile_management": "Changes saved successfully.",
+            "copy_phone_number": "Seller's phone mumber copied successfully."
         }
     },
     "fa": {
@@ -353,20 +353,20 @@
             "forget_password_link": "فراموشی رمز عبور"
         },
         "forget_password_form": {
-            "enter_your_email": "لطفا ایمیل خود را برای بازیابی رمز عبور وارد نمایید",
+            "enter_your_email": "لطفا ایمیل خود را برای بازیابی رمز عبور وارد نمایید.",
             "forget_password_btn": "بازیابی رمز عبور"
         },
         "signup_form": {
             "signup_btn": "ثبت‌نام",
-            "login_link": "در صورت داشتن حساب کاربری، کلیک کنید",
+            "login_link": "در صورت داشتن حساب کاربری، کلیک کنید.",
             "is_admin": "مدیر هستم",
             "error": {
-                "password_mismatch": "رمز عبور‌ها با هم مطابقت ندارند"
+                "password_mismatch": "رمز عبور‌ها با هم مطابقت ندارند."
             }
         },
         "code_verification": {
             "verify_btn": "بررسی",
-            "enter_code": "کد تأیید ارسال شده به ایمیل خود را وارد کنید"
+            "enter_code": "کد تأیید ارسال شده به ایمیل خود را وارد کنید."
         },
         "item_details": {
             "price": "قیمت",
@@ -425,7 +425,7 @@
                 },
                 "block_usr_success_message": "کاربر با موفقیت مسدود شد.",
                 "block_ad_success_message": "آگهی با موفقیت مسدود شد.",
-                "no_reports": "هیچ گزارشی یافت نشد"
+                "no_reports": "هیچ گزارشی یافت نشد."
             },
             "error": {
                 "missing_violation_type": "انتخاب نوع تخلف الزامی است.",
@@ -484,61 +484,61 @@
             }
         },
         "error": {
-            "general": ".خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید",
+            "general": "خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید.",
             "input": {
-                "invalid_email": "لطفاً یک ایمیل معتبر وارد کنید",
+                "invalid_email": "لطفاً یک ایمیل معتبر وارد کنید.",
                 "invalid_password": {
-                    "min_length": "رمز عبور باید حداقل ۸ کاراکتر داشته باشد",
-                    "has_number": "رمز عبور باید حداقل یک عدد داشته باشد",
-                    "has_uppercase": "رمز عبور باید حداقل یک حرف بزرگ داشته باشد",
-                    "has_special_char": "رمز عبور باید حداقل یک کاراکتر ویژه داشته باشد"
+                    "min_length": "رمز عبور باید حداقل ۸ کاراکتر داشته باشد.",
+                    "has_number": "رمز عبور باید حداقل یک عدد داشته باشد.",
+                    "has_uppercase": "رمز عبور باید حداقل یک حرف بزرگ داشته باشد.",
+                    "has_special_char": "رمز عبور باید حداقل یک کاراکتر ویژه داشته باشد."
                 },
-                "invalid_phone_number": "لطفاً یک شماره تلفن معتبر وارد کنید",
+                "invalid_phone_number": "لطفاً یک شماره تلفن معتبر وارد کنید.",
                 "invalid_image": {
-                    "max_size": "حجم فایل نباید بیشتر از 1 مگابایت باشد",
-                    "invalid_type": "فقط فایل‌های تصویری مجاز هستند"
+                    "max_size": "حجم فایل نباید بیشتر از 1 مگابایت باشد.",
+                    "invalid_type": "فقط فایل‌های تصویری مجاز هستند."
                 }
             },
             "create_ad": {
-                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید",
-                "required_image": "لطفا حداقل یک عکس برای آگهی خود انتخاب کنید"
+                "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید.",
+                "required_image": "لطفا حداقل یک عکس برای آگهی خود انتخاب کنید."
             },
             "login": {
-                "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید"
+                "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید."
             },
             "landing": {
-                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است",
-                "error_get_product": "خطایی در گرفتن آگهی‌ها رخ داده است"
+                "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است.",
+                "error_get_product": "خطایی در گرفتن آگهی‌ها رخ داده است."
             },
             "item_details": {
-                "not_found": "کالای مورد نظر پیدا نشد",
-                "disable_report_submiision": "برای ثبت تخلف ابتدا وارد حساب کاربری خود شوید",
-                "copy_phone_number_failed": "خطایی در کپی کردن شماره تلفن خریدار رخ داد"
+                "not_found": "کالای مورد نظر پیدا نشد.",
+                "disable_report_submiision": "برای ثبت تخلف ابتدا وارد حساب کاربری خود شوید.",
+                "copy_phone_number_failed": "خطایی در کپی کردن شماره تلفن خریدار رخ داد."
             },
             "profile_management": {
-                "save_failed": ".خطایی در ذخیره‌ی تغییرات رخ داد",
-                "retrive_failed": ".خطایی در گرفتن اطلاعات پروفایل شما رخ داد"
+                "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد.",
+                "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد."
             },
             "report_history": {
-                "retrieve_failed": ".خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد"
+                "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد."
             },
             "server": {
-                "401": ".شما مجوز این کار را ندارید",
-                "403": ".دسترسی رد شد",
-                "404": ".منبع مورد نظر پیدا نشد",
+                "401": "شما مجوز این کار را ندارید.",
+                "403": "دسترسی رد شد.",
+                "404": "منبع مورد نظر پیدا نشد.",
                 "409": "این ایمیل در سیستم ثبت‌نام شده است.",
-                "500": ".خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید"
+                "500": "خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید."
             }
         },
         "success": {
-            "signup": ".ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید",
-            "code_verification": ".ایمیل شما با موفقیت تایید شد",
-            "login": "!خوش آمدید",
-            "forget_password": ".رمز عبور جدیدی به ایمیل شما فرستاده شد",
-            "create_ad": ".آگهی شما با موفقیت ثبت شد",
-            "report": ".گزارش تخلف شما با موفقیت ثبت شد",
-            "profile_management": ".تغییرات شما با موفقیت ذخیره شد",
-            "copy_phone_number": ".شماره تلفن خریدار با موفقیت کپی شد"
+            "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
+            "code_verification": "ایمیل شما با موفقیت تایید شد.",
+            "login": "خوش آمدید!",
+            "forget_password": "رمز عبور جدیدی به ایمیل شما فرستاده شد.",
+            "create_ad": "آگهی شما با موفقیت ثبت شد.",
+            "report": "گزارش تخلف شما با موفقیت ثبت شد.",
+            "profile_management": "تغییرات شما با موفقیت ذخیره شد.",
+            "copy_phone_number": "شماره تلفن خریدار با موفقیت کپی شد."
         }
     }
 }
