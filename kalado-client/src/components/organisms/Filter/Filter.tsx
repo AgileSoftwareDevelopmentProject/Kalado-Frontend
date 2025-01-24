@@ -10,7 +10,7 @@ const Filter: React.FC = () => {
   const { t } = useTranslation();
   const { date_filter_options } = OptionsComponent();
   const { applyFilters } = useProductContext();
-  const [date, setDate] = useState<string | null>(null);
+  const [date, setDate] = useState<string | ''>('');
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
 
@@ -27,7 +27,7 @@ const Filter: React.FC = () => {
   };
 
   const handleApplyFilters = () => {
-    applyFilters('', minPrice, maxPrice, date);
+    applyFilters(minPrice, maxPrice, date);
   };
 
   return (

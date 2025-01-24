@@ -46,9 +46,9 @@ export const OptionsComponent = () => {
     ];
 
     const date_filter_options = [
-        { title: t('filter.one_day'), value: 'oneDay' },
-        { title: t('filter.one_week'), value: 'oneWeek' },
-        { title: t('filter.one_month'), value: 'oneMonth' },
+        { title: t('filter.one_day'), value: '1D' },
+        { title: t('filter.one_week'), value: '1W' },
+        { title: t('filter.one_month'), value: '1M' },
     ];
 
     return { product_categories, user_dashboard_menu, admin_dashboard_menu, report_options, search_options, date_filter_options };
