@@ -10,7 +10,7 @@ import { useProductContext } from '../../contexts/ProductContext';
 const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { user_dashboard_menu } = OptionsComponent();
-    const { products, loading, error } = useProductContext();
+    // const { products, loading, error } = useProductContext();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
 
     const handleSelectMenu = (menuTitle: string) => {
@@ -21,13 +21,13 @@ const UserDashboard: React.FC = () => {
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
                 return <ProfileManagement />;
-            case t("dashboard.user.menu.two"):
-                return <AdManagement
-                    ads={products}
-                    onEdit={ }
-                    selectedAd={ }
-                    onCloseEdit={ }
-                />;
+            // case t("dashboard.user.menu.two"):
+            //     return <AdManagement
+            //         ads={products}
+            //         onEdit={ }
+            //         selectedAd={ }
+            //         onCloseEdit={ }
+            //     />;
         }
     };
 

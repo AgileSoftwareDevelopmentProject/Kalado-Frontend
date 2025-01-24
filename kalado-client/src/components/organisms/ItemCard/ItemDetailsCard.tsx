@@ -2,14 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
 import defaultImage from '../../../assets/images/no-image.png';
-import { CustomButton } from '../../../components/atoms';
 import PriceIcon from '@mui/icons-material/AttachMoney';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DateIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PhoneIcon from '@mui/icons-material/Phone';
-import { useModalContext } from '../../../contexts';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../contexts';
 
 
 interface ItemDetailsCardProps {
@@ -23,19 +22,17 @@ interface ItemDetailsCardProps {
             unit: string,
         },
         description?: string;
-        sellerPhoneNumber?: string;
+        sellerPhoneNumber: string;
         sellerId: number;
         brand?: string;
         productionYear?: string;
         status: string;
     };
-    neededReportSubmissionForm?: boolean;
 }
 
-const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSubmissionForm = false }) => {
+const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
     const { t } = useTranslation();
-    const { handleOpenReportSubmission } = useModalContext();
-
+    const { token } = useAuth();
     const imageToDisplay = item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls[0] : defaultImage;
 
     const formatDate = (timestamp: string | null): string => {
@@ -87,6 +84,17 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
         document.body.removeChild(textArea);
     };
 
+    const maskPhoneNumber = (phoneNumber: string) => {
+        if (!phoneNumber) return t("item_details.no_seller_phone");
+
+        if (!token) {
+            const visiblePart = phoneNumber.slice(-4);
+            const maskedPart = phoneNumber.slice(0, -4).replace(/\d/g, '*');
+            return maskedPart + visiblePart;
+        }
+
+        return phoneNumber;
+    };
 
     return (
         <Card sx={{ width: 800, height: 'auto' }}>
@@ -133,7 +141,7 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
                                     },
                                 }}
                             >
-                                {item.sellerPhoneNumber || t("item_details.no_seller_phone")}
+                                {maskPhoneNumber(item.sellerPhoneNumber)}
                             </Typography>
 
                         </Box>
@@ -146,13 +154,6 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item, neededReportSub
                     sx={{ height: 400, width: 500, objectFit: 'cover' }}
                 />
             </Box >
-            {
-                neededReportSubmissionForm && (
-                    <CustomButton
-                        text={t("item_details.report_submission_btn")}
-                        onClick={handleOpenReportSubmission}
-                    />)
-            }
         </Card >
     );
 };

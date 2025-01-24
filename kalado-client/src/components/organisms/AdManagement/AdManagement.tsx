@@ -13,7 +13,7 @@ interface AdData {
         unit: string,
     },
     description?: string;
-    sellerPhoneNumber?: string;
+    sellerPhoneNumber: string;
     sellerId: number;
     brand?: string;
     productionYear?: string;

@@ -13,7 +13,7 @@ interface Product {
         unit: string,
     },
     description?: string;
-    sellerPhoneNumber?: string;
+    sellerPhoneNumber: string;
     sellerId: number;
     brand?: string;
     productionYear?: string;
@@ -56,16 +56,17 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
-    const fetchSingleProduct = async (id: number): Promise<Product | null> => {
+    const fetchSingleProduct = async (id: number) => {
         setLoading(true);
         setError('');
         try {
             console.log('Fetching single product');
             console.log(id);
             const response = await getSingleProduct(id);
-            setSingleProduct(response.data);
+            setSingleProduct(response);
+            console.log("WWWWWWWW");
+            console.log(response.data);
             console.log(response);
-            return response;
         } catch (err) {
             setError('Failed to fetch the product');
             return null;

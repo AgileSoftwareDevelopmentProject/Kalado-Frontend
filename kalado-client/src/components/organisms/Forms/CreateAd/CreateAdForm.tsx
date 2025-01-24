@@ -4,10 +4,9 @@ import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomBut
 import { PopupBox, ImageUploadBox } from '../../../molecules';
 import { createProductWithImages } from '../../../../api/services/ProductService';
 import { toast } from 'react-toastify';
-import { useModalContext } from '../../../../contexts';
+import { useModalContext, useAuth } from '../../../../contexts';
 import { OptionsComponent } from '../../../../constants/options';
 import { ProductData } from '../../../../constants/apiTypes';
-import { useAuth } from '../../../../contexts';
 
 
 const CreateAdForm: React.FC = () => {
