@@ -12,7 +12,7 @@
             "price": "Price",
             "date": "Date",
             "code": "Verification Code",
-            "add_image": "Add image",
+            "add_image": "Add Image",
             "description": "Description",
             "category": "Category",
             "no_option": "No option"
@@ -43,7 +43,7 @@
             "one_day": "One Day",
             "one_week": "One Week",
             "one_month": "One Month",
-            "apply": "Apply filter"
+            "apply": "Apply Filter"
         },
         "sort": {
             "newest": "Newest",
@@ -84,7 +84,7 @@
         "forget_password_form": {
             "enter_your_email": "Enter your email to retrieve your password",
             "forget_password_btn": "Send Email"
-        },
+       },
         "signup_form": {
             "signup_btn": "Signup",
             "login_link": "In case of having account, click here",
@@ -143,13 +143,18 @@
                 "evidence": "Evidence",
                 "actions": {
                     "show_details": "Show Details",
-                    "block": "Block",
+                    "go_to_ad": "Go to Ad",
+                    "block_ad": "Block Ad",
+                    "block_user": "Block User",
                     "back_to_list": "Back to List"
                 },
                 "block_confirmation": {
-                    "title": "Are you Sure to Block this User?"
-                },
-                "block_success_message": "The user has been successfully blocked."
+                    "title_usr": "Are you Sure to Block this User?",
+                    "title_ad": "Are you Sure to Block this Ad?"
+              },
+              "block_usr_success_message": "The user has been successfully blocked.",
+                "block_ad_success_message": "The ad has been successfully blocked.",
+                "no_reports": "No reports found."
             },
             "error": {
                 "missing_violation_type": "Violation type is required.",
@@ -240,9 +245,12 @@
                 "copy_phone_number_failed": "Failed to copy seller's phone number"
             },
             "profile_management": {
-                "save_failed": "Error ocurred during saving your changes",
-                "retrive_failed": "Error ocurred during retrive you profile information"
-            }
+                "save_failed": "Error Ocurred during Saving your Changes",
+                "retrive_failed": "Error Ocurred during Retrive you Profile Information"
+            },
+            "report_history": {
+                "retrieve_failed": "Error Ocurred during Getting Report History"
+           }
         },
         "success": {
             "signup": "Registered successfully. Please verify your email.",
@@ -253,7 +261,7 @@
             "report": "Report submitted successfully",
             "profile_management": "Changes saved successfully",
             "copy_phone_number": "Seller's phone mumber copied successfully"
-        }
+       }
     },
     "fa": {
         "brand_name": "کالادو",
@@ -340,7 +348,7 @@
         "forget_password_form": {
             "enter_your_email": "لطفا ایمیل خود را برای بازیابی رمز عبور وارد نمایید",
             "forget_password_btn": "بازیابی رمز عبور"
-        },
+       },
         "signup_form": {
             "signup_btn": "ثبت‌نام",
             "login_link": "در صورت داشتن حساب کاربری، کلیک کنید",
@@ -399,13 +407,18 @@
                 "evidence": "شواهد",
                 "actions": {
                     "show_details": "جزئیات بیشتر",
-                    "block": "مسدود کردن",
+                    "go_to_ad": "مشاهده آگهی",
+                    "block_ad": "مسدود کردن آگهی",
+                    "block_user": "مسدود کردن کاربر",
                     "back_to_list": "بازگشت به لیست"
                 },
                 "block_confirmation": {
-                    "title": "آیا از مسدود کردن این کاربر اطمینان دارید؟"
+                    "title_usr": "آیا از مسدود کردن این کاربر اطمینان دارید؟",
+                    "title_ad": "آیا از مسدود کردن این آگهی اطمینان دارید؟"
                 },
-                "block_success_message": "کاربر با موفقیت مسدود شد."
+                "block_usr_success_message": "کاربر با موفقیت مسدود شد.",
+                "block_ad_success_message": "آگهی با موفقیت مسدود شد.",        
+                "no_reports": "هیچ گزارشی یافت نشد"
             },
             "error": {
                 "missing_violation_type": "انتخاب نوع تخلف الزامی است.",
@@ -498,6 +511,9 @@
             "profile_management": {
                 "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد",
                 "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد"
+            },
+            "report_history": {
+                "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد"
             }
         },
         "success": {

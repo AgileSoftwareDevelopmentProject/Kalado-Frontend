@@ -105,6 +105,7 @@ export interface ReportStatusUpdateData {
     adminNotes: string;
     blockUser: boolean;
     blockReason: string | null;
+    blockProduct: boolean;
 }
 
 export interface TReportResponseType {

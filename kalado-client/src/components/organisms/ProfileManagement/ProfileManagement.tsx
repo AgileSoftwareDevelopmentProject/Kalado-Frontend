@@ -30,11 +30,12 @@ const ProfileManagement = () => {
             setUserData(response.data as TUserProfileResponse);
             console.log(userData);
         } catch (err) {
-            setError(t("error.profile_management.retrive_failed"));
+            setError(t('error.profile_management.retrieve_failed'));
         } finally {
             setLoading(false);
         }
     };
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -57,27 +58,21 @@ const ProfileManagement = () => {
     const handleSaveChanges = async () => {
         if (!userData) return;
 
-        const formData = new FormData();
-        formData.append('firstName', userData.firstName);
-        formData.append('lastName', userData.lastName);
-        formData.append('phoneNumber', userData.phoneNumber);
-        formData.append('address', userData.address);
-
-        if (userData.profileImage) {
-            formData.append('profileImage', userData.profileImage);
-        }
-
-        // Update Profile API call
-        console.log("Update Profile API call");
-        console.log(formData);
-        const response = await modifyProfile(formData, token);
-        console.log(response);
-        if (response.isSuccess) {
-            toast(t('success.profile_management'));
-        } else {
-            toast(t("error.profile_management.save_failed"));
+        try {
+            console.log('Update Profile API call', userData);
+            const response = await modifyProfile(userData);
+            console.log(response);
+    
+            if (response.isSuccess) {
+                toast(t('success.profile_management'));
+            } else {
+                toast(t('error.profile_management.save_failed'));
+            }
+        } catch (err) {
+            toast(t('error.profile_management.save_failed'));
         }
     };
+    
 
 
     return (
