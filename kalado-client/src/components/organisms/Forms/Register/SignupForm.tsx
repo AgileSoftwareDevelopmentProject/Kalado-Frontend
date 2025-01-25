@@ -119,6 +119,12 @@ const SignupForm: React.FC = () => {
           onClick={(e) => { e.preventDefault(); handleOpenLogin(); }}
           text={t("signup_form.login_link")}
         />
+        <CustomLink
+          to="/#"
+          onClick={(e) => { e.preventDefault(); handleOpenCodeVerification(); }}
+          text={t("signup_form.code_verification_link")}
+          fontSize={15}
+        />
         <FormError message={error} />
       </form>
     </PopupBox>

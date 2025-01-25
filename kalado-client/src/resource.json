@@ -88,6 +88,7 @@
         "signup_form": {
             "signup_btn": "Signup",
             "login_link": "In case of having account, click here.",
+            "code_verification_link": "Verify your registration code",
             "is_admin": "I'm Admin",
             "error": {
                 "password_mismatch": "Password mismatch"
@@ -359,6 +360,7 @@
         "signup_form": {
             "signup_btn": "ثبت‌نام",
             "login_link": "در صورت داشتن حساب کاربری، کلیک کنید.",
+            "code_verification_link": "تایید کد ثبت‌نام",
             "is_admin": "مدیر هستم",
             "error": {
                 "password_mismatch": "رمز عبور‌ها با هم مطابقت ندارند."
