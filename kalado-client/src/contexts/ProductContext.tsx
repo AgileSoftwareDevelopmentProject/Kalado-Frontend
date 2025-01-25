@@ -28,14 +28,11 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setLoading(true);
         setError('');
         try {
-            console.log('Fetching products by Category');
-            console.log(category)
             const response = await getProductsByCategory(category);
             console.log(response);
             const filteredProducts = response.filter((product: TProductResponseType) =>
                 product.status === 'ACTIVE' || product.status === 'RESERVED'
             );
-
             setProducts(filteredProducts);
             console.log(filteredProducts);
         } catch (err) {
@@ -51,8 +48,6 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         try {
             const response = await getSingleProduct(id);
             setSingleProduct(response.data);
-            console.log(response.data);
-            console.log(response);
         } catch (err) {
             setError('Failed to fetch the product');
             return null;
@@ -65,7 +60,6 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setLoading(true);
         setError('');
         try {
-            console.log('Fetching products by multiple filters');
             const response = await getSearchByMultipleFilters('', minPrice, maxPrice, timeFilter);
             setProducts(response.content);
         } catch (err) {
@@ -79,10 +73,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setLoading(true);
         setError('');
         try {
-            console.log('Fetching products by search keyword');
             const response = await getSearchByKeyword(keyword);
-            setProducts(response);
-            console.log(response);
+            setProducts(response.content);
         } catch (err) {
             setError('Failed to search products');
         } finally {
@@ -94,10 +86,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setLoading(true);
         setError('');
         try {
-            console.log('Fetching products by price range');
             const response = await getSearchByPriceRange(minPrice, maxPrice);
-            setProducts(response);
-            console.log(response);
+            setProducts(response.content);
         } catch (err) {
             setError('Failed to search products');
         } finally {

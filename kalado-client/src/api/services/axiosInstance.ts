@@ -79,6 +79,7 @@ export async function sendRequest<T>(
     signal?: AbortSignal,
 ): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
     try {
+        console.log(url, method, headers, requestData);
         const response = await axiosInstance.request({
             method,
             url,
