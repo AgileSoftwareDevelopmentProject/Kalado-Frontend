@@ -36,7 +36,16 @@ const CreateAdForm: React.FC = () => {
         }));
     };
 
+    const handleYearChange = (date: Date | null) => {
+        setFormData(prevData => ({
+            ...prevData,
+            productionYear: date
+        }));
+    };
+
     const handleImageUpload = (files: File[]) => {
+        console.log("handleImageUpload")
+        console.log(files);
         setImages(files);
         setError('');
     };
@@ -73,7 +82,7 @@ const CreateAdForm: React.FC = () => {
             console.log(formData);
             console.log(images);
 
-            const response = await createProductWithImages(formData, images, token);
+            const response = await createProductWithImages(formData, images);
 
             console.log(response);
             if (response.isSuccess) {
@@ -113,7 +122,12 @@ const CreateAdForm: React.FC = () => {
                     }))}
                     value={product_categories.find(option => option.value === formData.category) || null}
                 />
-                <YearInput />
+                <YearInput
+                    value={formData.productionYear ? formData.productionYear : null}
+                    onChange={handleYearChange}
+                    minDate={new Date(1900, 0, 1)}
+                    maxDate={new Date()}
+                />
                 <NameInput
                     name="brand"
                     placeholder={t("create_ad.input.brand")}

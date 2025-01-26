@@ -14,7 +14,7 @@ interface YearInputProps {
 }
 
 const YearInput: React.FC<YearInputProps> = ({ label, value, onChange, minDate, maxDate }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -32,7 +32,11 @@ const YearInput: React.FC<YearInputProps> = ({ label, value, onChange, minDate, 
                         },
                     }}
                     sx={{
-                        width: '70%'
+                        width: '70%',
+                        '& .MuiInputLabel-root': {
+                            textAlign: i18n.language === 'fa' ? 'right' : 'left',
+                            width: '100%',
+                        },
                     }}
                 />
             </DemoContainer>

@@ -83,9 +83,9 @@ export async function sendRequest<T>(
         const response = await axiosInstance.request({
             method,
             url,
-            headers: headers ? { ...headers } : {},
             data: requestData,
             signal,
+            headers: headers ? { ...headers } : {},
         });
 
         return {

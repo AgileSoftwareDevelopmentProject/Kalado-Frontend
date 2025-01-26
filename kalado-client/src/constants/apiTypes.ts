@@ -67,8 +67,8 @@ export interface ProductData {
         unit: string;
     };
     category: string;
-    // images?: File[] | null;
-    productionYear?: number | null;
+    images?: File[] | null;
+    productionYear?: Date | null;
     brand?: string | null;
     // sellerId: number;
 }

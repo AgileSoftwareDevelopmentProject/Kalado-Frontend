@@ -38,6 +38,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
 
             setSelectedImages(newImages);
             setImagePreviews(newPreviews);
+            onUpload(newImages);
         }
     };
 
@@ -46,6 +47,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
         const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
         setSelectedImages(updatedImages);
         setImagePreviews(updatedPreviews);
+        onUpload(updatedImages);
     };
 
     const handleBrowseClick = () => {

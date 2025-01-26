@@ -74,8 +74,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenCreateAd = () => {
-        console.log("handleOpenCreateAd")
-        console.log(token);
         if (token == null) {
             toast.error(t("error.create_ad.disable_not_loggined"));
             return;
@@ -109,6 +107,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setIsInProfile(false);
         setToken(null);
         setRole('USER');
+        localStorage.setItem('token', '');
         navigate('/');
     };
 
