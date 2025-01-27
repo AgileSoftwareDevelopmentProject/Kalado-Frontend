@@ -31,11 +31,15 @@ axiosInstance.interceptors.request.use(
         if (token && config.headers) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
+        if (!config.headers['Content-Type']) {
+            config.headers['Content-Type'] = 'application/json';
+        }
         console.log(config);
         return config;
     },
     (error: any) => Promise.reject(error)
 );
+
 
 
 axiosInstance.interceptors.response.use(
@@ -68,15 +72,21 @@ export const sendRequest = async <T>(
     url: string,
     method: string,
     data: any = null,
-    config: Partial<RequestConfig> = {}
+    config: Partial<RequestConfig> = {},
+    contentType?: string
 ): Promise<ApiResponse<T>> => {
     try {
         console.log('Sending request: ', url, method, data);
+        const headers = {
+            ...config.headers,
+            'Content-Type': contentType || 'application/json'
+        };
         const response: AxiosResponse<T> & { isSuccess: boolean } = await axiosInstance({
             method,
             url,
             data,
-            ...config
+            ...config,
+            headers
         });
         return {
             data: response.data,

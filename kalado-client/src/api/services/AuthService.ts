@@ -21,9 +21,8 @@ export async function signupUser(userData: UserData) {
 
 export async function verifyCode(code: string) {
     return sendRequest(
-        AUTH.VERIFY,
-        'POST',
-        { code },
+        `${AUTH.VERIFY}?token=${code}`,
+        'POST'
     );
 }
 

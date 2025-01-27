@@ -63,8 +63,9 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
         const response = await sendRequest<TReportResponseType>(
             REPORT.CREATE,
             'POST',
-            // undefined,
             formData,
+            {},
+            'multipart/form-data'
         );
         console.log('****************************  api response:', response);
         return response;

@@ -15,8 +15,9 @@ export async function createProductWithImages(productData: ProductData, imageFil
     return sendRequest<TProductResponseType>(
         PRODUCT.CREATE,
         'POST',
-        // undefined,
         formData,
+        {},
+        'multipart/form-data'
     );
 }
 
@@ -31,8 +32,9 @@ export async function updateAd(productId: number, productData: ProductData) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE(productId),
         'PUT',
-        // undefined,
         productData,
+        {},
+        'multipart/form-data'
     );
 }
 
