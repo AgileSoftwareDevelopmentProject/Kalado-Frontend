@@ -64,8 +64,8 @@ export async function createReportWithImages(reportData: ReportData, imageFiles:
             REPORT.CREATE,
             'POST',
             formData,
-            {}
-            // 'multipart/form-data'
+            {},
+            'multipart/form-data'
         );
         console.log('****************************  api response:', response);
         return response;
