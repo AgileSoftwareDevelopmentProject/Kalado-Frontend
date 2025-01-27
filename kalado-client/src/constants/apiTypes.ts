@@ -76,7 +76,7 @@ export interface ProductData {
 export type TProductResponseType = {
     id: number;
     title: string;
-    createdAt: string;
+    createdAt: number;
     imageUrls?: string[];
     price: {
         amount: number,
@@ -86,7 +86,7 @@ export type TProductResponseType = {
     sellerPhoneNumber: string;
     sellerId: number;
     brand?: string;
-    productionYear?: string;
+    productionYear?: number;
     status: string;
 };
 
