@@ -31,7 +31,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     type = 'button',
     onClick,
     disabled,
-    fullWidth,
+    fullWidth = false,
     ...props
 }) => {
     return (
