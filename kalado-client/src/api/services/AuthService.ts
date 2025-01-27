@@ -23,7 +23,7 @@ export async function verifyCode(code: string) {
     return sendRequest(
         AUTH.VERIFY,
         'POST',
-        code,
+        { code },
     );
 }
 

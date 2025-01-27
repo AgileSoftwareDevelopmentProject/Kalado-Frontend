@@ -39,14 +39,16 @@ axiosInstance.interceptors.request.use(
 
 
 axiosInstance.interceptors.response.use(
-    (response: AxiosResponse) => response,
+    (response: AxiosResponse) => {
+        return { ...response, isSuccess: true };
+    },
     (error: any) => {
         const status: number = error.response?.status;
         const errorMessage: string = ERROR_MESSAGES[status] || ERROR_MESSAGES.default;
         console.log('Response interceptor');
         console.log(status);
         console.log(errorMessage);
-        return Promise.reject({ message: errorMessage, status });
+        return Promise.reject({ message: errorMessage, status, isSuccess: false });
     }
 );
 
@@ -55,22 +57,37 @@ interface RequestConfig extends AxiosRequestConfig {
     url: string;
 }
 
+interface ApiResponse<T> {
+    data: T;
+    isSuccess: boolean;
+    message?: string;
+    status?: number;
+}
+
 export const sendRequest = async <T>(
     url: string,
     method: string,
     data: any = null,
     config: Partial<RequestConfig> = {}
-): Promise<T> => {
+): Promise<ApiResponse<T>> => {
     try {
         console.log('Sending request: ', url, method, data);
-        const response: AxiosResponse<T> = await axiosInstance({
+        const response: AxiosResponse<T> & { isSuccess: boolean } = await axiosInstance({
             method,
             url,
             data,
             ...config
         });
-        return response.data;
-    } catch (error) {
-        throw error;
+        return {
+            data: response.data,
+            isSuccess: true
+        };
+    } catch (error: any) {
+        return {
+            data: null as T,
+            isSuccess: false,
+            message: error.message,
+            status: error.status
+        };
     }
 };

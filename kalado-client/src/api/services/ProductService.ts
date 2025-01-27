@@ -55,9 +55,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
     const response = await sendRequest(
         PRODUCT.GET_BY_CATEGORY(category),
         'GET',
-        {
-            'Content-Type': 'application/json'
-        },
     );
     return response.data as TProductResponseType[];
 }

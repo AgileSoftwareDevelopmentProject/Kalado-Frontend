@@ -43,8 +43,8 @@ const LoginForm: React.FC = () => {
             console.log(response);
             if (response.isSuccess) {
                 setToken(response.data.token);
-                localStorage.setItem('token', response.data.token);
                 setRole(response.data.role);
+                localStorage.setItem('token', response.data.token);
                 handleClose();
                 toast(t("success.login"));
             } else {
