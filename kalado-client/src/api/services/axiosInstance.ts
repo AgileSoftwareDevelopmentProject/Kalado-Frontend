@@ -79,7 +79,7 @@ export const sendRequest = async <T>(
         console.log('Sending request: ', url, method, data);
         const headers = {
             ...config.headers,
-            'Content-Type': contentType || 'application/json'
+            ...(contentType ? { 'Content-Type': contentType } : {})
         };
         const response: AxiosResponse<T> & { isSuccess: boolean } = await axiosInstance({
             method,
