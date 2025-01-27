@@ -34,6 +34,7 @@ type AdCardState = {
   isEditing: boolean;
   newTitle: string;
   isDeleteDialogOpen: boolean;
+  accessLevel: string;
 };
 
 class AdCard extends Component<AdCardProps, AdCardState> {
@@ -43,6 +44,7 @@ class AdCard extends Component<AdCardProps, AdCardState> {
       isEditing: false,
       newTitle: props.title,
       isDeleteDialogOpen: false,
+      accessLevel: 'user',
     };
   }
 
@@ -62,9 +64,18 @@ class AdCard extends Component<AdCardProps, AdCardState> {
     this.setState({ isDeleteDialogOpen: false });
   };
 
+  handleAccessLevelChange = (event: SelectChangeEvent<string>) => {
+    const newAccessLevel = event.target.value;
+    if (this.state.accessLevel === 'user' && newAccessLevel === 'admin') {
+      this.setState({ accessLevel: newAccessLevel });
+    } else {
+      console.warn('Access level cannot be changed back to User.');
+    }
+  };
+
   render() {
     const { title, status, onStatusChange, onEdit, t } = this.props;
-    const { isEditing, isDeleteDialogOpen } = this.state;
+    const { isEditing, isDeleteDialogOpen, accessLevel } = this.state;
 
     return (
       <>
@@ -105,12 +116,13 @@ class AdCard extends Component<AdCardProps, AdCardState> {
             )}
           </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px' }}>
+            {/* Status Dropdown */}
             <Select
               value={status}
               onChange={onStatusChange}
               displayEmpty
-              sx={{ minWidth: '180px', fontSize: '1rem' }}
+              sx={{ minWidth: '150px', fontSize: '1rem' }}
               inputProps={{
                 'aria-label': t('ad_list.ad_status.dropdown'),
               }}
@@ -118,6 +130,22 @@ class AdCard extends Component<AdCardProps, AdCardState> {
               <MenuItem value="active">{t('ad_list.ad_status.active')}</MenuItem>
               <MenuItem value="reserved">{t('ad_list.ad_status.reserved')}</MenuItem>
               <MenuItem value="sold">{t('ad_list.ad_status.sold')}</MenuItem>
+            </Select>
+
+            {/* Access Level Dropdown */}
+            <Select
+              value={accessLevel}
+              onChange={this.handleAccessLevelChange}
+              displayEmpty
+              sx={{ minWidth: '150px', fontSize: '1rem' }}
+              inputProps={{
+                'aria-label': t('ad_list.access_level.dropdown'),
+              }}
+            >
+              <MenuItem value="user" disabled>
+                {t('ad_list.access_level.user')}
+              </MenuItem>
+              <MenuItem value="admin">{t('ad_list.access_level.admin')}</MenuItem>
             </Select>
           </Box>
 
