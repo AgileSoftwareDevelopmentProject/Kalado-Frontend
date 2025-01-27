@@ -71,7 +71,8 @@
                 "description": "Description",
                 "add_image": "Add Image",
                 "production_year": "Production Year",
-                "brand": "Brand"
+                "brand": "Brand",
+                "undefined": "Undefined"
             },
             "default": {
                 "category": "Select Category"
@@ -214,6 +215,10 @@
             },
             "buttons": {
                 "back_to_list": "Back to list"
+            },
+            "access_level": {
+                "admin": "Admin",
+                "user": "User"
             }
         },
         "error": {
@@ -346,7 +351,8 @@
                 "description": "توضیحات",
                 "add_image": "افزودن عکس",
                 "production_year": "سال تولید",
-                "brand": "برند"
+                "brand": "برند",
+                "undefined": "نامشخص"
             },
             "default": {
                 "category": "انتخاب دسته‌بندی"
@@ -489,6 +495,10 @@
             },
             "buttons": {
                 "back_to_list": "بازگشت به لیست"
+            },
+            "access_level": {
+                "admin": "ادمین",
+                "user": "کاربر"
             }
         },
         "error": {
