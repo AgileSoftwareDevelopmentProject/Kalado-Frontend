@@ -29,7 +29,7 @@ axiosInstance.interceptors.request.use(
         console.log('Request interceptor');
         console.log(token);
         if (token && config.headers) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+            config.headers['Authorization'] = `${token}`;
         }
         if (!config.headers['Content-Type']) {
             config.headers['Content-Type'] = 'application/json';
@@ -101,3 +101,4 @@ export const sendRequest = async <T>(
         };
     }
 };
+
