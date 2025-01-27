@@ -9,7 +9,6 @@ const NavBar: React.FC = () => {
   const theme = useTheme();
   const { searchProductsByKeyword } = useProductContext();
   const [searchQuery, setSearchQuery] = useState('');
-  const { search_options } = OptionsComponent();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +33,7 @@ const NavBar: React.FC = () => {
         <Logo />
         <SearchBar
           value={searchQuery}
-          options={search_options}
+          options={OptionsComponent().search_options}
           onChange={(e) => setSearchQuery(e.target.value)}
           onSearch={handleSearch}
         />

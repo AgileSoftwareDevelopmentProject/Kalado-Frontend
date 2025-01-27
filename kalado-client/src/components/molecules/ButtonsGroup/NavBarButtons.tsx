@@ -29,7 +29,12 @@ const NavBarButtons: React.FC = () => {
             );
         } else {
             return (
-                <CustomButton text={t('navbar.login/signup')} onClick={handleOpenLogin} />
+                <>
+                    <CustomButton text={t('navbar.login/signup')} onClick={handleOpenLogin} />
+                    {role === 'USER' && (
+                        <CustomButton text={t('navbar.create_ad')} onClick={handleOpenCreateAd} />
+                    )}
+                </>
             );
         }
     };
