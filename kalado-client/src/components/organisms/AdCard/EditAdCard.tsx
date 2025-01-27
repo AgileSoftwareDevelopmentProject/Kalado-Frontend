@@ -60,7 +60,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
     images,
   });
 
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
 
@@ -137,12 +137,29 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           textAlign: isRtl ? 'right' : 'left',
         }}
       >
-        <Box>
-          <Typography variant="h5" textAlign="center">{formData.title}</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+          {isEditing ? (
+            <TextField
+              value={formData.title}
+              onChange={(e) => handleChange('title', e.target.value)}
+              variant="outlined"
+              size="small"
+              sx={{
+                width: '300px', // Adjust the width to reduce the rectangle length
+                fontSize: '1.2rem',
+                textAlign: 'center',
+              }}
+            />
+          ) : (
+            <Typography variant="h5" textAlign="center">
+              {formData.title}
+            </Typography>
+          )}
           <Typography variant="subtitle1" sx={{ marginTop: '5px', textAlign: 'center' }}>
             {resources[language]?.ad_list?.ad_status?.[formData.status]}
           </Typography>
         </Box>
+
         <Box>
           <IconButton onClick={onCancel}>
             <CloseIcon />
@@ -283,7 +300,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             }}
             component="label"
           >
-            <Typography>Add Image</Typography>
+            <Typography> {t("general_inputs.add_image")}</Typography>
             <input
               type="file"
               hidden
