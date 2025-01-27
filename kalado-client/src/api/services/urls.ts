@@ -7,7 +7,7 @@ export const AUTH = {
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
     VERIFY: '/auth/verify',
-    FORGETPASSWORD: '/auth/forgetpassword',
+    RESETPASSWORD: '/auth/reset-password',
 };
 
 export const USER = {
