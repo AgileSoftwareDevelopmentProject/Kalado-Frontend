@@ -15,7 +15,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
 import { useTranslation } from 'react-i18next';
-import ImageUploadBox from '../../molecules/Boxes/ImageUploadBox';
 import YearInput from '../../atoms/Inputs/YearInput';
 
 type EditAdCardProps = {
@@ -267,11 +266,45 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           </Box>
         ))}
         {isEditing && formData.images.length < 3 && (
-          <ImageUploadBox
-            onUpload={handleImageUpload}
-            title={resources[language]?.general_inputs.add_image}
-            numberOfImages={3 - formData.images.length}
-          />
+          <Box
+            sx={{
+              width: '160px',
+              height: '160px',
+              border: '1px dashed #ccc',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              color: '#888',
+              cursor: 'pointer',
+            }}
+            component="label"
+          >
+            <Typography>Add Image</Typography>
+            <input
+              type="file"
+              hidden
+              multiple
+              accept="image/*"
+              onChange={(e) => {
+                const files = e.target.files;
+                if (!files) return;
+
+                const uploadedImages = Array.from(files).map((file) => URL.createObjectURL(file));
+                setFormData((prev) => {
+                  const allImages = [...prev.images, ...uploadedImages];
+                  if (allImages.length > 3) {
+                    toast.error('You can only upload a maximum of 3 images.');
+                    return { ...prev, images: allImages.slice(0, 3) };
+                  }
+                  return { ...prev, images: allImages };
+                });
+              }}
+            />
+          </Box>
         )}
       </Box>
     </Card>
