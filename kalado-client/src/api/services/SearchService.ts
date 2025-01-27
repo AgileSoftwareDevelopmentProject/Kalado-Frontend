@@ -4,12 +4,15 @@ import { SortOrder } from '../../constants/types';
 import { PageableResponseType, TProductResponseType } from '../../constants/apiTypes';
 
 
-export async function getSearchByKeyword(keyword: string) {
-    return sendRequest<PageableResponseType<TProductResponseType>>(
+export async function getSearchByKeyword(keyword: string) : Promise<TProductResponseType[]> {
+    const response = await sendRequest(
         SEARCH.BY_KEYWORD(keyword),
         'GET',
     );
+    return response.data as TProductResponseType[];
 }
+
+
 
 export async function getSearchByPriceRange(minPrice: number, maxPrice: number) {
     return sendRequest<PageableResponseType<TProductResponseType>>(
