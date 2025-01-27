@@ -11,20 +11,18 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { Edit as EditIcon, Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { TextFieldProps } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
 import { useTranslation } from 'react-i18next';
 import ImageUploadBox from '../../molecules/Boxes/ImageUploadBox';
+import YearInput from '../../atoms/Inputs/YearInput';
 
 type EditAdCardProps = {
   title: string;
   price: number;
   category: string;
-  date: string;
+  productionYear: Date | null;
   description?: string;
   images: string[];
   status: string;
@@ -45,7 +43,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   title,
   price,
   category,
-  date,
+  productionYear,
   description,
   images,
   status,
@@ -57,7 +55,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
     title,
     price,
     category,
-    date: new Date(date),
+    productionYear,
     description,
     status,
     images,
@@ -102,12 +100,12 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   };
 
   const handleSave = () => {
-    const { title, price, category, date, description, status, images } = formData;
+    const { title, price, category, productionYear, description, status, images } = formData;
     onEdit({
       title,
       price,
       category,
-      date: (date as Date).toISOString().split('T')[0],
+      productionYear,
       description,
       status,
       images,
@@ -141,8 +139,8 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
         }}
       >
         <Box>
-          <Typography variant="h5">{formData.title}</Typography>
-          <Typography variant="subtitle1" sx={{ marginTop: '5px' }}>
+          <Typography variant="h5" textAlign="center">{formData.title}</Typography>
+          <Typography variant="subtitle1" sx={{ marginTop: '5px', textAlign: 'center' }}>
             {resources[language]?.ad_list?.ad_status?.[formData.status]}
           </Typography>
         </Box>
@@ -192,6 +190,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             displayEmpty
             sx={{ direction: isRtl ? 'rtl' : 'ltr' }}
           >
+            <MenuItem value="">{`<<Select Category>>`}</MenuItem>
             {Object.keys(categories || {}).map((key) => (
               <MenuItem key={key} value={key}>
                 {categories[key as keyof typeof categories]}
@@ -202,19 +201,16 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
           <Typography>{categories?.[formData.category as keyof typeof categories] || resources[language]?.create_ad.default.category}</Typography>
         )}
 
-        <Typography>{resources[language]?.general_inputs.date}</Typography>
+        <Typography>{resources[language]?.create_ad.input.production_year}</Typography>
         {isEditing ? (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-              value={formData.date}
-              onChange={(newDate) => handleChange('date', newDate)}
-              renderInput={(params: TextFieldProps) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+          <YearInput
+            value={formData.productionYear}
+            onChange={(newYear) => handleChange('productionYear', newYear)}
+            minDate={new Date(1900, 0, 1)}
+            maxDate={new Date()}
+          />
         ) : (
-          <Typography>
-            {formData.date instanceof Date ? formData.date.toLocaleDateString() : formData.date}
-          </Typography>
+          <Typography>{formData.productionYear?.getFullYear() || ''}</Typography>
         )}
 
         <Typography>{resources[language]?.general_inputs.description}</Typography>
@@ -273,7 +269,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
         {isEditing && formData.images.length < 3 && (
           <ImageUploadBox
             onUpload={handleImageUpload}
-            // title={resources[language]?.general_inputs.add_image}
+            title={resources[language]?.general_inputs.add_image}
             numberOfImages={3 - formData.images.length}
           />
         )}
