@@ -31,11 +31,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     type = 'button',
     onClick,
     disabled,
-    fullWidth,
+    fullWidth = false,
     ...props
 }) => {
     return (
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box display="flex" justifyContent="center" alignItems="center" width="100%">
             <MuiButton
                 sx={{
                     borderRadius: borderRadius || (shape === 'square' ? '0px' : '30px'),
