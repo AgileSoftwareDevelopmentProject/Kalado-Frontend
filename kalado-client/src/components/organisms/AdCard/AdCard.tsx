@@ -1,247 +1,155 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import {
-  Card,
+  Box,
   Typography,
+  TextField,
+  Card,
   IconButton,
   MenuItem,
   Select,
-  Box,
-  TextField,
-  Tooltip,
   Dialog,
   DialogContent,
+  Tooltip,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
-import { useTranslation } from 'react-i18next';
-import { SelectChangeEvent } from '@mui/material';
+import {
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Check as CheckIcon,
+  Close as CloseIcon,
+} from '@mui/icons-material';
 
-type AdCardProps = {
+import { SelectChangeEvent } from '@mui/material';
+import { withTranslation, WithTranslation } from 'react-i18next';
+
+type AdCardProps = WithTranslation & {
   title: string;
   status: string;
   onStatusChange: (event: SelectChangeEvent<string>) => void;
   onDelete: () => void;
   onEditTitle: (newTitle: string) => void;
   onEdit: () => void;
-  language: "en" | "fa";
 };
 
-const AdCard: React.FC<AdCardProps> = ({
-  title,
-  status,
-  onStatusChange,
-  onDelete,
-  onEditTitle,
-  onEdit,
-}) => {
-  const { t, i18n } = useTranslation();
+type AdCardState = {
+  isEditing: boolean;
+  newTitle: string;
+  isDeleteDialogOpen: boolean;
+};
 
-  const isRtl = i18n.language === 'fa'; // check if the language is right-to-left
-  const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState(title);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+class AdCard extends Component<AdCardProps, AdCardState> {
+  constructor(props: AdCardProps) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      newTitle: props.title,
+      isDeleteDialogOpen: false,
+    };
+  }
 
-  const MAX_TITLE_LENGTH = 10;
-
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value.length <= MAX_TITLE_LENGTH) {
-      setNewTitle(event.target.value);
+  handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length <= 10) {
+      this.setState({ newTitle: event.target.value });
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      saveTitle();
-    }
+  saveTitle = () => {
+    this.props.onEditTitle(this.state.newTitle.trim());
+    this.setState({ isEditing: false });
   };
 
-  const saveTitle = () => {
-    onEditTitle(newTitle.trim());
-    setIsEditing(false);
+  handleDeleteConfirm = () => {
+    this.props.onDelete();
+    this.setState({ isDeleteDialogOpen: false });
   };
 
-  const handleDeleteConfirm = () => {
-    onDelete();
-    setIsDeleteDialogOpen(false);
-  };
+  render() {
+    const { title, status, onStatusChange, onEdit, t } = this.props;
+    const { isEditing, isDeleteDialogOpen } = this.state;
 
-  return (
-    <>
-      <Card
-        data-testid="ad-card-container"
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          padding: '10px 40px',
-          marginBottom: '40px',
-          borderRadius: '15px',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-          direction: isRtl ? 'rtl' : 'ltr',
-        }}
-      >
-        {/* Ad Title */}
-        <Box
+    return (
+      <>
+        <Card
           sx={{
-            flex: 1,
-            textAlign: isRtl ? 'right' : 'left',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '10px 40px',
+            marginBottom: '40px',
+            borderRadius: '40px',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
           }}
         >
-          {isEditing ? (
-            <TextField
-              fullWidth
-              value={newTitle}
-              onChange={handleTitleChange}
-              onKeyDown={handleKeyDown}
-              onBlur={saveTitle}
-              autoFocus
-              variant="standard"
+          <Box sx={{ flex: 1, textAlign: 'left' }}>
+            {isEditing ? (
+              <TextField
+                fullWidth
+                value={this.state.newTitle}
+                onChange={this.handleTitleChange}
+                onBlur={this.saveTitle}
+                autoFocus
+                variant="standard"
+              />
+            ) : (
+              <Tooltip title={title} arrow>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    maxWidth: '150px',
+                  }}
+                >
+                  {title}
+                </Typography>
+              </Tooltip>
+            )}
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+            <Select
+              value={status}
+              onChange={onStatusChange}
+              displayEmpty
+              sx={{ minWidth: '180px', fontSize: '1rem' }}
               inputProps={{
-                'aria-label': t('ad_list.inputs.title'),
+                'aria-label': t('ad_list.ad_status.dropdown'),
               }}
-              InputProps={{
-                sx: {
-                  '&:before': { borderBottom: '1px solid #000' },
-                  '&:after': { borderBottom: '2px solid #000', transition: 'width 0.2s ease-out' },
-                },
-              }}
-            />
-          ) : (
-            <Tooltip title={title} arrow>
-              <Typography
-                variant="h6"
-                sx={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  maxWidth: '300px',
-                  cursor: 'default',
-                }}
-              >
-                {title}
-              </Typography>
-            </Tooltip>
-          )}
-        </Box>
-
-        {/* Status Dropdown */}
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flex: 1,
-          }}
-        >
-          <Typography
-            variant="subtitle1"
-            sx={{ marginRight: '10px', fontSize: '1rem' }}
-          >
-            {t('ad_list.ad_status.label')}:
-          </Typography>
-          <Select
-            value={status}
-            onChange={onStatusChange}
-            displayEmpty
-            sx={{
-              minWidth: '150px',
-              maxWidth: '200px',
-              fontSize: '1rem',
-              '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-              '& .MuiSvgIcon-root': {},
-            }}
-            inputProps={{
-              'aria-label': t('ad_list.ad_status.dropdown'),
-            }}
-          >
-            <MenuItem value="active">{t('ad_list.ad_status.active')}</MenuItem>
-            <MenuItem value="reserved">{t('ad_list.ad_status.reserved')}</MenuItem>
-            <MenuItem value="sold">{t('ad_list.ad_status.sold')}</MenuItem>
-          </Select>
-        </Box>
-
-        {/* Action Buttons */}
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '10px',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <IconButton
-            onClick={onEdit}
-            aria-label={t('ad_list.buttons.edit')}
-          >
-            <EditIcon/>
-          </IconButton>
-          <IconButton
-            onClick={() => setIsDeleteDialogOpen(true)}
-            aria-label={t('ad_list.buttons.delete')}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Box>
-      </Card>
-
-      {/* Delete Confirmation Dialog */}
-      <Dialog
-        open={isDeleteDialogOpen}
-        onClose={() => setIsDeleteDialogOpen(false)}
-        PaperProps={{
-          sx: {
-            borderRadius: '20px',
-            padding: '20px',
-          },
-        }}
-      >
-        <DialogContent
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '20px',
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{ textAlign: 'center', fontWeight: 'bold' }}
-          >
-            {t('ad_list.delete_confirmation.title')}
-          </Typography>
-          <Box sx={{ display: 'flex', gap: '30px' }}>
-          <IconButton
-              onClick={handleDeleteConfirm}
-              sx={{
-                backgroundColor: 'green',
-                width: '50px',
-                height: '50px',
-                borderRadius: '50%',
-                '&:hover': { backgroundColor: '#66bb66' },
-              }}
-              aria-label={t('ad_list.buttons.confirm')}
             >
-              <CheckIcon />
+              <MenuItem value="active">{t('ad_list.ad_status.active')}</MenuItem>
+              <MenuItem value="reserved">{t('ad_list.ad_status.reserved')}</MenuItem>
+              <MenuItem value="sold">{t('ad_list.ad_status.sold')}</MenuItem>
+            </Select>
+          </Box>
+
+          <Box sx={{ display: 'flex', gap: '10px' }}>
+            <IconButton onClick={onEdit}>
+              <EditIcon />
             </IconButton>
-            <IconButton
-              onClick={() => setIsDeleteDialogOpen(false)}
-              sx={{
-                backgroundColor: 'red',
-                width: '50px',
-                height: '50px',
-                borderRadius: '50%',
-                '&:hover': { backgroundColor: '#ff4d4d' },
-              }}
-              aria-label={t('ad_list.buttons.cancel')}
-            >
-              <CloseIcon />
+            <IconButton onClick={() => this.setState({ isDeleteDialogOpen: true })}>
+              <DeleteIcon />
             </IconButton>
           </Box>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-};
+        </Card>
 
-export default AdCard;
+        <Dialog open={isDeleteDialogOpen} onClose={() => this.setState({ isDeleteDialogOpen: false })}>
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+            <Typography>{t('ad_list.delete_confirmation.title')}</Typography>
+            <Box sx={{ display: 'flex', gap: '20px' }}>
+              <IconButton onClick={this.handleDeleteConfirm} sx={{ backgroundColor: 'green' }}>
+                <CheckIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => this.setState({ isDeleteDialogOpen: false })}
+                sx={{ backgroundColor: 'red' }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  }
+}
+
+export default withTranslation()(AdCard);
