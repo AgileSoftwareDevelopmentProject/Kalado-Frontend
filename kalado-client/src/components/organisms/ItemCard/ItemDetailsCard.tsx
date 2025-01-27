@@ -32,6 +32,9 @@ const ItemDetailsCard: React.FC<ItemDetailsCardProps> = ({ item }) => {
     };
 
     const copyPhoneNumberToClipboard = () => {
+        if (!token) {
+            return;
+        }
         if (navigator.clipboard && item.sellerPhoneNumber) {
             navigator.clipboard.writeText(item.sellerPhoneNumber)
                 .then(() => {

@@ -1,106 +1,103 @@
-import axios, { AxiosError } from 'axios';
-import { BASE_URL as baseURL } from './urls';
-import i18n from '../../i18n';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { BASE_URL } from './urls';
 
-const axiosInstance = axios.create({ baseURL });
 
-interface ErrorResponseData {
-    message?: string;
-    [key: string]: any;
+interface ErrorMessages {
+    [key: number]: string;
+    default: string;
 }
+
+const ERROR_MESSAGES: ErrorMessages = {
+    400: 'Bad request. Please check your input.',
+    401: 'Unauthorized. Please log in again.',
+    403: 'Forbidden. You dont have permission to access this resource.',
+    404: 'Resource not found.',
+    500: 'Internal server error. Please try again later.',
+    default: 'An unexpected error occurred. Please try again.'
+};
+
+const axiosInstance: AxiosInstance = axios.create({
+    baseURL: BASE_URL,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
 
 axiosInstance.interceptors.request.use(
-    async (config) => {
+    (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
         const token = localStorage.getItem('token');
-
-        console.log('-----------------------------------');
-        console.log('[Request] URL:', config.url);
-        console.log('[Request] Method:', config.method);
-        console.log('[Request] Headers:', config.headers);
-        console.log('[Request] Data:', config.data);
-
-        if (token) {
-            config.headers['Authorization'] = `${token}`;
-            console.log('[Request] Authorization Token Attached');
-        } else {
-            console.log('[Request] Public Endpoint - No Token Attached');
+        console.log('Request interceptor');
+        console.log(token);
+        if (token && config.headers) {
+            config.headers['Authorization'] = `Bearer ${token}`;
         }
-
+        if (!config.headers['Content-Type']) {
+            config.headers['Content-Type'] = 'application/json';
+        }
+        console.log(config);
         return config;
     },
-    (error) => {
-        console.error('[Request Interceptor] Error:', error);
-        return Promise.reject(error);
-    }
+    (error: any) => Promise.reject(error)
 );
+
+
 
 axiosInstance.interceptors.response.use(
-    (response) => {
-        console.log('-----------------------------------');
-        console.log('[Response] URL:', response.config.url);
-        console.log('[Response] Status:', response.status);
-        console.log('[Response] Data:', response.data);
-        console.log('-----------------------------------');
-        return response;
+    (response: AxiosResponse) => {
+        return { ...response, isSuccess: true };
     },
-    (error: AxiosError<ErrorResponseData>) => {
-        const statusCode = error.response?.status;
-
-        if (!error.response) {
-            return Promise.resolve({
-                isSuccess: false,
-                data: null,
-                status: 0,
-                message: i18n.t('error.general'),
-            });
-        }
-
-        console.log('-----------------------------------');
-        console.error('[Response Interceptor] Error Status:', statusCode);
-        console.error('[Response Interceptor] Error Data:', error.response?.data);
-        console.log('-----------------------------------');
-
-        const message = statusCode ? i18n.t(`error.server.${statusCode}`) : i18n.t(`error.general`);
-
-        return Promise.reject({
-            isSuccess: false,
-            data: null,
-            status: statusCode,
-            message: message,
-        });
+    (error: any) => {
+        const status: number = error.response?.status;
+        const errorMessage: string = ERROR_MESSAGES[status] || ERROR_MESSAGES.default;
+        console.log('Response interceptor');
+        console.log(status);
+        console.log(errorMessage);
+        return Promise.reject({ message: errorMessage, status, isSuccess: false });
     }
 );
 
-export async function sendRequest<T>(
+interface RequestConfig extends AxiosRequestConfig {
+    method: string;
+    url: string;
+}
+
+interface ApiResponse<T> {
+    data: T;
+    isSuccess: boolean;
+    message?: string;
+    status?: number;
+}
+
+export const sendRequest = async <T>(
     url: string,
-    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-    headers?: Record<string, string>,
-    requestData?: any,
-    signal?: AbortSignal,
-): Promise<{ isSuccess: boolean; data: T | null; status: number; message?: string }> {
+    method: string,
+    data: any = null,
+    config: Partial<RequestConfig> = {},
+    contentType?: string
+): Promise<ApiResponse<T>> => {
     try {
-        console.log(url, method, headers, requestData);
-        const response = await axiosInstance.request({
+        console.log('Sending request: ', url, method, data);
+        const headers = {
+            ...config.headers,
+            'Content-Type': contentType || 'application/json'
+        };
+        const response: AxiosResponse<T> & { isSuccess: boolean } = await axiosInstance({
             method,
             url,
-            data: requestData,
-            signal,
-            headers: headers ? { ...headers } : {},
+            data,
+            ...config,
+            headers
         });
-
         return {
-            isSuccess: true,
-            data: response.data as T,
-            status: response.status,
+            data: response.data,
+            isSuccess: true
         };
-    } catch (error) {
-        const axiosError = error as AxiosError<ErrorResponseData>;
-
+    } catch (error: any) {
         return {
+            data: null as T,
             isSuccess: false,
-            data: null,
-            status: axiosError.response?.status || 500,
-            message: i18n.t('error.general'),
+            message: error.message,
+            status: error.status
         };
     }
-}
+};

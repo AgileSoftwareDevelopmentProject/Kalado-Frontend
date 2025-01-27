@@ -15,8 +15,9 @@ export async function createProductWithImages(productData: ProductData, imageFil
     return sendRequest<TProductResponseType>(
         PRODUCT.CREATE,
         'POST',
-        undefined,
         formData,
+        {},
+        'multipart/form-data'
     );
 }
 
@@ -31,8 +32,9 @@ export async function updateAd(productId: number, productData: ProductData) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE(productId),
         'PUT',
-        undefined,
         productData,
+        {},
+        'multipart/form-data'
     );
 }
 
@@ -40,9 +42,6 @@ export async function updateAdStatus(productId: number, status: string) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE_STATUS(productId),
         'PUT',
-        {
-            'Content-Type': 'application/json'
-        },
         { status },
     );
 }
@@ -51,9 +50,6 @@ export async function getSingleProduct(adId: number) {
     return sendRequest<TProductResponseType>(
         PRODUCT.GET_SINGLE(adId),
         'GET',
-        {
-            'Content-Type': 'application/json'
-        },
     );
 }
 
@@ -61,9 +57,6 @@ export async function getProductsByCategory(category: string): Promise<TProductR
     const response = await sendRequest(
         PRODUCT.GET_BY_CATEGORY(category),
         'GET',
-        {
-            'Content-Type': 'application/json'
-        },
     );
     return response.data as TProductResponseType[];
 }
@@ -73,9 +66,6 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
         const response = await sendRequest(
             PRODUCT.GET_BY_SELLER,
             'GET',
-            {
-                'Content-Type': 'application/json'
-            },
             token
         );
 
