@@ -73,6 +73,9 @@
                 "production_year": "Production Year",
                 "brand": "Brand"
             },
+            "default": {
+                "category": "Select Category"
+            },
             "choose_image": "Choose Image",
             "create_ad_btn": "Submit Ad"
         },
@@ -344,6 +347,9 @@
                 "add_image": "افزودن عکس",
                 "production_year": "سال تولید",
                 "brand": "برند"
+            },
+            "default": {
+                "category": "انتخاب دسته‌بندی"
             },
             "choose_image": "انتخاب عکس",
             "create_ad_btn": "ثبت آگهی"
