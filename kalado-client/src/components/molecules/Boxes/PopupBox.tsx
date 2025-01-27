@@ -31,7 +31,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ open, children, onClose }) => {
             }}
         >
             <Box sx={{
-                width: isMobile ? "90vw" : "25vw",
+                width: isMobile ? "80vw" : "40vw",
                 maxWidth: "500px",
                 padding: isMobile ? "10px 20px" : "25px 20px",
                 position: 'fixed',
