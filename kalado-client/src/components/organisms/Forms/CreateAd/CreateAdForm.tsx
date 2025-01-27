@@ -37,9 +37,12 @@ const CreateAdForm: React.FC = () => {
     };
 
     const handleYearChange = (date: Date | null) => {
+        console.log(date.getFullYear())
         setFormData(prevData => ({
             ...prevData,
             productionYear: date ? date.getFullYear() : null
+            
+
         }));
     };
 
