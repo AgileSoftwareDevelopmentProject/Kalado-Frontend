@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1738002244576" clover="3.2.0">
-  <project timestamp="1738002244576" name="All files">
-    <metrics statements="781" coveredstatements="65" conditionals="459" coveredconditionals="40" methods="263" coveredmethods="25" elements="1503" coveredelements="130" complexity="0" loc="781" ncloc="781" packages="28" files="55" classes="55"/>
+<coverage generated="1738003072379" clover="3.2.0">
+  <project timestamp="1738003072379" name="All files">
+    <metrics statements="781" coveredstatements="65" conditionals="460" coveredconditionals="41" methods="263" coveredmethods="25" elements="1504" coveredelements="131" complexity="0" loc="781" ncloc="781" packages="28" files="55" classes="55"/>
     <package name="atoms.Buttons">
-      <metrics statements="2" coveredstatements="2" conditionals="18" coveredconditionals="15" methods="1" coveredmethods="1"/>
+      <metrics statements="2" coveredstatements="2" conditionals="19" coveredconditionals="16" methods="1" coveredmethods="1"/>
       <file name="CustomButton.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/atoms/Buttons/CustomButton.tsx">
-        <metrics statements="2" coveredstatements="2" conditionals="18" coveredconditionals="15" methods="1" coveredmethods="1"/>
+        <metrics statements="2" coveredstatements="2" conditionals="19" coveredconditionals="16" methods="1" coveredmethods="1"/>
         <line num="20" count="1" type="stmt"/>
         <line num="37" count="6" type="stmt"/>
       </file>
@@ -209,14 +209,14 @@
       </file>
       <file name="PopupBox.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/molecules/Boxes/PopupBox.tsx">
         <metrics statements="8" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
       </file>
       <file name="ProductListBox.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/molecules/Boxes/ProductListBox.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -536,35 +536,6 @@
     </package>
     <package name="organisms.Forms.Login">
       <metrics statements="60" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="13" coveredmethods="0"/>
-      <file name="ForgetPasswordForm.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/Forms/Login/ForgetPasswordForm.tsx">
-        <metrics statements="26" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-      </file>
       <file name="LoginForm.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/Forms/Login/LoginForm.tsx">
         <metrics statements="34" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="8" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
@@ -601,6 +572,35 @@
         <line num="66" count="0" type="stmt"/>
         <line num="74" count="0" type="stmt"/>
         <line num="79" count="0" type="stmt"/>
+      </file>
+      <file name="ResetPasswordForm.tsx" path="/home/fonij/Documents/Kalado-Frontend/kalado-client/src/components/organisms/Forms/Login/ResetPasswordForm.tsx">
+        <metrics statements="26" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
       </file>
     </package>
     <package name="organisms.Forms.Register">

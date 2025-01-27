@@ -35,7 +35,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     ...props
 }) => {
     return (
-        <Box display="flex" justifyContent="center" alignItems="center" width="100%">
+        <Box display="flex" justifyContent="center" alignItems="center">
             <MuiButton
                 sx={{
                     borderRadius: borderRadius || (shape === 'square' ? '0px' : '30px'),
