@@ -192,7 +192,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             displayEmpty
             sx={{ direction: isRtl ? 'rtl' : 'ltr' }}
           >
-            <MenuItem value="">{`<<Select Category>>`}</MenuItem>
             {Object.keys(categories || {}).map((key) => (
               <MenuItem key={key} value={key}>
                 {categories[key as keyof typeof categories]}
@@ -200,7 +199,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             ))}
           </Select>
         ) : (
-          <Typography>{categories?.[formData.category as keyof typeof categories] || 'No Category'}</Typography>
+          <Typography>{categories?.[formData.category as keyof typeof categories] || resources[language]?.create_ad.default.category}</Typography>
         )}
 
         <Typography>{resources[language]?.general_inputs.date}</Typography>
