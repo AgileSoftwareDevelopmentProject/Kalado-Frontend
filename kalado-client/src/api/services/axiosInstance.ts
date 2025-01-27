@@ -31,9 +31,9 @@ axiosInstance.interceptors.request.use(
         if (token && config.headers) {
             config.headers['Authorization'] = `${token}`;
         }
-        if (!config.headers['Content-Type']) {
-            config.headers['Content-Type'] = 'application/json';
-        }
+        // if (config.headers['Content-Type']) {
+        //     config.headers['Content-Type'] = 'application/json';
+        // }
         console.log(config);
         return config;
     },
