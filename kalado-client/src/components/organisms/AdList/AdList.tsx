@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import resources from '../../../resource.json';
+import resources from "../../../resource.json";
 import AdCard from "../AdCard/AdCard";
 import EditAdCard from "../AdCard/EditAdCard";
 import { useTranslation } from "react-i18next";
 import { Typography, Box } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material";
-import { useAuth } from '../../../contexts';
+import { useAuth } from "../../../contexts";
 
 import {
   getSellersProducts,
@@ -13,7 +13,7 @@ import {
   updateAd,
   updateAdStatus,
 } from "../../../api/services/ProductService";
-import { TProductResponseType } from "../../../constants/apiTypes";
+import { ProductData, TProductResponseType } from "../../../constants/apiTypes";
 
 const AdList: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -28,7 +28,6 @@ const AdList: React.FC = () => {
     const fetchAds = async () => {
       try {
         const { token } = useAuth();
-        // const token = localStorage.getItem("authToken");
         const data = await getSellersProducts(token);
         setAds(data);
       } catch (error) {
@@ -95,13 +94,32 @@ const AdList: React.FC = () => {
     handleEditAdCardClose();
   };
 
-  const handleUpdateAd = async (id: number, updatedData: Partial<TProductResponseType>) => {
+  const mapToProductData = (ad: TProductResponseType): ProductData => ({
+    title: ad.title,
+    category: ad.brand || resources[language]?.create_ad.input.undefined,
+    price: ad.price,
+    description: ad.description || "",
+    productionYear: ad.productionYear || resources[language]?.create_ad.input.undefined,
+    sellerPhoneNumber: "",
+    sellerId: ad.sellerId,
+  });
+
+  const handleUpdateAd = async (id: number, updatedData: ProductData) => {
     try {
       const response = await updateAd(id, updatedData);
       if (response) {
         setAds((prevAds) =>
           prevAds.map((ad) =>
-            ad.id === id ? { ...ad, ...updatedData } : ad
+            ad.id === id
+              ? {
+                  ...ad,
+                  ...updatedData,
+                  brand: updatedData.brand ?? undefined,
+                  productionYear: updatedData.productionYear
+                    ? String(updatedData.productionYear)
+                    : undefined,
+                }
+              : ad
           )
         );
         setEditingAdId(null);
@@ -125,7 +143,9 @@ const AdList: React.FC = () => {
             description={editingAd.description || ""}
             images={editingAd.imageUrls || []}
             status={editingAd.status}
-            onEdit={(updatedData) => handleUpdateAd(editingAd.id, updatedData)}
+            onEdit={(updatedData) =>
+              handleUpdateAd(editingAd.id, mapToProductData({ ...editingAd, ...updatedData }))
+            }
             onCancel={handleCancelEdit}
           />
         </>
