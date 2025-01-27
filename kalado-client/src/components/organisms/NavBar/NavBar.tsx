@@ -83,7 +83,6 @@ const NavBar: React.FC = () => {
           )}
         </Box>
 
-        {/* Hamburger Menu for mobile view */}
         <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
           <IconButton onClick={handleOpenNavMenu} color="secondary">
             <MenuIcon />
