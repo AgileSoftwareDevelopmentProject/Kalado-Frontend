@@ -4,16 +4,17 @@ import { Box } from '@mui/material';
 import { IconList, SideBar } from '../../components/molecules';
 import { ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
-import { useProductContext } from '../../contexts/ProductContext';
+import { useAuth } from '../../contexts';
 import { getProfile } from '../../api/services/UserService';
+import { getSellersProducts } from '../../api/services/ProductService';
 import { TProductResponseType, TUserProfileResponse } from '../../constants/apiTypes';
 import { toast } from 'react-toastify';
 
 const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const { user_dashboard_menu } = OptionsComponent();
+    const { token } = useAuth();
     const [userData, setUserData] = useState<TUserProfileResponse | null>(null);
-    const { products } = useProductContext();
+    const [userProduct, setUserProduct] = useState<TProductResponseType[] | null>(null);
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
     const [selectedAd, setSelectedAd] = useState<TProductResponseType | null>(null);
 
@@ -25,6 +26,15 @@ const UserDashboard: React.FC = () => {
             toast(t('error.profile_management.retrieve_failed'));
         }
     };
+
+    const fetchUserProducts = async () => {
+        const response = await getSellersProducts(token);
+        if (response.isSuccess) {
+            setUserProduct(response.data as TProductResponseType[]);
+        } else {
+            toast(t('error.ad_management.retrieve_failed'));
+        }
+    }
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
@@ -40,6 +50,7 @@ const UserDashboard: React.FC = () => {
 
     const renderContent = () => {
         fetchUserData();
+        fetchUserProducts();
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
                 return <ProfileManagement userData={userData} />;
@@ -49,6 +60,7 @@ const UserDashboard: React.FC = () => {
                         onEdit={handleEditAd}
                         selectedAd={selectedAd}
                         onCloseEdit={handleCloseEdit}
+                        adsList={userProduct}
                     />
                 );
         }
@@ -60,7 +72,7 @@ const UserDashboard: React.FC = () => {
 
             <SideBar>
                 <IconList
-                    categories={user_dashboard_menu}
+                    categories={OptionsComponent().user_dashboard_menu}
                     onSelectCategory={handleSelectMenu}
                     selectedCategory={selectedMenuTitle}
                 />

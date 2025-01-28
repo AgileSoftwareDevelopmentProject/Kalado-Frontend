@@ -21,8 +21,8 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const [selectedUser, setSelectedUser] = useState<TUserProfileResponse | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleBlockUser = async () => {
-    const response = await blockUser(token);
+  const handleBlockUser = async (id: number) => {
+    const response = await blockUser(id);
     if (response.isSuccess) {
       toast(t("success.user_management.block_user"));
     } else {
@@ -115,7 +115,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                   <Select
                     value={user.blocked}
                     onChange={(event) =>
-                      handleBlockUser()
+                      handleBlockUser(user.id)
                     }
                     sx={{
                       minWidth: 150,
