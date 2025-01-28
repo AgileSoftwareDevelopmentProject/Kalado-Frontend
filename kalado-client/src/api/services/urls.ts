@@ -52,4 +52,5 @@ export const REPORT = {
     GET_ALL_REPORTS: `/reports/admin/all`,
     GET_REPORT_STATISTICS: (startDate: string, endDate: string) =>
         `/reports/admin/statistics?startDate=${startDate}&endDate=${endDate}`,
+    GET_REPORT_TO_USER_ID: (userId: number) => `/reports/my-reports/${userId}`,
 };
