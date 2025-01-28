@@ -46,9 +46,9 @@ const UserDashboard: React.FC = () => {
     useEffect(() => {
         console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQq");
         console.log(selectedMenuTitle);
-        if (selectedMenuTitle === t("dashboard.user.menu.one")) {
+        if (selectedMenuTitle === user_dashboard_menu[0].value) {
             fetchUserData();
-        } else if (selectedMenuTitle === t("dashboard.user.menu.two")) {
+        } else if (selectedMenuTitle === user_dashboard_menu[1].value) {
             fetchUserProducts();
         }
     }, [selectedMenuTitle]);
