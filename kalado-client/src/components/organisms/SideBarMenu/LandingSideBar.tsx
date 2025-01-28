@@ -15,13 +15,10 @@ const LandingSideBar: React.FC = () => {
     const [selectedCategory, setSelectedCategoryState] = useState(product_categories[0].value);
 
     const handleSelectCategory = (categoryValue: string) => {
-        console.log(categoryValue);
         const selected = product_categories.find(cat => cat.value === categoryValue);
         if (selected) {
-            console.log("WWWWWWWWWww");
             setSelectedCategory({ value: selected.value, title: selected.title });
             setSelectedCategoryState(selected.value);
-            console.log(selectedCategory);
         }
     }
 
