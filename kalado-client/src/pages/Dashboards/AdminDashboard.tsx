@@ -17,8 +17,8 @@ const AdminDashboard: React.FC = () => {
 
     const renderContent = () => {
         switch (selectedMenuTitle) {
-            case t("dashboard.admin.menu.two"):
-                return <UserManagement />;
+            // case t("dashboard.admin.menu.two"):
+            //     return <UserManagement />;
             case t("dashboard.admin.menu.three"):
                 return <ReportHistory />;
         }
