@@ -184,7 +184,8 @@
                     "password": "Password",
                     "phone_number": "Phone Number",
                     "address": "Address",
-                    "save_changes_btn": "Save Changes"
+                    "save_changes_btn": "Save Changes",
+                    "enter_new_password": "Enter new password"
                 }
             },
             "admin": {
@@ -264,7 +265,7 @@
                 "block_failed": "Error ocurred during blocking the user."
             },
             "ad_management": {
-                "retrive_failed": "Error ocurred during retriving your ad's list."
+                "retrieve_failed": "Error ocurred during retriving your ad's list."
             },
             "report_history": {
                 "retrieve_failed": "Error ocurred during retriving your reports."
@@ -477,7 +478,8 @@
                     "password": "رمز عبور",
                     "phone_number": "شماره تلفن",
                     "address": "محل سکونت",
-                    "save_changes_btn": "ذخیره تغییرات"
+                    "save_changes_btn": "ذخیره تغییرات",
+                    "enter_new_password": "رمز عبور جدید خود را وارد نمایید"
                 }
             },
             "admin": {
@@ -557,7 +559,7 @@
                 "block_failed": "خطایی در مسدودسازی کاربر رخ داد."
             },
             "ad_management": {
-                "retrive_failed": "خطایی در گرفتن لیست آگهی‌هایتان رخ داد."
+                "retrieve_failed": "خطایی در گرفتن لیست آگهی‌هایتان رخ داد."
             },
             "report_history": {
                 "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد."

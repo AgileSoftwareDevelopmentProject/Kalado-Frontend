@@ -93,7 +93,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                         onChange={handleInputChange}
                     />
                     <PasswordInput
-                        value={''}
+                        value={t('dashboard.user.profile_management.enter_new_password')}
                         onChange={handleInputChange}
                         isValidatorActive={true}
                     />
