@@ -33,7 +33,6 @@ const UserDashboard: React.FC = () => {
             case t("dashboard.user.menu.two"):
                 return (
                     <AdManagement
-                        ads={products}
                         onEdit={handleEditAd}
                         selectedAd={selectedAd}
                         onCloseEdit={handleCloseEdit}
