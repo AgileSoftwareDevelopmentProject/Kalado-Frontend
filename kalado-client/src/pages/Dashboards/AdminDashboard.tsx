@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { IconList, SideBar } from '../../components/molecules';
@@ -12,7 +12,8 @@ import { toast } from 'react-toastify';
 
 const AdminDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.admin.menu.two"));
+    const { admin_dashboard_menu } = OptionsComponent();
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(admin_dashboard_menu[0].value);
     const [userDataList, setUserDataList] = useState<TUserProfileResponse[] | null>(null);
     const [userReportList, setUserReportList] = useState<TReportResponseType[] | null>(null);
 
@@ -42,13 +43,19 @@ const AdminDashboard: React.FC = () => {
         setSelectedMenuTitle(menuTitle);
     };
 
+    useEffect(() => {
+        if (selectedMenuTitle === admin_dashboard_menu[0].value) {
+            fetchUserDataList();
+        } else if (selectedMenuTitle === admin_dashboard_menu[1].value) {
+            fetchUserReportList();
+        }
+    }, [selectedMenuTitle]);
+
     const renderContent = () => {
         switch (selectedMenuTitle) {
-            case t("dashboard.admin.menu.two"):
-                fetchUserDataList();
+            case admin_dashboard_menu[0].value:
                 return <UserManagement userDataList={userDataList} />;
-            case t("dashboard.admin.menu.three"):
-                fetchUserReportList();
+            case admin_dashboard_menu[1].value:
                 return <ReportHistory reportsList={userReportList} />;
         }
     };
@@ -59,7 +66,7 @@ const AdminDashboard: React.FC = () => {
 
             <SideBar>
                 <IconList
-                    categories={OptionsComponent().admin_dashboard_menu}
+                    categories={admin_dashboard_menu}
                     onSelectCategory={handleSelectMenu}
                     selectedCategory={selectedMenuTitle}
                 />

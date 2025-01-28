@@ -20,8 +20,8 @@ export const OptionsComponent = () => {
     ];
 
     const admin_dashboard_menu = [
-        { value: 'Users Management', title: t("dashboard.admin.menu.two"), icon: <FaAd /> },
-        { value: 'Report History', title: t("dashboard.admin.menu.three"), icon: <FaHistory /> },
+        { value: 'Users Management', title: t("dashboard.admin.menu.one"), icon: <FaAd /> },
+        { value: 'Report History', title: t("dashboard.admin.menu.two"), icon: <FaHistory /> },
     ];
 
     const report_options = [
