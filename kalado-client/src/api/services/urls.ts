@@ -13,7 +13,7 @@ export const AUTH = {
 export const USER = {
     GET: '/user',
     PUT: '/user',
-    GET_PROFILE: '/user/getProfile',
+    GET_PROFILE: '/user/profile',
     MODIFY_PROFILE: '/user/modifyProfile',
 };
 
