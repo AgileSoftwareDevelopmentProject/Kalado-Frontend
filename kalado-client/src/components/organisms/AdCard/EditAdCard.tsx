@@ -10,70 +10,58 @@ import {
   Divider,
   InputAdornment,
 } from '@mui/material';
-import { Edit as EditIcon, Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import {
+  Edit as EditIcon,
+  Save as SaveIcon,
+  Close as CloseIcon,
+  Delete as DeleteIcon,
+} from '@mui/icons-material';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
 import { useTranslation } from 'react-i18next';
-import YearInput from '../../atoms/Inputs/YearInput';
+import ImageUploadBox from '../../molecules/Boxes/ImageUploadBox';
+import { updateAd, createProductWithImages } from '../../../api/services/ProductService';
+import { useAuth } from '../../../contexts';
+import { ProductData, TProductResponseType } from '../../../constants/apiTypes';
 
 type EditAdCardProps = {
-  title: string;
-  price: number;
-  category: string;
-  productionYear: Date | null;
-  description?: string;
-  images: string[];
-  status: string;
-  brand?: string | null;
-  onEdit: (data: any) => void;
+  ad: TProductResponseType;
+  onEdit: (updatedAd: TProductResponseType) => void;
   onCancel: () => void;
 };
 
 const normalizeDigits = (value: string): string => {
   const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
   const englishDigits = '0123456789';
-
-  return value.replace(/[۰-۹]/g, (char) =>
-    englishDigits[persianDigits.indexOf(char)]
-  );
+  return value.replace(/[۰-۹]/g, (char) => englishDigits[persianDigits.indexOf(char)]);
 };
 
-const EditAdCard: React.FC<EditAdCardProps> = ({
-  title,
-  price,
-  category,
-  productionYear,
-  description,
-  images,
-  status,
-  brand = '',
-  onEdit,
-  onCancel,
-}) => {
+const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
+  const { token } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    title,
-    price,
-    category,
-    productionYear,
-    description,
-    status,
-    images,
-    brand,
+
+  const [formData, setFormData] = useState<ProductData>({
+    title: ad.title,
+    price: ad.price,
+    category: ad.category,
+    productionYear: ad.productionYear || new Date(ad.createdAt).getFullYear(),
+    description: ad.description || '',
+    images: [],
   });
 
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
 
-  const handleChange = (field: keyof typeof formData, value: any) => {
+  const handleChange = (field: keyof ProductData, value: any) => {
     if (field === 'price') {
       const normalizedValue = normalizeDigits(value.toString());
       const numericValue = Number(normalizedValue);
-
       if (!isNaN(numericValue)) {
-        setFormData((prev) => ({ ...prev, [field]: numericValue }));
+        setFormData((prev) => ({ ...prev, price: { amount: numericValue, unit: prev.price.unit } }));
       } else {
         toast.error('Invalid input. Please enter a valid number.');
       }
@@ -82,13 +70,43 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
     }
   };
 
-  const handleSave = () => {
-    onEdit(formData);
-    setIsEditing(false);
-    const successMessage =
-      resources[language]?.ad_list?.save_success ||
-      (language === 'fa' ? 'تغییرات با موفقیت ذخیره شد.' : 'Changes saved successfully.');
-    toast.success(successMessage);
+  const handleImageUpload = async (files: File[]) => {
+    try {
+      if (token) {
+        const updatedProduct = await createProductWithImages(formData, files);
+        setFormData((prev) => ({
+          ...prev,
+          images: updatedProduct.imageUrls || [],
+        }));
+      }
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      toast.error('Error uploading images. Please try again.');
+    }
+  };
+
+  const handleImageDelete = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images?.filter((_, i) => i !== index) || [],
+    }));
+  };
+
+  const handleSave = async () => {
+    try {
+      if (!token) {
+        toast.error('User is not authenticated.');
+        return;
+      }
+
+      const updatedAd = await updateAd(ad.id, formData);
+      onEdit(updatedAd);
+      setIsEditing(false);
+      toast.success(resources[language]?.ad_list?.save_success || 'Changes saved successfully.');
+    } catch (error) {
+      console.error('Error updating ad:', error);
+      toast.error('Error updating ad. Please try again.');
+    }
   };
 
   const categories = resources[language]?.category;
@@ -104,81 +122,44 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
         direction: isRtl ? 'rtl' : 'ltr',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          textAlign: isRtl ? 'right' : 'left',
-        }}
-      >
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box>
-          {isEditing ? (
-            <TextField
-              value={formData.title}
-              onChange={(e) => handleChange('title', e.target.value)}
-              variant="outlined"
-              size="small"
-              sx={{ width: '300px', textAlign: 'center' }}
-            />
-          ) : (
-            <Typography variant="h5" textAlign="center">
-              {formData.title}
-            </Typography>
-          )}
-          <Typography variant="subtitle1" sx={{ marginTop: '5px', textAlign: 'center' }}>
-            {t(`ad_list.ad_status.${formData.status}`)}
-          </Typography>
+          <Typography variant="h5">{formData.title}</Typography>
+          <Typography variant="subtitle1">{resources[language]?.ad_list?.ad_status?.[ad.status]}</Typography>
         </Box>
         <Box>
           <IconButton onClick={onCancel}>
             <CloseIcon />
           </IconButton>
-          <IconButton onClick={handleSave}>
-            <SaveIcon />
-            {/* <IconButton onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? <SaveIcon onClick={handleSave} /> : <EditIcon />} */}
+          <IconButton onClick={() => setIsEditing(!isEditing)}>
+            {isEditing ? <SaveIcon onClick={handleSave} /> : <EditIcon />}
           </IconButton>
         </Box>
       </Box>
-  
+
       <Divider sx={{ marginY: '20px' }} />
-  
+
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '15px' }}>
+        {/* Price */}
         <Typography>{resources[language]?.general_inputs.price}</Typography>
         {isEditing ? (
           <TextField
-            value={formData.price}
+            value={formData.price.amount}
             onChange={(e) => handleChange('price', e.target.value)}
             fullWidth
             variant="outlined"
             size="small"
-            inputProps={{
-              inputMode: 'numeric',
-              pattern: '[0-9۰-۹]*',
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {resources[language]?.currency || (language === 'fa' ? 'تومان' : 'Toman')}
-                </InputAdornment>
-              ),
-            }}
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9۰-۹]*' }}
+            InputProps={{ endAdornment: <InputAdornment position="end">{formData.price.unit}</InputAdornment> }}
           />
         ) : (
-          <Typography>{`${formData.price} ${resources[language]?.currency || 'Toman'}`}</Typography>
+          <Typography>{`${formData.price.amount} ${formData.price.unit}`}</Typography>
         )}
-  
+
+        {/* Category */}
         <Typography>{resources[language]?.create_ad.input.category}</Typography>
         {isEditing ? (
-          <Select
-            value={formData.category || ''}
-            onChange={(e) => handleChange('category', e.target.value)}
-            fullWidth
-            displayEmpty
-            sx={{ direction: isRtl ? 'rtl' : 'ltr' }}
-          >
-            <MenuItem value="">{`<<Select Category>>`}</MenuItem>
+          <Select value={formData.category || ''} onChange={(e) => handleChange('category', e.target.value)} fullWidth>
             {Object.keys(categories || {}).map((key) => (
               <MenuItem key={key} value={key}>
                 {categories[key as keyof typeof categories]}
@@ -186,133 +167,28 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             ))}
           </Select>
         ) : (
-          <Typography>{categories?.[formData.category as keyof typeof categories] || resources[language]?.create_ad.default.category}</Typography>
-        )}
-  
-        <Typography>{resources[language]?.create_ad.input.production_year}</Typography>
-        {isEditing ? (
-          <YearInput
-            value={formData.productionYear}
-            onChange={(newYear) => handleChange('productionYear', newYear)}
-            minDate={new Date(1900, 0, 1)}
-            maxDate={new Date()}
-          />
-        ) : (
-          <Typography>{formData.productionYear?.getFullYear() || resources[language]?.create_ad.input.undefined}</Typography>
-        )}
-  
-        {/* Brand Field */}
-        <Typography>{resources[language]?.create_ad.input.brand}</Typography>
-        {isEditing ? (
-          <TextField
-            value={formData.brand}
-            onChange={(e) => handleChange('brand', e.target.value)}
-            fullWidth
-            variant="outlined"
-            size="small"
-          />
-        ) : (
-          <Typography>{formData.brand || resources[language]?.create_ad.input.undefined}</Typography>
-        )}
-  
-        {/* Description Field */}
-        <Typography>{resources[language]?.general_inputs.description}</Typography>
-        {isEditing ? (
-          <TextField
-            value={formData.description}
-            onChange={(e) => handleChange('description', e.target.value)}
-            fullWidth
-            multiline
-            rows={3}
-            helperText={`${formData.description?.length || 0}/500`}
-            sx={{ textAlign: isRtl ? 'right' : 'left' }}
-          />
-        ) : (
-          <Typography>{formData.description || 'No Description'}</Typography>
+          <Typography>{categories?.[formData.category as keyof typeof categories]}</Typography>
         )}
       </Box>
-  
+
       <Divider sx={{ marginY: '20px' }} />
-  
+
+      {/* Image Upload */}
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-        {formData.images.map((image, index) => (
-          <Box
-            key={index}
-            sx={{
-              width: '160px',
-              height: '160px',
-              position: 'relative',
-            }}
-          >
-            <img
-              src={image}
-              alt={`Image ${index + 1}`}
-              style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: '12px',
-                objectFit: 'cover',
-              }}
-            />
+        {formData.images?.map((image, index) => (
+          <Box key={index} sx={{ width: '160px', height: '160px', position: 'relative' }}>
+            <img src={image} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             {isEditing && (
-              <IconButton
-                onClick={() => handleImageDelete(index)}
-                sx={{
-                  position: 'absolute',
-                  top: 5,
-                  right: 5,
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                }}
-              >
+              <IconButton onClick={() => handleImageDelete(index)} sx={{ position: 'absolute', top: 5, right: 5 }}>
                 <DeleteIcon />
               </IconButton>
             )}
           </Box>
         ))}
-        {isEditing && formData.images.length < 3 && (
-          <Box
-            sx={{
-              width: '160px',
-              height: '160px',
-              border: '1px dashed #ccc',
-              borderRadius: '12px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              fontSize: '14px',
-              fontWeight: 'bold',
-              color: '#888',
-              cursor: 'pointer',
-            }}
-            component="label"
-          >
-            <Typography>{t("general_inputs.add_image")}</Typography>
-            <input
-              type="file"
-              hidden
-              multiple
-              accept="image/*"
-              onChange={(e) => {
-                const files = e.target.files;
-                if (!files) return;
-  
-                const uploadedImages = Array.from(files).map((file) => URL.createObjectURL(file));
-                setFormData((prev) => {
-                  const allImages = [...prev.images, ...uploadedImages];
-                  if (allImages.length > 3) {
-                    toast.error('You can only upload a maximum of 3 images.');
-                    return { ...prev, images: allImages.slice(0, 3) };
-                  }
-                  return { ...prev, images: allImages };
-                });
-              }}
-            />
-          </Box>
-        )}
+        {isEditing && (formData.images?.length || 0) < 3 && <ImageUploadBox onUpload={handleImageUpload} />}
       </Box>
     </Card>
-  );  
+  );
 };
 
 export default EditAdCard;
