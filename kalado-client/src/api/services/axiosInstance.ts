@@ -39,6 +39,8 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
+        console.log('Response: ');
+        console.log(response);
         return { ...response, isSuccess: true };
     },
     (error: any) => {

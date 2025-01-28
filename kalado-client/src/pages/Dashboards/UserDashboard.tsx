@@ -23,6 +23,7 @@ const UserDashboard: React.FC = () => {
     const fetchUserData = async () => {
         setLoading(true); // Set loading to true before fetching
         const response = await getProfile();
+        console.log(response);
         if (response.isSuccess) {
             setUserData(response.data as TUserProfileResponse);
         } else {
@@ -34,6 +35,7 @@ const UserDashboard: React.FC = () => {
     const fetchUserProducts = async () => {
         setLoading(true); // Set loading to true before fetching
         const response = await getSellersProducts(token);
+        console.log(response);
         if (response.isSuccess) {
             setUserProduct(response.data as TProductResponseType[]);
         } else {
