@@ -43,6 +43,8 @@ export async function updateAdStatus(productId: number, status: string) {
         PRODUCT.UPDATE_STATUS(productId),
         'PUT',
         { status },
+        {}, 
+        'application/json'
     );
 }
 
@@ -61,20 +63,37 @@ export async function getProductsByCategory(category: string): Promise<TProductR
     return response.data as TProductResponseType[];
 }
 
-export async function getSellersProducts(token: string | null): Promise<TProductResponseType[]> {
-    try {
-        const response = await sendRequest(
-            PRODUCT.GET_BY_SELLER,
-            'GET',
-            token
-        );
-
-        return response.data as TProductResponseType[];
-    } catch (error) {
-        console.error('Error fetching seller’s products:', error);
-        return [];
-    }
+export async function getSellersProducts() {
+    return sendRequest<TProductResponseType[]>(
+        PRODUCT.GET_BY_SELLER,
+        'GET',
+    );
 }
+
+export async function getSellersProductsById(sellerId: number) {
+    return sendRequest<TProductResponseType[]>(
+        PRODUCT.GET_BY_SELLER_ID(sellerId),
+        'GET',
+    );
+}
+
+
+// export async function getSellersProducts(token: string | null): Promise<TProductResponseType[]> {
+//     try {
+//         const response = await sendRequest(
+//             PRODUCT.GET_BY_SELLER,
+//             'GET',
+//             token
+//         );
+
+//         return response.data as TProductResponseType[];
+//     } catch (error) {
+//         console.error('Error fetching seller’s products:', error);
+//         return [];
+//     }
+// }
+
+
 
 
 

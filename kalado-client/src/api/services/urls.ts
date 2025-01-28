@@ -25,6 +25,7 @@ export const PRODUCT = {
     DELETE: (productId: number) => `/product/delete/${productId}`,
     UPDATE_STATUS: (productId: number) => `/product/status/${productId}`,
     GET_BY_SELLER: '/product/seller',
+    GET_BY_SELLER_ID: (sellerId: number) => `/product/seller/${sellerId}`,
     GET_BY_CATEGORY: (category: string) => `/product/category/${category}`,
     GET_SINGLE: (productId: number) => `/product/${productId}`,
 };
