@@ -98,9 +98,13 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
         toast.error('User is not authenticated.');
         return;
       }
-
-      const updatedAd = await updateAd(ad.id, formData);
-      onEdit(updatedAd);
+      const response = await updateAd(ad.id, formData);
+      const newToken = response.headers?.authorization || response.headers?.['Authorization'];
+      if (newToken) {
+        auth.setToken(newToken);
+      }
+  
+      onEdit(response.data);
       setIsEditing(false);
       toast.success(resources[language]?.ad_list?.save_success || 'Changes saved successfully.');
     } catch (error) {
