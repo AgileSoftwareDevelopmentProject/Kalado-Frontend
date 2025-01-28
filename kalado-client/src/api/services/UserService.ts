@@ -27,17 +27,7 @@ export async function getAllUsers() {
         USER.ALL_USER,
         'GET',
         undefined,
-        {},
-        'application/json'
+        {}
     );
 }
 
-export async function blockUser(id: number) {
-    return sendRequest(
-        USER.ALL_USER,
-        'PUT',
-        id,
-        {},
-        'application/json'
-    );
-}
