@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdCard from '../AdCard/AdCard';
+import EditAdCard from '../AdCard/EditAdCard';
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent, Typography, Box } from '@mui/material';
 import { TProductResponseType } from '../../../constants/apiTypes';
@@ -17,6 +18,8 @@ const AdList = () => {
   const isRtl = language === 'fa';
   const { token } = useAuth();
   const [ads, setAds] = useState<TProductResponseType[]>([]);
+  const [editingAdId, setEditingAdId] = useState<number | null>(null);
+  const [previousAdState, setPreviousAdState] = useState<TProductResponseType | null>(null);
 
   useEffect(() => {
     const fetchAds = async () => {
@@ -57,6 +60,7 @@ const AdList = () => {
     try {
       await deleteAd(id);
       setAds((prevAds) => prevAds.filter((ad) => ad.id !== id));
+      if (editingAdId === id) setEditingAdId(null);
     } catch (error) {
       console.error('Error deleting ad:', error);
     }
@@ -68,13 +72,54 @@ const AdList = () => {
     );
   };
 
+  const handleEdit = (id: number) => {
+    const editingAd = ads.find((ad) => ad.id === id);
+    if (editingAd) {
+      setEditingAdId(id);
+      setPreviousAdState(editingAd);
+    }
+  };
+
+  const handleEditAdCardClose = () => {
+    setEditingAdId(null);
+  };
+
+  const handleCancelEdit = () => {
+    if (previousAdState) {
+      setAds((prevAds) =>
+        prevAds.map((ad) => (ad.id === previousAdState.id ? previousAdState : ad))
+      );
+    }
+    handleEditAdCardClose();
+  };
+
+  const editingAd = ads.find((ad) => ad.id === editingAdId);
+
   return (
     <div style={{ padding: '20px', direction: isRtl ? 'rtl' : 'ltr' }}>
+      {editingAd ? (
+        <>
+          <EditAdCard
+            title={editingAd.title}
+            price={editingAd.price.amount}
+            category={editingAd.category}
+            date={editingAd.createdAt}
+            description={editingAd.description}
+            images={editingAd.imageUrls}
+            status={editingAd.status}
+            onEdit={(updatedData) => {
+              handleEditTitle(editingAd.id)(updatedData.title);
+            }}
+            onCancel={handleCancelEdit}
+          />
+        </>
+      ) : (
+        <>
       {/* Heading for Ad List */}
       <Box
         sx={{
           marginBottom: '50px',
-          textAlign: 'right',
+          textAlign: isRtl ? 'right' : 'left',
         }}
       >
         <Typography
@@ -94,10 +139,14 @@ const AdList = () => {
             status={ad.status}
             onStatusChange={handleStatusChange(ad.id)}
             onDelete={() => handleDelete(ad.id)}
+            onEdit={() => handleEdit(ad.id)}
             onEditTitle={handleEditTitle(ad.id)}
+            language={i18n.language as 'en' | 'fa'}
           />
         ))}
       </Box>
+        </>
+      )}
     </div>
   );
 };
