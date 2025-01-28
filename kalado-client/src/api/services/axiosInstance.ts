@@ -26,14 +26,9 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
         const token = localStorage.getItem('token');
-        console.log('Request interceptor');
-        console.log(token);
         if (token && config.headers) {
             config.headers['Authorization'] = `${token}`;
         }
-        // if (config.headers['Content-Type']) {
-        //     config.headers['Content-Type'] = 'application/json';
-        // }
         console.log(config);
         return config;
     },
