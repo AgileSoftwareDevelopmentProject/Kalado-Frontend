@@ -83,17 +83,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
   };
 
   const handleSave = () => {
-    const { title, price, category, productionYear, description, status, images, brand } = formData;
-    onEdit({
-      title,
-      price,
-      category,
-      productionYear,
-      description,
-      status,
-      images,
-      brand,
-    });
+    onEdit(formData);
     setIsEditing(false);
     const successMessage =
       resources[language]?.ad_list?.save_success ||
@@ -137,15 +127,17 @@ const EditAdCard: React.FC<EditAdCardProps> = ({
             </Typography>
           )}
           <Typography variant="subtitle1" sx={{ marginTop: '5px', textAlign: 'center' }}>
-            {resources[language]?.ad_list?.ad_status?.[formData.status]}
+            {t(`ad_list.ad_status.${formData.status}`)}
           </Typography>
         </Box>
         <Box>
           <IconButton onClick={onCancel}>
             <CloseIcon />
           </IconButton>
-          <IconButton onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? <SaveIcon onClick={handleSave} /> : <EditIcon />}
+          <IconButton onClick={handleSave}>
+            <SaveIcon />
+            {/* <IconButton onClick={() => setIsEditing(!isEditing)}>
+            {isEditing ? <SaveIcon onClick={handleSave} /> : <EditIcon />} */}
           </IconButton>
         </Box>
       </Box>

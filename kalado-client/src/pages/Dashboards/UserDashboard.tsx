@@ -1,33 +1,46 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { SideBar } from '../../components/molecules';
 import { SideBarMenu, ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 import { useProductContext } from '../../contexts/ProductContext';
-
+import { TProductResponseType } from '../../constants/apiTypes';
 
 const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { user_dashboard_menu } = OptionsComponent();
-    // const { products, loading, error } = useProductContext();
+    const { products } = useProductContext();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
+    const [selectedAd, setSelectedAd] = useState<TProductResponseType | null>(null);
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
+    };
+
+    const handleEditAd = (adData: TProductResponseType) => {
+        setSelectedAd(adData);
+    };
+
+    const handleCloseEdit = () => {
+        setSelectedAd(null);
     };
 
     const renderContent = () => {
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
                 return <ProfileManagement />;
-            // case t("dashboard.user.menu.two"):
-            //     return <AdManagement
-            //         ads={products}
-            //         onEdit={ }
-            //         selectedAd={ }
-            //         onCloseEdit={ }
-            //     />;
+            case t("dashboard.user.menu.two"):
+                return (
+                    <AdManagement
+                        ads={products}
+                        onEdit={handleEditAd}
+                        selectedAd={selectedAd}
+                        onCloseEdit={handleCloseEdit}
+                    />
+                );
+            default:
+                return null;
         }
     };
 

@@ -29,11 +29,11 @@ axiosInstance.interceptors.request.use(
         console.log('Request interceptor');
         console.log(token);
         if (token && config.headers) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+            config.headers['Authorization'] = `${token}`;
         }
-        if (!config.headers['Content-Type']) {
-            config.headers['Content-Type'] = 'application/json';
-        }
+        // if (config.headers['Content-Type']) {
+        //     config.headers['Content-Type'] = 'application/json';
+        // }
         console.log(config);
         return config;
     },
@@ -79,7 +79,7 @@ export const sendRequest = async <T>(
         console.log('Sending request: ', url, method, data);
         const headers = {
             ...config.headers,
-            'Content-Type': contentType || 'application/json'
+            ...(contentType ? { 'Content-Type': contentType } : {})
         };
         const response: AxiosResponse<T> & { isSuccess: boolean } = await axiosInstance({
             method,
@@ -101,3 +101,4 @@ export const sendRequest = async <T>(
         };
     }
 };
+
