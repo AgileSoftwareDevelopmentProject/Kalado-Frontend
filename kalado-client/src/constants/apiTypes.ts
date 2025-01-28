@@ -138,6 +138,7 @@ export type TUserProfileResponse = {
     password: string;
     address: string | null;
     phoneNumber: string;
+    profileImageUrl: string | null;
 };
 
 // Search
