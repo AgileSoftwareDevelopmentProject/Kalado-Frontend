@@ -43,12 +43,12 @@ const AdminDashboard: React.FC = () => {
     };
 
     const renderContent = () => {
-        fetchUserDataList();
-        fetchUserReportList();
         switch (selectedMenuTitle) {
             case t("dashboard.admin.menu.two"):
+                fetchUserDataList();
                 return <UserManagement userDataList={userDataList} />;
             case t("dashboard.admin.menu.three"):
+                fetchUserReportList();
                 return <ReportHistory reportsList={userReportList} />;
         }
     };
