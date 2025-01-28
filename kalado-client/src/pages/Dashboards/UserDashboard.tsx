@@ -18,34 +18,37 @@ const UserDashboard: React.FC = () => {
     const [userProduct, setUserProduct] = useState<TProductResponseType[] | null>(null);
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(user_dashboard_menu[0].value);
     const [selectedAd, setSelectedAd] = useState<TProductResponseType | null>(null);
+    const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
     const fetchUserData = async () => {
+        setLoading(true); // Set loading to true before fetching
         const response = await getProfile();
         if (response.isSuccess) {
             setUserData(response.data as TUserProfileResponse);
         } else {
             toast(t('error.profile_management.retrieve_failed'));
         }
+        setLoading(false); // Set loading to false after fetching
     };
 
     const fetchUserProducts = async () => {
+        setLoading(true); // Set loading to true before fetching
         const response = await getSellersProducts(token);
         if (response.isSuccess) {
             setUserProduct(response.data as TProductResponseType[]);
         } else {
             toast(t('error.ad_management.retrieve_failed'));
         }
+        setLoading(false); // Set loading to false after fetching
     };
 
     const handleSelectMenu = (menuTitle: string) => {
-        console.log("EEEEEEEEEEe");
-        console.log(menuTitle);
+        console.log("Selected Menu:", menuTitle);
         setSelectedMenuTitle(menuTitle);
     };
 
     useEffect(() => {
-        console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQq");
-        console.log(selectedMenuTitle);
+        console.log("Selected Menu Title:", selectedMenuTitle);
         if (selectedMenuTitle === user_dashboard_menu[0].value) {
             fetchUserData();
         } else if (selectedMenuTitle === user_dashboard_menu[1].value) {
@@ -54,7 +57,8 @@ const UserDashboard: React.FC = () => {
     }, [selectedMenuTitle]);
 
     const renderContent = () => {
-        console.log(selectedMenuTitle);
+        if (loading) return <div>Loading...</div>; // Show a loading message or spinner
+
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
                 return <ProfileManagement userData={userData} />;

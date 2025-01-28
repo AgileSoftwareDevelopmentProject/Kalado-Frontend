@@ -28,12 +28,12 @@ const LoginForm: React.FC = () => {
             return false;
         }
 
-        const passwordValidationResult = validatePassword(formData.password, t);
-        if (!passwordValidationResult.valid) {
-            setError(emailValidationResult.error);
-            setAreInputsValid(false);
-            return false;
-        }
+        // const passwordValidationResult = validatePassword(formData.password, t);
+        // if (!passwordValidationResult.valid) {
+        //     setError(emailValidationResult.error);
+        //     setAreInputsValid(false);
+        //     return false;
+        // }
 
         return true;
     };
