@@ -40,7 +40,7 @@ const CreateAdForm: React.FC = () => {
         console.log(date.getFullYear())
         setFormData(prevData => ({
             ...prevData,
-            productionYear: date ? date.getFullYear() : null
+            productionYear: date
             
 
         }));
