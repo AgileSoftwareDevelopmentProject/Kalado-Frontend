@@ -114,7 +114,10 @@ export async function updateReportStatus(reportId: number, reportStatusData: Rep
 export async function getAllReports() {
     return sendRequest<TReportResponseType[]>(
         REPORT.GET_ALL_REPORTS,
-        'GET',
+        'GET',        
+        undefined,
+        {},
+        'application/json'
     );
 }
 
