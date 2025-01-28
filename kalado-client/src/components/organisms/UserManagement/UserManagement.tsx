@@ -4,7 +4,7 @@ import {
   Box, Typography, Card, CardContent, Select, MenuItem, Grid, Dialog, DialogActions,
   DialogContent, DialogContentText, DialogTitle, Button
 } from "@mui/material";
-import { blockUser } from '../../../api/services/UserService';
+// import { blockUser } from '../../../api/services/UserService';
 import { TUserProfileResponse } from '../../../constants/apiTypes';
 import { useAuth } from '../../../contexts';
 import { toast } from 'react-toastify';
@@ -22,14 +22,14 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleBlockUser = async (id: number) => {
-    const response = await blockUser(id);
-    if (response.isSuccess) {
-      toast(t("success.user_management.block_user"));
-    } else {
-      toast(t('error.user_management.block_failed'));
-    }
-    // setSelectedUser(users.find((user) => user.id === id) || null);
-    setIsDialogOpen(true);
+    // const response = await blockUser(id);
+    // if (response.isSuccess) {
+    //   toast(t("success.user_management.block_user"));
+    // } else {
+    //   toast(t('error.user_management.block_failed'));
+    // }
+    // // setSelectedUser(users.find((user) => user.id === id) || null);
+    // setIsDialogOpen(true);
   };
 
   const confirmStatusChange = () => {
