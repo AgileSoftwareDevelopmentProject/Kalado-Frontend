@@ -15,12 +15,12 @@ const AdList = () => {
   const { t, i18n } = useTranslation();
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
+  const { token } = useAuth();
   const [ads, setAds] = useState<TProductResponseType[]>([]);
 
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const { token } = useAuth();
         if (token) {
           const data = await getSellersProducts(token);
           setAds(data);
@@ -30,7 +30,7 @@ const AdList = () => {
       }
     };
     fetchAds();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     setAds((prevAds) =>

@@ -17,12 +17,12 @@ const AdManagement: React.FC<AdManagementProps> = ({
   selectedAd,
   onCloseEdit,
 }) => {
+  const { token } = useAuth();
   const [ads, setAds] = useState<TProductResponseType[]>([]);
 
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const { token } = useAuth();
         if (token) {
           const data = await getSellersProducts(token);
           setAds(data);
@@ -32,7 +32,7 @@ const AdManagement: React.FC<AdManagementProps> = ({
       }
     };
     fetchAds();
-  }, []);
+  }, [token]);
 
   return (
     <Box sx={{ padding: 15 }}>
