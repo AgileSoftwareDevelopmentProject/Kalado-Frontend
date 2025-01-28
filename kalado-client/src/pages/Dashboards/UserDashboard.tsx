@@ -62,9 +62,9 @@ const UserDashboard: React.FC = () => {
         if (loading) return <div>Loading...</div>; // Show a loading message or spinner
 
         switch (selectedMenuTitle) {
-            case t("dashboard.user.menu.one"):
+            case user_dashboard_menu[0].value:
                 return <ProfileManagement userData={userData} />;
-            case t("dashboard.user.menu.two"):
+            case user_dashboard_menu[1].value:
                 return (
                     <AdManagement
                         onEdit={(adData: TProductResponseType) => setSelectedAd(adData)}
