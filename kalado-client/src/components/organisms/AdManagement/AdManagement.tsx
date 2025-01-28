@@ -3,36 +3,25 @@ import { Box } from '@mui/material';
 import AdList from '../AdList/AdList';
 import EditAdCard from '../AdCard/EditAdCard';
 import { TProductResponseType } from '../../../constants/apiTypes';
-import { getSellersProducts } from '../../../api/services/ProductService';
-import { useAuth } from '../../../contexts';
+
+
 
 interface AdManagementProps {
   onEdit: (adData: TProductResponseType) => void;
   selectedAd?: TProductResponseType;
   onCloseEdit: () => void;
+  adsList: TProductResponseType[] | null;
 }
 
 const AdManagement: React.FC<AdManagementProps> = ({
   onEdit,
   selectedAd,
   onCloseEdit,
+  adsList
 }) => {
-  const { token } = useAuth();
-  const [ads, setAds] = useState<TProductResponseType[]>([]);
 
-  useEffect(() => {
-    const fetchAds = async () => {
-      try {
-        if (token) {
-          const data = await getSellersProducts(token);
-          setAds(data);
-        }
-      } catch (error) {
-        console.error('Error fetching seller’s products:', error);
-      }
-    };
-    fetchAds();
-  }, [token]);
+  const [ads, setAds] = useState<TProductResponseType[] | null>(adsList);
+
 
   return (
     <Box sx={{ padding: 15 }}>

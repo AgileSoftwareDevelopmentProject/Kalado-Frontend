@@ -32,11 +32,11 @@ export async function getAllUsers() {
     );
 }
 
-export async function blockUser(token: string | null) {
+export async function blockUser(id: number) {
     return sendRequest(
         USER.ALL_USER,
         'PUT',
-        token,
+        id,
         {},
         'application/json'
     );

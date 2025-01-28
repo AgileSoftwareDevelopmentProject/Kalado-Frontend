@@ -5,15 +5,16 @@ import { IconList, SideBar } from '../../components/molecules';
 import { UserManagement, ReportHistory, NavBar } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 import { getAllUsers } from '../../api/services/UserService';
-import { TUserProfileResponse } from '../../constants/apiTypes';
+import { getAllReports } from '../../api/services/ReportService';
+import { TUserProfileResponse, TReportResponseType } from '../../constants/apiTypes';
 import { toast } from 'react-toastify';
 
 
 const AdminDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const { admin_dashboard_menu } = OptionsComponent();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.admin.menu.two"));
     const [userDataList, setUserDataList] = useState<TUserProfileResponse[] | null>(null);
+    const [userReportList, setUserReportList] = useState<TReportResponseType[] | null>(null);
 
     const fetchUserDataList = async () => {
         const response = await getAllUsers();
@@ -26,17 +27,29 @@ const AdminDashboard: React.FC = () => {
         }
     };
 
+    const fetchUserReportList = async () => {
+        const response = await getAllReports();
+        console.log("fetchUserReportList");
+        console.log(response);
+        if (response.isSuccess) {
+            setUserReportList(response.data as TReportResponseType[]);
+        } else {
+            toast(t('error.report_history.retrieve_failed'));
+        }
+    };
+
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
     };
 
     const renderContent = () => {
         fetchUserDataList();
+        fetchUserReportList();
         switch (selectedMenuTitle) {
             case t("dashboard.admin.menu.two"):
                 return <UserManagement userDataList={userDataList} />;
             case t("dashboard.admin.menu.three"):
-                return <ReportHistory />;
+                return <ReportHistory reportsList={userReportList} />;
         }
     };
 
@@ -46,7 +59,7 @@ const AdminDashboard: React.FC = () => {
 
             <SideBar>
                 <IconList
-                    categories={admin_dashboard_menu}
+                    categories={OptionsComponent().admin_dashboard_menu}
                     onSelectCategory={handleSelectMenu}
                     selectedCategory={selectedMenuTitle}
                 />
