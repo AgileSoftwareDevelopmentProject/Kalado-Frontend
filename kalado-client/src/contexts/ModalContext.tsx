@@ -82,8 +82,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenReportSubmission = () => {
-        console.log("handleOpenReportSubmission")
-        console.log(token);
         if (token == null) {
             toast.error(t("error.item_details.disable_report_submission"));
             return;
@@ -92,7 +90,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const handleOpenProfilePage = () => {
-        console.log("handleOpenProfilePage");
         console.log(role);
         setIsInProfile(true);
         if (role === 'USER') {

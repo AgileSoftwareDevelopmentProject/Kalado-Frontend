@@ -41,7 +41,7 @@ const CreateAdForm: React.FC = () => {
         setFormData(prevData => ({
             ...prevData,
             productionYear: date
-            
+
 
         }));
     };
@@ -80,7 +80,6 @@ const CreateAdForm: React.FC = () => {
 
         console.log("Create Ad API call");
         console.log(formData.category);
-        console.log(token);
         console.log(formData);
         console.log(images);
 

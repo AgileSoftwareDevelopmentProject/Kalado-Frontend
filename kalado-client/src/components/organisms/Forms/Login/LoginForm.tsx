@@ -76,7 +76,7 @@ const LoginForm: React.FC = () => {
                 <CustomButton
                     text={t("login_form.login_btn")}
                     type="submit"
-                    disabled={!areInputsValid}
+                // disabled={!areInputsValid}
                 />
                 <CustomLink
                     to="/#"
