@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { IconList, SideBar } from '../../components/molecules';
@@ -34,7 +34,7 @@ const UserDashboard: React.FC = () => {
         } else {
             toast(t('error.ad_management.retrieve_failed'));
         }
-    }
+    };
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
@@ -48,13 +48,19 @@ const UserDashboard: React.FC = () => {
         setSelectedAd(null);
     };
 
+    useEffect(() => {
+        if (selectedMenuTitle === t("dashboard.user.menu.one")) {
+            fetchUserData();
+        } else if (selectedMenuTitle === t("dashboard.user.menu.two")) {
+            fetchUserProducts();
+        }
+    }, [selectedMenuTitle]);
+
     const renderContent = () => {
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
-                fetchUserData();
                 return <ProfileManagement userData={userData} />;
             case t("dashboard.user.menu.two"):
-                fetchUserProducts();
                 return (
                     <AdManagement
                         onEdit={handleEditAd}
@@ -63,6 +69,8 @@ const UserDashboard: React.FC = () => {
                         adsList={userProduct}
                     />
                 );
+            default:
+                return null;
         }
     };
 
