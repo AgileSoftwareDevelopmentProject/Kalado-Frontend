@@ -36,7 +36,6 @@ const ProfileManagement = () => {
         }
     };
 
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setUserData(prevData => ({
@@ -62,7 +61,7 @@ const ProfileManagement = () => {
             console.log('Update Profile API call', userData);
             const response = await modifyProfile(userData);
             console.log(response);
-    
+
             if (response.isSuccess) {
                 toast(t('success.profile_management'));
             } else {
@@ -72,7 +71,7 @@ const ProfileManagement = () => {
             toast(t('error.profile_management.save_failed'));
         }
     };
-    
+
 
 
     return (

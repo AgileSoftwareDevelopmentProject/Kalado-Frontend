@@ -47,7 +47,7 @@ export async function updateAdStatus(productId: number, status: string) {
 }
 
 export async function getSingleProduct(adId: number) {
-    return sendRequest<TProductResponseType>(
+    return sendRequest<TProductResponseType | null>(
         PRODUCT.GET_SINGLE(adId),
         'GET',
     );

@@ -251,7 +251,8 @@
             "item_details": {
                 "not_found": "Item not found",
                 "disable_report_submiision": "For submitting a report, login to your account.",
-                "copy_phone_number_failed": "Failed to copy seller's phone number."
+                "copy_phone_number_failed": "Failed to copy seller's phone number.",
+                "login_to_copy_phone_number": "To see sellre's phone number, login to your account."
             },
             "profile_management": {
                 "save_failed": "Error ocurred during saving your changes",
@@ -531,7 +532,8 @@
             "item_details": {
                 "not_found": "کالای مورد نظر پیدا نشد.",
                 "disable_report_submiision": "برای ثبت تخلف ابتدا وارد حساب کاربری خود شوید.",
-                "copy_phone_number_failed": "خطایی در کپی کردن شماره تلفن خریدار رخ داد."
+                "copy_phone_number_failed": "خطایی در کپی کردن شماره تلفن خریدار رخ داد.",
+                "login_to_copy_phone_number": "برای مشاهده‌ی شماره تماس خریدار، وارد حساب کاربری خود شوید."
             },
             "profile_management": {
                 "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد.",

@@ -9,7 +9,7 @@ import { OptionsComponent } from '../../constants/options';
 const AdminDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { admin_dashboard_menu } = OptionsComponent();
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.admin.menu.one"));
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.admin.menu.two"));
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
@@ -17,8 +17,6 @@ const AdminDashboard: React.FC = () => {
 
     const renderContent = () => {
         switch (selectedMenuTitle) {
-            case t("dashboard.admin.menu.one"):
-                return <ProfileManagement />;
             case t("dashboard.admin.menu.two"):
                 return <UserManagement />;
             case t("dashboard.admin.menu.three"):

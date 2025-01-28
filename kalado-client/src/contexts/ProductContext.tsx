@@ -1,15 +1,18 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { getProductsByCategory, getSingleProduct } from '../api/services/ProductService';
 import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters } from '../api/services/SearchService';
 import { TProductResponseType } from '../constants/apiTypes';
+import { OptionsComponent } from '../constants/options';
 
 
 interface ProductContextType {
+    selectedCategory: { value: string; title: string; };
     products: TProductResponseType[];
     singleProduct: TProductResponseType | null;
     loading: boolean;
     error: string;
-    fetchProductsByCategory: (category: string) => void;
+    setSelectedCategory: React.Dispatch<React.SetStateAction<{ value: string; title: string; }>>;
+    fetchProductsByCategory: () => void;
     fetchSingleProduct: (id: number) => Promise<TProductResponseType | null>;
     applyFilters: (minPrice: number | 0, maxPrice: number | 0, timeFilter: string | '') => void;
     searchProductsByKeyword: (keyword: string) => void;
@@ -19,28 +22,34 @@ interface ProductContextType {
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [selectedCategory, setSelectedCategory] = useState({
+        value: OptionsComponent().product_categories[0].value,
+        title: OptionsComponent().product_categories[0].title
+    });
     const [products, setProducts] = useState<TProductResponseType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [singleProduct, setSingleProduct] = useState<TProductResponseType | null>(null);
 
-    const fetchProductsByCategory = async (category: string) => {
+    const fetchProductsByCategory = async () => {
         setLoading(true);
         setError('');
         try {
-            const response = await getProductsByCategory(category);
-            console.log(response);
+            const response = await getProductsByCategory(selectedCategory.value);
             const filteredProducts = response.filter((product: TProductResponseType) =>
                 product.status === 'ACTIVE' || product.status === 'RESERVED'
             );
             setProducts(filteredProducts);
-            console.log(filteredProducts);
         } catch (err) {
             setError('Failed to fetch products');
         } finally {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchProductsByCategory();
+    }, [selectedCategory]);
 
     const fetchSingleProduct = async (id: number) => {
         setLoading(true);
@@ -50,7 +59,6 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
             setSingleProduct(response.data);
         } catch (err) {
             setError('Failed to fetch the product');
-            return null;
         } finally {
             setLoading(false);
         }
@@ -97,10 +105,12 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     return (
         <ProductContext.Provider value={{
+            selectedCategory,
             products,
             singleProduct,
             loading,
             error,
+            setSelectedCategory,
             fetchProductsByCategory,
             fetchSingleProduct,
             applyFilters,
