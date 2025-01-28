@@ -12,10 +12,11 @@ import { toast } from 'react-toastify';
 
 const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
+    const { user_dashboard_menu } = OptionsComponent();
     const { token } = useAuth();
     const [userData, setUserData] = useState<TUserProfileResponse | null>(null);
     const [userProduct, setUserProduct] = useState<TProductResponseType[] | null>(null);
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(user_dashboard_menu[0].value);
     const [selectedAd, setSelectedAd] = useState<TProductResponseType | null>(null);
 
     const fetchUserData = async () => {
@@ -37,18 +38,14 @@ const UserDashboard: React.FC = () => {
     };
 
     const handleSelectMenu = (menuTitle: string) => {
+        console.log("EEEEEEEEEEe");
+        console.log(menuTitle);
         setSelectedMenuTitle(menuTitle);
     };
 
-    const handleEditAd = (adData: TProductResponseType) => {
-        setSelectedAd(adData);
-    };
-
-    const handleCloseEdit = () => {
-        setSelectedAd(null);
-    };
-
     useEffect(() => {
+        console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQq");
+        console.log(selectedMenuTitle);
         if (selectedMenuTitle === t("dashboard.user.menu.one")) {
             fetchUserData();
         } else if (selectedMenuTitle === t("dashboard.user.menu.two")) {
@@ -57,15 +54,16 @@ const UserDashboard: React.FC = () => {
     }, [selectedMenuTitle]);
 
     const renderContent = () => {
+        console.log(selectedMenuTitle);
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
                 return <ProfileManagement userData={userData} />;
             case t("dashboard.user.menu.two"):
                 return (
                     <AdManagement
-                        onEdit={handleEditAd}
+                        onEdit={(adData: TProductResponseType) => setSelectedAd(adData)}
                         selectedAd={selectedAd}
-                        onCloseEdit={handleCloseEdit}
+                        onCloseEdit={() => setSelectedAd(null)}
                         adsList={userProduct}
                     />
                 );
@@ -80,7 +78,7 @@ const UserDashboard: React.FC = () => {
 
             <SideBar>
                 <IconList
-                    categories={OptionsComponent().user_dashboard_menu}
+                    categories={user_dashboard_menu}
                     onSelectCategory={handleSelectMenu}
                     selectedCategory={selectedMenuTitle}
                 />
