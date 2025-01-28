@@ -118,9 +118,9 @@ class AdCard extends Component<AdCardProps, AdCardState> {
                 'aria-label': t('ad_list.ad_status.dropdown'),
               }}
             >
-              <MenuItem value="active">{t('ad_list.ad_status.active')}</MenuItem>
-              <MenuItem value="reserved">{t('ad_list.ad_status.reserved')}</MenuItem>
-              <MenuItem value="sold">{t('ad_list.ad_status.sold')}</MenuItem>
+              <MenuItem value="active">{t('ad_list.ad_status.ACTIVE')}</MenuItem>
+              <MenuItem value="reserved">{t('ad_list.ad_status.RESERVED')}</MenuItem>
+              <MenuItem value="sold">{t('ad_list.ad_status.SOLD')}</MenuItem>
             </Select>
             </Box>
           <Box sx={{ display: 'flex', gap: '10px' }}>

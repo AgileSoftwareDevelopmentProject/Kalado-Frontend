@@ -204,10 +204,11 @@
                 }
             },
             "ad_status": {
-                "label": "Status",
-                "active": "Active",
-                "reserved": "Reserved",
-                "sold": "Sold"
+                "label": "status",
+                "ACTIVE": "active",
+                "RESERVED": "reserved",
+                "SOLD": "sold",
+                "DELETED": "deleted"
             },
             "delete_confirmation": {
                 "title": "Are you sure to delete this ad?",
@@ -486,9 +487,10 @@
             },
             "ad_status": {
                 "label": "وضعیت",
-                "active": "فعال",
-                "reserved": "رزرو شده",
-                "sold": "فروخته شده"
+                "ACTIVE": "فعال",
+                "RESERVED": "رزرو شده",
+                "SOLD": "فروخته شده",
+                "DELETED": "حذف شده"
             },
             "delete_confirmation": {
                 "title": "آیا از حذف این آگهی اطمینان دارید؟",
