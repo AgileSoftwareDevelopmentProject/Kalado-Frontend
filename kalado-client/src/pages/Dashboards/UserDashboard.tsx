@@ -18,10 +18,8 @@ const UserDashboard: React.FC = () => {
     const [userProduct, setUserProduct] = useState<TProductResponseType[] | null>(null);
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(user_dashboard_menu[0].value);
     const [selectedAd, setSelectedAd] = useState<TProductResponseType | null>(null);
-    const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
     const fetchUserData = async () => {
-        setLoading(true); // Set loading to true before fetching
         const response = await getProfile();
         console.log(response);
         if (response.isSuccess) {
@@ -29,11 +27,9 @@ const UserDashboard: React.FC = () => {
         } else {
             toast(t('error.profile_management.retrieve_failed'));
         }
-        setLoading(false); // Set loading to false after fetching
     };
 
     const fetchUserProducts = async () => {
-        setLoading(true); // Set loading to true before fetching
         const response = await getSellersProducts(token);
         console.log(response);
         if (response.isSuccess) {
@@ -41,16 +37,13 @@ const UserDashboard: React.FC = () => {
         } else {
             toast(t('error.ad_management.retrieve_failed'));
         }
-        setLoading(false); // Set loading to false after fetching
     };
 
     const handleSelectMenu = (menuTitle: string) => {
-        console.log("Selected Menu:", menuTitle);
         setSelectedMenuTitle(menuTitle);
     };
 
     useEffect(() => {
-        console.log("Selected Menu Title:", selectedMenuTitle);
         if (selectedMenuTitle === user_dashboard_menu[0].value) {
             fetchUserData();
         } else if (selectedMenuTitle === user_dashboard_menu[1].value) {
@@ -59,8 +52,6 @@ const UserDashboard: React.FC = () => {
     }, [selectedMenuTitle]);
 
     const renderContent = () => {
-        if (loading) return <div>Loading...</div>; // Show a loading message or spinner
-
         switch (selectedMenuTitle) {
             case user_dashboard_menu[0].value:
                 return <ProfileManagement userData={userData} />;
@@ -73,8 +64,6 @@ const UserDashboard: React.FC = () => {
                         adsList={userProduct}
                     />
                 );
-            default:
-                return null;
         }
     };
 
