@@ -4,37 +4,38 @@ import { Box, Avatar, CircularProgress, IconButton } from '@mui/material';
 import { CustomButton, NameInput, PhoneNumberInput, PasswordInput, FormError } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../contexts';
 import defaultImage from '../../../assets/images/no-image.png';
 import { getProfile, modifyProfile } from '../../../api/services/UserService';
-import { TUserProfileResponse } from '../../../constants/apiTypes'
+import { TUserProfileResponse } from '../../../constants/apiTypes';
 
+interface ProfileManagementProps {
+    onRefresh: () => void;
+}
 
-const ProfileManagement = () => {
+const ProfileManagement: React.FC<ProfileManagementProps> = ({ onRefresh }) => {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<TUserProfileResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const { token } = useAuth();
-
-    useEffect(() => {
-        fetchUserData();
-    }, [token]);
 
     const fetchUserData = async () => {
         try {
             setLoading(true);
             const response = await getProfile();
-            console.log(response);
             setUserData(response.data as TUserProfileResponse);
-            console.log(userData);
         } catch (err) {
             setError(t('error.profile_management.retrieve_failed'));
         } finally {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (onRefresh) {
+            fetchUserData();
+        }
+    }, [onRefresh]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
