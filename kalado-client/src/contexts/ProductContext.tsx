@@ -35,11 +35,14 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setLoading(true);
         setError('');
         try {
+            console.log("fetchProductsByCategory");
             const response = await getProductsByCategory(selectedCategory.value);
             const filteredProducts = response.filter((product: TProductResponseType) =>
                 product.status === 'ACTIVE' || product.status === 'RESERVED'
             );
+            console.log(response);
             setProducts(filteredProducts);
+            console.log(filteredProducts);
         } catch (err) {
             setError('Failed to fetch products');
         } finally {
@@ -49,6 +52,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     // Fetch products when the component mounts or when the selected category changes
     useEffect(() => {
+        console.log("QQQQQQQQQQQQ");
         fetchProductsByCategory();
     }, [selectedCategory]);
 
