@@ -15,6 +15,8 @@ export const USER = {
     PUT: '/user',
     GET_PROFILE: '/user/profile',
     MODIFY_PROFILE: '/user/modifyProfile',
+    BLOCK: '/user/user/block',
+    ALL_USER: '/user/all'
 };
 
 export const PRODUCT = {

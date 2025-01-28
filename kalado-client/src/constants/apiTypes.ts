@@ -139,6 +139,7 @@ export type TUserProfileResponse = {
     address: string | null;
     phoneNumber: string;
     profileImageUrl: string | null;
+    blocked: boolean;
 };
 
 // Search

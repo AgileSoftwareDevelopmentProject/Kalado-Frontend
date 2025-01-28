@@ -21,3 +21,23 @@ export async function modifyProfile(profileData: ProfileData) {
         'multipart/form-data'
     );
 }
+
+export async function getAllUsers() {
+    return sendRequest(
+        USER.ALL_USER,
+        'GET',
+        undefined,
+        {},
+        'application/json'
+    );
+}
+
+export async function blockUser(token: string | null) {
+    return sendRequest(
+        USER.ALL_USER,
+        'PUT',
+        token,
+        {},
+        'application/json'
+    );
+}

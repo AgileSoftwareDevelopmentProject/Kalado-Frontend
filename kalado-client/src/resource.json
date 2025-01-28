@@ -257,7 +257,11 @@
             },
             "profile_management": {
                 "save_failed": "Error ocurred during saving your changes",
-                "retrive_failed": "Error ocurred during retrive you profile information."
+                "retrive_failed": "Error ocurred during retriving you profile information."
+            },
+            "user_management": {
+                "retrive_failed": "Error ocurred during retriving user's list.",
+                "block_failed": "Error ocurred during blocking the user."
             },
             "report_history": {
                 "retrieve_failed": "Error ocurred during getting report history."
@@ -278,7 +282,11 @@
             "create_ad": "Ad created successfully.",
             "report": "Report submitted successfully.",
             "profile_management": "Changes saved successfully.",
-            "copy_phone_number": "Seller's phone mumber copied successfully."
+            "copy_phone_number": "Seller's phone mumber copied successfully.",
+            "user_management": {
+                "block_user": "User banned successfully.",
+                "admin_user": "User become admin successfully."
+            }
         }
     },
     "fa": {
@@ -542,7 +550,8 @@
                 "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد."
             },
             "user_management": {
-                "retrive_failed": "خطایی در گرفتن لیست کاربران رخ داد."
+                "retrive_failed": "خطایی در گرفتن لیست کاربران رخ داد.",
+                "block_failed": "خطایی در مسدودسازی کاربر رخ داد."
             },
             "report_history": {
                 "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد."
@@ -563,7 +572,11 @@
             "create_ad": "آگهی شما با موفقیت ثبت شد.",
             "report": "گزارش تخلف شما با موفقیت ثبت شد.",
             "profile_management": "تغییرات شما با موفقیت ذخیره شد.",
-            "copy_phone_number": "شماره تلفن خریدار با موفقیت کپی شد."
+            "copy_phone_number": "شماره تلفن خریدار با موفقیت کپی شد.",
+            "user_management": {
+                "block_user": "کاربر با موفقیت مسدود شد.",
+                "admin_user": "کاربر با موفقیت ادمین شد."
+            }
         }
     }
 }

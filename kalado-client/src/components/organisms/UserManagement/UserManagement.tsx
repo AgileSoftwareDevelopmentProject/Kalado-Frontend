@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Select,
-  MenuItem,
-  Grid,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
+  Box, Typography, Card, CardContent, Select, MenuItem, Grid, Dialog, DialogActions,
+  DialogContent, DialogContentText, DialogTitle, Button
 } from "@mui/material";
+import { blockUser } from '../../../api/services/UserService';
 import { TUserProfileResponse } from '../../../constants/apiTypes';
+import { useAuth } from '../../../contexts';
+import { toast } from 'react-toastify';
 
 interface UserManageMentProps {
   userDataList: TUserProfileResponse[] | null;
@@ -24,29 +16,33 @@ interface UserManageMentProps {
 const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
-
+  const { token } = useAuth();
   const [users, setUsers] = useState<TUserProfileResponse[] | null>(userDataList);
   const [selectedUser, setSelectedUser] = useState<TUserProfileResponse | null>(null);
-  const [newStatus, setNewStatus] = useState<"Allowed" | "Blocked" | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleStatusChange = (id: number, status: "Allowed" | "Blocked") => {
-    setSelectedUser(users.find((user) => user.id === id) || null);
-    setNewStatus(status);
+  const handleBlockUser = async () => {
+    const response = await blockUser(token);
+    if (response.isSuccess) {
+      toast(t("success.user_management.block_user"));
+    } else {
+      toast(t('error.user_management.block_failed'));
+    }
+    // setSelectedUser(users.find((user) => user.id === id) || null);
     setIsDialogOpen(true);
   };
 
   const confirmStatusChange = () => {
-    if (selectedUser && newStatus) {
-      setUsers((prevUsers) =>
-        prevUsers.map((user) =>
-          user.id === selectedUser.id ? { ...user, status: newStatus } : user
-        )
-      );
-    }
+    // if (selectedUser && newStatus) {
+    //   setUsers((prevUsers) =>
+    //     prevUsers.map((user) =>
+    //       user.id === selectedUser.id ? { ...user, status: newStatus } : user
+    //     )
+    //   );
+    // }
     setIsDialogOpen(false);
     setSelectedUser(null);
-    setNewStatus(null);
+    // setNewStatus(null);
   };
 
   return (
@@ -117,9 +113,9 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                     {t("report.user_management.status")}
                   </Typography>
                   <Select
-                    value={user.status}
+                    value={user.blocked}
                     onChange={(event) =>
-                      handleStatusChange(user.id, event.target.value as "Allowed" | "Blocked")
+                      handleBlockUser()
                     }
                     sx={{
                       minWidth: 150,
@@ -150,7 +146,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
         <DialogTitle id="confirmation-dialog-title">
           {t("report.user_management.confirmation_title")}
         </DialogTitle>
-        <DialogContent>
+        {/* <DialogContent>
           <DialogContentText id="confirmation-dialog-description">
             {t("report.user_management.confirmation_message", {
               email: selectedUser?.email,
@@ -160,7 +156,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
               ),
             })}
           </DialogContentText>
-        </DialogContent>
+        </DialogContent> */}
         <DialogActions>
           <Button onClick={() => setIsDialogOpen(false)} color="secondary">
             {t("report.user_management.cancel")}

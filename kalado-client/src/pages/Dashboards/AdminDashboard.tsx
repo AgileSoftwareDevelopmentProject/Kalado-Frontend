@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { IconList, SideBar } from '../../components/molecules';
 import { UserManagement, ReportHistory, NavBar } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
-import { getProfile } from '../../api/services/UserService';
+import { getAllUsers } from '../../api/services/UserService';
 import { TUserProfileResponse } from '../../constants/apiTypes';
 import { toast } from 'react-toastify';
 
@@ -16,9 +16,11 @@ const AdminDashboard: React.FC = () => {
     const [userDataList, setUserDataList] = useState<TUserProfileResponse[] | null>(null);
 
     const fetchUserDataList = async () => {
-        const response = await getProfile();
+        const response = await getAllUsers();
+        console.log("fetchUserDataList");
+        console.log(response);
         if (response.isSuccess) {
-            // setUserDataList(response.data as TUserProfileResponse[]);
+            setUserDataList(response.data as TUserProfileResponse[]);
         } else {
             toast(t('error.user_management.retrieve_failed'));
         }
@@ -26,12 +28,10 @@ const AdminDashboard: React.FC = () => {
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
-        if (menuTitle === t("dashboard.user.menu.one")) {
-            fetchUserDataList();
-        }
     };
 
     const renderContent = () => {
+        fetchUserDataList();
         switch (selectedMenuTitle) {
             case t("dashboard.admin.menu.two"):
                 return <UserManagement userDataList={userDataList} />;
