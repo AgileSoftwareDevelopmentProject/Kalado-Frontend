@@ -49,7 +49,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
     category: ad.category,
     productionYear: ad.productionYear || new Date(ad.createdAt).getFullYear(),
     description: ad.description || '',
-    images: [],
+    images: ad.imageUrls || [],
   });
 
   const { i18n } = useTranslation();
@@ -132,7 +132,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
             <CloseIcon />
           </IconButton>
           <IconButton onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? <SaveIcon onClick={handleSave} /> : <EditIcon />}
+            {!isEditing ? <EditIcon /> : <SaveIcon onClick={handleSave} />}
           </IconButton>
         </Box>
       </Box>
