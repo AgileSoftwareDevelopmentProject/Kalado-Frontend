@@ -11,7 +11,7 @@ const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { user_dashboard_menu } = OptionsComponent();
     const { products } = useProductContext();
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.one"));
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(t("dashboard.user.menu.two"));
     const [selectedAd, setSelectedAd] = useState<TProductResponseType | null>(null);
 
     const handleSelectMenu = (menuTitle: string) => {
