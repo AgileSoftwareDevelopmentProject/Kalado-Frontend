@@ -8,8 +8,7 @@ export async function getProfile() {
         USER.GET_PROFILE,
         'GET',
         undefined,
-        {},
-        'multipart/form-data'
+        {}
     );
 }
 
