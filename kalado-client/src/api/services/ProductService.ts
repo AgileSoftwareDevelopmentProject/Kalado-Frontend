@@ -46,20 +46,20 @@ export async function updateAdStatus(productId: number, status: string) {
     );
 }
 
-export async function getSingleProduct(adId: number) {
-    return sendRequest<TProductResponseType | null>(
-        PRODUCT.GET_SINGLE(adId),
-        'GET',
-    );
-}
+// export async function getSingleProduct(adId: number) {
+//     return sendRequest<TProductResponseType | null>(
+//         PRODUCT.GET_SINGLE(adId),
+//         'GET',
+//     );
+// }
 
-export async function getProductsByCategory(category: string): Promise<TProductResponseType[]> {
-    const response = await sendRequest(
-        PRODUCT.GET_BY_CATEGORY(category),
-        'GET',
-    );
-    return response.data as TProductResponseType[];
-}
+// export async function getProductsByCategory(category: string): Promise<TProductResponseType[]> {
+//     const response = await sendRequest(
+//         PRODUCT.GET_BY_CATEGORY(category),
+//         'GET',
+//     );
+//     return response.data as TProductResponseType[];
+// }
 
 export async function getSellersProducts(token: string | null): Promise<TProductResponseType[]> {
     try {
@@ -79,21 +79,21 @@ export async function getSellersProducts(token: string | null): Promise<TProduct
 
 
 // **************** Mock Functions ****************
-// export const getSingleProduct = async (itemId: number) => {
-//     return new Promise((resolve, reject) => {
-//         const item = mockData.items.find(product => product.id === String(itemId));
-//         if (item) {
-//             resolve(item);
-//         } else {
-//             reject(new Error('Item not found'));
-//         }
-//     });
-// };
+export const getSingleProduct = async (itemId: number) => {
+    return new Promise((resolve, reject) => {
+        const item = mockData.items.find(product => product.id === String(itemId));
+        if (item) {
+            resolve(item);
+        } else {
+            reject(new Error('Item not found'));
+        }
+    });
+};
 
-// export const getProductsByCategory = async (category: string) => {
-//     return new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(mockData.items);
-//         }, 1000);
-//     });
-// };
+export const getProductsByCategory = async (category: string) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(mockData.items);
+        }, 1000);
+    });
+};

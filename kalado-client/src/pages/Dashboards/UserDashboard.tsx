@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
-import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
+import { IconList, SideBar } from '../../components/molecules';
+import { ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 import { useProductContext } from '../../contexts/ProductContext';
 import { TProductResponseType } from '../../constants/apiTypes';
@@ -49,10 +49,10 @@ const UserDashboard: React.FC = () => {
             <NavBar />
 
             <SideBar>
-                <SideBarMenu
+                <IconList
                     categories={user_dashboard_menu}
                     onSelectCategory={handleSelectMenu}
-                    initialSelect={t("dashboard.user.menu.one")}
+                    selectedCategory={t("dashboard.user.menu.one")}
                 />
             </SideBar>
 

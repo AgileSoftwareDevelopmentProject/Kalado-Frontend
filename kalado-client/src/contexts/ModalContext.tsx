@@ -96,10 +96,10 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         console.log(role);
         console.log(token);
         setIsInProfile(true);
-        if (role === 'ADMIN') {
-            navigate('/admin-dashboard');
-        } else if (role === 'USER') {
+        if (role === 'USER') {
             navigate('/user-dashboard');
+        } else {
+            navigate('/admin-dashboard');
         }
     };
 

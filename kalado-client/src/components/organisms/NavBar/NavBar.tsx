@@ -38,13 +38,13 @@ const NavBar: React.FC = () => {
           onSearch={handleSearch}
         />
 
-        {/* Right Section for NavBarButtons in Desktop View */}
+        {/* Desktop View */}
         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
           <NavBarButtons />
         </Box>
       </Toolbar>
 
-      {/* Bottom Section for Buttons in Mobile View */}
+      {/* Mobile View */}
       <Box sx={{ display: { xs: 'flex', md: 'none' }, position: 'fixed', bottom: 0, padding: '0px 200px' }}>
         <NavBarButtons />
       </Box>

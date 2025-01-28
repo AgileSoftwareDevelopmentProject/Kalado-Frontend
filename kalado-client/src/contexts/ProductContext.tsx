@@ -4,7 +4,6 @@ import { getSearchByKeyword, getSearchByPriceRange, getSearchByMultipleFilters }
 import { TProductResponseType } from '../constants/apiTypes';
 import { OptionsComponent } from '../constants/options';
 
-
 interface ProductContextType {
     selectedCategory: { value: string; title: string; };
     products: TProductResponseType[];
@@ -22,9 +21,10 @@ interface ProductContextType {
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const categories = OptionsComponent().product_categories;
     const [selectedCategory, setSelectedCategory] = useState({
-        value: OptionsComponent().product_categories[0].value,
-        title: OptionsComponent().product_categories[0].title
+        value: categories[0].value,
+        title: categories[0].title
     });
     const [products, setProducts] = useState<TProductResponseType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -47,10 +47,12 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+    // Fetch products when the component mounts or when the selected category changes
     useEffect(() => {
         fetchProductsByCategory();
     }, [selectedCategory]);
 
+    // Fetch single product by ID
     const fetchSingleProduct = async (id: number) => {
         setLoading(true);
         setError('');
@@ -64,6 +66,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+    // Apply filters to products
     const applyFilters = async (minPrice: number | 0, maxPrice: number | 0, timeFilter: string | '') => {
         setLoading(true);
         setError('');
@@ -77,6 +80,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+    // Search products by keyword
     const searchProductsByKeyword = async (keyword: string) => {
         setLoading(true);
         setError('');
@@ -90,6 +94,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+    // Search products by price range
     const searchProductsByPriceRange = async (minPrice: number | 0, maxPrice: number | 0) => {
         setLoading(true);
         setError('');

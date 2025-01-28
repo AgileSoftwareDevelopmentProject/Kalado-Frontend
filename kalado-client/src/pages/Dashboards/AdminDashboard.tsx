@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
-import { SideBar } from '../../components/molecules';
-import { SideBarMenu, ProfileManagement, UserManagement, ReportHistory, NavBar } from '../../components/organisms';
+import { IconList, SideBar } from '../../components/molecules';
+import { UserManagement, ReportHistory, NavBar } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
 
 
@@ -29,10 +29,10 @@ const AdminDashboard: React.FC = () => {
             <NavBar />
 
             <SideBar>
-                <SideBarMenu
+                <IconList
                     categories={admin_dashboard_menu}
                     onSelectCategory={handleSelectMenu}
-                    initialSelect={t("dashboard.admin.menu.one")}
+                    selectedCategory={""}
                 />
             </SideBar>
 
