@@ -15,45 +15,20 @@ import {
   DialogTitle,
   Button,
 } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material";
+import { TUserProfileResponse } from '../../../constants/apiTypes';
 
-type User = {
-  id: number;
-  email: string;
-  status: "Allowed" | "Blocked";
-};
+interface UserManageMentProps {
+  userDataList: TUserProfileResponse[] | null;
+}
 
-const generateMockData = (count: number): User[] => {
-  const mockData: User[] = [];
-  for (let i = 1; i <= count; i++) {
-    mockData.push({
-      id: i,
-      email: `user${i}@example.com`,
-      status: i % 2 === 0 ? "Allowed" : "Blocked",
-    });
-  }
-  return mockData;
-};
-
-const UserManagement: React.FC = () => {
+const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
 
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<TUserProfileResponse[] | null>(userDataList);
+  const [selectedUser, setSelectedUser] = useState<TUserProfileResponse | null>(null);
   const [newStatus, setNewStatus] = useState<"Allowed" | "Blocked" | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  // Mock API fetch
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const mockUsers = generateMockData(50);
-      setTimeout(() => {
-        setUsers(mockUsers);
-      }, 1000);
-    };
-    fetchUsers();
-  }, []);
 
   const handleStatusChange = (id: number, status: "Allowed" | "Blocked") => {
     setSelectedUser(users.find((user) => user.id === id) || null);

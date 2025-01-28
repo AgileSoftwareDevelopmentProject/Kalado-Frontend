@@ -28,9 +28,6 @@ const UserDashboard: React.FC = () => {
 
     const handleSelectMenu = (menuTitle: string) => {
         setSelectedMenuTitle(menuTitle);
-        if (menuTitle === t("dashboard.user.menu.one")) {
-            fetchUserData();
-        }
     };
 
     const handleEditAd = (adData: TProductResponseType) => {
@@ -42,6 +39,7 @@ const UserDashboard: React.FC = () => {
     };
 
     const renderContent = () => {
+        fetchUserData();
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
                 return <ProfileManagement userData={userData} />;
@@ -64,7 +62,7 @@ const UserDashboard: React.FC = () => {
                 <IconList
                     categories={user_dashboard_menu}
                     onSelectCategory={handleSelectMenu}
-                    selectedCategory={t("dashboard.user.menu.one")}
+                    selectedCategory={selectedMenuTitle}
                 />
             </SideBar>
 
