@@ -49,12 +49,12 @@ const UserDashboard: React.FC = () => {
     };
 
     const renderContent = () => {
-        fetchUserData();
-        fetchUserProducts();
         switch (selectedMenuTitle) {
             case t("dashboard.user.menu.one"):
+                fetchUserData();
                 return <ProfileManagement userData={userData} />;
             case t("dashboard.user.menu.two"):
+                fetchUserProducts();
                 return (
                     <AdManagement
                         onEdit={handleEditAd}
