@@ -189,7 +189,9 @@
                     "phone_number": "Phone Number",
                     "address": "Address",
                     "save_changes_btn": "Save Changes",
-                    "enter_new_password": "Enter new password"
+                    "new_password": "Enter your new password",
+                    "current_password": "Enter your current password",
+                    "repeat_new_password": "Enter your new password again"
                 }
             },
             "admin": {
@@ -506,7 +508,9 @@
                     "phone_number": "شماره تلفن",
                     "address": "محل سکونت",
                     "save_changes_btn": "ذخیره تغییرات",
-                    "enter_new_password": "رمز عبور جدید خود را وارد نمایید"
+                    "new_password": "رمز عبور جدید خود را وارد نمایید",
+                    "current_password": "رمز عبور فعلی خود را وارد نمایید",
+                    "repeat_new_password": "رمز عبور جدید خود را دوباره وارد نمایید"
                 }
             },
             "admin": {
