@@ -123,7 +123,11 @@
                 "one": "Abusiveness",
                 "two": "Inappropriate Content",
                 "three": "Inappropriate Price",
-                "four": "Others"
+                "four": "Others",
+                "INAPPROPRIATE_CONTENT": "Inappropriate Content",
+                "OTHER_VIOLATION_TYPES": "Others",
+                "ABUSIVENESS": "Abusiveness",
+                "INAPPROPRIATE_PRICE": "Inappropriate Price"
             },
             "choose_evidence": "Evidence/Documents",
             "user_management": {
@@ -436,7 +440,11 @@
                 "one": "فحاشی",
                 "two": "محتوای نامناسب",
                 "three": "قیمت نامتناسب با بازار",
-                "four": "سایر موارد"
+                "four": "سایر موارد",
+                "INAPPROPRIATE_CONTENT": "محتوای نامناسب",
+                "OTHER_VIOLATION_TYPES": "سایر موارد",
+                "ABUSIVENESS": "فحاشی",
+                "INAPPROPRIATE_PRICE": "قیمت نامتناسب با بازار",
             },
             "choose_evidence": "شواهد/مدارک",
             "user_management": {

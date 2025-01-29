@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { BASE_URL } from './urls';
+import { useTranslation } from 'react-i18next';
 
 
 interface ErrorMessages {
@@ -35,8 +36,6 @@ axiosInstance.interceptors.request.use(
     (error: any) => Promise.reject(error)
 );
 
-
-
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
         console.log('Response: ', response);
@@ -44,7 +43,8 @@ axiosInstance.interceptors.response.use(
     },
     (error: any) => {
         const status: number = error.response?.status;
-        const errorMessage: string = ERROR_MESSAGES[status] || ERROR_MESSAGES.default;
+        const { t } = useTranslation();
+        const errorMessage = t(`error.server.${status}`) || t('error.general');
         console.log('Response interceptor');
         console.log(status);
         console.log(errorMessage);

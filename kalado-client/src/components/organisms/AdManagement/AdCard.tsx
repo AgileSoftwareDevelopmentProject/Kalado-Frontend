@@ -55,7 +55,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
           display: 'flex',
           alignItems: 'center',
           padding: '10px 40px',
-          marginBottom: '40px',
+          marginBottom: '20px',
           borderRadius: '40px',
           boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
         }}
