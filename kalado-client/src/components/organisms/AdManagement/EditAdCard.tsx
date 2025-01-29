@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { Box, Typography, Card, IconButton, Divider } from '@mui/material';
+import { Box, Typography, Card, IconButton, Divider, TextField } from '@mui/material';
 import { Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { PriceInput, Dropdown } from '../../atoms';
 import { toast } from 'react-toastify';
@@ -58,7 +58,11 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   };
 
   const handleImageUpload = (files: File[]) => {
-    setImages(files);
+    if (images.length + files.length <= 3) {
+      setImages([...images, ...files]);
+    } else {
+      toast.error(t('error.max_images', { count: 3 }));
+    }
   };
 
   const handleEditAd = async (id: number) => {
@@ -70,7 +74,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     }
   };
 
-  const categories = resources[language]?.category;
   return (
     <Card
       sx={{
@@ -122,20 +125,38 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
 
       <Divider sx={{ my: 2 }} />
 
+      <Box>
+        <Typography fontWeight="bold">{t('create_ad.input.brand')}</Typography>
+        <TextField
+          value={formData.brand || ''}
+          onChange={(e) => handleChange('brand', e.target.value)}
+          fullWidth
+        />
+      </Box>
+
+      <Box>
+        <Typography fontWeight="bold">{t('create_ad.input.year')}</Typography>
+        <TextField
+          value={formData.year || ''}
+          onChange={(e) => handleChange('year', e.target.value)}
+          fullWidth
+        />
+      </Box>
+
+      <Divider sx={{ my: 2 }} />
+
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-        {formData.images?.slice(0, 3).map((image, index) => (
+        {images.slice(0, 3).map((image, index) => (
           <Box key={index} sx={{ width: '100px', height: '100px', position: 'relative' }}>
-            <img src={image} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
-            <IconButton onClick={() => setFormData((prev) => ({
-              ...prev, images: prev.images?.filter((_, i) => i !== index) || [],
-            }))} sx={{ position: 'absolute', top: 5, right: 5, background: 'rgba(0,0,0,0.5)', color: '#fff' }}>
+            <img src={URL.createObjectURL(image)} alt={`Image ${index + 1}`} 
+                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+            <IconButton onClick={() => setImages(images.filter((_, i) => i !== index))}
+                        sx={{ position: 'absolute', top: 5, right: 5, background: 'rgba(0,0,0,0.5)', color: '#fff' }}>
               <DeleteIcon fontSize="small" />
             </IconButton>
           </Box>
         ))}
-        {Array.from({ length: Math.max(0, 3 - (formData.images?.length || 0)) }).map((_, index) => (
-          <ImageUploadBox key={index} onUpload={handleImageUpload} />
-        ))}
+        {images.length < 3 && <ImageUploadBox onUpload={handleImageUpload} />}
       </Box>
     </Card>
   );
