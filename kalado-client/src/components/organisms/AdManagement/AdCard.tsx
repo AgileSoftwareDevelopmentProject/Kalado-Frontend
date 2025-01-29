@@ -29,8 +29,8 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
   };
 
   const handleDeleteAd = async (id: number) => {
-    const response = await deleteAd(id);
     setIsDialogOpen(false);
+    const response = await deleteAd(id);
     if (response.isSuccess) {
       toast(t('success.ad_management.delete'));
     } else {
@@ -103,17 +103,17 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
         isDialogOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onCheck={() => handleDeleteAd(ad.id)}
-        title={t("report.user_management.confirmation_title")}
-        message={t("report.user_management.confirmation_message")}
+        message={t("ad_list.delete_confirmation.title")}
       />
 
-
-      <Box sx={{ marginTop: 4 }}>
-        <EditAdCard
-          ad={ad}
-          onCancel={() => setIsEditingModeActive(false)}
-        />
-      </Box>
+      {isEditingModeActive && (
+        <Box sx={{ marginTop: 4 }}>
+          <EditAdCard
+            ad={ad}
+            onCancel={() => setIsEditingModeActive(false)}
+          />
+        </Box>
+      )}
     </>
   );
 }

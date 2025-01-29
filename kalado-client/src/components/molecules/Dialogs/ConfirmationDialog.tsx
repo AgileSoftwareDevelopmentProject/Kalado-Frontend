@@ -6,11 +6,11 @@ interface ConfirmationDialogProps {
     isDialogOpen: boolean;
     onClose: () => void;
     onCheck: () => void;
-    title: string;
     message: string;
+    title?: string;
 }
 
-const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isDialogOpen, onClose, onCheck, title, message }) => {
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isDialogOpen, onClose, onCheck, message, title }) => {
     return (
         <Dialog
             open={isDialogOpen}
@@ -18,19 +18,21 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isDialogOpen, o
             aria-labelledby="confirmation-dialog-title"
             aria-describedby="confirmation-dialog-description"
         >
-            <DialogTitle id="confirmation-dialog-title">
-                {title}
-            </DialogTitle>
+            {title && (
+                <DialogTitle id="confirmation-dialog-title">
+                    {title}
+                </DialogTitle>
+            )}
             <DialogContent>
                 <DialogContentText id="confirmation-dialog-description">
                     {message}
                 </DialogContentText>
             </DialogContent>
-            <DialogActions>
-                <IconButton onClick={onCheck} sx={{ backgroundColor: 'green' }}>
+            <DialogActions sx={{ justifyContent: 'center' }}>
+                <IconButton onClick={onCheck} sx={{ backgroundColor: 'green', margin: '0 10px' }}>
                     <CheckIcon />
                 </IconButton>
-                <IconButton onClick={onClose} sx={{ backgroundColor: 'red' }}>
+                <IconButton onClick={onClose} sx={{ backgroundColor: 'red', margin: '0 10px' }}>
                     <CloseIcon />
                 </IconButton>
             </DialogActions>
