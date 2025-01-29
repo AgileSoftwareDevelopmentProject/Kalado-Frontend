@@ -291,7 +291,9 @@
                 "edit_failed": "Error ocurred during save your changes."
             },
             "report_history": {
-                "retrieve_failed": "Error ocurred during retriving your reports."
+                "retrieve_failed": "Error ocurred during retriving your reports.",
+                "block_ad_failed": "Error ocurred during blocking the ad.",
+                "block_user_failed": "Error occurred during blocking the user."
             },
             "server": {
                 "401": "You are not authorized to perform this action.",
@@ -615,7 +617,9 @@
                 "edit_failed": "خطایی در ذخیره‌ی تغییرات رخ داد."
             },
             "report_history": {
-                "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد."
+                "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد.",
+                "block_ad_failed": "خطایی در مسدودسازی آگهی رخ داد.",
+                "block_user_failed": "خطایی در مسدودسازی کاربر رخ داد."
             },
             "server": {
                 "401": "شما مجوز این کار را ندارید.",

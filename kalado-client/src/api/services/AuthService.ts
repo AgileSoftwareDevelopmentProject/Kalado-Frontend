@@ -58,5 +58,7 @@ export async function changeUserToAdmin(userId: number) {
         AUTH.CHANGEUSERTOADMIN,
         'PUT',
         userId,
+        {},
+        undefined
     );
 }
