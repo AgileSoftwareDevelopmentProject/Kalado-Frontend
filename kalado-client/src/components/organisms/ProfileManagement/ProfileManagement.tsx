@@ -44,9 +44,10 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
+            const imageUrl = URL.createObjectURL(file);
             setModifiedUserData(prevData => ({
                 ...prevData!,
-                profileImage: file
+                profileImageUrl: imageUrl
             }));
         }
     };
