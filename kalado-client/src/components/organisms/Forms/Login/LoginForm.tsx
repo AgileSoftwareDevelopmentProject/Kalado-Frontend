@@ -49,7 +49,7 @@ const LoginForm: React.FC = () => {
                 handleClose();
                 toast(t("success.login"));
             } else {
-                setError(response.message);
+                setError(t("error.login.incorrect_password"));
             }
         }
     };

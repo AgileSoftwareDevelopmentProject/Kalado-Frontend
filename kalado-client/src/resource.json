@@ -263,7 +263,8 @@
                 "required_image": "Please choose at least one image for your ad."
             },
             "login": {
-                "not_verified": "For login, first verify your email."
+                "not_verified": "For login, first verify your email.",
+                "incorrect_password": "The password you entered is incorrect. Please try again."
             },
             "landing": {
                 "empty_product_list": "No ad submitted in the selected category.",
@@ -589,7 +590,8 @@
                 "required_image": "لطفا حداقل یک عکس برای آگهی خود انتخاب کنید."
             },
             "login": {
-                "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید."
+                "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید.",
+                "incorrect_password": "رمز عبور وارد شده اشتباه است. لطفا دوباره تلاش کنید."
             },
             "landing": {
                 "empty_product_list": "در دسته‌بندی انتخاب‌شده هیچ آگهی‌ای ثبت نشده است.",
