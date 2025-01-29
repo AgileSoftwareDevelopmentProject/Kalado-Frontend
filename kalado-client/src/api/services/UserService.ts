@@ -12,8 +12,26 @@ export async function getProfile() {
     );
 }
 
-export async function modifyProfile(profileData: ProfileData) {
-    return sendRequest(
+// export async function modifyProfile(profileData: ProfileData) {
+//     return sendRequest(
+//         USER.MODIFY_PROFILE,
+//         'POST',
+//         profileData,
+//         {},
+//         'multipart/form-data'
+//     );
+// }
+
+export async function modifyProfile(profileData: ProfileData, imageFile: File) {
+    const formData = new FormData();
+    formData.append('profile', JSON.stringify(profileData));
+
+    // imageFiles.forEach((file, index) => {
+    //     formData.append(`profileImage[${index}]`, file);
+    // });
+    formData.append(`profileImage`, imageFile);
+
+    return sendRequest<TUserProfileResponse>(
         USER.MODIFY_PROFILE,
         'POST',
         profileData,
