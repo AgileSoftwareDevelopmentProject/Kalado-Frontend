@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Avatar, IconButton } from '@mui/material';
+import { Box, Avatar, IconButton, Typography } from '@mui/material';
 import { CustomButton, NameInput, PhoneNumberInput, PasswordInput, EmailInput } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import defaultImage from '../../../assets/images/no-image.png';
 import { modifyProfile } from '../../../api/services/UserService';
-import { TUserProfileResponse } from '../../../constants/apiTypes';
+import { TUserProfileResponse, ProfileData } from '../../../constants/apiTypes';
 
 interface ProfileManagementProps {
     userData: TUserProfileResponse | null;
@@ -39,9 +39,12 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     const handleSaveChanges = async () => {
         if (!modifiedUserData) return;
 
-        const dataToSend = {
-            ...modifiedUserData,
-            password: newPassword || undefined
+        const dataToSend: ProfileData = {
+            firstName: modifiedUserData.firstName,
+            lastName: modifiedUserData.lastName,
+            address: modifiedUserData.address,
+            profileImageUrl: modifiedUserData.profileImageUrl,
+            newPassword: newPassword
         };
 
         console.log('Update Profile API call', dataToSend);
@@ -58,15 +61,15 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     return (
         <Box sx={{ maxWidth: 600, margin: '90px auto', padding: 3 }}>
 
-            {!modifiedUserData && (
-                <p></p>
-            )}
-
-            {modifiedUserData && (
+            {!modifiedUserData ? (
+                <Typography color="error" align="center">
+                    {t('error.profile_management.save_failed')}
+                </Typography>
+            ) : (
                 <>
                     <Box sx={{ position: 'relative', width: 100, height: 100, margin: '20px auto' }}>
                         <Avatar
-                            src={modifiedUserData.profileImageUrl ? modifiedUserData.profileImageUrl : defaultImage}
+                            src={modifiedUserData.profileImageUrl || defaultImage}
                             sx={{ width: 100, height: 100 }}
                         />
                         <IconButton

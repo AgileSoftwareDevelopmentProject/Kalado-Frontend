@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import AdCard from '../AdCard/AdCard';
-import EditAdCard from '../AdCard/EditAdCard';
+import AdCard from './AdCard';
+import EditAdCard from './EditAdCard';
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent, Typography, Box } from '@mui/material';
 import { TProductResponseType } from '../../../constants/apiTypes';
