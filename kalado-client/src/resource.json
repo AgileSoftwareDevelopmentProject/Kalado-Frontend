@@ -444,7 +444,7 @@
                 "INAPPROPRIATE_CONTENT": "محتوای نامناسب",
                 "OTHER_VIOLATION_TYPES": "سایر موارد",
                 "ABUSIVENESS": "فحاشی",
-                "INAPPROPRIATE_PRICE": "قیمت نامتناسب با بازار",
+                "INAPPROPRIATE_PRICE": "قیمت نامتناسب با بازار"
             },
             "choose_evidence": "شواهد/مدارک",
             "user_management": {
