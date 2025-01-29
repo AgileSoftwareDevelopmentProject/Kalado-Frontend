@@ -77,7 +77,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         borderRadius: '20px',
         boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.15)',
         maxWidth: '900px',
-        margin: '20px auto',
+        margin: '10px auto',
         direction: isRtl ? 'rtl' : 'ltr',
       }}
     >

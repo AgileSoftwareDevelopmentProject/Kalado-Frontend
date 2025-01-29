@@ -81,13 +81,15 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
             )}
 
 
-            <ReportDetails
-                report={selectedReport}
-                onBackToList={() => setSelectedReport(null)}
-                onBlockContent={(contentId) => {
-                    console.log('Block content with ID:', contentId);
-                }}
-            />
+            {selectedReport && (
+                <ReportDetails
+                    report={selectedReport}
+                    onBackToList={() => setSelectedReport(null)}
+                    onBlockContent={(contentId) => {
+                        console.log('Block content with ID:', contentId);
+                    }}
+                />
+            )}
         </Box>
     );
 };

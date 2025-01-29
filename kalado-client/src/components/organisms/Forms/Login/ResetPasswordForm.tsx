@@ -51,7 +51,6 @@ const ResetPasswordForm: React.FC = () => {
                 <EmailInput
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    isValidatorActive={true}
                 />
                 <CustomButton
                     text={t("forget_password_form.forget_password_btn")}

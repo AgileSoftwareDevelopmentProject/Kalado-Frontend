@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { Box, Typography, Card, IconButton, MenuItem, Select, Tooltip } from '@mui/material';
-import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { Edit as EditIcon } from '@mui/icons-material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { ConfirmationDialog } from '../../../components/molecules';
 import EditAdCard from './EditAdCard';
 import { TProductResponseType } from '../../../constants/apiTypes';
@@ -22,8 +23,8 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
     setAdNewStatus(ad.status);
   }, [ad]);
 
-  const handleSelectChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-    const newStatus = e.target.value as string;
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const newStatus = event.target.value;
     setAdNewStatus(newStatus);
     handleAdStatusChange(ad.id, newStatus);
   };
@@ -76,7 +77,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
         <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px', padding: '0px 50px' }}>
           <Select
             value={adNewStatus}
-            onChange={() => handleSelectChange}
+            onChange={handleSelectChange}
             displayEmpty
             sx={{ minWidth: '150px', fontSize: '1rem' }}
             inputProps={{
@@ -88,6 +89,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
             <MenuItem value="SOLD">{t('ad_list.ad_status.SOLD')}</MenuItem>
             <MenuItem value="DELETED">{t('ad_list.ad_status.DELETED')}</MenuItem>
           </Select>
+
         </Box>
 
         <Box sx={{ display: 'flex', gap: '10px' }}>
@@ -105,12 +107,10 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
       />
 
       {isEditingModeActive && (
-        <Box sx={{ marginTop: 1 }}>
-          <EditAdCard
-            ad={ad}
-            onCancel={() => setIsEditingModeActive(false)}
-          />
-        </Box>
+        <EditAdCard
+          ad={ad}
+          onCancel={() => setIsEditingModeActive(false)}
+        />
       )}
     </>
   );
