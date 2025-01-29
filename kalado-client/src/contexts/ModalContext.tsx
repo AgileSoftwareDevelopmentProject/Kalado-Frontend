@@ -8,7 +8,6 @@ interface ModalContextType {
     isLoginVisible: boolean;
     isForgetPasswordVisible: boolean;
     isResetPasswordVisible: boolean;
-    passwordToken: string;
     isSignupVisible: boolean;
     isCodeVerificationVisible: boolean;
     isCreateAdVisible: boolean;
@@ -18,7 +17,6 @@ interface ModalContextType {
     setLoginVisible: (visible: boolean) => void;
     setForgetPasswordVisible: (visible: boolean) => void;
     setResetPasswordVisible: (visible: boolean) => void;
-    setPasswordToken: (token: string) => void;
     setSignupVisible: (visible: boolean) => void;
     setCodeVerificationVisible: (visible: boolean) => void;
     setCreateAdVisible: (visible: boolean) => void;
@@ -48,7 +46,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isForgetPasswordVisible, setForgetPasswordVisible] = useState(false);
     const [isResetPasswordVisible, setResetPasswordVisible] = useState(false);
-    const [passwordToken, setPasswordToken] = useState('');
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
@@ -147,7 +144,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             isLoginVisible,
             isForgetPasswordVisible,
             isResetPasswordVisible,
-            passwordToken,
             isSignupVisible,
             isCodeVerificationVisible,
             isCreateAdVisible,
@@ -157,7 +153,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             setLoginVisible,
             setForgetPasswordVisible,
             setResetPasswordVisible,
-            setPasswordToken,
             setSignupVisible,
             setCodeVerificationVisible,
             setCreateAdVisible,
