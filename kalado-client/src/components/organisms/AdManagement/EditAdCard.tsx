@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { Box, Typography, Card, IconButton, MenuItem, Select, Divider } from '@mui/material';
+import { Box, Typography, Card, IconButton, Divider } from '@mui/material';
 import { Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { PriceInput, Dropdown } from '../../atoms';
 import { toast } from 'react-toastify';
@@ -40,7 +40,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   });
 
   const [images, setImages] = useState<File[]>([]);
-  const language = i18n.language;
+  const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
 
   const handleChange = (field: keyof ProductData, value: any) => {
@@ -50,7 +50,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
       if (!isNaN(numericValue)) {
         setFormData((prev) => ({ ...prev, price: { amount: numericValue, unit: prev.price.unit } }));
       } else {
-        toast.error('Invalid input. Please enter a valid number.');
+        toast.error(t('error.invalid_number'));
       }
     } else {
       setFormData((prev) => ({ ...prev, [field]: value }));
@@ -64,9 +64,9 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const handleEditAd = async (id: number) => {
     const response = await updateAd(id, formData);
     if (response.isSuccess) {
-      toast(t('success.ad_management.edit'));
+      toast.success(t('success.ad_management.edit'));
     } else {
-      toast(t('error.ad_management.edit_failed'));
+      toast.error(t('error.ad_management.edit_failed'));
     }
   };
 
@@ -74,19 +74,16 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   return (
     <Card
       sx={{
-        padding: '30px',
-        borderRadius: '20px',
-        boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.15)',
-        maxWidth: '900px',
-        margin: '20px auto',
+        padding: '20px',
+        borderRadius: '15px',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+        maxWidth: '500px',
+        margin: 'auto',
         direction: isRtl ? 'rtl' : 'ltr',
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box>
-          <Typography variant="h5">{formData.title}</Typography>
-          <Typography variant="subtitle1">{resources[language]?.ad_list?.ad_status?.[ad.status]}</Typography>
-        </Box>
+        <Typography variant="h6" fontWeight="bold">{formData.title}</Typography>
         <Box>
           <IconButton onClick={onCancel}>
             <CloseIcon />
@@ -97,41 +94,48 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         </Box>
       </Box>
 
-      <Divider sx={{ marginY: '20px' }} />
+      <Divider sx={{ my: 2 }} />
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '15px' }}>
-        {/* Price */}
-        <Typography>{resources[language]?.general_inputs.price}</Typography>
+      <Box>
+        <Typography fontWeight="bold">{t('general_inputs.price')}</Typography>
         <PriceInput
           value={formData.price}
-          onChange={(price: { amount: number; unit: string }) => setFormData(prevData => ({ ...prevData, price }))}
-          isRequired={true}
-        />
-
-        <Dropdown
-          options={product_categories}
-          onChange={(selectedOption: Option | null) => setFormData(prevData => ({
-            ...prevData,
-            category: selectedOption ? selectedOption.value : ''
-          }))}
-          value={product_categories.find(option => option.value === formData.category) || null}
-          width={'100%'}
+          onChange={(price: { amount: number; unit: string }) => 
+            setFormData((prev) => ({ ...prev, price }))}
+          isRequired
         />
       </Box>
 
-      <Divider sx={{ marginY: '20px' }} />
+      <Divider sx={{ my: 2 }} />
 
-      {/* Image Upload */}
+      <Box>
+        <Typography fontWeight="bold">{t('create_ad.input.category')} *</Typography>
+        <Dropdown
+          options={product_categories}
+          onChange={(selectedOption: any) => setFormData(prev => ({
+            ...prev, category: selectedOption ? selectedOption.value : ''
+          }))}
+          value={product_categories.find(option => option.value === formData.category) || null}
+          width="100%"
+        />
+      </Box>
+
+      <Divider sx={{ my: 2 }} />
+
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-        {formData.images?.map((image, index) => (
-          <Box key={index} sx={{ width: '160px', height: '160px', position: 'relative' }}>
-            <img src={image} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            <IconButton onClick={() => handleImageDelete(index)} sx={{ position: 'absolute', top: 5, right: 5 }}>
-              <DeleteIcon />
+        {formData.images?.slice(0, 3).map((image, index) => (
+          <Box key={index} sx={{ width: '100px', height: '100px', position: 'relative' }}>
+            <img src={image} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+            <IconButton onClick={() => setFormData((prev) => ({
+              ...prev, images: prev.images?.filter((_, i) => i !== index) || [],
+            }))} sx={{ position: 'absolute', top: 5, right: 5, background: 'rgba(0,0,0,0.5)', color: '#fff' }}>
+              <DeleteIcon fontSize="small" />
             </IconButton>
           </Box>
         ))}
-        {(formData.images?.length || 0) < 3 && <ImageUploadBox onUpload={handleImageUpload} />}
+        {Array.from({ length: Math.max(0, 3 - (formData.images?.length || 0)) }).map((_, index) => (
+          <ImageUploadBox key={index} onUpload={handleImageUpload} />
+        ))}
       </Box>
     </Card>
   );
