@@ -17,7 +17,8 @@ const Filter: React.FC = () => {
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.trim();
 
-    if (!/^\d*$/.test(value)) {
+    if (!/^[0-9]*$/.test(value)) {
+      e.target.value = "";
       return;
     }
 
