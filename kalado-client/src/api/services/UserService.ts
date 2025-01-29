@@ -34,7 +34,7 @@ export async function modifyProfile(profileData: ProfileData, imageFile: File) {
     return sendRequest<TUserProfileResponse>(
         USER.MODIFY_PROFILE,
         'POST',
-        profileData,
+        formData,
         {},
         'multipart/form-data'
     );

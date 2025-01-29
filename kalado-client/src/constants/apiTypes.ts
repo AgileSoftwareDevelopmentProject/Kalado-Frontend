@@ -130,7 +130,7 @@ export interface ProfileData {
     firstName: string;
     lastName: string;
     phoneNumber: string;
-    profileImage: string | null;
+    // profileImage: string | null;
     address: string | null;
     currentPassword: string;
     newPassword: string | null;
