@@ -29,7 +29,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
     // setIsDialogOpen(true);
   };
 
-  const confirmStatusChange = () => {
+  const confirmUserStatusChange = () => {
     // if (selectedUser && newStatus) {
     //   setUsers((prevUsers) =>
     //     prevUsers.map((user) =>
@@ -116,8 +116,9 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                   <ConfirmationDialog
                     isDialogOpen={isDialogOpen}
                     onClose={() => setIsDialogOpen(false)}
-                    confirmStatusChange={confirmStatusChange}
-                    selectedUser={user}
+                    onCheck={confirmUserStatusChange}
+                    title={t("report.user_management.confirmation_title")}
+                    message={t("report.user_management.confirmation_message")}
                   />
                 </Grid>
               ))

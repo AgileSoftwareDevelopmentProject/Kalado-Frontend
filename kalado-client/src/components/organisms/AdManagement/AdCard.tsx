@@ -1,157 +1,130 @@
-import React, { Component } from 'react';
-import {
-  Box,
-  Typography,
-  TextField,
-  Card,
-  IconButton,
-  MenuItem,
-  Select,
-  Dialog,
-  DialogContent,
-  Tooltip,
-} from '@mui/material';
-import {
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Check as CheckIcon,
-  Close as CloseIcon,
-} from '@mui/icons-material';
+import React, { useState } from 'react';
+import { useTranslation } from "react-i18next";
+import { Box, Typography, TextField, Card, IconButton, MenuItem, Select, Tooltip } from '@mui/material';
+import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { ConfirmationDialog } from '../../../components/molecules';
+import { TProductResponseType } from '../../../constants/apiTypes';
+import { updateAdStatus, deleteAd } from '../../../api/services/ProductService';
+import { toast } from 'react-toastify';
 
-import { SelectChangeEvent } from '@mui/material';
-import { withTranslation, WithTranslation } from 'react-i18next';
-
-type AdCardProps = WithTranslation & {
-  title: string;
-  status: string;
-  onStatusChange: (event: SelectChangeEvent<string>) => void;
-  onDelete: () => void;
-  onEditTitle: (newTitle: string) => void;
-  onEdit: () => void;
+interface AdCardProps {
+  ad: TProductResponseType;
 };
 
-type AdCardState = {
-  isEditing: boolean;
-  newTitle: string;
-  isDeleteDialogOpen: boolean;
-  accessLevel: string;
-};
+const AdCard: React.FC<AdCardProps> = ({ ad }) => {
+  const { t } = useTranslation();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-class AdCard extends Component<AdCardProps, AdCardState> {
-  constructor(props: AdCardProps) {
-    super(props);
-    this.state = {
-      isEditing: false,
-      newTitle: props.title,
-      isDeleteDialogOpen: false,
-      accessLevel: 'user',
-    };
-  }
 
-  handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value.length <= 10) {
-      this.setState({ newTitle: event.target.value });
+  const handleAdStatusChange = async (id: number, newStatus: string) => {
+    const response = await updateAdStatus(id, newStatus);
+    setIsDialogOpen(false);
+    if (response.isSuccess) {
+      toast(t('success.ad_management.status_change'));
+    } else {
+      toast(t('error.ad_management.status_change_failed'));
     }
   };
 
-  saveTitle = () => {
-    this.props.onEditTitle(this.state.newTitle.trim());
-    this.setState({ isEditing: false });
+  const handleDeleteAd = async (id: number) => {
+    const response = await deleteAd(id);
+    setIsDialogOpen(false);
+    if (response.isSuccess) {
+      toast(t('success.ad_management.delete'));
+    } else {
+      toast(t('error.ad_management.delete_failed'));
+    }
   };
 
-  handleDeleteConfirm = () => {
-    this.props.onDelete();
-    this.setState({ isDeleteDialogOpen: false });
+
+  const handleEditAd = (id: number) => {
+    // const editingAd = ads.find((ad) => ad.id === id);
+    // if (editingAd) {
+    //   setEditingAdId(id);
+    //   setPreviousAdState(editingAd);
+    // }
   };
 
-  render() {
-    const { title, status, onStatusChange, onEdit, t } = this.props;
-    const { isEditing, isDeleteDialogOpen, accessLevel } = this.state;
+  const handleEditAdTitle = (id: number) => (newTitle: string) => {
+    // setAds((prevAds) =>
+    //   prevAds.map((ad) => (ad.id === id ? { ...ad, title: newTitle } : ad))
+    // );
+  };
 
-    return (
-      <>
-        <Card
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '10px 40px',
-            marginBottom: '40px',
-            borderRadius: '40px',
-            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-          }}
-        >
-          <Box sx={{ flex: 1, textAlign: 'left' }}>
-            {isEditing ? (
-              <TextField
-                fullWidth
-                value={this.state.newTitle}
-                onChange={this.handleTitleChange}
-                onBlur={this.saveTitle}
-                autoFocus
-                variant="standard"
-              />
-            ) : (
-              <Tooltip title={title} arrow>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    maxWidth: '150px',
-                  }}
-                >
-                  {title}
-                </Typography>
-              </Tooltip>
-            )}
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px' }}>
-            {/* Status Dropdown */}
-            <Select
-              value={status}
-              onChange={onStatusChange}
-              displayEmpty
-              sx={{ minWidth: '150px', fontSize: '1rem' }}
-              inputProps={{
-                'aria-label': t('ad_list.ad_status.dropdown'),
-              }}
-            >
-              <MenuItem value="active">{t('ad_list.ad_status.ACTIVE')}</MenuItem>
-              <MenuItem value="reserved">{t('ad_list.ad_status.RESERVED')}</MenuItem>
-              <MenuItem value="sold">{t('ad_list.ad_status.SOLD')}</MenuItem>
-            </Select>
-            </Box>
-          <Box sx={{ display: 'flex', gap: '10px' }}>
-            <IconButton onClick={onEdit}>
-              <EditIcon />
-            </IconButton>
-            <IconButton onClick={() => this.setState({ isDeleteDialogOpen: true })}>
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        </Card>
-
-        <Dialog open={isDeleteDialogOpen} onClose={() => this.setState({ isDeleteDialogOpen: false })}>
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <Typography>{t('ad_list.delete_confirmation.title')}</Typography>
-            <Box sx={{ display: 'flex', gap: '20px' }}>
-              <IconButton onClick={this.handleDeleteConfirm} sx={{ backgroundColor: 'green' }}>
-                <CheckIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => this.setState({ isDeleteDialogOpen: false })}
-                sx={{ backgroundColor: 'red' }}
+  return (
+    <>
+      <Card
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '10px 40px',
+          marginBottom: '40px',
+          borderRadius: '40px',
+          boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+        }}
+      >
+        <Box sx={{ flex: 1, textAlign: 'left' }}>
+          {false ? (
+            <TextField
+              fullWidth
+              value={this.state.newTitle}
+              onChange={this.handleTitleChange}
+              onBlur={this.saveTitle}
+              autoFocus
+              variant="standard"
+            />
+          ) : (
+            <Tooltip title={ad.title} arrow>
+              <Typography
+                variant="h6"
+                sx={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  maxWidth: '150px',
+                }}
               >
-                <CloseIcon />
-              </IconButton>
-            </Box>
-          </DialogContent>
-        </Dialog>
-      </>
-    );
-  }
+                {ad.title}
+              </Typography>
+            </Tooltip>
+          )}
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px' }}>
+          {/* Status Dropdown */}
+          <Select
+            value={status}
+            onChange={() => handleAdStatusChange(ad.id, ad.status)}    // ad new status??????
+            displayEmpty
+            sx={{ minWidth: '150px', fontSize: '1rem' }}
+            inputProps={{
+              'aria-label': t('ad_list.ad_status.dropdown'),
+            }}
+          >
+            <MenuItem value="active">{t('ad_list.ad_status.ACTIVE')}</MenuItem>
+            <MenuItem value="reserved">{t('ad_list.ad_status.RESERVED')}</MenuItem>
+            <MenuItem value="sold">{t('ad_list.ad_status.SOLD')}</MenuItem>
+          </Select>
+        </Box>
+        <Box sx={{ display: 'flex', gap: '10px' }}>
+          {/* <IconButton onClick={onEdit}>
+            <EditIcon />
+          </IconButton> */}
+          <IconButton onClick={() => setIsDialogOpen(true)}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      </Card>
+
+      <ConfirmationDialog
+        isDialogOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onCheck={() => handleDeleteAd}
+        title={t("report.user_management.confirmation_title")}
+        message={t("report.user_management.confirmation_message")}
+      />
+    </>
+  );
 }
 
-export default withTranslation()(AdCard);
+export default AdCard;
