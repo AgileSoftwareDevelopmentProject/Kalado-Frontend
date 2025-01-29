@@ -55,7 +55,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
         overflow: "auto",
       }}
     >
-      {!userDataList && (
+      {(!userDataList || userDataList.length == 0) && (
         <Box sx={{ textAlign: 'center' }}>
           <ErrorOutlineIcon sx={{ fontSize: 100, color: 'error.main' }} />
           <Typography variant="h6" sx={{ mt: 2 }}>
@@ -65,7 +65,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
       )}
 
 
-      {userDataList && userDataList.length > 0 && (
+      {userDataList && (
         <Box sx={{ width: "100%", maxWidth: "800px" }}>
           <Grid container spacing={3}>
             {
@@ -104,7 +104,8 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                         {t("report.user_management.email")}: {user.username}
                       </Typography>
                       <Typography variant="body2" sx={{ marginBottom: 2 }}>
-                        {t("report.user_management.status")}
+                        {t("report.user_management.status")}:
+                        {user.blocked ? t("report.user_management.blocked") : t("report.user_management.allowed")}
                       </Typography>
 
                       <CustomButton
