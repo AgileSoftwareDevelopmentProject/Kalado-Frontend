@@ -4,8 +4,8 @@ import { Box, Typography, TextField, Card, IconButton, MenuItem, Select, Tooltip
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { ConfirmationDialog } from '../../../components/molecules';
 import EditAdCard from './EditAdCard';
-import { TProductResponseType, ProductData } from '../../../constants/apiTypes';
-import { updateAdStatus, deleteAd, updateAd } from '../../../api/services/ProductService';
+import { TProductResponseType } from '../../../constants/apiTypes';
+import { updateAdStatus, deleteAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 
 interface AdCardProps {
@@ -35,15 +35,6 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
       toast(t('success.ad_management.delete'));
     } else {
       toast(t('error.ad_management.delete_failed'));
-    }
-  };
-
-  const handleEditAd = async (id: number, productData: ProductData) => {
-    const response = await updateAd(id, productData);
-    if (response.isSuccess) {
-      toast(t('success.ad_management.edit'));
-    } else {
-      toast(t('error.ad_management.edit_failed'));
     }
   };
 
@@ -119,15 +110,8 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
 
       <Box sx={{ marginTop: 4 }}>
         <EditAdCard
-          title={ad.title}
-          price={ad.price.amount}
-          category={ad.category}
-          date={ad.createdAt}
-          description={ad.description}
-          images={ad.imageUrls}
-          status={ad.status}
-          onEdit={() => handleEditAd(ad.id, ad)}
-        // onCancel={onCloseEdit}
+          ad={ad}
+          onCancel={() => setIsEditingModeActive(false)}
         />
       </Box>
     </>

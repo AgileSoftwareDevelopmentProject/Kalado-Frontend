@@ -88,6 +88,7 @@ export type TProductResponseType = {
     brand?: string;
     productionYear?: number;
     status: string;
+    category: string;
 };
 
 

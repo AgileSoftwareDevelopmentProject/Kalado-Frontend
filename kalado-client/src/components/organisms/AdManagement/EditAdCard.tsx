@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Typography,
-  TextField,
-  Card,
-  IconButton,
-  MenuItem,
-  Select,
-  Divider,
-  InputAdornment,
-} from '@mui/material';
+import { useTranslation } from "react-i18next";
+import { Box, Typography, TextField, Card, IconButton, MenuItem, Select, Divider, InputAdornment } from '@mui/material';
 import {
   Edit as EditIcon,
   Save as SaveIcon,
@@ -21,15 +12,12 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
-import { useTranslation } from 'react-i18next';
 import ImageUploadBox from '../../molecules/Boxes/ImageUploadBox';
-import { updateAd, createProductWithImages } from '../../../api/services/ProductService';
-import { useAuth } from '../../../contexts';
+import { updateAd } from '../../../api/services/ProductService';
 import { ProductData, TProductResponseType } from '../../../constants/apiTypes';
 
 type EditAdCardProps = {
-  ad: ProductData;
-  onEdit: (updatedAd: TProductResponseType) => void;
+  ad: TProductResponseType;
   onCancel: () => void;
 };
 
@@ -39,9 +27,10 @@ const normalizeDigits = (value: string): string => {
   return value.replace(/[۰-۹]/g, (char) => englishDigits[persianDigits.indexOf(char)]);
 };
 
-const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
-  const { token } = useAuth();
+const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
+  const { t, i18n } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
+  const [images, setImages] = useState<File[]>([]);
 
   const [formData, setFormData] = useState<ProductData>({
     title: ad.title,
@@ -52,7 +41,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
     images: ad.imageUrls || [],
   });
 
-  const { i18n } = useTranslation();
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
 
@@ -70,19 +58,10 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
     }
   };
 
-  const handleImageUpload = async (files: File[]) => {
-    try {
-      if (token) {
-        const updatedProduct = await createProductWithImages(formData, files);
-        setFormData((prev) => ({
-          ...prev,
-          images: updatedProduct.imageUrls || [],
-        }));
-      }
-    } catch (error) {
-      console.error('Error uploading images:', error);
-      toast.error('Error uploading images. Please try again.');
-    }
+  const handleImageUpload = (files: File[]) => {
+    console.log("handleImageUpload")
+    console.log(files);
+    setImages(files);
   };
 
   const handleImageDelete = (index: number) => {
@@ -92,24 +71,12 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
     }));
   };
 
-  const handleSave = async () => {
-    try {
-      if (!token) {
-        toast.error('User is not authenticated.');
-        return;
-      }
-      const response = await updateAd(ad.id, formData);
-      const newToken = response.headers?.authorization || response.headers?.['Authorization'];
-      if (newToken) {
-        auth.setToken(newToken);
-      }
-
-      onEdit(response.data);
-      setIsEditing(false);
-      toast.success(resources[language]?.ad_list?.save_success || 'Changes saved successfully.');
-    } catch (error) {
-      console.error('Error updating ad:', error);
-      toast.error('Error updating ad. Please try again.');
+  const handleEditAd = async (id: number, productData: TProductResponseType) => {
+    const response = await updateAd(id, productData);
+    if (response.isSuccess) {
+      toast(t('success.ad_management.edit'));
+    } else {
+      toast(t('error.ad_management.edit_failed'));
     }
   };
 
@@ -136,7 +103,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
             <CloseIcon />
           </IconButton>
           <IconButton onClick={() => setIsEditing(!isEditing)}>
-            {!isEditing ? <EditIcon /> : <SaveIcon onClick={handleSave} />}
+            {!isEditing ? <EditIcon /> : <SaveIcon onClick={() => handleEditAd(ad.id, ad)} />}  {/* Wrong parameters!!!!!*/}
           </IconButton>
         </Box>
       </Box>
