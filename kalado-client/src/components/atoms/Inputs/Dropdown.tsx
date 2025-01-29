@@ -11,7 +11,7 @@ interface Option {
 
 interface DropdownProps {
     options: Option[];
-    placeholder: string;
+    placeholder?: string;
     onChange: (value: Option | null) => void;
     value: Option | null;
     isRequired?: boolean;

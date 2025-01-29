@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { Box, Typography, TextField, Card, IconButton, MenuItem, Select, Divider, InputAdornment } from '@mui/material';
+import { Box, Typography, Card, IconButton, MenuItem, Select, Divider } from '@mui/material';
 import { Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
+import { PriceInput, Dropdown } from '../../atoms';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
 import ImageUploadBox from '../../molecules/Boxes/ImageUploadBox';
 import { updateAd } from '../../../api/services/ProductService';
 import { ProductData, TProductResponseType } from '../../../constants/apiTypes';
+import { OptionsComponent } from '../../../constants/options';
 
 type EditAdCardProps = {
   ad: TProductResponseType;
@@ -23,6 +24,7 @@ const normalizeDigits = (value: string): string => {
 
 const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const { t, i18n } = useTranslation();
+  const { product_categories } = OptionsComponent();
   const [formData, setFormData] = useState<TProductResponseType>(ad);
   const [images, setImages] = useState<File[]>([]);
   const language = i18n.language as keyof typeof resources;
@@ -113,7 +115,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         /> */}
 
         {/* Category */}
-        <Typography>{resources[language]?.create_ad.input.category}</Typography>
+        {/* <Typography>{resources[language]?.create_ad.input.category}</Typography>
         <Select
           value={formData.category} // Set initial value to formData.category
           onChange={(e) => handleChange('category', e.target.value)}
@@ -124,7 +126,16 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
               {categories[key as keyof typeof categories]}
             </MenuItem>
           ))}
-        </Select>
+        </Select> */}
+
+        <Dropdown
+          options={product_categories}
+          onChange={(selectedOption: Option | null) => setFormData(prevData => ({
+            ...prevData,
+            category: selectedOption ? selectedOption.value : ''
+          }))}
+          value={product_categories.find(option => option.value === formData.category) || null}
+        />
       </Box>
 
       <Divider sx={{ marginY: '20px' }} />
