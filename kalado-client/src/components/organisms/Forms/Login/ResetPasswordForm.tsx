@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PasswordInput, CustomButton, FormError } from '../../../atoms';
+import { NameInput, PasswordInput, CustomButton, FormError } from '../../../atoms';
 import { PopupBox } from '../../../molecules';
 import { resetPassword } from '../../../../api/services/AuthService';
 import { toast } from 'react-toastify';
@@ -9,10 +9,10 @@ import { useModalContext } from '../../../../contexts';
 
 const ResetPasswordForm: React.FC = () => {
     const { t } = useTranslation();
-    const initialFormData = { newPassword: '' };
+    const initialFormData = { token: '', newPassword: '' };
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState<string>('');
-    const { isResetPasswordVisible, handleClosePopups, passwordToken } = useModalContext();
+    const { isResetPasswordVisible, handleClosePopups } = useModalContext();
 
     const validateUserInputs = () => {
         const passwordValidationResult = validatePassword(formData.newPassword, t);
@@ -33,10 +33,10 @@ const ResetPasswordForm: React.FC = () => {
         e.preventDefault();
 
         if (validateUserInputs()) {
-            const response = await resetPassword(passwordToken, formData.newPassword);
+            const response = await resetPassword(formData.token, formData.newPassword);
             if (response.isSuccess) {
                 handleClose();
-                toast(t("success.forget_password"));
+                toast(t("success.reset_password"));
             } else {
                 setError(response.message);
             }
@@ -47,6 +47,13 @@ const ResetPasswordForm: React.FC = () => {
         <PopupBox open={isResetPasswordVisible} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
                 <p>{t("forget_password_form.enter_new_passwrod")}</p>
+                <NameInput
+                    name="token"
+                    placeholder={t("general_inputs.token")}
+                    value={formData.token}
+                    onChange={(e) => setFormData({ ...formData, token: e.target.value })}
+                    isRequired={true}
+                />
                 <PasswordInput
                     value={formData.newPassword}
                     onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}

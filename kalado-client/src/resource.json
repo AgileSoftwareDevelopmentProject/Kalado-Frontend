@@ -15,7 +15,8 @@
             "add_image": "Add Image",
             "description": "Description",
             "category": "Category",
-            "no_option": "No option"
+            "no_option": "No option",
+            "token": "Token"
         },
         "navbar": {
             "create_ad": "Submit Ad",
@@ -304,7 +305,8 @@
             "signup": "Registered successfully. Please verify your email.",
             "code_verification": "Your email verified successfully.",
             "login": "You are welcome!",
-            "forget_password": "Your password changed successfully.",
+            "reset_password": "Your password changed successfully.",
+            "forget_password": "Password's token sent to your email successsfully.",
             "create_ad": "Ad created successfully.",
             "report": "Report submitted successfully.",
             "profile_management": "Changes saved successfully.",
@@ -336,7 +338,8 @@
             "add_image": "افزودن عکس",
             "description": "توضیحات",
             "category": "دسته‌بندی",
-            "no_option": "بدون گزینه"
+            "no_option": "بدون گزینه",
+            "token": "توکن"
         },
         "navbar": {
             "create_ad": "ثبت آگهی",
@@ -626,7 +629,8 @@
             "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
             "code_verification": "ایمیل شما با موفقیت تایید شد.",
             "login": "خوش آمدید!",
-            "forget_password": "رمز عبور شما با موفقیت تغییر کرد.",
+            "reset_password": "رمز عبور شما با موفقیت تغییر کرد.",
+            "forget_password": "توکن رمز عبور با موفقیت به ایمیل شما ارسال شد.",
             "create_ad": "آگهی شما با موفقیت ثبت شد.",
             "report": "گزارش تخلف شما با موفقیت ثبت شد.",
             "profile_management": "تغییرات شما با موفقیت ذخیره شد.",
