@@ -17,6 +17,7 @@ const AdminDashboard: React.FC = () => {
     const { admin_dashboard_menu } = OptionsComponent();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(admin_dashboard_menu[0].value);
     const [userDataList, setUserDataList] = useState<TUserProfileResponse[] | null>(null);
+    
     const [userReportList, setUserReportList] = useState<TReportResponseType[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -56,20 +57,28 @@ const AdminDashboard: React.FC = () => {
         setSelectedMenuTitle(menuTitle);
     };
 
+    useEffect(() => {
+        if (selectedMenuTitle === admin_dashboard_menu[0].value) {
+            fetchUserDataList();
+        } else if (selectedMenuTitle === admin_dashboard_menu[1].value) {
+            fetchUserReportList();
+        }
+    }, [selectedMenuTitle]);
+
     const renderContent = () => {
+        console.log("UUUUUUUUUUUU");
         switch (selectedMenuTitle) {
             case admin_dashboard_menu[0].value:
                 return <UserManagement userDataList={userDataList} />;
             case admin_dashboard_menu[1].value:
                 return <ReportHistory reportsList={userReportList} />;
-            default:
-                return null;
         }
     };
 
     return (
         <Box>
             <NavBar />
+
             <SideBar>
                 <IconList
                     categories={admin_dashboard_menu}
@@ -77,6 +86,7 @@ const AdminDashboard: React.FC = () => {
                     selectedCategory={selectedMenuTitle}
                 />
             </SideBar>
+
             <Box sx={{ flexGrow: 1, padding: 2 }}>
                 {isLoading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
