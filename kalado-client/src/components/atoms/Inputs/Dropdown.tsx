@@ -15,9 +15,10 @@ interface DropdownProps {
     onChange: (value: Option | null) => void;
     value: Option | null;
     isRequired?: boolean;
+    width?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ options, placeholder, onChange, value, isRequired = true }) => {
+const Dropdown: React.FC<DropdownProps> = ({ options, placeholder, onChange, value, isRequired = true, width = '70%' }) => {
     const { t, i18n } = useTranslation();
     const translatedPlaceholder = placeholder || t('general_inputs.category');
 
@@ -35,7 +36,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, placeholder, onChange, val
                     margin="normal"
                     required={isRequired}
                     sx={{
-                        width: '70%',
+                        width: width,
                         '& .MuiInputLabel-root': {
                             textAlign: i18n.language === 'fa' ? 'right' : 'left',
                             width: '90%',
