@@ -137,7 +137,6 @@ export interface ProfileData {
     confirmPassword: string;
 }
 
-
 export type TUserProfileResponse = {
     id: number;
     username: string;

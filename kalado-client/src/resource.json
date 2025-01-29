@@ -87,7 +87,9 @@
         },
         "forget_password_form": {
             "enter_your_email": "Enter your email to retrieve your password.",
-            "forget_password_btn": "Send Email"
+            "forget_password_btn": "Send Email",
+            "enter_new_passwrod": "Eneter your new passowrd.",
+            "change_password_btn": "Change password"
         },
         "signup_form": {
             "signup_btn": "Signup",
@@ -189,7 +191,9 @@
                     "phone_number": "Phone Number",
                     "address": "Address",
                     "save_changes_btn": "Save Changes",
-                    "enter_new_password": "Enter new password"
+                    "new_password": "Enter your new password",
+                    "current_password": "Enter your current password",
+                    "repeat_new_password": "Enter your new password again"
                 }
             },
             "admin": {
@@ -300,7 +304,7 @@
             "signup": "Registered successfully. Please verify your email.",
             "code_verification": "Your email verified successfully.",
             "login": "You are welcome!",
-            "forget_password": "A new password is sent to your email.",
+            "forget_password": "Your password changed successfully.",
             "create_ad": "Ad created successfully.",
             "report": "Report submitted successfully.",
             "profile_management": "Changes saved successfully.",
@@ -404,7 +408,9 @@
         },
         "forget_password_form": {
             "enter_your_email": "لطفا ایمیل خود را برای بازیابی رمز عبور وارد نمایید.",
-            "forget_password_btn": "بازیابی رمز عبور"
+            "forget_password_btn": "بازیابی رمز عبور",
+            "enter_new_passwrod": "رمز عبور جدید خود را وارد نمایید.",
+            "change_password_btn": "تغییر رمز عبور"
         },
         "signup_form": {
             "signup_btn": "ثبت‌نام",
@@ -506,7 +512,9 @@
                     "phone_number": "شماره تلفن",
                     "address": "محل سکونت",
                     "save_changes_btn": "ذخیره تغییرات",
-                    "enter_new_password": "رمز عبور جدید خود را وارد نمایید"
+                    "new_password": "رمز عبور جدید خود را وارد نمایید",
+                    "current_password": "رمز عبور فعلی خود را وارد نمایید",
+                    "repeat_new_password": "رمز عبور جدید خود را دوباره وارد نمایید"
                 }
             },
             "admin": {
@@ -618,7 +626,7 @@
             "signup": "ثبت‌نام شما با موفقیت انجام شد. لطفا ایمیل خود را تایید نمایید.",
             "code_verification": "ایمیل شما با موفقیت تایید شد.",
             "login": "خوش آمدید!",
-            "forget_password": "رمز عبور جدیدی به ایمیل شما فرستاده شد.",
+            "forget_password": "رمز عبور شما با موفقیت تغییر کرد.",
             "create_ad": "آگهی شما با موفقیت ثبت شد.",
             "report": "گزارش تخلف شما با موفقیت ثبت شد.",
             "profile_management": "تغییرات شما با موفقیت ذخیره شد.",

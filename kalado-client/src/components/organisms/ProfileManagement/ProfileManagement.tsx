@@ -21,15 +21,22 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
         lastName: '',
         address: '',
         phoneNumber: '',
-        profileImageUrl: '',
+        profileImageUrl: defaultImage,
         blocked: false,
     });
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
     const [newPassword, setNewPassword] = useState('');
+    const [repeatNewPassword, setRepeatNewPassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
 
     useEffect(() => {
         if (userData) {
-            setModifiedUserData(userData);
+            setModifiedUserData(prevData => ({
+                ...prevData,
+                ...userData,
+                profileImageUrl: userData.profileImageUrl || defaultImage
+            }));
         }
     }, [userData]);
 
@@ -44,6 +51,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
+            setProfileImageFile(file);
             const imageUrl = URL.createObjectURL(file);
             setModifiedUserData(prevData => ({
                 ...prevData!,
@@ -56,15 +64,19 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
         if (!modifiedUserData) return;
 
         const dataToSend: ProfileData = {
+            id: modifiedUserData.id,
             firstName: modifiedUserData.firstName,
             lastName: modifiedUserData.lastName,
             address: modifiedUserData.address,
-            profileImageUrl: modifiedUserData.profileImageUrl,
-            newPassword: newPassword
+            phoneNumber: modifiedUserData.phoneNumber,
+            profileImage: modifiedUserData.profileImageUrl,
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+            confirmPassword: repeatNewPassword,
         };
 
         console.log('Update Profile API call', dataToSend);
-        const response = await modifyProfile(dataToSend);
+        const response = await modifyProfile(dataToSend, profileImageFile);
         console.log(response);
 
         if (response.isSuccess) {
@@ -124,8 +136,20 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                     />
                     <PasswordInput
                         value={newPassword}
-                        placeholder={t('dashboard.user.profile_management.enter_new_password')}
+                        placeholder={t('dashboard.user.profile_management.new_password')}
                         onChange={(e) => setNewPassword(e.target.value)}
+                        isValidatorActive={true}
+                    />
+                    <PasswordInput
+                        value={newPassword}
+                        placeholder={t('dashboard.user.profile_management.current_password')}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        isValidatorActive={true}
+                    />
+                    <PasswordInput
+                        value={newPassword}
+                        placeholder={t('dashboard.user.profile_management.repeat_new_password')}
+                        onChange={(e) => setRepeatNewPassword(e.target.value)}
                         isValidatorActive={true}
                     />
                     <PhoneNumberInput

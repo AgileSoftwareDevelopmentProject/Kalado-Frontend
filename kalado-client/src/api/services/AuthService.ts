@@ -43,6 +43,16 @@ export async function forgetPassword(email: string) {
     );
 }
 
+export async function resetPassword(token: string, newPassword: string) {
+    return sendRequest(
+        AUTH.RESETPASSWORD,
+        'POST',
+        { token, newPassword },
+        {},
+        'application/json'
+    );
+}
+
 export async function changeUserToAdmin(userId: number) {
     return sendRequest(
         AUTH.CHANGEUSERTOADMIN,
