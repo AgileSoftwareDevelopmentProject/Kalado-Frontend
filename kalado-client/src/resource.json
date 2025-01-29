@@ -192,9 +192,9 @@
                     "phone_number": "Phone Number",
                     "address": "Address",
                     "save_changes_btn": "Save Changes",
-                    "new_password": "Enter your new password",
-                    "current_password": "Enter your current password",
-                    "repeat_new_password": "Enter your new password again"
+                    "new_password": "New password",
+                    "current_password": "Current password",
+                    "repeat_new_password": "Confirm new password"
                 }
             },
             "admin": {
@@ -520,9 +520,9 @@
                     "phone_number": "شماره تلفن",
                     "address": "محل سکونت",
                     "save_changes_btn": "ذخیره تغییرات",
-                    "new_password": "رمز عبور جدید خود را وارد نمایید",
-                    "current_password": "رمز عبور فعلی خود را وارد نمایید",
-                    "repeat_new_password": "رمز عبور جدید خود را دوباره وارد نمایید"
+                    "new_password": "رمز عبور جدید",
+                    "current_password": "رمز عبور فعلی",
+                    "repeat_new_password": "تکرار رمز عبور جدید"
                 }
             },
             "admin": {

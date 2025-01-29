@@ -61,14 +61,15 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     };
 
     const handleSaveChanges = async () => {
-        if (!formData.currentPassword) {
-            toast.error(t('error.profile_management.required_current_password'));
-            return;
-        }
-
-        if (formData.newPassword !== formData.confirmPassword) {
-            toast.error(t('error.profile_management.password_mismatch'));
-            return;
+        if (formData.newPassword || formData.confirmPassword) {
+            if (!formData.currentPassword) {
+                toast.error(t('error.profile_management.required_current_password'));
+                return;
+            }
+            if (formData.newPassword !== formData.confirmPassword) {
+                toast.error(t('error.profile_management.password_mismatch'));
+                return;
+            }
         }
 
         const response = await modifyProfile(formData, profileImageFile);
