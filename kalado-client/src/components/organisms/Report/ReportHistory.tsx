@@ -31,7 +31,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                         <Grid item xs={12} sm={6} md={4} key={report.id}>
                             <Card
                                 sx={{
-                                    padding: 2,
+                                    padding: '10px 10px',
                                     boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
                                     borderRadius: '15px',
                                     margin: '0 auto',

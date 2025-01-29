@@ -5,13 +5,14 @@ import { PopupBox } from '../../../molecules';
 import { forgetPassword } from '../../../../api/services/AuthService';
 import { validateEmail } from '../../../../validators';
 import { useModalContext } from '../../../../contexts';
+import { toast } from 'react-toastify';
 
 const ForgetPasswordForm: React.FC = () => {
     const { t } = useTranslation();
     const initialFormData = { email: '' };
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState<string>('');
-    const { isForgetPasswordVisible, handleClosePopups, handleOpenResetPassword, setPasswordToken } = useModalContext();
+    const { isForgetPasswordVisible, handleClosePopups, handleOpenResetPassword } = useModalContext();
 
     const validateUserInputs = () => {
         const emailValidationResult = validateEmail(formData.email, t);
@@ -35,7 +36,7 @@ const ForgetPasswordForm: React.FC = () => {
             const response = await forgetPassword(formData.email.toLowerCase());
             if (response.isSuccess) {
                 handleClose();
-                setPasswordToken(response.data.token);
+                toast(t("success.forget_password"));
                 handleOpenResetPassword();
             } else {
                 setError(response.message);
