@@ -8,6 +8,7 @@ export const AUTH = {
     LOGOUT: '/auth/logout',
     VERIFY: '/auth/verify',
     FORETPASSWORD: '/auth/forget-password',
+    RESETPASSWORD: '/auth/reset-password',
     CHANGEUSERTOADMIN: '/auth/roles',
 };
 

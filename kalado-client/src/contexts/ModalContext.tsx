@@ -7,12 +7,17 @@ import { useAuth } from '../contexts';
 interface ModalContextType {
     isLoginVisible: boolean;
     isForgetPasswordVisible: boolean;
+    isResetPasswordVisible: boolean;
+    passwordToken: string;
     isSignupVisible: boolean;
     isCodeVerificationVisible: boolean;
     isCreateAdVisible: boolean;
     isReportSubmissionVisible: boolean;
     isInProfile: boolean;
     setLoginVisible: (visible: boolean) => void;
+    setForgetPasswordVisible: (visible: boolean) => void;
+    setResetPasswordVisible: (visible: boolean) => void;
+    setPasswordToken: (token: string) => void;
     setSignupVisible: (visible: boolean) => void;
     setCodeVerificationVisible: (visible: boolean) => void;
     setCreateAdVisible: (visible: boolean) => void;
@@ -20,6 +25,7 @@ interface ModalContextType {
     setIsInProfile: (visible: boolean) => void;
     handleOpenLogin: () => void;
     handleOpenForgetPassword: () => void;
+    handleOpenResetPassword: () => void;
     handleOpenSignup: () => void;
     handleOpenCodeVerification: () => void;
     handleOpenCreateAd: () => void;
@@ -38,6 +44,8 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const { token, setToken, role, setRole } = useAuth();
     const [isLoginVisible, setLoginVisible] = useState(false);
     const [isForgetPasswordVisible, setForgetPasswordVisible] = useState(false);
+    const [isResetPasswordVisible, setResetPasswordVisible] = useState(false);
+    const [passwordToken, setPasswordToken] = useState('');
     const [isSignupVisible, setSignupVisible] = useState(false);
     const [isCodeVerificationVisible, setCodeVerificationVisible] = useState(false);
     const [isCreateAdVisible, setCreateAdVisible] = useState(false);
@@ -47,6 +55,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleClosePopups = () => {
         setLoginVisible(false);
         setForgetPasswordVisible(false);
+        setResetPasswordVisible(false);
         setSignupVisible(false);
         setCreateAdVisible(false);
         setCodeVerificationVisible(false);
@@ -62,6 +71,11 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setForgetPasswordVisible(true);
         setLoginVisible(false);
     };
+
+    const handleOpenResetPassword = () => {
+        setResetPasswordVisible(true);
+        setForgetPasswordVisible(false);
+    }
 
     const handleOpenSignup = () => {
         setSignupVisible(true);
@@ -123,12 +137,17 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         <ModalContext.Provider value={{
             isLoginVisible,
             isForgetPasswordVisible,
+            isResetPasswordVisible,
+            passwordToken,
             isSignupVisible,
             isCodeVerificationVisible,
             isCreateAdVisible,
             isReportSubmissionVisible,
             isInProfile,
             setLoginVisible,
+            setForgetPasswordVisible,
+            setResetPasswordVisible,
+            setPasswordToken,
             setSignupVisible,
             setCodeVerificationVisible,
             setCreateAdVisible,
@@ -136,6 +155,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             setIsInProfile,
             handleOpenLogin,
             handleOpenForgetPassword,
+            handleOpenResetPassword,
             handleOpenSignup,
             handleOpenCodeVerification,
             handleOpenCreateAd,

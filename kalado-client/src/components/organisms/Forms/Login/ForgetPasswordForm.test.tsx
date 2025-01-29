@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import ResetPasswordForm from './ResetPasswordForm';
-import { resetPassword } from '../../../../api/services/AuthService';
+import ForgetPasswordForm from './ForgetPasswordForm';
+import { forgetPassword } from '../../../../api/services/AuthService';
 import { toast } from 'react-toastify';
 
 jest.mock('../../../../api/services/AuthService', () => ({
@@ -19,20 +19,20 @@ jest.mock('../../../../contexts', () => ({
     }),
 }));
 
-describe('ResetPasswordForm Component', () => {
+describe('ForgetPasswordForm Component', () => {
     beforeEach(() => {
         jest.clearAllMocks(); // Clear mocks before each test
     });
 
     it('renders correctly', () => {
-        const { getByText } = render(<ResetPasswordForm />);
+        const { getByText } = render(<ForgetPasswordForm />);
 
         expect(getByText(/enter_your_email/i)).toBeInTheDocument();
         expect(getByText(/forget_password_btn/i)).toBeInTheDocument();
     });
 
     it('validates email input and shows error message', async () => {
-        const { getByText, getByRole } = render(<ResetPasswordForm />);
+        const { getByText, getByRole } = render(<ForgetPasswordForm />);
 
         // Simulate invalid email input
         fireEvent.change(getByRole('textbox'), { target: { value: 'invalid-email' } });
@@ -47,7 +47,7 @@ describe('ResetPasswordForm Component', () => {
     it('handles successful password reset', async () => {
         resetPassword.mockResolvedValueOnce({ isSuccess: true }); // Mock successful response
 
-        const { getByText, getByRole } = render(<ResetPasswordForm />);
+        const { getByText, getByRole } = render(<ForgetPasswordForm />);
 
         fireEvent.change(getByRole('textbox'), { target: { value: 'test@example.com' } });
         fireEvent.click(getByText(/forget_password_btn/i));
@@ -61,7 +61,7 @@ describe('ResetPasswordForm Component', () => {
     it('handles failed password reset and shows error message', async () => {
         resetPassword.mockResolvedValueOnce({ isSuccess: false, message: 'Error resetting password' }); // Mock failure response
 
-        const { getByText, getByRole } = render(<ResetPasswordForm />);
+        const { getByText, getByRole } = render(<ForgetPasswordForm />);
 
         fireEvent.change(getByRole('textbox'), { target: { value: 'test@example.com' } });
         fireEvent.click(getByText(/forget_password_btn/i));
