@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { IconList, SideBar } from '../../components/molecules';
 import { ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
@@ -15,25 +15,28 @@ const UserDashboard: React.FC = () => {
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(user_dashboard_menu[0].value);
     const [userData, setUserData] = useState<TUserProfileResponse | null>(null);
     const [userProduct, setUserProduct] = useState<TProductResponseType[] | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchUserData = async () => {
+        setIsLoading(true);
         const response = await getProfile();
-        console.log(response);
         if (response.isSuccess) {
             setUserData(response.data as TUserProfileResponse);
         } else {
             toast(t('error.profile_management.retrieve_failed'));
         }
+        setIsLoading(false);
     };
 
     const fetchUserProducts = async () => {
+        setIsLoading(true);
         const response = await getSellersProducts();
-        console.log(response);
         if (response.isSuccess) {
             setUserProduct(response.data as TProductResponseType[]);
         } else {
             toast(t('error.ad_management.retrieve_failed'));
         }
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -50,8 +53,23 @@ const UserDashboard: React.FC = () => {
                 return <ProfileManagement userData={userData} />;
             case user_dashboard_menu[1].value:
                 return <AdManagement adsList={userProduct} />;
+            default:
+                return null;
         }
     };
+
+    const renderLoadingState = () => (
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%'
+            }}
+        >
+            <CircularProgress />
+        </Box>
+    );
 
     return (
         <Box>
@@ -66,7 +84,7 @@ const UserDashboard: React.FC = () => {
             </SideBar>
 
             <Box sx={{ flexGrow: 1, padding: 2 }}>
-                {renderContent()}
+                {isLoading ? renderLoadingState() : renderContent()}
             </Box>
 
             <FormGroup />

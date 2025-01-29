@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Avatar, IconButton, Typography } from '@mui/material';
 import { CustomButton, NameInput, PhoneNumberInput, PasswordInput, EmailInput } from '../../atoms';
@@ -14,10 +14,25 @@ interface ProfileManagementProps {
 
 const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     const { t } = useTranslation();
-    const [modifiedUserData, setModifiedUserData] = useState<TUserProfileResponse | null>(userData);
+    const [modifiedUserData, setModifiedUserData] = useState<TUserProfileResponse>({
+        id: 0,
+        username: '',
+        firstName: '',
+        lastName: '',
+        address: '',
+        phoneNumber: '',
+        profileImageUrl: '',
+        blocked: false,
+    });
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [newPassword, setNewPassword] = useState('');
 
+    useEffect(() => {
+        if (userData) {
+            setModifiedUserData(userData);
+        }
+    }, [userData]);
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setModifiedUserData(prevData => ({
