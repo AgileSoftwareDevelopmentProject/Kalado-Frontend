@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { BASE_URL } from './urls';
-import { useTranslation } from 'react-i18next';
 
 
 interface ErrorMessages {
@@ -9,12 +8,13 @@ interface ErrorMessages {
 }
 
 const ERROR_MESSAGES: ErrorMessages = {
-    400: 'Bad request. Please check your input.',
-    401: 'Unauthorized. Please log in again.',
-    403: 'Forbidden. You dont have permission to access this resource.',
-    404: 'Resource not found.',
-    500: 'Internal server error. Please try again later.',
-    default: 'An unexpected error occurred. Please try again.'
+    400: "لطفا ورودی‌های خود را چک بفرمایید.",
+    401: "شما مجوز این کار را ندارید.",
+    403: "دسترسی رد شد.",
+    404: "منبع مورد نظر پیدا نشد.",
+    409: "این ایمیل در سیستم ثبت‌نام شده است.",
+    500: "خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید.",
+    default: "خطای سیستمی رخ داده، لطفا دوباره امتحان نمایید."
 };
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -43,8 +43,7 @@ axiosInstance.interceptors.response.use(
     },
     (error: any) => {
         const status: number = error.response?.status;
-        const { t } = useTranslation();
-        const errorMessage = t(`error.server.${status}`) || t('error.general');
+        const errorMessage: string = ERROR_MESSAGES[status] || ERROR_MESSAGES.default;
         console.log('Response interceptor');
         console.log(status);
         console.log(errorMessage);
@@ -73,7 +72,7 @@ export const sendRequest = async <T>(
 ): Promise<ApiResponse<T>> => {
     try {
         console.log('Sending request: ', url, method, data);
-        
+
         // Only include Content-Type in headers if it's explicitly provided
         const headers = {
             ...config.headers,
@@ -87,7 +86,7 @@ export const sendRequest = async <T>(
             ...config,
             headers
         });
-        
+
         return {
             data: response.data,
             isSuccess: true
