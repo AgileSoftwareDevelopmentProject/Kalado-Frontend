@@ -124,18 +124,23 @@ export interface TReportResponseType {
 
 // User
 export interface ProfileData {
+    profileId: number;
     firstName: string;
     lastName: string;
     phoneNumber: string;
     address: string;
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
 }
 
 export type TUserProfileResponse = {
     id: number;
+    username: string;
     firstName: string;
     lastName: string;
-    email: string;
-    password: string;
+    // email: string;
+    // password: string;
     address: string | null;
     phoneNumber: string;
     profileImageUrl: string | null;

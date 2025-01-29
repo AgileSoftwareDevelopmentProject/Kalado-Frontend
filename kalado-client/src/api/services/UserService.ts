@@ -23,7 +23,7 @@ export async function modifyProfile(profileData: ProfileData) {
 }
 
 export async function getAllUsers() {
-    return sendRequest(
+    return sendRequest<TUserProfileResponse[]>(
         USER.ALL_USER,
         'GET',
         undefined,
