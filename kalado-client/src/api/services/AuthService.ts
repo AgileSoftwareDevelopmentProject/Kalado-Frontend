@@ -37,7 +37,7 @@ export async function resetPassword(email: string) {
     return sendRequest(
         AUTH.RESETPASSWORD,
         'POST',
-        email,
+        { email },
         {},
         'application/json'
     );
