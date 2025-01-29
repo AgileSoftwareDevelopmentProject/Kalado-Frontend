@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { Box, Typography, TextField, Card, IconButton, MenuItem, Select, Divider, InputAdornment } from '@mui/material';
-import {
-  Edit as EditIcon,
-  Save as SaveIcon,
-  Close as CloseIcon,
-  Delete as DeleteIcon,
-} from '@mui/icons-material';
+import { Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
@@ -77,7 +73,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         borderRadius: '20px',
         boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.15)',
         maxWidth: '900px',
-        margin: '10px auto',
+        margin: '20px auto',
         direction: isRtl ? 'rtl' : 'ltr',
       }}
     >
@@ -101,7 +97,12 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '15px' }}>
         {/* Price */}
         <Typography>{resources[language]?.general_inputs.price}</Typography>
-        <TextField
+        <PriceInput
+          value={formData.price}
+          onChange={(price: { amount: number; unit: string }) => setFormData(prevData => ({ ...prevData, price }))}
+          isRequired={true}
+        />
+        {/* <TextField
           value={formData.price.amount}
           onChange={(e) => handleChange('price', e.target.value)}
           fullWidth
@@ -109,7 +110,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
           size="small"
           inputProps={{ inputMode: 'numeric', pattern: '[0-9۰-۹]*' }}
           InputProps={{ endAdornment: <InputAdornment position="end">{formData.price.unit}</InputAdornment> }}
-        />
+        /> */}
 
         {/* Category */}
         <Typography>{resources[language]?.create_ad.input.category}</Typography>

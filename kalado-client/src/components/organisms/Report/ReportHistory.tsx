@@ -71,15 +71,17 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                                 </Button>
                             </Card>
                         </Grid>
-                    ))}) :
-                    {(
-                        <Typography variant="body1" sx={{ textAlign: 'center', marginTop: 4 }}>
-                            {t('report.report_card.no_reports')}
-                        </Typography>
-                    )}
+                    ))}
                 </Grid>
             )}
 
+            {
+                (!reportsList || reportsList.length == 0) && (
+                    <Typography variant="body1" sx={{ textAlign: 'center', marginTop: 4 }}>
+                        {t('report.report_card.no_reports')}
+                    </Typography>
+                )
+            }
 
             {selectedReport && (
                 <ReportDetails
