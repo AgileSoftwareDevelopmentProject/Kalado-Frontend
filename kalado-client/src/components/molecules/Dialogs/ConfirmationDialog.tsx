@@ -1,18 +1,16 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
-import { TUserProfileResponse } from '../../../constants/apiTypes';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
+import { Check as CheckIcon, Close as CloseIcon } from '@mui/icons-material';
 
 interface ConfirmationDialogProps {
     isDialogOpen: boolean;
     onClose: () => void;
-    confirmStatusChange: () => void;
-    selectedUser: TUserProfileResponse;
+    onCheck: () => void;
+    title: string;
+    message: string;
 }
 
-const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isDialogOpen, onClose, confirmStatusChange, selectedUser }) => {
-    const { t } = useTranslation();
-
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isDialogOpen, onClose, onCheck, title, message }) => {
     return (
         <Dialog
             open={isDialogOpen}
@@ -21,26 +19,20 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isDialogOpen, o
             aria-describedby="confirmation-dialog-description"
         >
             <DialogTitle id="confirmation-dialog-title">
-                {t("report.user_management.confirmation_title")}
+                {title}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText id="confirmation-dialog-description">
-                    {t("report.user_management.confirmation_message", {
-                        email: selectedUser?.username,
-                        //   status: t(
-                        //     `report.user_management.${newStatus?.toLowerCase()}`,
-                        //     newStatus
-                        //   ),
-                    })}
+                    {message}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color="secondary">
-                    {t("report.user_management.cancel")}
-                </Button>
-                <Button onClick={confirmStatusChange} color="primary">
-                    {t("report.user_management.confirm")}
-                </Button>
+                <IconButton onClick={onCheck} sx={{ backgroundColor: 'green' }}>
+                    <CheckIcon />
+                </IconButton>
+                <IconButton onClick={onClose} sx={{ backgroundColor: 'red' }}>
+                    <CloseIcon />
+                </IconButton>
             </DialogActions>
         </Dialog>
     );

@@ -32,7 +32,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
             setModifiedUserData(userData);
         }
     }, [userData]);
-    
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setModifiedUserData(prevData => ({
@@ -131,6 +131,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                         value={modifiedUserData.phoneNumber || ''}
                         onChange={handleInputChange}
                         disabled={true}
+                        isValidatorActive={false}
                     />
                     <NameInput
                         name="address"
