@@ -41,16 +41,6 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
 
             {/* {!reports ? (
                 <>
-                    <Typography
-                        variant="h4"
-                        sx={{
-                            marginBottom: 4,
-                            textAlign: 'center',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        {t('report.report_card.history_title')}
-                    </Typography>
                     <Grid container spacing={3} justifyContent="center">
                         {reports.length > 0 ? (
                             reports.map((report) => (

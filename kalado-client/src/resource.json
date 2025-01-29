@@ -136,7 +136,8 @@
                 "confirmation_title": "Change User Status",
                 "confirmation_message": "Are you sure you want to change the status of {{email}} to {{status}}?",
                 "confirm": "Confirm",
-                "cancel": "Cancel"
+                "cancel": "Cancel",
+                "become_admin": "Become Admin"
             },
             "report_card": {
                 "history_title": "Violation History",
@@ -428,7 +429,8 @@
                 "confirmation_title": "تغییر وضعیت کاربر",
                 "confirmation_message": "آیا مطمئن هستید که می‌خواهید وضعیت {{email}} را به {{status}} تغییر دهید؟",
                 "confirm": "تأیید",
-                "cancel": "لغو"
+                "cancel": "لغو",
+                "become_admin": "ادمین شو"
             },
             "report_card": {
                 "history_title": "تاریخچه تخلفات",

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Box, Typography, Card, CardContent, Select, MenuItem, Grid, Dialog, DialogActions,
-  DialogContent, DialogContentText, DialogTitle, Button
-} from "@mui/material";
+import { Box, Typography, Card, CardContent, Grid } from "@mui/material";
+import { ConfirmationDialog } from '../../../components/molecules';
 // import { blockUser } from '../../../api/services/UserService';
 import { TUserProfileResponse } from '../../../constants/apiTypes';
-import { useAuth } from '../../../contexts';
 import { toast } from 'react-toastify';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { CustomButton } from "../../atoms";
 
 interface UserManageMentProps {
   userDataList: TUserProfileResponse[] | null;
@@ -18,11 +16,10 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
   const [users, setUsers] = useState<TUserProfileResponse[] | null>(userDataList);
-  const { token } = useAuth();
   const [selectedUser, setSelectedUser] = useState<TUserProfileResponse | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleBlockUser = async (id: number) => {
+  const handleBecomeAdmin = async (id: number) => {
     // const response = await blockUser(id);
     // if (response.isSuccess) {
     //   toast(t("success.user_management.block_user"));
@@ -109,7 +106,11 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                       <Typography variant="body2" sx={{ marginBottom: 2 }}>
                         {t("report.user_management.status")}
                       </Typography>
-                      {/* Add a button to block user */}
+
+                      <CustomButton
+                        // onClick={handleBecomeAdmin(user.id)}
+                        text={t("report.user_management.become_admin")}
+                      />
                     </CardContent>
                   </Card>
                 </Grid>
@@ -117,7 +118,12 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
             }
           </Grid>
 
-          {/* Add confirmation Dialog */}
+          <ConfirmationDialog
+            isDialogOpen={isDialogOpen}
+            onClose={() => setIsDialogOpen(false)}
+            confirmStatusChange={confirmStatusChange}
+            selectedUser={selectedUser}
+          />
         </Box>
       )}
 
