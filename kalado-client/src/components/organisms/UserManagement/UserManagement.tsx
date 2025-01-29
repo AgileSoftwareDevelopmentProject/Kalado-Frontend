@@ -75,64 +75,70 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
         </Typography>
 
         <Grid container spacing={3}>
-          {users.map((user) => (
-            <Grid item xs={12} sm={6} key={user.id}>
-              <Card
-                sx={{
-                  height: "200px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-                  borderRadius: 2,
-                  textAlign: "center",
-                }}
-              >
-                <Typography
-                  variant="subtitle1"
+          {users && users.length > 0 ? (
+            users.map((user) => (
+              <Grid item xs={12} sm={6} key={user.id}>
+                <Card
                   sx={{
-                    position: "absolute",
-                    top: 10,
-                    fontWeight: "bold",
+                    height: "200px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+                    borderRadius: 2,
+                    textAlign: "center",
                   }}
                 >
-                  {t("report.user_management.user_info")}
-                </Typography>
-                <CardContent>
                   <Typography
-                    variant="body1"
+                    variant="subtitle1"
                     sx={{
+                      position: "absolute",
+                      top: 10,
                       fontWeight: "bold",
-                      marginBottom: 2,
                     }}
                   >
-                    {t("report.user_management.email")}: {user.email}
+                    {t("report.user_management.user_info")}
                   </Typography>
-                  <Typography variant="body2" sx={{ marginBottom: 2 }}>
-                    {t("report.user_management.status")}
-                  </Typography>
-                  <Select
-                    value={user.blocked}
-                    onChange={(event) =>
-                      handleBlockUser(user.id)
-                    }
-                    sx={{
-                      minWidth: 150,
-                      borderRadius: 2,
-                    }}
-                  >
-                    <MenuItem value="Allowed">
-                      {t("report.user_management.allowed")}
-                    </MenuItem>
-                    <MenuItem value="Blocked">
-                      {t("report.user_management.blocked")}
-                    </MenuItem>
-                  </Select>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+                  <CardContent>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: "bold",
+                        marginBottom: 2,
+                      }}
+                    >
+                      {t("report.user_management.email")}: {user.email}
+                    </Typography>
+                    <Typography variant="body2" sx={{ marginBottom: 2 }}>
+                      {t("report.user_management.status")}
+                    </Typography>
+                    <Select
+                      value={user.blocked}
+                      onChange={(event) =>
+                        handleBlockUser(user.id)
+                      }
+                      sx={{
+                        minWidth: 150,
+                        borderRadius: 2,
+                      }}
+                    >
+                      <MenuItem value="Allowed">
+                        {t("report.user_management.allowed")}
+                      </MenuItem>
+                      <MenuItem value="Blocked">
+                        {t("report.user_management.blocked")}
+                      </MenuItem>
+                    </Select>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography variant="body1" sx={{ textAlign: 'center', width: '100%' }}>
+            {t("No users found")}
+            </Typography>
+          )}
         </Grid>
       </Box>
 
