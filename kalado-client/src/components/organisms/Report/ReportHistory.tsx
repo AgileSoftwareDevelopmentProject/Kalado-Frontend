@@ -4,8 +4,6 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useTranslation } from 'react-i18next';
 import ReportDetails from './ReportDetails';
 import { TReportResponseType } from '../../../constants/apiTypes';
-import { useAuth } from '../../../contexts';
-import { FormError } from '../../atoms';
 
 interface ReportHistoryProps {
     reportsList: TReportResponseType[] | null;
@@ -15,17 +13,6 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.language === 'fa';
     const [selectedReport, setSelectedReport] = useState<TReportResponseType | null>(null);
-    const [reports, setReports] = useState<TReportResponseType[] | null>(reportsList);
-    const [error, setError] = useState<string>('');
-    const { token } = useAuth();
-
-    const handleShowDetails = (report: TReportResponseType) => {
-        setSelectedReport(report);
-    };
-
-    const handleBackToList = () => {
-        setSelectedReport(null);
-    };
 
     return (
         <Box
@@ -70,7 +57,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                                 </Typography>
                                 <Button
                                     variant="text"
-                                    onClick={() => handleShowDetails(report)}
+                                    onClick={() => setSelectedReport(report)}
                                     sx={{
                                         display: 'flex',
                                         alignItems: 'center',
@@ -94,18 +81,13 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
             )}
 
 
-            {/* <ReportDetails
-                report={{
-                    violationType: selectedReport.violationType,
-                    description: selectedReport.description,
-                    image: selectedReport.evidenceFiles,
-                    contentId: selectedReport.reportedContentId,
-                }}
-                onBackToList={handleBackToList}
+            <ReportDetails
+                report={selectedReport}
+                onBackToList={() => setSelectedReport(null)}
                 onBlockContent={(contentId) => {
                     console.log('Block content with ID:', contentId);
                 }}
-            /> */}
+            />
         </Box>
     );
 };
