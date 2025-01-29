@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { Box, Typography, Card, IconButton, Divider } from '@mui/material';
-import { Save as SaveIcon, Close as CloseIcon } from '@mui/icons-material';
-import { PriceInput, Dropdown, NameInput, DescriptionInput } from '../../atoms';
+import { Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { PriceInput, Dropdown } from '../../atoms';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
@@ -11,10 +11,20 @@ import { updateAd } from '../../../api/services/ProductService';
 import { ProductData, TProductResponseType } from '../../../constants/apiTypes';
 import { OptionsComponent } from '../../../constants/options';
 
-interface EditAdCardProps {
-    ad: TProductResponseType;
-    onCancel: () => void;
-}
+const defaultProductData: ProductData = {
+  title: '',
+  price: { amount: 0, unit: 'TOMAN' },
+  category: '',
+  description: '',
+  productionYear: null,
+  brand: null,
+  images: [],
+};
+
+type EditAdCardProps = {
+  ad: TProductResponseType;
+  onCancel: () => void;
+};
 
 const normalizeDigits = (value: string): string => {
   const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
@@ -25,29 +35,24 @@ const normalizeDigits = (value: string): string => {
 const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const { t, i18n } = useTranslation();
   const { product_categories } = OptionsComponent();
-  const [formData, setFormData] = useState<ProductData>({
-        title: ad.title,
-        price: ad.price,
-        category: ad.category,
-        description: ad.description || '',
-        productionYear: ad.productionYear || null,
-        brand: ad.brand || '',
-    });
+  const [formData, setFormData] = useState<ProductData>({ ...defaultProductData, ...ad });
   const [images, setImages] = useState<File[]>([]);
   const language = i18n.language;
   const isRtl = language === 'fa';
 
   const handleChange = (field: keyof ProductData, value: any) => {
-    if (field === 'price') {
-      const normalizedValue = normalizeDigits(value.toString());
-      const numericValue = Number(normalizedValue);
-      if (!isNaN(numericValue)) {
-        setFormData(prev => ({ ...prev, price: { amount: numericValue, unit: prev.price.unit } }));
+    if (field === 'title' || field === 'price') {
+      if (field === 'price') {
+        const normalizedValue = normalizeDigits(value.toString());
+        const numericValue = Number(normalizedValue);
+        if (!isNaN(numericValue)) {
+          setFormData((prev) => ({ ...prev, price: { amount: numericValue, unit: prev.price.unit } }));
+        } else {
+          toast.error('Invalid input. Please enter a valid number.');
+        }
       } else {
-        toast.error('Invalid input. Please enter a valid number.');
+        setFormData((prev) => ({ ...prev, [field]: value }));
       }
-    } else {
-      setFormData(prev => ({ ...prev, [field]: value }));
     }
   };
 
@@ -55,51 +60,52 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     setImages(files);
   };
 
-    const handleEditAd = async () => {
-    const response = await updateAd(ad.id, formData);
+  const handleEditAd = async (id: number) => {
+    const response = await updateAd(id, formData);
     if (response.isSuccess) {
-      toast.success(t('success.ad_management.edit'));
-        onCancel();
+      toast(t('success.ad_management.edit'));
     } else {
-      toast.error(t('error.ad_management.edit_failed'));
+      toast(t('error.ad_management.edit_failed'));
     }
   };
 
   return (
-    <Card
-      sx={{
-        padding: '30px',
-        borderRadius: '20px',
-        boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.15)',
-        maxWidth: '900px',
-        margin: '20px auto',
-        direction: isRtl ? 'rtl' : 'ltr',
-      }}
-    >
+    <Card sx={{ padding: '30px', borderRadius: '20px', boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.15)', maxWidth: '900px', margin: '20px auto', direction: isRtl ? 'rtl' : 'ltr' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box>
           <Typography variant="h5">{formData.title}</Typography>
           <Typography variant="subtitle1">{resources[language]?.ad_list?.ad_status?.[ad.status]}</Typography>
         </Box>
         <Box>
-          <IconButton onClick={onCancel}>
-            <CloseIcon />
-          </IconButton>
-          <IconButton onClick={handleEditAd}>
-            <SaveIcon />
-          </IconButton>
+          <IconButton onClick={onCancel}><CloseIcon /></IconButton>
+          <IconButton onClick={() => handleEditAd(ad.id)}><SaveIcon /></IconButton>
         </Box>
       </Box>
 
       <Divider sx={{ marginY: '20px' }} />
 
-            <NameInput name="title" value={formData.title} onChange={(e) => handleChange('title', e.target.value)} />
-            <PriceInput value={formData.price} onChange={(price) => handleChange('price', price)} />
-            <Dropdown options={product_categories} value={formData.category} onChange={(selected) => handleChange('category', selected?.value || '')} />
-            <DescriptionInput value={formData.description} onChange={(value) => handleChange('description', value)} />
-            <NameInput name="brand" value={formData.brand} onChange={(e) => handleChange('brand', e.target.value)} />
-            <NameInput name="productionYear" value={formData.productionYear ? formData.productionYear.toString() : ''} onChange={(e) => handleChange('productionYear', Number(e.target.value))} />
-            <ImageUploadBox onUpload={handleImageUpload} />
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '15px' }}>
+        <Typography>{resources[language]?.general_inputs.price}</Typography>
+        <PriceInput
+          value={formData.price}
+          onChange={(price: { amount: number; unit: string }) => handleChange('price', price.amount)}
+          isRequired={true}
+        />
+      </Box>
+
+      <Divider sx={{ marginY: '20px' }} />
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+        {formData.images?.map((image, index) => (
+          <Box key={index} sx={{ width: '160px', height: '160px', position: 'relative' }}>
+            <img src={image} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <IconButton onClick={() => handleImageUpload(images.filter((_, i) => i !== index))} sx={{ position: 'absolute', top: 5, right: 5 }}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        ))}
+        {(formData.images?.length || 0) < 3 && <ImageUploadBox onUpload={handleImageUpload} />}
+      </Box>
     </Card>
   );
 };
