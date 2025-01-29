@@ -28,7 +28,7 @@ import { useAuth } from '../../../contexts';
 import { ProductData, TProductResponseType } from '../../../constants/apiTypes';
 
 type EditAdCardProps = {
-  ad: TProductResponseType;
+  ad: ProductData;
   onEdit: (updatedAd: TProductResponseType) => void;
   onCancel: () => void;
 };
@@ -103,7 +103,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onEdit, onCancel }) => {
       if (newToken) {
         auth.setToken(newToken);
       }
-  
+
       onEdit(response.data);
       setIsEditing(false);
       toast.success(resources[language]?.ad_list?.save_success || 'Changes saved successfully.');

@@ -266,7 +266,8 @@
             "ad_management": {
                 "retrieve_failed": "Error ocurred during retriving your ad's list.",
                 "status_change_failed": "Error ocurred during changing your ad's status.",
-                "delete_failed": "Error ocurred during deleting your ad."
+                "delete_failed": "Error ocurred during deleting your ad.",
+                "edit_failed": "Error ocurred during save your changes."
             },
             "report_history": {
                 "retrieve_failed": "Error ocurred during retriving your reports."
@@ -294,7 +295,8 @@
             },
             "ad_management": {
                 "status_change": "Ad's status changed successfully",
-                "delete": "Ad deleted successfully."
+                "delete": "Ad deleted successfully.",
+                "edit": "Ad edited successfully."
             }
         }
     },
@@ -565,7 +567,8 @@
             "ad_management": {
                 "retrieve_failed": "خطایی در گرفتن لیست آگهی‌هایتان رخ داد.",
                 "status_change_failed": "خطایی در تغییر وضعیت آگهی رخ داد.",
-                "delete_failed": "خطایی در حذف آگهی رخ داد."
+                "delete_failed": "خطایی در حذف آگهی رخ داد.",
+                "edit_failed": "خطایی در ذخیره‌ی تغییرات رخ داد."
             },
             "report_history": {
                 "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد."
@@ -593,7 +596,8 @@
             },
             "ad_management": {
                 "status_change": "وضعیت آگهی با موفقیت تغییر کرد.",
-                "delete": "آگهی با موفقیت حذف شد."
+                "delete": "آگهی با موفقیت حذف شد.",
+                "edit": "آگهی با موفقیت ویرایش شد."
             }
         }
     }

@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import { Box, Typography, TextField, Card, IconButton, MenuItem, Select, Tooltip } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { ConfirmationDialog } from '../../../components/molecules';
-import { TProductResponseType } from '../../../constants/apiTypes';
-import { updateAdStatus, deleteAd } from '../../../api/services/ProductService';
+import EditAdCard from './EditAdCard';
+import { TProductResponseType, ProductData } from '../../../constants/apiTypes';
+import { updateAdStatus, deleteAd, updateAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 
 interface AdCardProps {
@@ -14,7 +15,8 @@ interface AdCardProps {
 const AdCard: React.FC<AdCardProps> = ({ ad }) => {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const [isEditingModeActive, setIsEditingModeActive] = useState(false);
+  const [adNewStatus, setAdNewStatus] = useState(ad.status);
 
   const handleAdStatusChange = async (id: number, newStatus: string) => {
     const response = await updateAdStatus(id, newStatus);
@@ -36,13 +38,13 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
     }
   };
 
-
-  const handleEditAd = (id: number) => {
-    // const editingAd = ads.find((ad) => ad.id === id);
-    // if (editingAd) {
-    //   setEditingAdId(id);
-    //   setPreviousAdState(editingAd);
-    // }
+  const handleEditAd = async (id: number, productData: ProductData) => {
+    const response = await updateAd(id, productData);
+    if (response.isSuccess) {
+      toast(t('success.ad_management.edit'));
+    } else {
+      toast(t('error.ad_management.edit_failed'));
+    }
   };
 
   const handleEditAdTitle = (id: number) => (newTitle: string) => {
@@ -63,38 +65,28 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
           boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
         }}
       >
-        <Box sx={{ flex: 1, textAlign: 'left' }}>
-          {false ? (
-            <TextField
-              fullWidth
-              value={this.state.newTitle}
-              onChange={this.handleTitleChange}
-              onBlur={this.saveTitle}
-              autoFocus
-              variant="standard"
-            />
-          ) : (
-            <Tooltip title={ad.title} arrow>
-              <Typography
-                variant="h6"
-                sx={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  maxWidth: '150px',
-                }}
-              >
-                {ad.title}
-              </Typography>
-            </Tooltip>
-          )}
-        </Box>
+        <Tooltip title={ad.title} arrow>
+          <Typography
+            variant="h6"
+            sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '150px',
+            }}
+          >
+            {ad.title}
+          </Typography>
+        </Tooltip>
 
         <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px' }}>
-          {/* Status Dropdown */}
           <Select
-            value={status}
-            onChange={() => handleAdStatusChange(ad.id, ad.status)}    // ad new status??????
+            value={adNewStatus}
+            onChange={(e) => {
+              const newStatus = e.target.value;
+              setAdNewStatus(newStatus);
+              handleAdStatusChange(ad.id, newStatus);
+            }}
             displayEmpty
             sx={{ minWidth: '150px', fontSize: '1rem' }}
             inputProps={{
@@ -107,9 +99,9 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
           </Select>
         </Box>
         <Box sx={{ display: 'flex', gap: '10px' }}>
-          {/* <IconButton onClick={onEdit}>
+          <IconButton onClick={() => setIsEditingModeActive(true)}>
             <EditIcon />
-          </IconButton> */}
+          </IconButton>
           <IconButton onClick={() => setIsDialogOpen(true)}>
             <DeleteIcon />
           </IconButton>
@@ -119,10 +111,25 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
       <ConfirmationDialog
         isDialogOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
-        onCheck={() => handleDeleteAd}
+        onCheck={() => handleDeleteAd(ad.id)}
         title={t("report.user_management.confirmation_title")}
         message={t("report.user_management.confirmation_message")}
       />
+
+
+      <Box sx={{ marginTop: 4 }}>
+        <EditAdCard
+          title={ad.title}
+          price={ad.price.amount}
+          category={ad.category}
+          date={ad.createdAt}
+          description={ad.description}
+          images={ad.imageUrls}
+          status={ad.status}
+          onEdit={() => handleEditAd(ad.id, ad)}
+        // onCancel={onCloseEdit}
+        />
+      </Box>
     </>
   );
 }
