@@ -147,15 +147,15 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                         onChange={handleInputChange}
                     />
                     <PasswordInput
-                        value={newPassword}
-                        placeholder={t('dashboard.user.profile_management.new_password')}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        isValidatorActive={true}
-                    />
-                    <PasswordInput
                         value={currentPassword}
                         placeholder={t('dashboard.user.profile_management.current_password')}
                         onChange={(e) => setCurrentPassword(e.target.value)}
+                        isValidatorActive={true}
+                    />
+                    <PasswordInput
+                        value={newPassword}
+                        placeholder={t('dashboard.user.profile_management.new_password')}
+                        onChange={(e) => setNewPassword(e.target.value)}
                         isValidatorActive={true}
                     />
                     <PasswordInput
