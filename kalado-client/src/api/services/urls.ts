@@ -7,7 +7,7 @@ export const AUTH = {
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
     VERIFY: '/auth/verify',
-    FORETPASSWORD: '/auth/forget-password',
+    FORETPASSWORD: '/auth/forgot-password',
     RESETPASSWORD: '/auth/reset-password',
     CHANGEUSERTOADMIN: '/auth/roles',
 };
