@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Typography,
-  Grid,
-  Dialog,
-  DialogContent,
-  IconButton,
-  Card,
-} from '@mui/material';
-import { Download as DownloadIcon, Check as CheckIcon, Close as CloseIcon } from '@mui/icons-material';
+import { Box, Typography, Grid, Dialog, IconButton, Card } from '@mui/material';
+import { Download as DownloadIcon } from '@mui/icons-material';
 import { CustomButton } from '../../atoms';
 import { ConfirmationDialog } from '../../../components/molecules';
 import { ItemDetailsPopup } from '../../organisms';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { updateReportStatus } from '../../../api/services/ReportService';
 import { ReportStatusUpdateData, TReportResponseType } from '../../../constants/apiTypes';
 import { useModalContext, useProductContext } from '../../../contexts';
 
 interface ReportDetailsProps {
   report: TReportResponseType;
   onBackToList: () => void;
-  onBlockContent: (contentId: number) => void;
 }
 
-const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onBlockContent }) => {
+const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === 'fa';
   const [openImage, setOpenImage] = useState<string | null>(null);
   const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false);
   const [isBlockAdDialogOpen, setIsBlockAdDialogOpen] = useState(false);
-  const { isProductDetailsOpen, handleProductDetailsClick } = useModalContext();
+  const { handleProductDetailsClick } = useModalContext();
   const { singleProduct, loading, error, fetchSingleProduct } = useProductContext();
 
   useEffect(() => {
@@ -46,20 +38,22 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
     setOpenImage(null);
   };
 
-  const handleBlockConfirm = () => {
-    if (report) {
-      onBlockContent(report.reportedContentId);
+  const handleBlockUserConfirm = async () => {
+    const response = await updateReportStatus();
+    if (response.isSuccess) {
       toast(t('report.report_card.block_usr_success_message'));
+    } else {
+      toast(t('error.report_history.block_user_failed'));
     }
-    setIsBlockDialogOpen(false);
   };
 
-  const handleBlockAdConfirm = () => {
-    if (report) {
-      // Perform ad blocking logic
+  const handleBlockAdConfirm = async () => {
+    const response = await updateReportStatus();
+    if (response.isSuccess) {
       toast(t('report.report_card.block_ad_success_message'));
+    } else {
+      toast(t('error.report_history.block_ad_failed'));
     }
-    setIsBlockAdDialogOpen(false);
   };
 
   return (
@@ -203,7 +197,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
       <ConfirmationDialog
         isDialogOpen={isBlockDialogOpen}
         onClose={() => setIsBlockDialogOpen(false)}
-        onCheck={() => handleBlockConfirm()}
+        onCheck={() => handleBlockUserConfirm()}
         message={t('report.report_card.block_confirmation.title_usr')}
       />
 
