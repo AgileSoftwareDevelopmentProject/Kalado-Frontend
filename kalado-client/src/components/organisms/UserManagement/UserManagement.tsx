@@ -14,32 +14,16 @@ interface UserManageMentProps {
 
 const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
-  const isRtl = i18n.language === "fa";
-  const [users, setUsers] = useState<TUserProfileResponse[] | null>(userDataList);
-  const [selectedUser, setSelectedUser] = useState<TUserProfileResponse | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleBecomeAdmin = async (id: number) => {
+    setIsDialogOpen(false);
     const response = await changeUserToAdmin(id);
     if (response.isSuccess) {
-      toast(t("success.user_management.block_user"));
+      toast(t("success.user_management.become_admin_failed"));
     } else {
-      toast(t('error.user_management.block_failed'));
+      toast(t('error.user_management.admin_user'));
     }
-    // setIsDialogOpen(true);
-  };
-
-  const confirmUserStatusChange = () => {
-    // if (selectedUser && newStatus) {
-    //   setUsers((prevUsers) =>
-    //     prevUsers.map((user) =>
-    //       user.id === selectedUser.id ? { ...user, status: newStatus } : user
-    //     )
-    //   );
-    // }
-    setIsDialogOpen(false);
-    setSelectedUser(null);
-    // setNewStatus(null);
   };
 
   return (
@@ -50,7 +34,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
         maxWidth: '100vw',
         margin: '0 auto',
         padding: 20,
-        direction: isRtl ? "rtl" : "ltr",
+        direction: i18n.language === "fa" ? "rtl" : "ltr",
         overflow: "auto",
       }}
     >
@@ -58,11 +42,10 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
         <Box sx={{ textAlign: 'center' }}>
           <ErrorOutlineIcon sx={{ fontSize: 100, color: 'error.main' }} />
           <Typography variant="h6" sx={{ mt: 2 }}>
-            {t("'error.user_management.retrieve_failed'")}
+            {t("error.user_management.retrieve_failed")}
           </Typography>
         </Box>
       )}
-
 
       {userDataList && (
         <Box sx={{ width: "100%", maxWidth: "800px" }}>
@@ -90,7 +73,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                         fontWeight: "bold",
                       }}
                     >
-                      {t("report.user_management.user_info")}
+                      {t("dashboard.admin.user_management.user_info")}
                     </Typography>
                     <CardContent>
                       <Typography
@@ -100,25 +83,24 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                           marginBottom: 2,
                         }}
                       >
-                        {t("report.user_management.email")}: {user.username}
+                        {t("dashboard.admin.user_management.email")}: {user.username}
                       </Typography>
                       <Typography variant="body2" sx={{ marginBottom: 2 }}>
-                        {t("report.user_management.status")}:
-                        {user.blocked ? t("report.user_management.blocked") : t("report.user_management.allowed")}
+                        {t("dashboard.admin.user_management.status")}:
+                        {user.blocked ? t("dashboard.admin.user_management.blocked") : t("dashboard.admin.user_management.allowed")}
                       </Typography>
 
                       <CustomButton
-                        onClick={() => handleBecomeAdmin(user.id)}
-                        text={t("report.user_management.become_admin")}
+                        onClick={() => setIsDialogOpen(true)}
+                        text={t("dashboard.admin.user_management.become_admin")}
                       />
                     </CardContent>
                   </Card>
                   <ConfirmationDialog
                     isDialogOpen={isDialogOpen}
                     onClose={() => setIsDialogOpen(false)}
-                    onCheck={confirmUserStatusChange}
-                    title={t("report.user_management.confirmation_title")}
-                    message={t("report.user_management.confirmation_message")}
+                    onCheck={() => handleBecomeAdmin}
+                    message={t("dashboard.admin.user_management.confirmation_message")}
                   />
                 </Grid>
               ))

@@ -192,6 +192,17 @@
                 "menu": {
                     "one": "Users Management",
                     "two": "Report History"
+                },
+                "user_management": {
+                    "user_info": "User Information",
+                    "email": "Email Address",
+                    "status": "Status",
+                    "allowed": "Allowed",
+                    "blocked": "Blocked",
+                    "confirmation_message": "Are you sure you want to make the user an admin?",
+                    "confirm": "Confirm",
+                    "cancel": "Cancel",
+                    "become_admin": "Become Admin"
                 }
             }
         },
@@ -261,7 +272,8 @@
             },
             "user_management": {
                 "retrive_failed": "Error ocurred during retriving user's list.",
-                "block_failed": "Error ocurred during blocking the user."
+                "block_failed": "Error ocurred during blocking the user.",
+                "become_admin_failed": "Error ocurred during changing the user to admin."
             },
             "ad_management": {
                 "retrieve_failed": "Error ocurred during retriving your ad's list.",
@@ -493,6 +505,18 @@
                 "menu": {
                     "one": "مدیریت کاربران",
                     "two": "تاریخچه‌ی تخلفات"
+                },
+                "user_management": {
+                    "user_info": "اطلاعات کاربر",
+                    "title": "مدیریت کاربران",
+                    "email": "آدرس ایمیل",
+                    "status": "وضعیت",
+                    "allowed": "مجاز",
+                    "blocked": "مسدود",
+                    "confirmation_message": "آیا مطمئن هستید که می‌خواهید کاربر را ادمین کنید؟",
+                    "confirm": "تأیید",
+                    "cancel": "لغو",
+                    "become_admin": "ادمین شو"
                 }
             }
         },
@@ -562,7 +586,8 @@
             },
             "user_management": {
                 "retrive_failed": "خطایی در گرفتن لیست کاربران رخ داد.",
-                "block_failed": "خطایی در مسدودسازی کاربر رخ داد."
+                "block_failed": "خطایی در مسدودسازی کاربر رخ داد.",
+                "become_admin_failed": "خطایی در ادمین کردن کاربر رخ داد."
             },
             "ad_management": {
                 "retrieve_failed": "خطایی در گرفتن لیست آگهی‌هایتان رخ داد.",
