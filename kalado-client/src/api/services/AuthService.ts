@@ -59,6 +59,5 @@ export async function changeUserToAdmin(userId: number) {
         'PUT',
         userId,
         {},
-        'application/json'
     );
 }

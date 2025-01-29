@@ -51,6 +51,10 @@ const Dropdown: React.FC<DropdownProps> = ({ options, placeholder, onChange, val
                 onChange(newValue);
             }}
             value={value}
+            sx={{
+                width: '100%',
+                zIndex: 1300,
+            }}
         />
     );
 };
