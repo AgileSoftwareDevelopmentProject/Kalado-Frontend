@@ -8,6 +8,8 @@ import { getAllUsers } from '../../api/services/UserService';
 import { getAllReports } from '../../api/services/ReportService';
 import { TUserProfileResponse, TReportResponseType } from '../../constants/apiTypes';
 import { toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
+
 
 
 const AdminDashboard: React.FC = () => {
@@ -15,16 +17,23 @@ const AdminDashboard: React.FC = () => {
     const { admin_dashboard_menu } = OptionsComponent();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(admin_dashboard_menu[0].value);
     const [userDataList, setUserDataList] = useState<TUserProfileResponse[] | null>(null);
+    
     const [userReportList, setUserReportList] = useState<TReportResponseType[] | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchUserDataList = async () => {
-        const response = await getAllUsers();
-        console.log("fetchUserDataList");
-        console.log(response);
-        if (response.isSuccess) {
-            setUserDataList(response.data as TUserProfileResponse[]);
-        } else {
+        setIsLoading(true);
+        try {
+            const response = await getAllUsers();
+            if (response.isSuccess) {
+                setUserDataList(response.data as TUserProfileResponse[]);
+            } else {
+                toast(t('error.user_management.retrieve_failed'));
+            }
+        } catch (error) {
             toast(t('error.user_management.retrieve_failed'));
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -74,7 +83,13 @@ const AdminDashboard: React.FC = () => {
             </SideBar>
 
             <Box sx={{ flexGrow: 1, padding: 2 }}>
-                {renderContent()}
+                {isLoading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                        <CircularProgress />
+                    </Box>
+                ) : (
+                    renderContent()
+                )}
             </Box>
         </Box>
     );

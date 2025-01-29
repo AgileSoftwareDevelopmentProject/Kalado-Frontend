@@ -17,7 +17,8 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
   const { token } = useAuth();
-  const [users, setUsers] = useState<TUserProfileResponse[] | null>(userDataList);
+  // const [users, setUsers] = useState<TUserProfileResponse[] | null>(userDataList);
+  const [users, setUsers] = useState<TUserProfileResponse[]>(userDataList || []);
   const [selectedUser, setSelectedUser] = useState<TUserProfileResponse | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -44,6 +45,12 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
     setSelectedUser(null);
     // setNewStatus(null);
   };
+
+  useEffect(() => {
+    if (userDataList) {
+        setUsers(userDataList);
+    }
+  }, [userDataList]);
 
   return (
     <Box
