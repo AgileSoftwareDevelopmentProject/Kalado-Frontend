@@ -102,9 +102,30 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
             <NameInput name="lastName" value={formData.lastName} onChange={handleInputChange} />
             <PhoneNumberInput value={formData.phoneNumber} disabled={true} isValidatorActive={false} />
             <NameInput name="address" value={formData.address} onChange={handleInputChange} />
-            <PasswordInput name="currentPassword" value={formData.currentPassword} onChange={handleInputChange} isValidatorActive={true} />
-            <PasswordInput name="newPassword" value={formData.newPassword} onChange={handleInputChange} isValidatorActive={true} />
-            <PasswordInput name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} isValidatorActive={true} />
+
+            <PasswordInput
+                        name="currentPassword"
+                        value={formData.currentPassword}
+                        placeholder={t('dashboard.user.profile_management.current_password')}
+                        onChange={handleInputChange}
+                        isValidatorActive={true}
+            />
+
+            <PasswordInput
+                        name="newPassword"
+                        placeholder={t('dashboard.user.profile_management.new_password')}
+                        value={formData.newPassword}
+                        onChange={handleInputChange}
+                        isValidatorActive={true}
+            />
+            <PasswordInput
+                        name="confirmPassword"
+                        placeholder={t('dashboard.user.profile_management.repeat_new_password')}
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        isValidatorActive={true}
+            />
+
             <CustomButton text={t('dashboard.user.profile_management.save_changes_btn')} onClick={handleSaveChanges} type="submit" />
         </Box>
     );
