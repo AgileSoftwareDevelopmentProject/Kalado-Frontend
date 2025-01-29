@@ -18,9 +18,9 @@ const ERROR_MESSAGES: ErrorMessages = {
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: BASE_URL,
-    headers: {
-        'Content-Type': 'application/json'
-    }
+    // headers: {
+    //     'Content-Type': 'application/json'
+    // }
 });
 
 axiosInstance.interceptors.request.use(
@@ -73,10 +73,13 @@ export const sendRequest = async <T>(
 ): Promise<ApiResponse<T>> => {
     try {
         console.log('Sending request: ', url, method, data);
+        
+        // Only include Content-Type in headers if it's explicitly provided
         const headers = {
             ...config.headers,
             ...(contentType ? { 'Content-Type': contentType } : {})
         };
+
         const response: AxiosResponse<T> & { isSuccess: boolean } = await axiosInstance({
             method,
             url,
@@ -84,6 +87,7 @@ export const sendRequest = async <T>(
             ...config,
             headers
         });
+        
         return {
             data: response.data,
             isSuccess: true
