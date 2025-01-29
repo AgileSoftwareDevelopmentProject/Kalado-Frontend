@@ -124,16 +124,17 @@ export interface TReportResponseType {
 
 // User
 export interface ProfileData {
-    profileId: number;
+    id: number;
     firstName: string;
     lastName: string;
     phoneNumber: string;
-    profileImageUrl: string | null;
+    profileImage: string | null;
     address: string | null;
     currentPassword: string;
     newPassword: string | null;
     confirmPassword: string;
 }
+
 
 export type TUserProfileResponse = {
     id: number;
