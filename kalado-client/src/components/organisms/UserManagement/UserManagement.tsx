@@ -15,6 +15,7 @@ interface UserManageMentProps {
 const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
   const handleBecomeAdmin = async (id: number) => {
     setIsDialogOpen(false);
@@ -91,24 +92,26 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                       </Typography>
 
                       <CustomButton
-                        onClick={() => setIsDialogOpen(true)}
+                        onClick={() => {
+                          setSelectedUserId(user.id);
+                          setIsDialogOpen(true);
+                        }}
                         text={t("dashboard.admin.user_management.become_admin")}
                       />
                     </CardContent>
                   </Card>
-                  <ConfirmationDialog
-                    isDialogOpen={isDialogOpen}
-                    onClose={() => setIsDialogOpen(false)}
-                    onCheck={() => handleBecomeAdmin}
-                    message={t("dashboard.admin.user_management.confirmation_message")}
-                  />
                 </Grid>
               ))
             }
           </Grid>
         </Box>
       )}
-
+      <ConfirmationDialog
+        isDialogOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onCheck={() => selectedUserId && handleBecomeAdmin(selectedUserId)}
+        message={t("dashboard.admin.user_management.confirmation_message")}
+      />
     </Box>
   );
 };
