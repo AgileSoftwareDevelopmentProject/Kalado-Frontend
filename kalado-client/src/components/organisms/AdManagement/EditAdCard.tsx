@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useTranslation } from "react-i18next";
-import { Box, Typography, Card, IconButton, MenuItem, Select, Divider } from '@mui/material';
-import { Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import { PriceInput, Dropdown } from '../../atoms';
+import { useTranslation } from 'react-i18next';
+import { Box, Typography, Card, IconButton, Divider } from '@mui/material';
+import { Save as SaveIcon, Close as CloseIcon } from '@mui/icons-material';
+import { PriceInput, Dropdown, NameInput, DescriptionInput } from '../../atoms';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
@@ -11,10 +11,10 @@ import { updateAd } from '../../../api/services/ProductService';
 import { ProductData, TProductResponseType } from '../../../constants/apiTypes';
 import { OptionsComponent } from '../../../constants/options';
 
-type EditAdCardProps = {
-  ad: TProductResponseType;
-  onCancel: () => void;
-};
+interface EditAdCardProps {
+    ad: TProductResponseType;
+    onCancel: () => void;
+}
 
 const normalizeDigits = (value: string): string => {
   const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
@@ -25,9 +25,16 @@ const normalizeDigits = (value: string): string => {
 const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const { t, i18n } = useTranslation();
   const { product_categories } = OptionsComponent();
-  const [formData, setFormData] = useState<ProductData>(ad);
+  const [formData, setFormData] = useState<ProductData>({
+        title: ad.title,
+        price: ad.price,
+        category: ad.category,
+        description: ad.description || '',
+        productionYear: ad.productionYear || null,
+        brand: ad.brand || '',
+    });
   const [images, setImages] = useState<File[]>([]);
-  const language = i18n.language as keyof typeof resources;
+  const language = i18n.language;
   const isRtl = language === 'fa';
 
   const handleChange = (field: keyof ProductData, value: any) => {
@@ -35,38 +42,28 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
       const normalizedValue = normalizeDigits(value.toString());
       const numericValue = Number(normalizedValue);
       if (!isNaN(numericValue)) {
-        setFormData((prev) => ({ ...prev, price: { amount: numericValue, unit: prev.price.unit } }));
+        setFormData(prev => ({ ...prev, price: { amount: numericValue, unit: prev.price.unit } }));
       } else {
         toast.error('Invalid input. Please enter a valid number.');
       }
     } else {
-      setFormData((prev) => ({ ...prev, [field]: value }));
+      setFormData(prev => ({ ...prev, [field]: value }));
     }
   };
 
   const handleImageUpload = (files: File[]) => {
-    console.log("handleImageUpload");
-    console.log(files);
     setImages(files);
   };
 
-  const handleImageDelete = (index: number) => {
-    // setFormData((prev) => ({
-    //   ...prev,
-    //   images: prev.images?.filter((_, i) => i !== index) || [],
-    // }));
-  };
-
-  const handleEditAd = async (id: number) => {
-    const response = await updateAd(id, formData);
+    const handleEditAd = async () => {
+    const response = await updateAd(ad.id, formData);
     if (response.isSuccess) {
-      toast(t('success.ad_management.edit'));
+      toast.success(t('success.ad_management.edit'));
+        onCancel();
     } else {
-      toast(t('error.ad_management.edit_failed'));
+      toast.error(t('error.ad_management.edit_failed'));
     }
   };
-
-  const categories = resources[language]?.category;
 
   return (
     <Card
@@ -88,7 +85,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
           <IconButton onClick={onCancel}>
             <CloseIcon />
           </IconButton>
-          <IconButton onClick={() => handleEditAd(ad.id)}>
+          <IconButton onClick={handleEditAd}>
             <SaveIcon />
           </IconButton>
         </Box>
@@ -96,63 +93,13 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
 
       <Divider sx={{ marginY: '20px' }} />
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '15px' }}>
-        {/* Price */}
-        <Typography>{resources[language]?.general_inputs.price}</Typography>
-        <PriceInput
-          value={formData.price}
-          onChange={(price: { amount: number; unit: string }) => setFormData(prevData => ({ ...prevData, price }))}
-          isRequired={true}
-        />
-        {/* <TextField
-          value={formData.price.amount}
-          onChange={(e) => handleChange('price', e.target.value)}
-          fullWidth
-          variant="outlined"
-          size="small"
-          inputProps={{ inputMode: 'numeric', pattern: '[0-9۰-۹]*' }}
-          InputProps={{ endAdornment: <InputAdornment position="end">{formData.price.unit}</InputAdornment> }}
-        /> */}
-
-        {/* Category */}
-        {/* <Typography>{resources[language]?.create_ad.input.category}</Typography>
-        <Select
-          value={formData.category} // Set initial value to formData.category
-          onChange={(e) => handleChange('category', e.target.value)}
-          fullWidth
-        >
-          {Object.keys(categories || {}).map((key) => (
-            <MenuItem key={key} value={key}>
-              {categories[key as keyof typeof categories]}
-            </MenuItem>
-          ))}
-        </Select> */}
-
-        <Dropdown
-          options={product_categories}
-          onChange={(selectedOption: Option | null) => setFormData(prevData => ({
-            ...prevData,
-            category: selectedOption ? selectedOption.value : ''
-          }))}
-          value={product_categories.find(option => option.value === formData.category) || null}
-          width={'100%'}
-        />
-      </Box>
-
-      <Divider sx={{ marginY: '20px' }} />
-
-      {/* Image Upload */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-        {formData.images?.map((image, index) => (
-          <Box key={index} sx={{ width: '160px', height: '160px', position: 'relative' }}>
-            <img src={image} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            <IconButton onClick={() => handleImageDelete(index)} sx={{ position: 'absolute', top: 5, right: 5 }}>
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        ))}
-        {(formData.images?.length || 0) < 3 && <ImageUploadBox onUpload={handleImageUpload} />}
-      </Box>
+            <NameInput name="title" value={formData.title} onChange={(e) => handleChange('title', e.target.value)} />
+            <PriceInput value={formData.price} onChange={(price) => handleChange('price', price)} />
+            <Dropdown options={product_categories} value={formData.category} onChange={(selected) => handleChange('category', selected?.value || '')} />
+            <DescriptionInput value={formData.description} onChange={(value) => handleChange('description', value)} />
+            <NameInput name="brand" value={formData.brand} onChange={(e) => handleChange('brand', e.target.value)} />
+            <NameInput name="productionYear" value={formData.productionYear ? formData.productionYear.toString() : ''} onChange={(e) => handleChange('productionYear', Number(e.target.value))} />
+            <ImageUploadBox onUpload={handleImageUpload} />
     </Card>
   );
 };
