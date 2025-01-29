@@ -285,7 +285,8 @@
                 "block_failed": "Error ocurred during blocking the user.",
                 "become_admin_failed": "Error ocurred during changing the user to admin.",
                 "required_current_password": "Current password is required.",
-                "password_mismatch": "New password and confirmation do not match."
+                "password_mismatch": "New password and confirmation do not match.",
+                "confirm_password_required": "Confirm password cannot be empty."
             },
             "ad_management": {
                 "retrieve_failed": "Error ocurred during retriving your ad's list.",
@@ -609,7 +610,9 @@
                 "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد.",
                 "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد.",
                 "required_current_password": "وارد کردن رمز عبور فعلی الزامی است.",
-                "password_mismatch": "رمز عبور جدید و تکرار آن مطابقت ندارند."
+                "password_mismatch": "رمز عبور جدید و تکرار آن مطابقت ندارند.",
+                "confirm_password_required": "تکرار رمز عبور نمی‌تواند خالی باشد."
+
             },
             "user_management": {
                 "retrive_failed": "خطایی در گرفتن لیست کاربران رخ داد.",

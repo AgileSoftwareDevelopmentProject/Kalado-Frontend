@@ -70,13 +70,16 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                 toast.error(t('error.profile_management.password_mismatch'));
                 return;
             }
-        }
-
-        const response = await modifyProfile(formData, profileImageFile);
-        if (response.isSuccess) {
-            toast.success(t('success.profile_management'));
-        } else {
-            toast.error(t('error.profile_management.save_failed'));
+            if (!formData.confirmPassword) {
+                toast.error(t('error.profile_management.confirm_password_required'));
+                return;
+            }
+            const response = await modifyProfile(formData, profileImageFile);
+            if (response.isSuccess) {
+                toast.success(t('success.profile_management'));
+            } else {
+                toast.error(t('error.profile_management.save_failed'));
+            }
         }
     };
 
