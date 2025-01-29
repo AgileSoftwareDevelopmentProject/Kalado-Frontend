@@ -17,20 +17,16 @@ const Filter: React.FC = () => {
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.trim();
 
-    const persianToEnglish = (str: string) =>
-      str.replace(/[٠-٩]/g, (d) => (d.charCodeAt(0) - 1632).toString()) // Persian digits
-         .replace(/[۰-۹]/g, (d) => (d.charCodeAt(0) - 1776).toString()); // Arabic digits
+    if (!/^\d*$/.test(value)) {
+      return;
+    }
 
-    value = persianToEnglish(value);
-
-    if (/^\d*$/.test(value)) {
       const numericValue = value ? parseFloat(value) : null;
 
       if (e.target.name === 'minPrice') {
-        setMinPrice(numericValue !== null && numericValue < 0 ? 0 : numericValue);
+        setMinPrice(numericValue);
       } else if (e.target.name === 'maxPrice') {
-        setMaxPrice(numericValue !== null && numericValue < 0 ? 0 : numericValue);
-      }
+        setMaxPrice(numericValue);
     }
   };
 
@@ -54,6 +50,7 @@ const Filter: React.FC = () => {
         minPlaceholder={t("filter.min_price")}
         maxPlaceholder={t("filter.max_price")}
         onChange={handlePriceChange}
+        onInput={(e: any) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
       />
 
       <LabelList
