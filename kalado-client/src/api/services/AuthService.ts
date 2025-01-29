@@ -54,7 +54,7 @@ export async function resetPassword(token: string, newPassword: string) {
     );
 }
 
-export async function changeUserToAdmin(userId: number, role: UserType) {
+export async function changeUserRole(userId: number, role: string) {
     return sendRequest(
         AUTH.CHANGE_USER_ROLE(userId, role),
         'PUT'

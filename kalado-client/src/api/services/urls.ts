@@ -1,4 +1,4 @@
-import { SortOrder, UserType } from "../../constants/types";
+import { SortOrder } from "../../constants/types";
 
 export const BASE_URL = 'http://kaladoshop.com:8083/v1';
 
@@ -9,7 +9,7 @@ export const AUTH = {
     VERIFY: '/auth/verify',
     FORETPASSWORD: '/auth/forgot-password',
     RESETPASSWORD: '/auth/reset-password',
-    CHANGE_USER_ROLE: (userId: number, role: UserType) => `/roles/update/${userId}?newRole=${role}`,
+    CHANGE_USER_ROLE: (userId: number, role: string) => `/roles/update/${userId}?newRole=${role}`,
 };
 
 export const USER = {
