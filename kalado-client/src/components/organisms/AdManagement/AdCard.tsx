@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
-import { Box, Typography, TextField, Card, IconButton, MenuItem, Select, Tooltip } from '@mui/material';
+import { Box, Typography, Card, IconButton, MenuItem, Select, Tooltip } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { ConfirmationDialog } from '../../../components/molecules';
 import EditAdCard from './EditAdCard';
@@ -18,9 +18,18 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
   const [isEditingModeActive, setIsEditingModeActive] = useState(false);
   const [adNewStatus, setAdNewStatus] = useState(ad.status);
 
+  useEffect(() => {
+    setAdNewStatus(ad.status);
+  }, [ad]);
+
+  const handleSelectChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const newStatus = e.target.value as string;
+    setAdNewStatus(newStatus);
+    handleAdStatusChange(ad.id, newStatus);
+  };
+
   const handleAdStatusChange = async (id: number, newStatus: string) => {
     const response = await updateAdStatus(id, newStatus);
-    setIsDialogOpen(false);
     if (response.isSuccess) {
       toast(t('success.ad_management.status_change'));
     } else {
@@ -36,12 +45,6 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
     } else {
       toast(t('error.ad_management.delete_failed'));
     }
-  };
-
-  const handleEditAdTitle = (id: number) => (newTitle: string) => {
-    // setAds((prevAds) =>
-    //   prevAds.map((ad) => (ad.id === id ? { ...ad, title: newTitle } : ad))
-    // );
   };
 
   return (
@@ -73,28 +76,23 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
         <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px' }}>
           <Select
             value={adNewStatus}
-            onChange={(e) => {
-              const newStatus = e.target.value;
-              setAdNewStatus(newStatus);
-              handleAdStatusChange(ad.id, newStatus);
-            }}
+            onChange={() => handleSelectChange}
             displayEmpty
             sx={{ minWidth: '150px', fontSize: '1rem' }}
             inputProps={{
               'aria-label': t('ad_list.ad_status.dropdown'),
             }}
           >
-            <MenuItem value="active">{t('ad_list.ad_status.ACTIVE')}</MenuItem>
-            <MenuItem value="reserved">{t('ad_list.ad_status.RESERVED')}</MenuItem>
-            <MenuItem value="sold">{t('ad_list.ad_status.SOLD')}</MenuItem>
+            <MenuItem value="ACTIVE">{t('ad_list.ad_status.ACTIVE')}</MenuItem>
+            <MenuItem value="RESERVED">{t('ad_list.ad_status.RESERVED')}</MenuItem>
+            <MenuItem value="SOLD">{t('ad_list.ad_status.SOLD')}</MenuItem>
+            <MenuItem value="DELETED">{t('ad_list.ad_status.DELETED')}</MenuItem>
           </Select>
         </Box>
+
         <Box sx={{ display: 'flex', gap: '10px' }}>
           <IconButton onClick={() => setIsEditingModeActive(true)}>
             <EditIcon />
-          </IconButton>
-          <IconButton onClick={() => setIsDialogOpen(true)}>
-            <DeleteIcon />
           </IconButton>
         </Box>
       </Card>
