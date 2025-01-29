@@ -1,6 +1,7 @@
 import { sendRequest } from './axiosInstance'
 import { AUTH } from './urls'
 import { TLoginResponseType, UserData } from '../../constants/apiTypes';
+import { UserType } from '../../constants/types';
 
 
 export async function loginUser(email: string, password: string) {
@@ -53,12 +54,9 @@ export async function resetPassword(token: string, newPassword: string) {
     );
 }
 
-export async function changeUserToAdmin(userId: number) {
+export async function changeUserToAdmin(userId: number, role: UserType) {
     return sendRequest(
-        AUTH.CHANGEUSERTOADMIN,
-        'PUT',
-        userId,
-        {},
-        undefined
+        AUTH.CHANGE_USER_ROLE(userId, role),
+        'PUT'
     );
 }

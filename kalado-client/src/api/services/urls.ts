@@ -1,4 +1,4 @@
-import { SortOrder } from "../../constants/types";
+import { SortOrder, UserType } from "../../constants/types";
 
 export const BASE_URL = 'http://kaladoshop.com:8083/v1';
 
@@ -9,7 +9,7 @@ export const AUTH = {
     VERIFY: '/auth/verify',
     FORETPASSWORD: '/auth/forgot-password',
     RESETPASSWORD: '/auth/reset-password',
-    CHANGEUSERTOADMIN: '/auth/roles',
+    CHANGE_USER_ROLE: (userId: number, role: UserType) => `/roles/update/${userId}?newRole=${role}`,
 };
 
 export const USER = {
@@ -21,6 +21,7 @@ export const USER = {
     ALL_USER: '/user/all'
 };
 
+
 export const PRODUCT = {
     CREATE: '/product',
     UPDATE: (productId: number) => `/product/${productId}`,
@@ -31,6 +32,7 @@ export const PRODUCT = {
     GET_BY_CATEGORY: (category: string) => `/product/category/${category}`,
     GET_SINGLE: (productId: number) => `/product/${productId}`,
 };
+
 
 export const SEARCH = {
     BY_KEYWORD: (keyword: string) => `/search/products?keyword=${encodeURIComponent(keyword)}`,
@@ -47,6 +49,7 @@ export const SEARCH = {
         `/search/products?keyword=${encodeURIComponent(keyword)}&minPrice=${minPrice}&maxPrice=${maxPrice}&timeFilter=${timeFilter}`,
     PAGINATED: (page: number, size: number) => `/search/products?page=${page}&size=${size}`,
 };
+
 
 export const REPORT = {
     CREATE: '/reports',
