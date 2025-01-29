@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
   Grid,
-  Button,
   Dialog,
   DialogContent,
   IconButton,
   Card,
 } from '@mui/material';
 import { Download as DownloadIcon, Check as CheckIcon, Close as CloseIcon } from '@mui/icons-material';
+import { CustomButton } from '../../atoms';
+import { ItemDetailsPopup } from '../../organisms';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
-import CustomToast from '../../molecules/CustomToast/CustomToast';
 import { ReportStatusUpdateData, TReportResponseType } from '../../../constants/apiTypes';
+import { useModalContext, useProductContext } from '../../../contexts';
 
 interface ReportDetailsProps {
   report: TReportResponseType;
@@ -29,6 +29,13 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
   const [openImage, setOpenImage] = useState<string | null>(null);
   const [isBlockDialogOpen, setIsBlockDialogOpen] = useState(false);
   const [isBlockAdDialogOpen, setIsBlockAdDialogOpen] = useState(false);
+  const { isProductDetailsOpen, handleProductDetailsClick } = useModalContext();
+  const { singleProduct, loading, error, fetchSingleProduct } = useProductContext();
+
+  useEffect(() => {
+    if (!report.reportedContentId) return;
+    fetchSingleProduct(Number(report.reportedContentId));
+  }, [report.reportedContentId]);
 
   const handleOpenImage = (image: string) => {
     setOpenImage(image);
@@ -72,7 +79,6 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
 
   return (
     <>
-      <CustomToast />
       <Card
         sx={{
           width: '40vw',
@@ -183,56 +189,16 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
           </Grid>
         </Grid>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: isRtl ? 'row-reverse' : 'row',
-            justifyContent: 'space-between',
-            gap: 2,
-            marginTop: 4,
-          }}
-        >
-          <Button
-            variant="outlined"
-            onClick={() => window.open(`/product/${report.reportedContentId}`, '_blank')}
-            sx={{
-              textTransform: 'none',
-            }}
-          >
-            {t('report.report_card.actions.go_to_ad')}
-          </Button>
+        <Box sx={{ display: 'flex', flexDirection: isRtl ? 'row-reverse' : 'row', justifyContent: 'space-between', gap: 2, marginTop: 4 }}>
+
+          <CustomButton text={t('report.report_card.actions.go_to_ad')} onClick={handleProductDetailsClick} />
 
           <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => setIsBlockAdDialogOpen(true)}
-              sx={{
-                textTransform: 'none',
-              }}
-            >
-              {t('report.report_card.actions.block_ad')}
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => setIsBlockDialogOpen(true)}
-              sx={{
-                textTransform: 'none',
-              }}
-            >
-              {t('report.report_card.actions.block_user')}
-            </Button>
+            <CustomButton text={t('report.report_card.actions.block_ad')} onClick={() => setIsBlockAdDialogOpen(true)} />
+            <CustomButton text={t('report.report_card.actions.block_user')} onClick={() => setIsBlockDialogOpen(true)} />
           </Box>
 
-          <Button
-            variant="outlined"
-            onClick={onBackToList}
-            sx={{
-              textTransform: 'none',
-            }}
-          >
-            {t('report.report_card.actions.back_to_list')}
-          </Button>
+          <CustomButton text={t('report.report_card.actions.back_to_list')} onClick={() => onBackToList()} />
         </Box>
 
         <Dialog open={!!openImage} onClose={handleCloseImage}>
@@ -354,6 +320,8 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
           </Box>
         </DialogContent>
       </Dialog>
+
+      {singleProduct && <ItemDetailsPopup singleProduct={singleProduct} />}
     </>
   );
 };

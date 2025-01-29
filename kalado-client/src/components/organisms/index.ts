@@ -3,6 +3,7 @@ export { default as NavBar } from './NavBar/NavBar';
 export { default as ItemCard } from './Items/ItemCard';
 export { default as ItemDetailsCard } from './Items/ItemDetailsCard';
 export { default as ItemsHolder } from './Items/ItemsHolder';
+export { default as ItemDetailsPopup } from './Items/ItemDetailsPopup';
 
 export { default as AdManagement } from './AdManagement/AdManagement';
 export { default as AdCard } from './AdManagement/AdCard';
