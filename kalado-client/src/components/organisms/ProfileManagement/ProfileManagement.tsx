@@ -134,6 +134,18 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                         value={modifiedUserData.lastName || ''}
                         onChange={handleInputChange}
                     />
+                    <PhoneNumberInput
+                        value={modifiedUserData.phoneNumber || ''}
+                        onChange={handleInputChange}
+                        disabled={true}
+                        isValidatorActive={false}
+                    />
+                    <NameInput
+                        name="address"
+                        placeholder={t('dashboard.user.profile_management.address')}
+                        value={modifiedUserData.address || ''}
+                        onChange={handleInputChange}
+                    />
                     <PasswordInput
                         value={newPassword}
                         placeholder={t('dashboard.user.profile_management.new_password')}
@@ -151,18 +163,6 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                         placeholder={t('dashboard.user.profile_management.repeat_new_password')}
                         onChange={(e) => setRepeatNewPassword(e.target.value)}
                         isValidatorActive={true}
-                    />
-                    <PhoneNumberInput
-                        value={modifiedUserData.phoneNumber || ''}
-                        onChange={handleInputChange}
-                        disabled={true}
-                        isValidatorActive={false}
-                    />
-                    <NameInput
-                        name="address"
-                        placeholder={t('dashboard.user.profile_management.address')}
-                        value={modifiedUserData.address || ''}
-                        onChange={handleInputChange}
                     />
                     <CustomButton
                         text={t('dashboard.user.profile_management.save_changes_btn')}
