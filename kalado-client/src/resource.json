@@ -174,8 +174,7 @@
             "user": {
                 "menu": {
                     "one": "Profile Management",
-                    "two": "Ads Management",
-                    "three": "Report History"
+                    "two": "Ads Management"
                 },
                 "profile_management": {
                     "first_name": "First Name",
@@ -190,9 +189,8 @@
             },
             "admin": {
                 "menu": {
-                    "one": "Profile Management",
-                    "two": "Users Management",
-                    "three": "Report History"
+                    "one": "Users Management",
+                    "two": "Report History"
                 }
             }
         },
@@ -468,8 +466,7 @@
             "user": {
                 "menu": {
                     "one": "مدیریت پروفایل",
-                    "two": "مدیریت آگهی‌ها",
-                    "three": "تاریخچه‌ی تخلفات"
+                    "two": "مدیریت آگهی‌ها"
                 },
                 "profile_management": {
                     "first_name": "نام",
@@ -484,9 +481,8 @@
             },
             "admin": {
                 "menu": {
-                    "one": "مدیریت پروفایل",
-                    "two": "مدیریت کاربران",
-                    "three": "تاریخچه‌ی تخلفات"
+                    "one": "مدیریت کاربران",
+                    "two": "تاریخچه‌ی تخلفات"
                 }
             }
         },

@@ -8,53 +8,30 @@ import { getAllUsers } from '../../api/services/UserService';
 import { getAllReports } from '../../api/services/ReportService';
 import { TUserProfileResponse, TReportResponseType } from '../../constants/apiTypes';
 import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
-
-
 
 const AdminDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { admin_dashboard_menu } = OptionsComponent();
     const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(admin_dashboard_menu[0].value);
     const [userDataList, setUserDataList] = useState<TUserProfileResponse[] | null>(null);
-    
     const [userReportList, setUserReportList] = useState<TReportResponseType[] | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
 
     const fetchUserDataList = async () => {
-        setIsLoading(true);
-        try {
-            const response = await getAllUsers();
-            if (response.isSuccess) {
-                setUserDataList(response.data as TUserProfileResponse[]);
-            } else {
-                toast(t('error.user_management.retrieve_failed'));
-            }
-        } catch (error) {
+        const response = await getAllUsers();
+        if (response.isSuccess) {
+            setUserDataList(response.data as TUserProfileResponse[]);
+        } else {
             toast(t('error.user_management.retrieve_failed'));
-        } finally {
-            setIsLoading(false);
         }
     };
 
     const fetchUserReportList = async () => {
-        setIsLoading(true);
-        try {
-            const response = await getAllReports();
-            if (response.isSuccess) {
-                setUserReportList(response.data as TReportResponseType[]);
-            } else {
-                toast(t('error.report_history.retrieve_failed'));
-            }
-        } catch (error) {
+        const response = await getAllReports();
+        if (response.isSuccess) {
+            setUserReportList(response.data as TReportResponseType[]);
+        } else {
             toast(t('error.report_history.retrieve_failed'));
-        } finally {
-            setIsLoading(false);
         }
-    };
-
-    const handleSelectMenu = (menuTitle: string) => {
-        setSelectedMenuTitle(menuTitle);
     };
 
     useEffect(() => {
@@ -82,19 +59,13 @@ const AdminDashboard: React.FC = () => {
             <SideBar>
                 <IconList
                     categories={admin_dashboard_menu}
-                    onSelectCategory={handleSelectMenu}
+                    onSelectCategory={(menuTitle: string) => setSelectedMenuTitle(menuTitle)}
                     selectedCategory={selectedMenuTitle}
                 />
             </SideBar>
 
             <Box sx={{ flexGrow: 1, padding: 2 }}>
-                {isLoading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                        <CircularProgress />
-                    </Box>
-                ) : (
-                    renderContent()
-                )}
+                {renderContent()}
             </Box>
         </Box>
     );

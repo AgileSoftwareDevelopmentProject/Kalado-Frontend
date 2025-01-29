@@ -39,7 +39,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
         >
             {error && <FormError message={error} />}
 
-            {!selectedReport ? (
+            {/* {!reports ? (
                 <>
                     <Typography
                         variant="h4"
@@ -118,7 +118,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                         console.log('Block content with ID:', contentId);
                     }}
                 />
-            )}
+            )} */}
         </Box>
     );
 };

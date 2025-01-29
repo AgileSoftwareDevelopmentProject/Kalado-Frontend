@@ -39,10 +39,6 @@ const UserDashboard: React.FC = () => {
         }
     };
 
-    const handleSelectMenu = (menuTitle: string) => {
-        setSelectedMenuTitle(menuTitle);
-    };
-
     useEffect(() => {
         if (selectedMenuTitle === user_dashboard_menu[0].value) {
             fetchUserData();
@@ -74,7 +70,7 @@ const UserDashboard: React.FC = () => {
             <SideBar>
                 <IconList
                     categories={user_dashboard_menu}
-                    onSelectCategory={handleSelectMenu}
+                    onSelectCategory={(menuTitle: string) => setSelectedMenuTitle(menuTitle)}
                     selectedCategory={selectedMenuTitle}
                 />
             </SideBar>
