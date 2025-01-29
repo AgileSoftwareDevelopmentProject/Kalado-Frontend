@@ -12,37 +12,27 @@ import {
 import { useAuth } from '../../../contexts';
 import resources from '../../../resource.json';
 
-const AdList = () => {
+interface AdListProps {
+  adsList: TProductResponseType[] | null;
+}
+
+const AdList: React.FC<AdListProps> = ({ adsList }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
   const { token } = useAuth();
-  const [ads, setAds] = useState<TProductResponseType[]>([]);
+  const [ads, setAds] = useState<TProductResponseType[] | null>(adsList);
   const [editingAdId, setEditingAdId] = useState<number | null>(null);
   const [previousAdState, setPreviousAdState] = useState<TProductResponseType | null>(null);
 
-  useEffect(() => {
-    const fetchAds = async () => {
-      try {
-        if (token) {
-          const data = await getSellersProducts(token);
-          setAds(data);
-        }
-      } catch (error) {
-        console.error('Error fetching seller’s products:', error);
-      }
-    };
-    fetchAds();
-  }, [token]);
-
-  useEffect(() => {
-    setAds((prevAds) =>
-      prevAds.map((ad) => ({
-        ...ad,
-        title: ad.title || `${t('ad_list.create_ad.input.title')} ${ad.id}`,
-      }))
-    );
-  }, [t, i18n.language]);
+  // useEffect(() => {
+  //   setAds((prevAds) =>
+  //     prevAds.map((ad) => ({
+  //       ...ad,
+  //       title: ad.title || `${t('ad_list.create_ad.input.title')} ${ad.id}`,
+  //     }))
+  //   );
+  // }, [t, i18n.language]);
 
   const handleStatusChange = (id: number) => async (event: SelectChangeEvent<string>) => {
     const newStatus = event.target.value;
@@ -99,7 +89,7 @@ const AdList = () => {
     <div style={{ padding: '20px', direction: isRtl ? 'rtl' : 'ltr' }}>
       {editingAd ? (
         <>
-          <EditAdCard
+          {/* <EditAdCard
             title={editingAd.title}
             price={editingAd.price.amount}
             category={editingAd.category}
@@ -111,40 +101,24 @@ const AdList = () => {
               handleEditTitle(editingAd.id)(updatedData.title);
             }}
             onCancel={handleCancelEdit}
-          />
+          /> */}
         </>
       ) : (
         <>
-      {/* Heading for Ad List */}
-      <Box
-        sx={{
-          marginBottom: '50px',
-          textAlign: isRtl ? 'right' : 'left',
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{ fontWeight: 'bold', color: '#FFF', marginBottom: '15px' }}
-        >
-          {t('ad_list.heading')}
-        </Typography>
-      </Box>
-
-      {/* List of Ad Cards */}
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {ads.map((ad) => (
-          <AdCard
-            key={ad.id}
-            title={ad.title}
-            status={ad.status}
-            onStatusChange={handleStatusChange(ad.id)}
-            onDelete={() => handleDelete(ad.id)}
-            onEdit={() => handleEdit(ad.id)}
-            onEditTitle={handleEditTitle(ad.id)}
-            language={i18n.language as 'en' | 'fa'}
-          />
-        ))}
-      </Box>
+          {/* List of Ad Cards */}
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            {ads.map((ad) => (
+              <AdCard
+                key={ad.id}
+                title={ad.title}
+                status={ad.status}
+                onStatusChange={handleStatusChange(ad.id)}
+                onDelete={() => handleDelete(ad.id)}
+                onEdit={() => handleEdit(ad.id)}
+                onEditTitle={handleEditTitle(ad.id)}
+              />
+            ))}
+          </Box>
         </>
       )}
     </div>

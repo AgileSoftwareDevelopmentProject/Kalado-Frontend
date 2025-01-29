@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import { IconList, SideBar } from '../../components/molecules';
 import { ProfileManagement, AdManagement, NavBar, FormGroup } from '../../components/organisms';
 import { OptionsComponent } from '../../constants/options';
-import { useAuth } from '../../contexts';
 import { getProfile } from '../../api/services/UserService';
 import { getSellersProducts } from '../../api/services/ProductService';
 import { TProductResponseType, TUserProfileResponse } from '../../constants/apiTypes';
@@ -13,11 +12,9 @@ import { toast } from 'react-toastify';
 const UserDashboard: React.FC = () => {
     const { t } = useTranslation();
     const { user_dashboard_menu } = OptionsComponent();
-    const { token } = useAuth();
+    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(user_dashboard_menu[0].value);
     const [userData, setUserData] = useState<TUserProfileResponse | null>(null);
     const [userProduct, setUserProduct] = useState<TProductResponseType[] | null>(null);
-    const [selectedMenuTitle, setSelectedMenuTitle] = useState<string>(user_dashboard_menu[0].value);
-    const [selectedAd, setSelectedAd] = useState<TProductResponseType | null>(null);
 
     const fetchUserData = async () => {
         const response = await getProfile();
@@ -30,7 +27,7 @@ const UserDashboard: React.FC = () => {
     };
 
     const fetchUserProducts = async () => {
-        const response = await getSellersProducts(token);
+        const response = await getSellersProducts();
         console.log(response);
         if (response.isSuccess) {
             setUserProduct(response.data as TProductResponseType[]);
@@ -52,14 +49,7 @@ const UserDashboard: React.FC = () => {
             case user_dashboard_menu[0].value:
                 return <ProfileManagement userData={userData} />;
             case user_dashboard_menu[1].value:
-                return (
-                    <AdManagement
-                        onEdit={(adData: TProductResponseType) => setSelectedAd(adData)}
-                        selectedAd={selectedAd}
-                        onCloseEdit={() => setSelectedAd(null)}
-                        adsList={userProduct}
-                    />
-                );
+                return <AdManagement adsList={userProduct} />;
         }
     };
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Box, Typography, Card, CardContent, Grid } from "@mui/material";
 import { ConfirmationDialog } from '../../../components/molecules';
-// import { blockUser } from '../../../api/services/UserService';
+import { changeUserToAdmin } from '../../../api/services/AuthService';
 import { TUserProfileResponse } from '../../../constants/apiTypes';
 import { toast } from 'react-toastify';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -20,13 +20,12 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleBecomeAdmin = async (id: number) => {
-    // const response = await blockUser(id);
-    // if (response.isSuccess) {
-    //   toast(t("success.user_management.block_user"));
-    // } else {
-    //   toast(t('error.user_management.block_failed'));
-    // }
-    // // setSelectedUser(users.find((user) => user.id === id) || null);
+    const response = await changeUserToAdmin(id);
+    if (response.isSuccess) {
+      toast(t("success.user_management.block_user"));
+    } else {
+      toast(t('error.user_management.block_failed'));
+    }
     // setIsDialogOpen(true);
   };
 
@@ -109,22 +108,21 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                       </Typography>
 
                       <CustomButton
-                        // onClick={handleBecomeAdmin(user.id)}
+                        onClick={() => handleBecomeAdmin(user.id)}
                         text={t("report.user_management.become_admin")}
                       />
                     </CardContent>
                   </Card>
+                  <ConfirmationDialog
+                    isDialogOpen={isDialogOpen}
+                    onClose={() => setIsDialogOpen(false)}
+                    confirmStatusChange={confirmStatusChange}
+                    selectedUser={user}
+                  />
                 </Grid>
               ))
             }
           </Grid>
-
-          <ConfirmationDialog
-            isDialogOpen={isDialogOpen}
-            onClose={() => setIsDialogOpen(false)}
-            confirmStatusChange={confirmStatusChange}
-            selectedUser={selectedUser}
-          />
         </Box>
       )}
 

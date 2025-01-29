@@ -42,3 +42,13 @@ export async function resetPassword(email: string) {
         'application/json'
     );
 }
+
+export async function changeUserToAdmin(userId: number) {
+    return sendRequest(
+        AUTH.CHANGEUSERTOADMIN,
+        'PUT',
+        userId,
+        {},
+        'application/json'
+    );
+}
