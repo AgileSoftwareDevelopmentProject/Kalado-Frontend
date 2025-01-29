@@ -9,10 +9,10 @@ interface ItemDetailsPopup {
 }
 
 const ItemDetailsPopup: React.FC<ItemDetailsPopup> = ({ singleProduct }) => {
-    const { isProductDetailsOpen, handleProductDetailsClick, handleClosePopups } = useModalContext();
+    const { isProductDetailsOpen, handleClosePopups } = useModalContext();
 
     return (
-        <PopupBox open={isProductDetailsOpen} onClose={handleClosePopups}>
+        <PopupBox open={isProductDetailsOpen} onClose={handleClosePopups} isLogoNeeded={false} maxContent={true}>
             <ItemDetailsCard
                 item={singleProduct}
             />

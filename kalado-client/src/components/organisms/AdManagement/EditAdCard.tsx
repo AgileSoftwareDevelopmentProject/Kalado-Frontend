@@ -135,6 +135,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
             category: selectedOption ? selectedOption.value : ''
           }))}
           value={product_categories.find(option => option.value === formData.category) || null}
+          width={'100%'}
         />
       </Box>
 
