@@ -43,7 +43,6 @@ const AdminDashboard: React.FC = () => {
     }, [selectedMenuTitle]);
 
     const renderContent = () => {
-        console.log("UUUUUUUUUUUU");
         switch (selectedMenuTitle) {
             case admin_dashboard_menu[0].value:
                 return <UserManagement userDataList={userDataList} />;

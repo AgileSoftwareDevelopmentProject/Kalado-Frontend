@@ -17,8 +17,8 @@ interface UserManageMentProps {
 const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "fa";
-  const { token } = useAuth();
   const [users, setUsers] = useState<TUserProfileResponse[] | null>(userDataList);
+  const { token } = useAuth();
   const [selectedUser, setSelectedUser] = useState<TUserProfileResponse | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -68,27 +68,11 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
       )}
 
 
-      {userDataList && (
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: "800px",
-          }}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: 4,
-              textAlign: "center",
-            }}
-          >
-            {t("report.user_management.title")}
-          </Typography>
-
+      {userDataList && userDataList.length > 0 && (
+        <Box sx={{ width: "100%", maxWidth: "800px" }}>
           <Grid container spacing={3}>
-            {users && users.length > 0 ? (
-              users.map((user) => (
+            {
+              userDataList.map((user) => (
                 <Grid item xs={12} sm={6} key={user.id}>
                   <Card
                     sx={{
@@ -120,71 +104,21 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                           marginBottom: 2,
                         }}
                       >
-                        {t("report.user_management.email")}: {user.email}
+                        {t("report.user_management.email")}: {user.username}
                       </Typography>
                       <Typography variant="body2" sx={{ marginBottom: 2 }}>
                         {t("report.user_management.status")}
                       </Typography>
-                      <Select
-                        value={user.blocked}
-                        onChange={(event) =>
-                          handleBlockUser(user.id)
-                        }
-                        sx={{
-                          minWidth: 150,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <MenuItem value="Allowed">
-                          {t("report.user_management.allowed")}
-                        </MenuItem>
-                        <MenuItem value="Blocked">
-                          {t("report.user_management.blocked")}
-                        </MenuItem>
-                      </Select>
+                      {/* Add a button to block user */}
                     </CardContent>
                   </Card>
                 </Grid>
               ))
-            ) : (
-              <Typography variant="body1" sx={{ textAlign: 'center', width: '100%' }}>
-                {t("No users found")}
-              </Typography>
-            )}
+            }
           </Grid>
 
-          {/* Confirmation Dialog */}
-          <Dialog
-            open={isDialogOpen}
-            onClose={() => setIsDialogOpen(false)}
-            aria-labelledby="confirmation-dialog-title"
-            aria-describedby="confirmation-dialog-description"
-          >
-            <DialogTitle id="confirmation-dialog-title">
-              {t("report.user_management.confirmation_title")}
-            </DialogTitle>
-            {/* <DialogContent>
-          <DialogContentText id="confirmation-dialog-description">
-            {t("report.user_management.confirmation_message", {
-              email: selectedUser?.email,
-              status: t(
-                `report.user_management.${newStatus?.toLowerCase()}`,
-                newStatus
-              ),
-            })}
-          </DialogContentText>
-        </DialogContent> */}
-            <DialogActions>
-              <Button onClick={() => setIsDialogOpen(false)} color="secondary">
-                {t("report.user_management.cancel")}
-              </Button>
-              <Button onClick={confirmStatusChange} color="primary">
-                {t("report.user_management.confirm")}
-              </Button>
-            </DialogActions>
-          </Dialog>
+          {/* Add confirmation Dialog */}
         </Box>
-
       )}
 
     </Box>
