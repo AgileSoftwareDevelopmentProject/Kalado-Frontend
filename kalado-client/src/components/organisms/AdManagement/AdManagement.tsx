@@ -10,11 +10,11 @@ interface AdManagementProps {
 
 const AdManagement: React.FC<AdManagementProps> = ({ adsList }) => {
   const { t } = useTranslation();
-  const [ads, setAds] = useState<TProductResponseType[] | null>(adsList);
+  const [ads] = useState<TProductResponseType[] | null>(adsList);
 
   return (
     <Box sx={{ padding: 15 }}>
-      {!ads ? (
+      {(!ads || ads.length == 0) ? (
         <Typography color="error" align="center">
           {t('error.profile_management.save_failed')}
         </Typography>
@@ -32,20 +32,3 @@ const AdManagement: React.FC<AdManagementProps> = ({ adsList }) => {
 };
 
 export default AdManagement;
-
-
-{/* {ads && (
-        <Box sx={{ marginTop: 4 }}>
-          <EditAdCard
-            title={selectedAd.title}
-            price={selectedAd.price.amount}
-            category={selectedAd.category}
-            date={selectedAd.createdAt}
-            description={selectedAd.description}
-            images={selectedAd.imageUrls}
-            status={selectedAd.status}
-            onEdit={(updatedData) => onEdit(updatedData)}
-            onCancel={onCloseEdit}
-          />
-        </Box>
-      )} */}
