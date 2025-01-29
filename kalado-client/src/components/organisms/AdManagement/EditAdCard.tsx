@@ -7,8 +7,6 @@ import {
   Close as CloseIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
@@ -29,18 +27,8 @@ const normalizeDigits = (value: string): string => {
 
 const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const { t, i18n } = useTranslation();
-  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState<TProductResponseType>(ad);
   const [images, setImages] = useState<File[]>([]);
-
-  const [formData, setFormData] = useState<ProductData>({
-    title: ad.title,
-    price: ad.price,
-    category: ad.category,
-    productionYear: ad.productionYear || new Date(ad.createdAt).getFullYear(),
-    description: ad.description || '',
-    images: ad.imageUrls || [],
-  });
-
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
 
@@ -59,20 +47,20 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   };
 
   const handleImageUpload = (files: File[]) => {
-    console.log("handleImageUpload")
+    console.log("handleImageUpload");
     console.log(files);
     setImages(files);
   };
 
   const handleImageDelete = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images?.filter((_, i) => i !== index) || [],
-    }));
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   images: prev.images?.filter((_, i) => i !== index) || [],
+    // }));
   };
 
-  const handleEditAd = async (id: number, productData: TProductResponseType) => {
-    const response = await updateAd(id, productData);
+  const handleEditAd = async (id: number) => {
+    const response = await updateAd(id, formData);
     if (response.isSuccess) {
       toast(t('success.ad_management.edit'));
     } else {
@@ -102,8 +90,8 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
           <IconButton onClick={onCancel}>
             <CloseIcon />
           </IconButton>
-          <IconButton onClick={() => setIsEditing(!isEditing)}>
-            {!isEditing ? <EditIcon /> : <SaveIcon onClick={() => handleEditAd(ad.id, ad)} />}  {/* Wrong parameters!!!!!*/}
+          <IconButton onClick={() => handleEditAd(ad.id)}>
+            <SaveIcon />
           </IconButton>
         </Box>
       </Box>
@@ -113,33 +101,29 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '15px' }}>
         {/* Price */}
         <Typography>{resources[language]?.general_inputs.price}</Typography>
-        {isEditing ? (
-          <TextField
-            value={formData.price.amount}
-            onChange={(e) => handleChange('price', e.target.value)}
-            fullWidth
-            variant="outlined"
-            size="small"
-            inputProps={{ inputMode: 'numeric', pattern: '[0-9۰-۹]*' }}
-            InputProps={{ endAdornment: <InputAdornment position="end">{formData.price.unit}</InputAdornment> }}
-          />
-        ) : (
-          <Typography>{`${formData.price.amount} ${formData.price.unit}`}</Typography>
-        )}
+        <TextField
+          value={formData.price.amount}
+          onChange={(e) => handleChange('price', e.target.value)}
+          fullWidth
+          variant="outlined"
+          size="small"
+          inputProps={{ inputMode: 'numeric', pattern: '[0-9۰-۹]*' }}
+          InputProps={{ endAdornment: <InputAdornment position="end">{formData.price.unit}</InputAdornment> }}
+        />
 
         {/* Category */}
         <Typography>{resources[language]?.create_ad.input.category}</Typography>
-        {isEditing ? (
-          <Select value={formData.category || ''} onChange={(e) => handleChange('category', e.target.value)} fullWidth>
-            {Object.keys(categories || {}).map((key) => (
-              <MenuItem key={key} value={key}>
-                {categories[key as keyof typeof categories]}
-              </MenuItem>
-            ))}
-          </Select>
-        ) : (
-          <Typography>{categories?.[formData.category as keyof typeof categories]}</Typography>
-        )}
+        <Select
+          value={formData.category} // Set initial value to formData.category
+          onChange={(e) => handleChange('category', e.target.value)}
+          fullWidth
+        >
+          {Object.keys(categories || {}).map((key) => (
+            <MenuItem key={key} value={key}>
+              {categories[key as keyof typeof categories]}
+            </MenuItem>
+          ))}
+        </Select>
       </Box>
 
       <Divider sx={{ marginY: '20px' }} />
@@ -149,14 +133,12 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         {formData.images?.map((image, index) => (
           <Box key={index} sx={{ width: '160px', height: '160px', position: 'relative' }}>
             <img src={image} alt={`Image ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            {isEditing && (
-              <IconButton onClick={() => handleImageDelete(index)} sx={{ position: 'absolute', top: 5, right: 5 }}>
-                <DeleteIcon />
-              </IconButton>
-            )}
+            <IconButton onClick={() => handleImageDelete(index)} sx={{ position: 'absolute', top: 5, right: 5 }}>
+              <DeleteIcon />
+            </IconButton>
           </Box>
         ))}
-        {isEditing && (formData.images?.length || 0) < 3 && <ImageUploadBox onUpload={handleImageUpload} />}
+        {(formData.images?.length || 0) < 3 && <ImageUploadBox onUpload={handleImageUpload} />}
       </Box>
     </Card>
   );
