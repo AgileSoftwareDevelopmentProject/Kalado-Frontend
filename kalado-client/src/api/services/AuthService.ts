@@ -33,9 +33,9 @@ export async function verifyCode(code: string) {
     );
 }
 
-export async function resetPassword(email: string) {
+export async function forgetPassword(email: string) {
     return sendRequest(
-        AUTH.RESETPASSWORD,
+        AUTH.FORETPASSWORD,
         'POST',
         { email },
         {},
