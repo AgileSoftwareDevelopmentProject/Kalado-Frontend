@@ -15,7 +15,7 @@ export async function getProfile() {
 export async function modifyProfile(profileData: ProfileData) {
     return sendRequest(
         USER.MODIFY_PROFILE,
-        'PUT',
+        'POST',
         profileData,
         {},
         'multipart/form-data'
