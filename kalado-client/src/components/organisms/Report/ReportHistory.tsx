@@ -38,7 +38,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
             }}
         >
 
-            {(reportsList && reportsList.length > 0) ? (
+            {(reportsList && reportsList.length > 0) && (
                 <Grid container spacing={3} justifyContent="center">
                     {reportsList.map((report) => (
                         <Grid item xs={12} sm={6} md={4} key={report.id}>
@@ -91,8 +91,6 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                         </Typography>
                     )}
                 </Grid>
-            ) : (
-                <FormError message={error} />
             )}
 
 
