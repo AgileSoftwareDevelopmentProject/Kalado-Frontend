@@ -25,7 +25,7 @@ const normalizeDigits = (value: string): string => {
 const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const { t, i18n } = useTranslation();
   const { product_categories } = OptionsComponent();
-  const [formData, setFormData] = useState<TProductResponseType>(ad);
+  const [formData, setFormData] = useState<ProductData>(ad);
   const [images, setImages] = useState<File[]>([]);
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
