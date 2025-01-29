@@ -73,7 +73,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
           </Typography>
         </Tooltip>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px', padding: '0px 20px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, gap: '30px', padding: '0px 50px' }}>
           <Select
             value={adNewStatus}
             onChange={() => handleSelectChange}
@@ -105,7 +105,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
       />
 
       {isEditingModeActive && (
-        <Box sx={{ marginTop: 4 }}>
+        <Box sx={{ marginTop: 1 }}>
           <EditAdCard
             ad={ad}
             onCancel={() => setIsEditingModeActive(false)}

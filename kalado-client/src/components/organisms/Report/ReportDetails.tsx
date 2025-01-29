@@ -15,15 +15,10 @@ import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import CustomToast from '../../molecules/CustomToast/CustomToast';
-import {ReportStatusUpdateData} from '../../../utils/apiTypes';
+import { ReportStatusUpdateData, TReportResponseType } from '../../../constants/apiTypes';
 
 interface ReportDetailsProps {
-  report: {
-    violationType: string;
-    description: string;
-    image: string[];
-    contentId: number;
-  };
+  report: TReportResponseType;
   onBackToList: () => void;
   onBlockContent: (contentId: number) => void;
 }
@@ -45,7 +40,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
 
   const handleBlockConfirm = () => {
     if (report) {
-      onBlockContent(report.contentId);
+      onBlockContent(report.reportedContentId);
 
       // Display success toast
       toast.success(t('report.report_card.block_usr_success_message'), {
@@ -150,7 +145,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
               {t('report.choose_evidence')}:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4, justifyContent: 'center' }}>
-              {report.image.map((image, index) => (
+              {report.evidenceFiles.map((image, index) => (
                 <Box
                   key={index}
                   sx={{
@@ -197,15 +192,15 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList, onB
             marginTop: 4,
           }}
         >
-        <Button
-          variant="outlined"
-          onClick={() => window.open(`/product/${report.reportedContentId}`, '_blank')}
-          sx={{
-            textTransform: 'none',
-          }}
-        >
-          {t('report.report_card.actions.go_to_ad')}
-        </Button>
+          <Button
+            variant="outlined"
+            onClick={() => window.open(`/product/${report.reportedContentId}`, '_blank')}
+            sx={{
+              textTransform: 'none',
+            }}
+          >
+            {t('report.report_card.actions.go_to_ad')}
+          </Button>
 
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Button

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ProductListBox, ItemSort } from '../../molecules';
-import ItemCard from '../ItemCard/ItemCard';
+import ItemCard from './ItemCard';
 import { useProductContext } from '../../../contexts/ProductContext';
 import NoProductImage from '../../../assets/images/no-product-found.png';
 

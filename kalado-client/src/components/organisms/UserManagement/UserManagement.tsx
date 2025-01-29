@@ -21,9 +21,9 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
     setIsDialogOpen(false);
     const response = await changeUserToAdmin(id);
     if (response.isSuccess) {
-      toast(t("success.user_management.become_admin_failed"));
+      toast(t("success.user_management.admin_user"));
     } else {
-      toast(t('error.user_management.admin_user'));
+      toast(t('error.user_management.become_admin_failed'));
     }
   };
 
