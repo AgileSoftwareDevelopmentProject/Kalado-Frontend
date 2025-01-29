@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Avatar, IconButton } from '@mui/material';
-import { CustomButton, NameInput, PhoneNumberInput, PasswordInput } from '../../atoms';
+import { CustomButton, NameInput, PhoneNumberInput, PasswordInput, EmailInput } from '../../atoms';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
 import defaultImage from '../../../assets/images/no-image.png';
@@ -16,6 +16,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     const { t } = useTranslation();
     const [modifiedUserData, setModifiedUserData] = useState<TUserProfileResponse | null>(userData);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [newPassword, setNewPassword] = useState('');
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -38,8 +39,13 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     const handleSaveChanges = async () => {
         if (!modifiedUserData) return;
 
-        console.log('Update Profile API call', modifiedUserData);
-        const response = await modifyProfile(modifiedUserData);
+        const dataToSend = {
+            ...modifiedUserData,
+            password: newPassword || undefined
+        };
+
+        console.log('Update Profile API call', dataToSend);
+        const response = await modifyProfile(dataToSend);
         console.log(response);
 
         if (response.isSuccess) {
@@ -52,15 +58,15 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     return (
         <Box sx={{ maxWidth: 600, margin: '90px auto', padding: 3 }}>
 
-            {!userData && (
+            {!modifiedUserData && (
                 <p></p>
             )}
 
-            {userData && (
+            {modifiedUserData && (
                 <>
                     <Box sx={{ position: 'relative', width: 100, height: 100, margin: '20px auto' }}>
                         <Avatar
-                            src={userData.profileImageUrl ? userData.profileImageUrl : defaultImage}
+                            src={modifiedUserData.profileImageUrl ? modifiedUserData.profileImageUrl : defaultImage}
                             sx={{ width: 100, height: 100 }}
                         />
                         <IconButton
@@ -81,31 +87,37 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                             accept="image/*"
                         />
                     </Box>
+                    <EmailInput
+                        value={modifiedUserData.username}
+                        onChange={handleInputChange}
+                        disabled={true}
+                    />
                     <NameInput
                         name="firstName"
-                        value={userData.firstName || ''}
+                        value={modifiedUserData.firstName || ''}
                         onChange={handleInputChange}
                     />
                     <NameInput
                         name="lastName"
                         placeholder={t('dashboard.user.profile_management.last_name')}
-                        value={userData.lastName || ''}
+                        value={modifiedUserData.lastName || ''}
                         onChange={handleInputChange}
                     />
                     <PasswordInput
-                        value={''}
+                        value={newPassword}
                         placeholder={t('dashboard.user.profile_management.enter_new_password')}
-                        onChange={handleInputChange}
+                        onChange={(e) => setNewPassword(e.target.value)}
                         isValidatorActive={true}
                     />
                     <PhoneNumberInput
-                        value={userData.phoneNumber || ''}
+                        value={modifiedUserData.phoneNumber || ''}
                         onChange={handleInputChange}
+                        disabled={true}
                     />
                     <NameInput
                         name="address"
                         placeholder={t('dashboard.user.profile_management.address')}
-                        value={userData.address || ''}
+                        value={modifiedUserData.address || ''}
                         onChange={handleInputChange}
                     />
                     <CustomButton

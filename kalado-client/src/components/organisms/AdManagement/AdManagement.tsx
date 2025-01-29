@@ -4,21 +4,11 @@ import AdList from '../AdList/AdList';
 import EditAdCard from '../AdCard/EditAdCard';
 import { TProductResponseType } from '../../../constants/apiTypes';
 
-
-
 interface AdManagementProps {
-  onEdit: (adData: TProductResponseType) => void;
-  selectedAd?: TProductResponseType;
-  onCloseEdit: () => void;
   adsList: TProductResponseType[] | null;
 }
 
-const AdManagement: React.FC<AdManagementProps> = ({
-  onEdit,
-  selectedAd,
-  onCloseEdit,
-  adsList
-}) => {
+const AdManagement: React.FC<AdManagementProps> = ({ adsList }) => {
 
   const [ads, setAds] = useState<TProductResponseType[] | null>(adsList);
 
@@ -26,10 +16,10 @@ const AdManagement: React.FC<AdManagementProps> = ({
   return (
     <Box sx={{ padding: 15 }}>
       <Box sx={{ marginBottom: 4 }}>
-        <AdList ads={ads} onEdit={onEdit} />
+        <AdList adsList={ads} />
       </Box>
 
-      {selectedAd && (
+      {/* {ads && (
         <Box sx={{ marginTop: 4 }}>
           <EditAdCard
             title={selectedAd.title}
@@ -43,7 +33,7 @@ const AdManagement: React.FC<AdManagementProps> = ({
             onCancel={onCloseEdit}
           />
         </Box>
-      )}
+      )} */}
     </Box>
   );
 };
