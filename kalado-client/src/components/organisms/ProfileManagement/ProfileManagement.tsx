@@ -153,13 +153,13 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                         isValidatorActive={true}
                     />
                     <PasswordInput
-                        value={newPassword}
+                        value={currentPassword}
                         placeholder={t('dashboard.user.profile_management.current_password')}
                         onChange={(e) => setCurrentPassword(e.target.value)}
                         isValidatorActive={true}
                     />
                     <PasswordInput
-                        value={newPassword}
+                        value={repeatNewPassword}
                         placeholder={t('dashboard.user.profile_management.repeat_new_password')}
                         onChange={(e) => setRepeatNewPassword(e.target.value)}
                         isValidatorActive={true}
