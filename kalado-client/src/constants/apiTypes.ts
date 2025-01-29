@@ -128,9 +128,10 @@ export interface ProfileData {
     firstName: string;
     lastName: string;
     phoneNumber: string;
-    address: string;
+    profileImageUrl: string | null;
+    address: string | null;
     currentPassword: string;
-    newPassword: string;
+    newPassword: string | null;
     confirmPassword: string;
 }
 
@@ -139,8 +140,6 @@ export type TUserProfileResponse = {
     username: string;
     firstName: string;
     lastName: string;
-    // email: string;
-    // password: string;
     address: string | null;
     phoneNumber: string;
     profileImageUrl: string | null;
