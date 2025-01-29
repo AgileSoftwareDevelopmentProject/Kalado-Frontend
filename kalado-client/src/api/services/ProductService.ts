@@ -28,7 +28,7 @@ export async function deleteAd(adId: number) {
     );
 }
 
-export async function updateAd(productId: number, productData: ProductData) {
+export async function updateAd(productId: number, productData: ProductData, imageFiles: File[]) {
     return sendRequest<TProductResponseType>(
         PRODUCT.UPDATE(productId),
         'PUT',

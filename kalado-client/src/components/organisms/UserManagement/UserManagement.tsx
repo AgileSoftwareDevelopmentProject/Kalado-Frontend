@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Box, Typography, Card, CardContent, Grid } from "@mui/material";
 import { ConfirmationDialog } from '../../../components/molecules';
-import { changeUserToAdmin } from '../../../api/services/AuthService';
+import { changeUserRole } from '../../../api/services/AuthService';
+import { UserType } from '../../../constants/types';
 import { TUserProfileResponse } from '../../../constants/apiTypes';
 import { toast } from 'react-toastify';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -19,7 +20,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
 
   const handleBecomeAdmin = async (id: number) => {
     setIsDialogOpen(false);
-    const response = await changeUserToAdmin(id);
+    const response = await changeUserRole(id, "ADMIN");
     if (response.isSuccess) {
       toast(t("success.user_management.admin_user"));
     } else {
