@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { Box, Typography, Card, IconButton, Divider } from '@mui/material';
+import { Box, Typography, Card, IconButton, MenuItem, Select, Divider } from '@mui/material';
 import { Save as SaveIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import { PriceInput, Dropdown, NameInput, DescriptionInput, YearInput } from '../../atoms';
+import { PriceInput, Dropdown } from '../../atoms';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import resources from '../../../resource.json';
@@ -61,13 +61,6 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     setImages(files);
   };
 
-  const handleImageDelete = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images?.filter((_, i) => i !== index) || [],
-    }));
-  };
-
   const handleEditAd = async (id: number) => {
     const response = await updateAd(id, formData);
     if (response.isSuccess) {
@@ -77,6 +70,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     }
   };
 
+  const categories = resources[language]?.category;
   return (
     <Card
       sx={{
@@ -106,51 +100,22 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
       <Divider sx={{ marginY: '20px' }} />
 
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '15px' }}>
-        {/* Title */}
-        <Typography>{t("create_ad.input.title")}</Typography>
-        <NameInput
-          name="title"
-          placeholder={t("create_ad.input.title")}
-          value={formData.title}
-          onChange={(e) => handleChange('title', e.target.value)}
-        />
-
         {/* Price */}
         <Typography>{resources[language]?.general_inputs.price}</Typography>
         <PriceInput
           value={formData.price}
-          onChange={(price: { amount: number; unit: string }) => handleChange('price', price)}
+          onChange={(price: { amount: number; unit: string }) => setFormData(prevData => ({ ...prevData, price }))}
+          isRequired={true}
         />
 
-        {/* Category */}
-        <Typography>{t("create_ad.input.category")}</Typography>
         <Dropdown
           options={product_categories}
-          onChange={(selectedOption: Option | null) => handleChange('category', selectedOption ? selectedOption.value : '')}
+          onChange={(selectedOption: Option | null) => setFormData(prevData => ({
+            ...prevData,
+            category: selectedOption ? selectedOption.value : ''
+          }))}
           value={product_categories.find(option => option.value === formData.category) || null}
-        />
-
-        {/* Production Year */}
-        <Typography>{t("create_ad.input.productionYear")}</Typography>
-        <YearInput
-          value={formData.productionYear}
-          onChange={(date: Date | null) => handleChange('productionYear', date)}
-        />
-
-        {/* Brand */}
-        <Typography>{t("create_ad.input.brand")}</Typography>
-        <NameInput
-          name="brand"
-          placeholder={t("create_ad.input.brand")}
-          value={formData.brand || ''}
-          onChange={(e) => handleChange('brand', e.target.value)}
-        />
-
-        {/* Description */}
-        <Typography>{t("create_ad.input.description")}</Typography>
-        <DescriptionInput
-          value={formData.description}
-          onChange={(description: string) => handleChange('description', description)}
+          width={'100%'}
         />
       </Box>
 
