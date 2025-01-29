@@ -14,36 +14,40 @@ interface ProfileManagementProps {
 
 const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
     const { t } = useTranslation();
-    const [modifiedUserData, setModifiedUserData] = useState<TUserProfileResponse>({
+    const [formData, setFormData] = useState<ProfileData>({
         id: 0,
-        username: '',
         firstName: '',
         lastName: '',
         address: '',
         phoneNumber: '',
-        profileImageUrl: defaultImage,
-        blocked: false,
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
     });
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
-    const [newPassword, setNewPassword] = useState('');
-    const [repeatNewPassword, setRepeatNewPassword] = useState('');
-    const [currentPassword, setCurrentPassword] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState<string>(defaultImage);
 
     useEffect(() => {
         if (userData) {
-            setModifiedUserData(prevData => ({
-                ...prevData,
-                ...userData,
-                profileImageUrl: userData.profileImageUrl || defaultImage
-            }));
+            setFormData({
+                id: userData.id,
+                firstName: userData.firstName || '',
+                lastName: userData.lastName || '',
+                address: userData.address || '',
+                phoneNumber: userData.phoneNumber || '',
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: '',
+            });
+            setProfileImageUrl(userData.profileImageUrl || defaultImage);
         }
     }, [userData]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setModifiedUserData(prevData => ({
-            ...prevData!,
+        setFormData(prevData => ({
+            ...prevData,
             [name]: value,
         }));
     };
@@ -52,125 +56,56 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             setProfileImageFile(file);
-            const imageUrl = URL.createObjectURL(file);
-            setModifiedUserData(prevData => ({
-                ...prevData!,
-                profileImageUrl: imageUrl
-            }));
+            setProfileImageUrl(URL.createObjectURL(file));
         }
     };
 
     const handleSaveChanges = async () => {
-        if (!modifiedUserData) return;
+        if (!formData.currentPassword) {
+            toast.error(t('error.profile_management.required_current_password'));
+            return;
+        }
 
-        const dataToSend: ProfileData = {
-            id: modifiedUserData.id,
-            firstName: modifiedUserData.firstName,
-            lastName: modifiedUserData.lastName,
-            address: modifiedUserData.address,
-            phoneNumber: modifiedUserData.phoneNumber,
-            profileImage: modifiedUserData.profileImageUrl,
-            currentPassword: currentPassword,
-            newPassword: newPassword,
-            confirmPassword: repeatNewPassword,
-        };
+        if (formData.newPassword !== formData.confirmPassword) {
+            toast.error(t('error.profile_management.password_mismatch'));
+            return;
+        }
 
-        console.log('Update Profile API call', dataToSend);
-        const response = await modifyProfile(dataToSend, profileImageFile);
-        console.log(response);
-
+        const response = await modifyProfile(formData, profileImageFile);
         if (response.isSuccess) {
-            toast(t('success.profile_management'));
+            toast.success(t('success.profile_management'));
         } else {
-            toast(t('error.profile_management.save_failed'));
+            toast.error(t('error.profile_management.save_failed'));
         }
     };
 
     return (
         <Box sx={{ maxWidth: 600, margin: '90px auto', padding: 3 }}>
-
-            {!modifiedUserData ? (
-                <Typography color="error" align="center">
-                    {t('error.profile_management.save_failed')}
-                </Typography>
-            ) : (
-                <>
-                    <Box sx={{ position: 'relative', width: 100, height: 100, margin: '20px auto' }}>
-                        <Avatar
-                            src={modifiedUserData.profileImageUrl || defaultImage}
-                            sx={{ width: 100, height: 100 }}
-                        />
-                        <IconButton
-                            sx={{
-                                position: 'absolute',
-                                bottom: 0,
-                                right: 0,
-                            }}
-                            onClick={() => fileInputRef.current?.click()}
-                        >
-                            <EditIcon />
-                        </IconButton>
-                        <input
-                            type="file"
-                            hidden
-                            ref={fileInputRef}
-                            onChange={handleImageChange}
-                            accept="image/*"
-                        />
-                    </Box>
-                    <EmailInput
-                        value={modifiedUserData.username}
-                        onChange={handleInputChange}
-                        disabled={true}
-                    />
-                    <NameInput
-                        name="firstName"
-                        value={modifiedUserData.firstName || ''}
-                        onChange={handleInputChange}
-                    />
-                    <NameInput
-                        name="lastName"
-                        placeholder={t('dashboard.user.profile_management.last_name')}
-                        value={modifiedUserData.lastName || ''}
-                        onChange={handleInputChange}
-                    />
-                    <PhoneNumberInput
-                        value={modifiedUserData.phoneNumber || ''}
-                        onChange={handleInputChange}
-                        disabled={true}
-                        isValidatorActive={false}
-                    />
-                    <NameInput
-                        name="address"
-                        placeholder={t('dashboard.user.profile_management.address')}
-                        value={modifiedUserData.address || ''}
-                        onChange={handleInputChange}
-                    />
-                    <PasswordInput
-                        value={currentPassword}
-                        placeholder={t('dashboard.user.profile_management.current_password')}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        isValidatorActive={true}
-                    />
-                    <PasswordInput
-                        value={newPassword}
-                        placeholder={t('dashboard.user.profile_management.new_password')}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        isValidatorActive={true}
-                    />
-                    <PasswordInput
-                        value={repeatNewPassword}
-                        placeholder={t('dashboard.user.profile_management.repeat_new_password')}
-                        onChange={(e) => setRepeatNewPassword(e.target.value)}
-                        isValidatorActive={true}
-                    />
-                    <CustomButton
-                        text={t('dashboard.user.profile_management.save_changes_btn')}
-                        onClick={handleSaveChanges}
-                        type="submit"
-                    />
-                </>
-            )}
+            <Box sx={{ position: 'relative', width: 100, height: 100, margin: '20px auto' }}>
+                <Avatar src={profileImageUrl} sx={{ width: 100, height: 100 }} />
+                <IconButton
+                    sx={{ position: 'absolute', bottom: 0, right: 0 }}
+                    onClick={() => fileInputRef.current?.click()}
+                >
+                    <EditIcon />
+                </IconButton>
+                <input
+                    type="file"
+                    hidden
+                    ref={fileInputRef}
+                    onChange={handleImageChange}
+                    accept="image/*"
+                />
+            </Box>
+            <EmailInput value={userData?.username || ''} disabled={true} />
+            <NameInput name="firstName" value={formData.firstName} onChange={handleInputChange} />
+            <NameInput name="lastName" value={formData.lastName} onChange={handleInputChange} />
+            <PhoneNumberInput value={formData.phoneNumber} disabled={true} isValidatorActive={false} />
+            <NameInput name="address" value={formData.address} onChange={handleInputChange} />
+            <PasswordInput name="currentPassword" value={formData.currentPassword} onChange={handleInputChange} isValidatorActive={true} />
+            <PasswordInput name="newPassword" value={formData.newPassword} onChange={handleInputChange} isValidatorActive={true} />
+            <PasswordInput name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} isValidatorActive={true} />
+            <CustomButton text={t('dashboard.user.profile_management.save_changes_btn')} onClick={handleSaveChanges} type="submit" />
         </Box>
     );
 };
