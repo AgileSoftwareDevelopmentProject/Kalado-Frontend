@@ -26,8 +26,8 @@ export const OptionsComponent = () => {
 
     const report_options = [
         { value: 'Abuse', title: t("report.category.one") },
-        { value: 'Inproper Content', title: t("report.category.two") },
-        { value: 'Inproper Price', title: t("report.category.three") },
+        { value: 'InproperContent', title: t("report.category.two") },
+        { value: 'InproperPrice', title: t("report.category.three") },
         { value: 'Others', title: t("report.category.four") },
     ];
 
