@@ -133,9 +133,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
                         </IconButton>
                     </Box>
                 </Box>
-
-                <Divider sx={{ my: 2 }} />
-
+                
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <NameInput
                         name="title"
