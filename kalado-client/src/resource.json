@@ -279,10 +279,10 @@
             },
             "profile_management": {
                 "save_failed": "Error ocurred during saving your changes",
-                "retrive_failed": "Error ocurred during retriving you profile information."
+                "retrieve_failed": "Error ocurred during retriving you profile information."
             },
             "user_management": {
-                "retrive_failed": "Error ocurred during retriving user's list.",
+                "retrieve_failed": "Error ocurred during retriving user's list.",
                 "block_failed": "Error ocurred during blocking the user.",
                 "become_admin_failed": "Error ocurred during changing the user to admin.",
                 "required_current_password": "Current password is required.",
@@ -610,13 +610,13 @@
             },
             "profile_management": {
                 "save_failed": "خطایی در ذخیره‌ی تغییرات رخ داد.",
-                "retrive_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد.",
+                "retrieve_failed": "خطایی در گرفتن اطلاعات پروفایل شما رخ داد.",
                 "required_current_password": "وارد کردن رمز عبور فعلی الزامی است.",
                 "password_mismatch": "رمز عبور جدید و تکرار آن مطابقت ندارند.",
                 "confirm_password_required": "تکرار رمز عبور نمی‌تواند خالی باشد."
             },
             "user_management": {
-                "retrive_failed": "خطایی در گرفتن لیست کاربران رخ داد.",
+                "retrieve_failed": "خطایی در گرفتن لیست کاربران رخ داد.",
                 "block_failed": "خطایی در مسدودسازی کاربر رخ داد.",
                 "become_admin_failed": "خطایی در ادمین کردن کاربر رخ داد."
             },
