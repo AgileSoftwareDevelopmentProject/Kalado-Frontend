@@ -43,16 +43,16 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
     const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
     useEffect(() => {
-        console.log("OOOOOOOOOOOOO");
+        console.log("useEffect triggered, initialFormData:", initialFormData);
         if (initialFormData) {
-            console.log("MMMMMMMMMMMMMMMM");
+            console.log("Setting formData with initialFormData");
             setFormData({
-                title: initialFormData.title,
-                price: initialFormData.price,
-                category: initialFormData.category,
-                description: initialFormData.description,
-                productionYear: initialFormData.productionYear,
-                brand: initialFormData.brand,
+                title: initialFormData.title || '',
+                price: initialFormData.price || { amount: 0, unit: 'TOMAN' },
+                category: initialFormData.category || '',
+                description: initialFormData.description || '',
+                productionYear: initialFormData.productionYear || null,
+                brand: initialFormData.brand || null,
             });
         }
     }, [initialFormData]);
