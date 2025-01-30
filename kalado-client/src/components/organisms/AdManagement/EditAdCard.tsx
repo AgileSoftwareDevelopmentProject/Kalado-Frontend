@@ -31,7 +31,9 @@ const normalizeDigits = (value: string): string => {
 const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const { t, i18n } = useTranslation();
   const { product_categories } = OptionsComponent();
-  
+  const language = i18n.language as keyof typeof resources;
+  const isRtl = language === 'fa';
+
   const [formData, setFormData] = useState<ProductData>({
     title: ad.title || '',
     price: {
@@ -42,12 +44,9 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     description: ad.description || '',
     productionYear: ad.productionYear || null,
     brand: ad.brand || null,
-    images: ad.images || [],
   });
 
-  const [images, setImages] = useState<File[]>([]);
-  const language = i18n.language as keyof typeof resources;
-  const isRtl = language === 'fa';
+  const [images, setImages] = useState<File[]>(ad.images || []);
 
   const handleChange = (field: keyof ProductData, value: any) => {
     console.log(`Updating field: ${field} =>`, value);
@@ -76,10 +75,9 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
 
   const handleEditAd = async (id: number) => {
     try {
-      console.log("Editing Ad ID:", id); // لاگ مقدار id قبل از ارسال درخواست
-
+      console.log("Editing Ad ID:", id);
       const filteredData = cleanData(formData);
-      console.log("Filtered Data before sending:", filteredData); // لاگ داده‌های تمیز شده قبل از ارسال
+      console.log("Filtered Data before sending:", filteredData);
 
       if (!filteredData.category) {
         toast.error(t('error.category_required'));
@@ -108,10 +106,10 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   return (
     <Card
       sx={{
-        padding: '25px',
+        padding: '30px',
         borderRadius: '15px',
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-        maxWidth: '650px', 
+        maxWidth: '750px', 
         margin: 'auto',
         direction: isRtl ? 'rtl' : 'ltr',
       }}
