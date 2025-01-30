@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Box, Typography, Card, CardContent, Grid } from "@mui/material";
 import { ConfirmationDialog } from '../../../components/molecules';
 import { changeUserRole } from '../../../api/services/AuthService';
-import { UserType } from '../../../constants/types';
 import { TUserProfileResponse } from '../../../constants/apiTypes';
 import { toast } from 'react-toastify';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { CustomButton } from "../../atoms";
+import { useAuth } from '../../../contexts';
 
 interface UserManageMentProps {
   userDataList: TUserProfileResponse[] | null;
@@ -15,6 +15,7 @@ interface UserManageMentProps {
 
 const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
   const { t, i18n } = useTranslation();
+  const { role } = useAuth();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
@@ -91,14 +92,15 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                         {t("dashboard.admin.user_management.status")}:
                         {user.blocked ? t("dashboard.admin.user_management.blocked") : t("dashboard.admin.user_management.allowed")}
                       </Typography>
-
-                      <CustomButton
-                        onClick={() => {
-                          setSelectedUserId(user.id);
-                          setIsDialogOpen(true);
-                        }}
-                        text={t("dashboard.admin.user_management.become_admin")}
-                      />
+                      {role === "GOD" && (
+                        <CustomButton
+                          onClick={() => {
+                            setSelectedUserId(user.id);
+                            setIsDialogOpen(true);
+                          }}
+                          text={t("dashboard.admin.user_management.become_admin")}
+                        />
+                      )}
                     </CardContent>
                   </Card>
                 </Grid>
