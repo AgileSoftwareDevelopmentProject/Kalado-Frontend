@@ -22,19 +22,19 @@ const Filter: React.FC = () => {
       return;
     }
 
-      const numericValue = value ? parseFloat(value) : null;
+    const numericValue = value ? parseFloat(value) : null;
 
-      if (e.target.name === 'minPrice') {
-        setMinPrice(numericValue);
-      } else if (e.target.name === 'maxPrice') {
-        setMaxPrice(numericValue);
+    if (e.target.name === 'minPrice') {
+      setMinPrice(numericValue);
+    } else if (e.target.name === 'maxPrice') {
+      setMaxPrice(numericValue);
     }
   };
 
   const handleApplyFilters = () => {
     applyFilters(
-      minPrice !== null ? minPrice : undefined, 
-      maxPrice !== null ? maxPrice : undefined, 
+      minPrice !== null ? minPrice : undefined,
+      maxPrice !== null ? maxPrice : undefined,
       date
     );
   };
@@ -51,15 +51,15 @@ const Filter: React.FC = () => {
         minPlaceholder={t("filter.min_price")}
         maxPlaceholder={t("filter.max_price")}
         onChange={handlePriceChange}
-        onInput={(e: any) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
+      // onInput={(e: any) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
       />
 
-      <LabelList
+      {/* <LabelList
         items={date_filter_options}
         selectedValue={date}
         onSelect={(newDate) => setDate(newDate)}
         title={t("filter.ad_date")}
-      />
+      /> */}
 
       <CustomButton
         text={t('filter.apply')}
