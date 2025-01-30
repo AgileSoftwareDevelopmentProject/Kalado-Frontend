@@ -7,7 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 interface YearInputProps {
     label?: string;
-    value: Date | null;
+    value: Date | number | null;
     onChange: (date: Date | null) => void;
     minDate?: Date;
     maxDate?: Date;
@@ -15,13 +15,14 @@ interface YearInputProps {
 
 const YearInput: React.FC<YearInputProps> = ({ label, value, onChange, minDate, maxDate }) => {
     const { t, i18n } = useTranslation();
+    const dateValue = typeof value === 'number' ? new Date(value, 0, 1) : value;
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DatePicker']} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                 <DatePicker
                     label={label || t("create_ad.input.production_year")}
-                    value={value}
+                    value={dateValue}
                     onChange={onChange}
                     openTo="year"
                     views={['year']}

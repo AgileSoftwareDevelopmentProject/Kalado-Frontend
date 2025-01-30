@@ -103,27 +103,6 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
             xs={12}
             md={6}
             sx={{
-              paddingRight: isRtl ? 2 : 0,
-              paddingLeft: isRtl ? 0 : 2,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Typography variant="h6" sx={{ marginBottom: 2 }}>
-              {t('report.report_card.description')}:
-            </Typography>
-            <Typography variant="body1" sx={{ textAlign: 'justify' }}>
-              {report.description}
-            </Typography>
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{
               borderLeft: isRtl ? 'none' : '1px solid',
               borderRight: isRtl ? '1px solid' : 'none',
               paddingRight: isRtl ? 2 : 0,
@@ -134,6 +113,12 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
               justifyContent: 'flex-start',
             }}
           >
+            <Typography variant="h6" sx={{ marginBottom: 2 }}>
+              {t('report.report_card.description')}:
+            </Typography>
+            <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+              {report.description}
+            </Typography>
             <Typography
               variant="h6"
               sx={{
