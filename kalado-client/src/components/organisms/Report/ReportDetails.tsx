@@ -184,13 +184,13 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
         <Box sx={{ display: 'flex', flexDirection: isRtl ? 'row-reverse' : 'row', justifyContent: 'space-between', gap: 2, marginTop: 4 }}>
 
           <CustomButton text={t('report.report_card.actions.go_to_ad')} onClick={handleProductDetailsClick} fullWidth={true} />
+          <CustomButton text={t('report.report_card.actions.block_ad')} onClick={() => setIsBlockAdDialogOpen(true)} fullWidth={true} />
+          <CustomButton text={t('report.report_card.actions.block_user')} onClick={() => setIsBlockDialogOpen(true)} fullWidth={true} />
 
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <CustomButton text={t('report.report_card.actions.block_ad')} onClick={() => setIsBlockAdDialogOpen(true)} fullWidth={true} />
-            <CustomButton text={t('report.report_card.actions.block_user')} onClick={() => setIsBlockDialogOpen(true)} fullWidth={true} />
-          </Box>
+          {/* <Box sx={{ display: 'flex', gap: 2 }}>
+            
+          </Box> */}
 
-          <CustomButton text={t('report.report_card.actions.back_to_list')} onClick={() => onBackToList()} fullWidth={true} />
         </Box>
 
         <Dialog open={!!openImage} onClose={handleCloseImage}>

@@ -61,7 +61,7 @@ export interface ReportListResponse {
 // Product
 export interface ProductData {
     title: string;
-    description: string;
+    description?: string;
     price: {
         amount: number;
         unit: string;

@@ -8,6 +8,7 @@ import { CreateAdForm } from '../../organisms';
 import { TProductResponseType } from '../../../constants/apiTypes';
 import { updateAdStatus, deleteAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
+import { useModalContext } from '../../../contexts';
 
 interface AdCardProps {
   ad: TProductResponseType;
@@ -16,7 +17,7 @@ interface AdCardProps {
 const AdCard: React.FC<AdCardProps> = ({ ad }) => {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isEditingModeActive, setIsEditingModeActive] = useState(false);
+  const { handleOpenCreateAd, isCreateAdVisible } = useModalContext();
   const [adNewStatus, setAdNewStatus] = useState(ad.status);
 
   useEffect(() => {
@@ -93,7 +94,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
         </Box>
 
         <Box sx={{ display: 'flex', gap: '10px' }}>
-          <IconButton onClick={() => setIsEditingModeActive(true)}>
+          <IconButton onClick={() => handleOpenCreateAd()}>
             <EditIcon />
           </IconButton>
         </Box>
@@ -106,7 +107,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
         message={t("ad_list.delete_confirmation.title")}
       />
 
-      {isEditingModeActive && (
+      {isCreateAdVisible && (
         <CreateAdForm
           initialFormData={ad}
           isEditingMode={true}
