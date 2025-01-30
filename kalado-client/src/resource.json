@@ -293,7 +293,8 @@
                 "retrieve_failed": "Error ocurred during retriving your ad's list.",
                 "status_change_failed": "Error ocurred during changing your ad's status.",
                 "delete_failed": "Error ocurred during deleting your ad.",
-                "edit_failed": "Error ocurred during save your changes."
+                "edit_failed": "Error ocurred during save your changes.",
+                "no_ad": "No Submitted ad."
             },
             "report_history": {
                 "retrieve_failed": "Error ocurred during retriving your reports.",
@@ -624,7 +625,8 @@
                 "retrieve_failed": "خطایی در گرفتن لیست آگهی‌هایتان رخ داد.",
                 "status_change_failed": "خطایی در تغییر وضعیت آگهی رخ داد.",
                 "delete_failed": "خطایی در حذف آگهی رخ داد.",
-                "edit_failed": "خطایی در ذخیره‌ی تغییرات رخ داد."
+                "edit_failed": "خطایی در ذخیره‌ی تغییرات رخ داد.",
+                "no_ad": "آگهی ثبت‌‌شده‌ای برای شما وجود ندارد."
             },
             "report_history": {
                 "retrieve_failed": "خطایی در گرفتن تاریخچه‌ی تخلفات رخ داد.",

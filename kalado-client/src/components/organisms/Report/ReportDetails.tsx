@@ -73,7 +73,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
     <>
       <Card
         sx={{
-          width: '40vw',
+          width: '80vw',
           height: 'auto',
           margin: '0 auto',
           display: 'flex',
