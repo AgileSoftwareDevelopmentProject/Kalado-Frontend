@@ -25,10 +25,10 @@ export const OptionsComponent = () => {
     ];
 
     const report_options = [
-        { value: 'Abuse', title: t("report.category.one") },
-        { value: 'InproperContent', title: t("report.category.two") },
-        { value: 'InproperPrice', title: t("report.category.three") },
-        { value: 'Others', title: t("report.category.four") },
+        { value: 'Abuse', title: "ناسزا" },
+        { value: 'InproperContent', title: "محتوای نامناسب"},
+        { value: 'InproperPrice', title: "قیمت نامناسب" },
+        { value: 'Others', title: "سایر موارد" },
     ];
 
     const search_options = [
