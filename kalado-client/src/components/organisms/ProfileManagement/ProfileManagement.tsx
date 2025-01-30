@@ -101,11 +101,36 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                     accept="image/*"
                 />
             </Box>
-            <EmailInput value={userData?.username || ''} disabled={true} />
-            <NameInput name="firstName" value={formData.firstName} onChange={handleInputChange} />
-            <NameInput name="lastName" value={formData.lastName} onChange={handleInputChange} />
-            <PhoneNumberInput value={formData.phoneNumber} disabled={true} isValidatorActive={false} />
-            <NameInput name="address" value={formData.address} onChange={handleInputChange} />
+            <EmailInput
+                    value={userData?.username || ''}
+                    disabled={true}
+            />
+
+            <NameInput 
+                    name="firstName" 
+                    value={formData.firstName} 
+                    onChange={handleInputChange}
+            />
+
+            <NameInput
+                    name="lastName"
+                    placeholder={t('dashboard.user.profile_management.last_name')}
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+            />
+
+            <PhoneNumberInput
+                        value={formData.phoneNumber}
+                        disabled={true}
+                        isValidatorActive={false}
+            />
+
+            <NameInput 
+                    name="address" 
+                    placeholder={t('dashboard.user.profile_management.address')}
+                    value={formData.address}
+                    onChange={handleInputChange}
+            />
 
             <PasswordInput
                         name="currentPassword"
@@ -122,6 +147,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ userData }) => {
                         onChange={handleInputChange}
                         isValidatorActive={true}
             />
+            
             <PasswordInput
                         name="confirmPassword"
                         placeholder={t('dashboard.user.profile_management.repeat_new_password')}
