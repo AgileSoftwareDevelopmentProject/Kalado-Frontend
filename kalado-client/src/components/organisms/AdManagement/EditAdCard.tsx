@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../atoms';
+import { Box, Grid, Typography, Divider, IconButton } from '@mui/material';
+import { Save as SaveIcon, Close as CloseIcon } from '@mui/icons-material';
+import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton } from '../../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { updateAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
@@ -41,13 +43,11 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     });
 
     const [images, setImages] = useState<File[]>(ad.images || []);
-    const [error, setError] = useState<string>('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+    const handleChange = (field: keyof ProductData, value: any) => {
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [field]: value,
         }));
     };
 
@@ -82,14 +82,13 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     const handleImageUpload = (files: File[]) => {
         console.log("handleImageUpload", files);
         setImages(files);
-        setError('');
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (images.length === 0) {
-            setError(t("error.create_ad.required_image"));
+            toast.error(t("error.create_ad.required_image"));
             return;
         }
 
@@ -101,55 +100,85 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
             toast.success(t("success.ad_management.edit"));
             onCancel();
         } else {
-            setError(response.message);
+            toast.error(t("error.ad_management.edit_failed"));
         }
     };
 
     return (
         <PopupBox open={true} onClose={onCancel}>
             <form onSubmit={handleSubmit}>
-                <NameInput
-                    name="title"
-                    placeholder={t("create_ad.input.title")}
-                    value={formData.title}
-                    onChange={handleChange}
-                    isRequired={true}
-                    isStarNeeded={true}
-                />
-                <PriceInput
-                    value={formData.price}
-                    onChange={handlePriceChange}
-                    isRequired={true}
-                    isStarNeeded={true}
-                />
-                <Dropdown
-                    options={product_categories}
-                    placeholder={t("create_ad.input.category")}
-                    onChange={handleCategoryChange}
-                    value={product_categories.find(option => option.value === formData.category) || null}
-                />
-                <YearInput
-                    value={formData.productionYear ? formData.productionYear : null}
-                    onChange={handleYearChange}
-                    minDate={new Date(1900, 0, 1)}
-                    maxDate={new Date()}
-                />
-                <NameInput
-                    name="brand"
-                    placeholder={t("create_ad.input.brand")}
-                    value={formData.brand || ''}
-                    onChange={handleChange}
-                />
-                <DescriptionInput
-                    value={formData.description}
-                    onChange={(description: string) => setFormData(prevData => ({ ...prevData, description }))}
-                />
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                    <Typography variant="h6" fontWeight="bold">{t("edit_ad.title")}</Typography>
+                    <Box>
+                        <IconButton onClick={onCancel}>
+                            <CloseIcon />
+                        </IconButton>
+                        <IconButton type="submit">
+                            <SaveIcon />
+                        </IconButton>
+                    </Box>
+                </Box>
+
+                <Divider sx={{ my: 2 }} />
+
+                <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                        <NameInput
+                            name="title"
+                            placeholder={t("create_ad.input.title")}
+                            value={formData.title}
+                            onChange={(e) => handleChange("title", e.target.value)}
+                            isRequired={true}
+                            isStarNeeded={true}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <PriceInput
+                            value={formData.price}
+                            onChange={handlePriceChange}
+                            isRequired={true}
+                            isStarNeeded={true}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Dropdown
+                            options={product_categories}
+                            placeholder={t("create_ad.input.category")}
+                            onChange={handleCategoryChange}
+                            value={product_categories.find(option => option.value === formData.category) || null}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <YearInput
+                            value={formData.productionYear ? formData.productionYear : null}
+                            onChange={handleYearChange}
+                            minDate={new Date(1900, 0, 1)}
+                            maxDate={new Date()}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <NameInput
+                            name="brand"
+                            placeholder={t("create_ad.input.brand")}
+                            value={formData.brand || ''}
+                            onChange={(e) => handleChange("brand", e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <DescriptionInput
+                            value={formData.description}
+                            onChange={(description: string) => handleChange("description", description)}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Divider sx={{ my: 3 }} />
+
                 <ImageUploadBox onUpload={handleImageUpload} title={t("create_ad.choose_image")} />
-                <CustomButton
-                    text={t("create_ad.create_ad_btn")}
-                    type="submit"
-                />
-                <FormError message={error} />
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                    <CustomButton text={t("edit_ad.save_changes")} type="submit" />
+                </Box>
             </form>
         </PopupBox>
     );
