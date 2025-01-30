@@ -62,23 +62,17 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                                 <CustomButton
                                     text={t('report.report_card.actions.show_details')}
                                     onClick={handleReportDetailsClick}
-                                >
-                                    <InfoOutlinedIcon sx={{ marginRight: isRtl ? 0 : 1, marginLeft: isRtl ? 1 : 0 }} />
-                                </CustomButton>
-                                {/* <Button
-                                    variant="text"
-                                    
+                                    icon={<InfoOutlinedIcon />}
                                     sx={{
                                         display: 'flex',
                                         alignItems: 'center',
-                                        marginTop: 2,
-                                        textTransform: 'none',
-                                        justifyContent: isRtl ? 'flex-end' : 'flex-start',
+                                        justifyContent: 'center',
+                                        '& .MuiSvgIcon-root': {
+                                            marginRight: isRtl ? 0 : 1,
+                                            marginLeft: isRtl ? 1 : 0,
+                                        }
                                     }}
-                                >
-                                    
-                                    {}
-                                </Button> */}
+                                />
                             </Card>
                         </Grid>
                     ))}
@@ -93,9 +87,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                 )
             }
 
-            {selectedReport && (
-                <ReportDetailsPopup selectedReport={selectedReport} />
-            )}
+            {selectedReport && <ReportDetailsPopup selectedReport={selectedReport} />}
         </Box>
     );
 };
