@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Grid, Typography, Divider, IconButton } from '@mui/material';
-import { Save as SaveIcon } from '@mui/icons-material';
+import { Save as SaveIcon, Close as CloseIcon } from '@mui/icons-material';
 import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { updateAd } from '../../../api/services/ProductService';
@@ -121,13 +121,18 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     };
 
     return (
-        <PopupBox open={true} onClose={onCancel}>
+        <PopupBox open={true} sx={{ maxWidth: '900px', width: '100%' }}>
             <form onSubmit={handleSubmit}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                     <Typography variant="h6" fontWeight="bold">{t("edit_ad.title")}</Typography>
-                    <IconButton sx={{ display: 'flex' }} type="submit">
-                        <SaveIcon />
-                    </IconButton>
+                    <Box>
+                        <IconButton onClick={onCancel}>
+                            <CloseIcon />
+                        </IconButton>
+                        <IconButton sx={{ display: 'flex' }} type="submit">
+                            <SaveIcon />
+                        </IconButton>
+                    </Box>
                 </Box>
 
                 <Divider sx={{ my: 2 }} />
