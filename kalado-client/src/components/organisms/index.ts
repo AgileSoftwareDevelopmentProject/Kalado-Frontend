@@ -7,7 +7,6 @@ export { default as ItemDetailsPopup } from './Items/ItemDetailsPopup';
 
 export { default as AdManagement } from './AdManagement/AdManagement';
 export { default as AdCard } from './AdManagement/AdCard';
-export { default as AdList } from './AdManagement/AdList';
 
 export { default as ProfileManagement } from './ProfileManagement/ProfileManagement';
 

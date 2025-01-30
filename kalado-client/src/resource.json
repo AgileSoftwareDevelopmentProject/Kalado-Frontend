@@ -260,7 +260,9 @@
             },
             "create_ad": {
                 "disable_not_loggined": "For submitting an ad, login to your account.",
-                "required_image": "Please choose at least one image for your ad."
+                "required_image": "Please choose at least one image for your ad.",
+                "edit_failed": "Error ocurred during editing your ad.",
+                "submit_failed": "Error ocurred during submitting your ad."
             },
             "login": {
                 "not_verified": "For login, first verify your email.",
@@ -316,6 +318,7 @@
             "reset_password": "Your password changed successfully.",
             "forget_password": "Password's token sent to your email successsfully.",
             "create_ad": "Ad created successfully.",
+            "edit_ad": "Ad edited successfully.",
             "report": "Report submitted successfully.",
             "profile_management": "Changes saved successfully.",
             "copy_phone_number": "Seller's phone mumber copied successfully.",
@@ -592,7 +595,9 @@
             },
             "create_ad": {
                 "disable_not_loggined": "برای ثبت آگهی ابتدا وارد حساب کاربری خود شوید.",
-                "required_image": "لطفا حداقل یک عکس برای آگهی خود انتخاب کنید."
+                "required_image": "لطفا حداقل یک عکس برای آگهی خود انتخاب کنید.",
+                "edit_failed": "ویرایش آگهی شما با خطا مواجه شد.",
+                "submit_failed": "ثبت آگهی شما با خطا مواجه شد."
             },
             "login": {
                 "not_verified": "برای ورود، ابتدا ایمیل خود را تایید کنید.",
@@ -648,6 +653,7 @@
             "reset_password": "رمز عبور شما با موفقیت تغییر کرد.",
             "forget_password": "توکن رمز عبور با موفقیت به ایمیل شما ارسال شد.",
             "create_ad": "آگهی شما با موفقیت ثبت شد.",
+            "edit_ad": "آگهی شما با موفقیت ویرایش شد.",
             "report": "گزارش تخلف شما با موفقیت ثبت شد.",
             "profile_management": "تغییرات شما با موفقیت ذخیره شد.",
             "copy_phone_number": "شماره تلفن خریدار با موفقیت کپی شد.",
