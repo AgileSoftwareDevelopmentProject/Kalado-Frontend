@@ -34,6 +34,8 @@ const ResetPasswordForm: React.FC = () => {
 
         if (validateUserInputs()) {
             const response = await resetPassword(formData.token, formData.newPassword);
+            console.log(response);
+            console.log("33333333333333333");
             if (response.isSuccess) {
                 handleClose();
                 toast(t("success.reset_password"));
