@@ -52,7 +52,6 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     // Fetch products when the component mounts or when the selected category changes
     useEffect(() => {
-        console.log("QQQQQQQQQQQQ");
         fetchProductsByCategory();
     }, [selectedCategory]);
 

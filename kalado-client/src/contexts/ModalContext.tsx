@@ -82,8 +82,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleOpenResetPassword = () => {
         handleClosePopups();
         setResetPasswordVisible(true);
-        console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQqq");
-        console.log(isResetPasswordVisible);
     }
 
     const handleOpenSignup = () => {
