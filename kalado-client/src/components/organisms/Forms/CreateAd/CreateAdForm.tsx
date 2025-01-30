@@ -17,6 +17,8 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
     const { t } = useTranslation();
     const [formData, setFormData] = useState<ProductData>(() => {
         if (initialFormData) {
+            console.log("RRRRRRRRRRRRRRRRR");
+            console.log(initialFormData);
             return {
                 title: initialFormData.title,
                 price: initialFormData.price,
@@ -41,7 +43,9 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
     const { isCreateAdVisible, handleClosePopups } = useModalContext();
 
     useEffect(() => {
+        console.log("OOOOOOOOOOOOO");
         if (initialFormData) {
+            console.log("MMMMMMMMMMMMMMMM");
             setFormData({
                 title: initialFormData.title,
                 price: initialFormData.price,
@@ -145,11 +149,12 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                     value={product_categories.find(option => option.value === formData.category) || null}
                 />
                 <YearInput
-                    value={formData.productionYear ? formData.productionYear : null}
+                    value={formData.productionYear ? new Date(formData.productionYear, 0, 1) : null}
                     onChange={handleYearChange}
                     minDate={new Date(1900, 0, 1)}
                     maxDate={new Date()}
                 />
+
                 <NameInput
                     name="brand"
                     placeholder={t("create_ad.input.brand")}
@@ -157,7 +162,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                     onChange={handleChange}
                 />
                 <DescriptionInput
-                    value={formData.description}
+                    value={formData.description || ''}
                     onChange={(description: string) => setFormData(prevData => ({ ...prevData, description }))}
                 />
                 <ImageUploadBox onUpload={handleImageUpload} title={t("create_ad.choose_image")} />
