@@ -16,7 +16,7 @@ const AdManagement: React.FC<AdManagementProps> = ({ adsList }) => {
     <Box sx={{ padding: 15 }}>
       {(!ads || ads.length == 0) ? (
         <Typography color="error" align="center">
-          {t('error.profile_management.save_failed')}
+          {t('error.ad_management.no_ad')}
         </Typography>
       ) : (
         <Box sx={{ marginBottom: 4 }}>
