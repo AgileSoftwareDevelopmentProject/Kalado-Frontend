@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../../atoms';
+import { NameInput, PriceInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../../atoms';
 import { PopupBox, ImageUploadBox } from '../../../molecules';
 import { createProductWithImages, updateAd } from '../../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../../contexts';
 import { OptionsComponent } from '../../../../constants/options';
 import { ProductData, TProductResponseType } from '../../../../constants/apiTypes';
+import dayjs from 'dayjs';
+
 
 interface CreateAdFormProps {
     initialFormData?: TProductResponseType;
@@ -17,7 +19,6 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
     const { t } = useTranslation();
     const [formData, setFormData] = useState<ProductData>(() => {
         if (initialFormData) {
-            console.log("RRRRRRRRRRRRRRRRR");
             console.log(initialFormData);
             return {
                 title: initialFormData.title,
@@ -65,13 +66,19 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
         }));
     };
 
-    const handleYearChange = (date: Date | null) => {
+    const handleYearChange = (date: dayjs.Dayjs | null) => {
         console.log("Received date:", date);
-        console.log("Is valid Date:", date instanceof Date);
-        setFormData(prevData => ({
-            ...prevData,
-            productionYear: date ? date.getFullYear() : null
-        }));
+        if (date) {
+            setFormData(prevData => ({
+                ...prevData,
+                productionYear: date.year() // Use Day.js's year() method
+            }));
+        } else {
+            setFormData(prevData => ({
+                ...prevData,
+                productionYear: null
+            }));
+        }
     };
 
     const handleImageUpload = (files: File[]) => {
@@ -150,11 +157,14 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                     }))}
                     value={product_categories.find(option => option.value === formData.category) || null}
                 />
-                <YearInput
-                    value={formData.productionYear || null}
-                    onChange={handleYearChange}
-                    minDate={new Date(1900, 0, 1)}
-                    maxDate={new Date(2026, 0, 1)}
+                <NameInput
+                    name="year"
+                    placeholder={t("create_ad.input.production_year")}
+                    value={formData.productionYear !== null ? formData.productionYear.toString() : ''} // Convert number to string
+                    onChange={(e) => setFormData(prevData => ({
+                        ...prevData,
+                        productionYear: e.target.value ? parseInt(e.target.value, 10) : null // Convert back to number
+                    }))}
                 />
                 <NameInput
                     name="brand"
