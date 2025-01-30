@@ -106,7 +106,7 @@ export interface ReportStatusUpdateData {
     blockUser: boolean;
     blockReason: string | null;
     blockProduct: boolean;
-    reportedContentId: number;
+    // reportedContentId: number;
 }
 
 export interface TReportResponseType {

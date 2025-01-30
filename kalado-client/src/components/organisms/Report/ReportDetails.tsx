@@ -25,6 +25,8 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) =
   const { handleProductDetailsClick } = useModalContext();
   const { singleProduct, loading, error, fetchSingleProduct } = useProductContext();
 
+
+
   useEffect(() => {
     if (!report.reportedContentId) return;
     fetchSingleProduct(Number(report.reportedContentId));
@@ -39,7 +41,14 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) =
   };
 
   const handleBlockUserConfirm = async () => {
-    const response = await updateReportStatus();
+    const blockUserData: ReportStatusUpdateData = {
+      status: report.status,  
+      adminNotes: "This user has been blocked.",
+      blockUser: true,
+      blockReason: null,
+      blockProduct: false,
+    };
+    const response = await updateReportStatus(report.id, blockUserData);
     if (response.isSuccess) {
       toast(t('report.report_card.block_usr_success_message'));
     } else {
@@ -48,7 +57,14 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) =
   };
 
   const handleBlockAdConfirm = async () => {
-    const response = await updateReportStatus();
+    const blockAdData: ReportStatusUpdateData = {
+      status: report.status,  
+      adminNotes: "This user has been blocked.",
+      blockUser: false,
+      blockReason: null,
+      blockProduct: true
+    };
+    const response = await updateReportStatus(report.id, blockAdData);
     if (response.isSuccess) {
       toast(t('report.report_card.block_ad_success_message'));
     } else {
