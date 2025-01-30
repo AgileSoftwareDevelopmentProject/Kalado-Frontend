@@ -23,6 +23,7 @@ const Filter: React.FC = () => {
       setMinPrice(value ? parseFloat(value) : 0);
     } else if (e.target.name === 'maxPrice') {
       setMaxPrice(value ? parseFloat(value) : 0);
+    }
   };
 
   const handleApplyFilters = () => {
