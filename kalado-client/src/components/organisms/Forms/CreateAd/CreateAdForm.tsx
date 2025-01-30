@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../../atoms';
+import { NameInput, PriceInput, NumberInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../../atoms';
 import { PopupBox, ImageUploadBox } from '../../../molecules';
 import { createProductWithImages, updateAd } from '../../../../api/services/ProductService';
 import { toast } from 'react-toastify';
@@ -62,13 +62,6 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
-        }));
-    };
-
-    const handleYearChange = (date: Date | null) => {
-        setFormData(prevData => ({
-            ...prevData,
-            productionYear: date ? date.getFullYear() : null
         }));
     };
 
@@ -148,11 +141,11 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                     }))}
                     value={product_categories.find(option => option.value === formData.category) || null}
                 />
-                <YearInput
-                    value={formData.productionYear || null}
-                    onChange={handleYearChange}
-                    minDate={new Date(1900, 0, 1)}
-                    maxDate={new Date(2026, 0, 1)}
+                <NumberInput
+                    value={formData.productionYear || 0}
+                    name="year"
+                    placeholder={t("create_ad.input.production_year")}
+                    onChange={handleChange}
                 />
                 <NameInput
                     name="brand"
