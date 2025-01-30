@@ -16,6 +16,12 @@ type EditAdCardProps = {
   onCancel: () => void;
 };
 
+const cleanData = (data: any) => {
+  return Object.fromEntries(
+    Object.entries(data).filter(([_, v]) => v !== null && v !== undefined)
+  );
+};
+
 const normalizeDigits = (value: string): string => {
   const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
   const englishDigits = '0123456789';
@@ -44,6 +50,8 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   const isRtl = language === 'fa';
 
   const handleChange = (field: keyof ProductData, value: any) => {
+    console.log(`Updating field: ${field} =>`, value);
+
     if (field === 'price') {
       const normalizedValue = normalizeDigits(value.toString());
       const numericValue = Number(normalizedValue);
@@ -58,6 +66,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   };
 
   const handleImageUpload = (files: File[]) => {
+    console.log("Uploading images:", files);
     if (images.length + files.length <= 3) {
       setImages([...images, ...files]);
     } else {
@@ -66,10 +75,32 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   };
 
   const handleEditAd = async (id: number) => {
-    const response = await updateAd(id, formData);
-    if (response.isSuccess) {
-      toast.success(t('success.ad_management.edit'));
-    } else {
+    try {
+      console.log("Editing Ad ID:", id); // لاگ مقدار id قبل از ارسال درخواست
+
+      const filteredData = cleanData(formData);
+      console.log("Filtered Data before sending:", filteredData); // لاگ داده‌های تمیز شده قبل از ارسال
+
+      if (!filteredData.category) {
+        toast.error(t('error.category_required'));
+        return;
+      }
+
+      if (!filteredData.price || isNaN(filteredData.price.amount)) {
+        toast.error(t('error.invalid_price'));
+        return;
+      }
+
+      const response = await updateAd(id, filteredData);
+      console.log("API Response:", response);
+
+      if (response.isSuccess) {
+        toast.success(t('success.ad_management.edit'));
+      } else {
+        toast.error(t('error.ad_management.edit_failed'));
+      }
+    } catch (error) {
+      console.error("Error updating ad:", error);
       toast.error(t('error.ad_management.edit_failed'));
     }
   };
@@ -77,10 +108,10 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
   return (
     <Card
       sx={{
-        padding: '20px',
+        padding: '25px',
         borderRadius: '15px',
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-        maxWidth: '500px',
+        maxWidth: '650px', 
         margin: 'auto',
         direction: isRtl ? 'rtl' : 'ltr',
       }}
@@ -97,9 +128,9 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         </Box>
       </Box>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider sx={{ my: 3 }} />
 
-      <Box>
+      <Box sx={{ mb: 3 }}>
         <Typography fontWeight="bold">{t('general_inputs.price')}</Typography>
         <PriceInput
           value={formData.price}
@@ -109,10 +140,9 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         />
       </Box>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider sx={{ my: 3 }} />
 
       <Box>
-        <Typography fontWeight="bold">{t('create_ad.input.category')} *</Typography>
         <Dropdown
           options={product_categories}
           onChange={(selectedOption: any) => setFormData(prev => ({
@@ -134,16 +164,16 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
         />
       </Box>
 
-      <Box>
+      <Box sx={{ mb: 3 }}>
         <Typography fontWeight="bold">{t('create_ad.input.year')}</Typography>
         <TextField
-          value={formData.year || ''}
-          onChange={(e) => handleChange('year', e.target.value)}
+          value={formData.productionYear || ''}
+          onChange={(e) => handleChange('productionYear', e.target.value)}
           fullWidth
         />
       </Box>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider sx={{ my: 3 }} />
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
         {images.slice(0, 3).map((image, index) => (
