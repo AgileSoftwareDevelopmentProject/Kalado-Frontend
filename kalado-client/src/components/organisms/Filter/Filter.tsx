@@ -15,20 +15,14 @@ const Filter: React.FC = () => {
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.trim();
-
-    if (!/^[0-9]*$/.test(value)) {
-      e.target.value = "";
-      return;
+    const value = e.target.value;
+    if (parseFloat(value) < 0) {
+      e.target.value = '0';
     }
-
-    const numericValue = value ? parseFloat(value) : null;
-
     if (e.target.name === 'minPrice') {
-      setMinPrice(numericValue);
+      setMinPrice(value ? parseFloat(value) : 0);
     } else if (e.target.name === 'maxPrice') {
-      setMaxPrice(numericValue);
-    }
+      setMaxPrice(value ? parseFloat(value) : 0);
   };
 
   const handleApplyFilters = () => {
