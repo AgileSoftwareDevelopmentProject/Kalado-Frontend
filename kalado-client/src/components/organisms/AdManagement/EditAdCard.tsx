@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Grid, Typography, Divider, IconButton } from '@mui/material';
 import { Save as SaveIcon, Close as CloseIcon } from '@mui/icons-material';
-import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton } from '../../../atoms';
+import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton } from '../../atoms';
 import { PopupBox, ImageUploadBox } from '../../molecules';
 import { updateAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
