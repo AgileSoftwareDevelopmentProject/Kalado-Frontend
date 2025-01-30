@@ -4,7 +4,7 @@ import { Box, Typography, Card, IconButton, MenuItem, Select, Tooltip } from '@m
 import { Edit as EditIcon } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { ConfirmationDialog } from '../../../components/molecules';
-import EditAdCard from './EditAdCard';
+import { CreateAdForm } from '../../organisms';
 import { TProductResponseType } from '../../../constants/apiTypes';
 import { updateAdStatus, deleteAd } from '../../../api/services/ProductService';
 import { toast } from 'react-toastify';
@@ -107,9 +107,9 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
       />
 
       {isEditingModeActive && (
-        <EditAdCard
-          ad={ad}
-          onCancel={() => setIsEditingModeActive(false)}
+        <CreateAdForm
+          initialFormData={ad}
+          isEditingMode={true}
         />
       )}
     </>

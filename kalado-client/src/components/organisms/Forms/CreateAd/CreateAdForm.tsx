@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../../atoms';
 import { PopupBox, ImageUploadBox } from '../../../molecules';
-import { createProductWithImages } from '../../../../api/services/ProductService';
+import { createProductWithImages, updateAd } from '../../../../api/services/ProductService';
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../../contexts';
 import { OptionsComponent } from '../../../../constants/options';
 import { ProductData } from '../../../../constants/apiTypes';
 
+interface CreateAdFormProps {
+    initialFormData?: ProductData;
+    isEditingMode?: boolean;
+}
 
-const CreateAdForm: React.FC = () => {
+const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingMode }) => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState<ProductData>({
+    const [formData, setFormData] = useState<ProductData>(() => initialFormData || {
         title: '',
         price: {
             amount: 0,
@@ -36,12 +40,12 @@ const CreateAdForm: React.FC = () => {
     };
 
     const handleYearChange = (date: Date | null) => {
-        console.log(date.getFullYear())
         setFormData(prevData => ({
             ...prevData,
-            productionYear: date
+            productionYear: date ? date.getFullYear() : null
         }));
     };
+
 
     const handleImageUpload = (files: File[]) => {
         console.log("handleImageUpload")
@@ -74,18 +78,34 @@ const CreateAdForm: React.FC = () => {
             setError(t("error.create_ad.required_image"));
             return;
         }
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        console.log(initialFormData);
+        try {
+            if (isEditingMode) {
+                console.log(initialFormData);
+                const response = await updateAd(initialFormData.id, formData, images);
+                if (response.isSuccess) {
+                    handleClose();
+                    toast(t("success.edit_ad"));
+                } else {
+                    setError(t("error.create_ad.edit_failed"));
+                }
+            } else {
+                console.log("Create Ad API call");
+                console.log(formData.category);
+                console.log(formData);
+                console.log(images);
 
-        console.log("Create Ad API call");
-        console.log(formData.category);
-        console.log(formData);
-        console.log(images);
-
-        const response = await createProductWithImages(formData, images);
-        if (response.isSuccess) {
-            handleClose();
-            toast(t("success.create_ad"));
-        } else {
-            setError(response.message);
+                const response = await createProductWithImages(formData, images);
+                if (response.isSuccess) {
+                    handleClose();
+                    toast(t("success.create_ad"));
+                } else {
+                    setError(t("error.create_ad.submit_failed"));
+                }
+            }
+        } catch (error) {
+            setError(t("error.create_ad.edit_failed"));
         }
     };
 
