@@ -66,6 +66,8 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
     };
 
     const handleYearChange = (date: Date | null) => {
+        console.log("Received date:", date);
+        console.log("Is valid Date:", date instanceof Date);
         setFormData(prevData => ({
             ...prevData,
             productionYear: date ? date.getFullYear() : null
