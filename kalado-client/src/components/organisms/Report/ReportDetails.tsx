@@ -46,6 +46,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
       blockProduct: false,
     };
     const response = await updateReportStatus(report.id, blockUserData);
+    setIsBlockDialogOpen(false);
     if (response.isSuccess) {
       toast(t('report.report_card.block_usr_success_message'));
     } else {
@@ -62,6 +63,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
       blockProduct: true
     };
     const response = await updateReportStatus(report.id, blockAdData);
+    setIsBlockAdDialogOpen(false);
     if (response.isSuccess) {
       toast(t('report.report_card.block_ad_success_message'));
     } else {

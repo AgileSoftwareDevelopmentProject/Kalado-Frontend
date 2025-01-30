@@ -34,6 +34,7 @@ interface ModalContextType {
     handleOpenReportSubmission: () => void;
     handleOpenProfilePage: () => void;
     handleClosePopups: () => void;
+    handleCloseProductDetails: () => void;
     handleLogoutClick: () => void;
     handlePopState: () => void;
     handleReportDetailsClick: () => void;
@@ -66,6 +67,10 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setCodeVerificationVisible(false);
         setReportSubmissionVisible(false);
         setReportDetailsOpen(false);
+        setProductDetailsOpen(false);
+    };
+
+    const handleCloseProductDetails = () => {
         setProductDetailsOpen(false);
     };
 
@@ -179,6 +184,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             handleOpenReportSubmission,
             handleOpenProfilePage,
             handleClosePopups,
+            handleCloseProductDetails,
             handleLogoutClick,
             handlePopState,
             handleReportDetailsClick,
