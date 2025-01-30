@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Typography, Grid, Card, Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { useTranslation } from 'react-i18next';
-import ReportDetails from './ReportDetails';
+import { CustomButton } from '../../atoms';
 import { TReportResponseType } from '../../../constants/apiTypes';
+import ReportDetailsPopup from './ReportDetailsPopup';
+import { useModalContext } from '../../../contexts';
+
 
 interface ReportHistoryProps {
     reportsList: TReportResponseType[] | null;
@@ -12,6 +15,7 @@ interface ReportHistoryProps {
 const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.language === 'fa';
+    const { handleReportDetailsClick } = useModalContext();
     const [selectedReport, setSelectedReport] = useState<TReportResponseType | null>(null);
 
     return (
@@ -55,9 +59,15 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                                         )
                                     )}
                                 </Typography>
-                                <Button
+                                <CustomButton
+                                    text={t('report.report_card.actions.show_details')}
+                                    onClick={handleReportDetailsClick}
+                                >
+                                    <InfoOutlinedIcon sx={{ marginRight: isRtl ? 0 : 1, marginLeft: isRtl ? 1 : 0 }} />
+                                </CustomButton>
+                                {/* <Button
                                     variant="text"
-                                    onClick={() => setSelectedReport(report)}
+                                    
                                     sx={{
                                         display: 'flex',
                                         alignItems: 'center',
@@ -66,9 +76,9 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                                         justifyContent: isRtl ? 'flex-end' : 'flex-start',
                                     }}
                                 >
-                                    <InfoOutlinedIcon sx={{ marginRight: isRtl ? 0 : 1, marginLeft: isRtl ? 1 : 0 }} />
-                                    {t('report.report_card.actions.show_details')}
-                                </Button>
+                                    
+                                    {}
+                                </Button> */}
                             </Card>
                         </Grid>
                     ))}
@@ -84,10 +94,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
             }
 
             {selectedReport && (
-                <ReportDetails
-                    report={selectedReport}
-                    onBackToList={() => setSelectedReport(null)}
-                />
+                <ReportDetailsPopup selectedReport={selectedReport} />
             )}
         </Box>
     );
