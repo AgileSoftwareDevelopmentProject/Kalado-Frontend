@@ -73,7 +73,19 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
 
   return (
     <>
-      <Box>
+      <Card
+        sx={{
+          width: '50vw',
+          height: 'auto',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          padding: 4,
+          boxShadow: 2,
+          borderRadius: 2,
+        }}
+      >
         <Typography
           variant="h5"
           sx={{
@@ -166,7 +178,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
             }}
           />
         </Dialog>
-      </Box>
+      </Card>
 
       <ConfirmationDialog
         isDialogOpen={isBlockDialogOpen}

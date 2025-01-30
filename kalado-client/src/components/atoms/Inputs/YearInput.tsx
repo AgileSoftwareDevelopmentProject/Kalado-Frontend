@@ -15,6 +15,7 @@ interface YearInputProps {
 
 const YearInput: React.FC<YearInputProps> = ({ label, value, onChange, minDate, maxDate }) => {
     const { t, i18n } = useTranslation();
+
     const dateValue = typeof value === 'number' ? new Date(value, 0, 1) : value;
 
     return (

@@ -149,12 +149,11 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                     value={product_categories.find(option => option.value === formData.category) || null}
                 />
                 <YearInput
-                    value={formData.productionYear ? new Date(formData.productionYear, 0, 1) : null}
+                    value={formData.productionYear || null}
                     onChange={handleYearChange}
                     minDate={new Date(1900, 0, 1)}
-                    maxDate={new Date()}
+                    maxDate={new Date(2026, 0, 1)}
                 />
-
                 <NameInput
                     name="brand"
                     placeholder={t("create_ad.input.brand")}
