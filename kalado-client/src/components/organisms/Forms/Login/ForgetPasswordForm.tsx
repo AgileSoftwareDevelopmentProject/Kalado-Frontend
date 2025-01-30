@@ -34,9 +34,7 @@ const ForgetPasswordForm: React.FC = () => {
 
         if (validateUserInputs()) {
             const response = await forgetPassword(formData.email.toLowerCase());
-            console.log(response);
-            console.log("33333333333333333");
-            if (response.status === 200) {
+            if (response.isSuccess) {
                 handleClose();
                 toast(t("success.forget_password"));
                 handleOpenResetPassword();
