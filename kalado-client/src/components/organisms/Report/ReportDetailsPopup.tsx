@@ -9,10 +9,10 @@ interface ReportDetailsPopup {
 }
 
 const ReportDetailsPopup: React.FC<ReportDetailsPopup> = ({ selectedReport }) => {
-    const { isProductDetailsOpen, handleClosePopups } = useModalContext();
+    const { isReportDetailsOpen, handleClosePopups } = useModalContext();
 
     return (
-        <PopupBox open={isProductDetailsOpen} onClose={handleClosePopups} isLogoNeeded={false} maxContent={true}>
+        <PopupBox open={isReportDetailsOpen} onClose={handleClosePopups} isLogoNeeded={false} maxContent={true}>
             <ReportDetails
                 report={selectedReport}
             />
