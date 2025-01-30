@@ -121,19 +121,16 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
     };
 
     return (
-        <PopupBox open={true} sx={{ maxWidth: '900px', width: '100%' }}>
+        <PopupBox open={true} onClose={onCancel} sx={{ maxWidth: '1200px', width: '100%' }}>
             <form onSubmit={handleSubmit}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                    <Box>
-                        <IconButton  sx={{ display: 'flex' }} onClick={onCancel}>
-                            <CloseIcon />
-                        </IconButton>
-                        <IconButton sx={{ display: 'flex' }} type="submit">
-                            <SaveIcon />
-                        </IconButton>
-                    </Box>
+=                    <IconButton sx={{ color: '#FF6600' }} type="submit">
+                        <SaveIcon />
+                    </IconButton>
                 </Box>
-                
+
+                <Divider sx={{ my: 2 }} />
+
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <NameInput
                         name="title"
@@ -142,6 +139,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
                         onChange={(e) => handleChange("title", e.target.value)}
                         isRequired={true}
                         isStarNeeded={true}
+                        sx={{ textAlign: 'center' }}
                     />
 
                     <PriceInput
@@ -149,6 +147,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
                         onChange={handlePriceChange}
                         isRequired={true}
                         isStarNeeded={true}
+                        sx={{ textAlign: 'center' }}
                     />
 
                     <Dropdown
@@ -156,6 +155,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
                         placeholder={t("create_ad.input.category")}
                         onChange={handleCategoryChange}
                         value={product_categories.find(option => option.value === formData.category) || null}
+                        sx={{ ".MuiSelect-select": { paddingRight: '30px !important' } }}
                     />
 
                     <YearInput
@@ -170,6 +170,7 @@ const EditAdCard: React.FC<EditAdCardProps> = ({ ad, onCancel }) => {
                         placeholder={t("create_ad.input.brand")}
                         value={formData.brand || ''}
                         onChange={(e) => handleChange("brand", e.target.value)}
+                        sx={{ textAlign: 'center' }}
                     />
 
                     <DescriptionInput
