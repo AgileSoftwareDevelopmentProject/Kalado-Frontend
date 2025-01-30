@@ -92,7 +92,7 @@ const UserManagement: React.FC<UserManageMentProps> = ({ userDataList }) => {
                         {t("dashboard.admin.user_management.status")}:
                         {user.blocked ? t("dashboard.admin.user_management.blocked") : t("dashboard.admin.user_management.allowed")}
                       </Typography>
-                      {role === "GOD" && (
+                      {role === "GOD" && !user.blocked && (
                         <CustomButton
                           onClick={() => {
                             setSelectedUserId(user.id);
