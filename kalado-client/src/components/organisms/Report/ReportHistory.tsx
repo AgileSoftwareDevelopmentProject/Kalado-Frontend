@@ -35,7 +35,7 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                         <Grid item xs={12} sm={6} md={4} key={report.id}>
                             <Card
                                 sx={{
-                                    padding: '10px 10px',
+                                    padding: '20px 20px',
                                     boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
                                     borderRadius: '15px',
                                     margin: '0 auto',
@@ -61,7 +61,10 @@ const ReportHistory: React.FC<ReportHistoryProps> = ({ reportsList }) => {
                                 </Typography>
                                 <CustomButton
                                     text={t('report.report_card.actions.show_details')}
-                                    onClick={handleReportDetailsClick}
+                                    onClick={() => {
+                                        setSelectedReport(report);
+                                        handleReportDetailsClick();
+                                    }}
                                     icon={<InfoOutlinedIcon />}
                                     sx={{
                                         display: 'flex',
