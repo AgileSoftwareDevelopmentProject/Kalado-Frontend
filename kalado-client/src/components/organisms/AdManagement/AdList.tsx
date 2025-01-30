@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AdCard from './AdCard';
-import EditAdCard from './EditAdCard';
 import { useTranslation } from 'react-i18next';
-import { SelectChangeEvent, Typography, Box } from '@mui/material';
+import { SelectChangeEvent, Box } from '@mui/material';
 import { TProductResponseType } from '../../../constants/apiTypes';
-import {
-  getSellersProducts,
-  updateAdStatus,
-  deleteAd,
-} from '../../../api/services/ProductService';
-import { useAuth } from '../../../contexts';
+import { updateAdStatus, deleteAd } from '../../../api/services/ProductService';
 import resources from '../../../resource.json';
 
 interface AdListProps {
@@ -20,7 +14,6 @@ const AdList: React.FC<AdListProps> = ({ adsList }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language as keyof typeof resources;
   const isRtl = language === 'fa';
-  const { token } = useAuth();
   const [ads, setAds] = useState<TProductResponseType[] | null>(adsList);
   const [editingAdId, setEditingAdId] = useState<number | null>(null);
   const [previousAdState, setPreviousAdState] = useState<TProductResponseType | null>(null);
