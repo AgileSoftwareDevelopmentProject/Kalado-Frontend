@@ -79,7 +79,8 @@
                 "category": "Select Category"
             },
             "choose_image": "Choose Image",
-            "create_ad_btn": "Submit Ad"
+            "create_ad_btn": "Submit Ad",
+            "edit_ad_btn": "Save Changes"
         },
         "login_form": {
             "login_btn": "Login",
@@ -413,7 +414,8 @@
                 "category": "انتخاب دسته‌بندی"
             },
             "choose_image": "انتخاب عکس",
-            "create_ad_btn": "ثبت آگهی"
+            "create_ad_btn": "ثبت آگهی",
+            "edit_ad_btn": "ذخیره‌ی تغییرات"
         },
         "login_form": {
             "login_btn": "ورود",

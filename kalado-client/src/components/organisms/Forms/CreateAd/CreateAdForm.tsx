@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NameInput, PriceInput, YearInput, Dropdown, DescriptionInput, CustomButton, FormError } from '../../../atoms';
 import { PopupBox, ImageUploadBox } from '../../../molecules';
@@ -6,30 +6,52 @@ import { createProductWithImages, updateAd } from '../../../../api/services/Prod
 import { toast } from 'react-toastify';
 import { useModalContext } from '../../../../contexts';
 import { OptionsComponent } from '../../../../constants/options';
-import { ProductData } from '../../../../constants/apiTypes';
+import { ProductData, TProductResponseType } from '../../../../constants/apiTypes';
 
 interface CreateAdFormProps {
-    initialFormData?: ProductData;
+    initialFormData?: TProductResponseType;
     isEditingMode?: boolean;
 }
 
 const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingMode }) => {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState<ProductData>(() => initialFormData || {
-        title: '',
-        price: {
-            amount: 0,
-            unit: 'TOMAN',
-        },
-        category: '',
-        description: '',
-        productionYear: null,
-        brand: null,
+    const [formData, setFormData] = useState<ProductData>(() => {
+        if (initialFormData) {
+            return {
+                title: initialFormData.title,
+                price: initialFormData.price,
+                category: initialFormData.category,
+                description: initialFormData.description,
+                productionYear: initialFormData.productionYear,
+                brand: initialFormData.brand,
+            };
+        }
+        return {
+            title: '',
+            price: { amount: 0, unit: 'TOMAN' },
+            category: '',
+            description: '',
+            productionYear: null,
+            brand: null,
+        };
     });
     const [images, setImages] = useState<File[]>([]);
     const [error, setError] = useState<string>('');
     const { product_categories } = OptionsComponent();
     const { isCreateAdVisible, handleClosePopups } = useModalContext();
+
+    useEffect(() => {
+        if (initialFormData) {
+            setFormData({
+                title: initialFormData.title,
+                price: initialFormData.price,
+                category: initialFormData.category,
+                description: initialFormData.description,
+                productionYear: initialFormData.productionYear,
+                brand: initialFormData.brand,
+            });
+        }
+    }, [initialFormData]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -46,10 +68,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
         }));
     };
 
-
     const handleImageUpload = (files: File[]) => {
-        console.log("handleImageUpload")
-        console.log(files);
         setImages(files);
         setError('');
     };
@@ -57,10 +76,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
     const handleClose = () => {
         setFormData({
             title: '',
-            price: {
-                amount: 0,
-                unit: 'TOMAN',
-            },
+            price: { amount: 0, unit: 'TOMAN' },
             category: '',
             description: '',
             productionYear: null,
@@ -74,15 +90,13 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (images.length === 0) {
+        if (images.length === 0 && !isEditingMode) {
             setError(t("error.create_ad.required_image"));
             return;
         }
-        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        console.log(initialFormData);
+
         try {
-            if (isEditingMode) {
-                console.log(initialFormData);
+            if (isEditingMode && initialFormData) {
                 const response = await updateAd(initialFormData.id, formData, images);
                 if (response.isSuccess) {
                     handleClose();
@@ -91,11 +105,6 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                     setError(t("error.create_ad.edit_failed"));
                 }
             } else {
-                console.log("Create Ad API call");
-                console.log(formData.category);
-                console.log(formData);
-                console.log(images);
-
                 const response = await createProductWithImages(formData, images);
                 if (response.isSuccess) {
                     handleClose();
@@ -105,7 +114,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                 }
             }
         } catch (error) {
-            setError(t("error.create_ad.edit_failed"));
+            setError(t("error.create_ad.submission_failed"));
         }
     };
 
@@ -153,7 +162,7 @@ const CreateAdForm: React.FC<CreateAdFormProps> = ({ initialFormData, isEditingM
                 />
                 <ImageUploadBox onUpload={handleImageUpload} title={t("create_ad.choose_image")} />
                 <CustomButton
-                    text={t("create_ad.create_ad_btn")}
+                    text={isEditingMode ? t("create_ad.edit_ad_btn") : t("create_ad.create_ad_btn")}
                     type="submit"
                 />
                 <FormError message={error} />
