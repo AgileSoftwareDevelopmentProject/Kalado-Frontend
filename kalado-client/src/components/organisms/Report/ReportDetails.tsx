@@ -13,10 +13,9 @@ import { useModalContext, useProductContext } from '../../../contexts';
 
 interface ReportDetailsProps {
   report: TReportResponseType;
-  onBackToList: () => void;
 }
 
-const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) => {
+const ReportDetails: React.FC<ReportDetailsProps> = ({ report }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === 'fa';
   const [openImage, setOpenImage] = useState<string | null>(null);
@@ -24,8 +23,6 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) =
   const [isBlockAdDialogOpen, setIsBlockAdDialogOpen] = useState(false);
   const { handleProductDetailsClick } = useModalContext();
   const { singleProduct, loading, error, fetchSingleProduct } = useProductContext();
-
-
 
   useEffect(() => {
     if (!report.reportedContentId) return;
@@ -42,7 +39,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) =
 
   const handleBlockUserConfirm = async () => {
     const blockUserData: ReportStatusUpdateData = {
-      status: report.status,  
+      status: report.status,
       adminNotes: "This user has been blocked.",
       blockUser: true,
       blockReason: null,
@@ -58,7 +55,7 @@ const ReportDetails: React.FC<ReportDetailsProps> = ({ report, onBackToList }) =
 
   const handleBlockAdConfirm = async () => {
     const blockAdData: ReportStatusUpdateData = {
-      status: report.status,  
+      status: report.status,
       adminNotes: "This user has been blocked.",
       blockUser: false,
       blockReason: null,
